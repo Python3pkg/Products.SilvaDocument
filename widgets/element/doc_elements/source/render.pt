@@ -6,6 +6,7 @@
       <div class="warning"><b>[external source element is broken]</b>
     </tal:block>
     <tal:block tal:condition="source">
+    <div class="csvsource">
       <div>
         <h3 class="front5" tal:content="source/meta_type">external source</h3>
         id:&nbsp;<tal:block content="source/id" />
@@ -25,6 +26,7 @@
           has_parameters python: form and fields;
           current_parameters here/get_parameters;
           "
+          class="csvsource"
         >
         <b tal:condition="not: has_parameters">
           No parameters to be filled for this source.
@@ -58,12 +60,12 @@
                   </span><span class="warning" tal:condition="is_required">*</span>
                 </td>
                 <td tal:content="structure python: field.render_view(value=current_value)" />
-                <td tal:content="description" />
               </tr>
             </tal:block>
           </tbody>
         </table>
       </div>    
+    </div>
     </tal:block>
   </metal:block>
 </metal:block>
