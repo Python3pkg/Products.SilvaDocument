@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.5.2.1 $
 # Python
 from __future__ import nested_scopes
 import re
@@ -275,8 +275,7 @@ class ParagraphSupport(MixedContentSupport):
                 result.append(self._renderEditableHelper(child))
                 result.append('</acronym>')
             elif child.nodeName == 'br':
-                # \n is already in XML (or not)
-                result.append('<br>')
+                result.append('\n')
             else:
                 result.append(
                     'ERROR %s ERROR ' % self._renderEditableHelper(child))
