@@ -36,23 +36,20 @@ class UpgradeDocumentXML:
         # <index name="foo">bar</index> to
         # <index name="foo"/>bar
         dom = obj.content
-        node = dom.firstChild
-        while node:
-            if node.nodeType == node.ELEMENT_NODE and node.nodeName == 'index':
-                if node.nextSibling:
-                    while node.lastChild:
-                        node.parentNode.insertBefore(node.lastChild, node.nextSibling)
-                else:
-                    while node.firstChild:
-                        node.parentNode.appendChild(node.firstChild)
-            next = node.firstChild
-            if not next:
-                next = node.nextSibling
-            while not next and node.parentNode:
-                node = node.parentNode
-                next = node.nextSibling
-            node = next
+        self._upgrade_helper(dom.documentElement)
         return obj
+
+    def _upgrade_helper(self, node):
+        if node.nodeType == node.ELEMENT_NODE and node.nodeName == 'index':
+            if node.nextSibling:
+                while node.hasChildNodes():
+                    node.parentNode.insertBefore(node.lastChild, node.nextSibling)
+            else:
+                while node.hasChildNodes():
+                    node.parentNode.appendChild(node.firstChild)
+        else:
+            for child in node.childNodes:
+                self._upgrade_helper(child)
 
 def initialize():
     upgrade.registry.registerUpgrader(SwitchClass(Document),

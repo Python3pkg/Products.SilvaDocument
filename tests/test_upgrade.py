@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_upgrade.py,v 1.1.8.2 2004/03/09 21:08:16 clemens Exp $
+# $Id: test_upgrade.py,v 1.1.8.3 2004/03/10 13:06:02 guido Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -34,6 +34,20 @@ class UpgradeTest(unittest.TestCase):
         u.upgrade(self.obj)
         xml = self._xml_string(self.obj.content)
         self.assertEquals('<p>foo<index name="bar"/>bazbladibla</p>', xml)
+
+        dom = parseString('<p>foo<index name="bar">baz</index>bladibla<em><strong><index name="baz">bar</index></strong></em></p>')
+        self.obj.content = dom
+        u = upgrade.UpgradeDocumentXML()
+        u.upgrade(self.obj)
+        xml = self._xml_string(self.obj.content)
+        self.assertEquals('<p>foo<index name="bar"/>bazbladibla<em><strong><index name="baz"/>bar</strong></em></p>', xml)
+
+        dom = parseString('<table><row><field><index name="foo">foo</index></field></row><row><field><p><em><index name="bar">bar</index></em></p></field></row></table>')
+        self.obj.content = dom
+        u = upgrade.UpgradeDocumentXML()
+        u.upgrade(self.obj)
+        xml = self._xml_string(self.obj.content)
+        self.assertEquals('<table><row><field><index name="foo"/>foo</field></row><row><field><p><em><index name="bar"/>bar</em></p></field></row></table>', xml)
 
     def test_xmlupgrade2(self):
         # XXX copy & paste tests ... could be done more elegant
