@@ -24,21 +24,34 @@
     </choice>
   </define>
 
-  <!-- toplevel elements that can be located everywhere in the tree -->
+  <!-- toplevel elements except tables -->
+
   <define name="toplevel">
     <choice>
-      <ref name="heading" />
       <ref name="p" />
-      <ref name="pre" />
-      <ref name="image" />
+      <ref name="heading" />
       <ref name="list" />
-      <ref name="nlist" />
       <ref name="dlist" />
+      <ref name="pre" />
+      <ref name="cite" />
+      <ref name="image" />
+      <ref name="nlist" />
       <ref name="toc" />
-      <ref name="codesource" />
+      <ref name="external_source" />
     </choice>
   </define>
-
+  
+  <!-- toplevel elements allowed in table fields -->
+  <define name="field">
+    <choice>
+      <ref name="p" />
+      <ref name="heading" />
+      <ref name="list" />
+      <ref name="nlist" />
+      <ref name="image" />
+    </choice>
+  </define>
+  
   <!-- inline markup -->
   <define name="markup">
     <choice>
@@ -130,6 +143,24 @@
     </element>
   </define>
 
+  <define name="cite">
+    <element name="doc:cite">
+      <optional>
+        <element name="doc:author">
+          <text />
+        </element>
+      </optional>
+      <optional>
+        <element name="doc:source">
+          <text />
+        </element>
+      </optional>
+      <oneOrMore>
+        <ref name="p" />
+      </oneOrMore>
+    </element>
+  </define>
+  
   <define name="image">
     <element name="doc:image">
       <attribute name="path">
@@ -165,6 +196,7 @@
             <value>image-right</value>
           </choice>
         </attribute>
+      </optional>
     </element>
   </define>
 
@@ -244,7 +276,7 @@
     </element>
   </define>
 
-  <define name="codesource">
+  <define name="external_source">
     <element name="doc:source">
       <attribute name="id">
         <text />
@@ -455,7 +487,7 @@
       <oneOrMore>
         <element name="doc:field">
           <zeroOrMore>
-            <ref name="toplevel" />
+            <ref name="field" />
           </zeroOrMore>
         </element>
       </oneOrMore>
