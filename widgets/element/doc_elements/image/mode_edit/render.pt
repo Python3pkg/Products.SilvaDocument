@@ -20,9 +20,35 @@
       <td class="invisible align-right">
         url for image hyperlink
       </td>
-      <td class="invisible align-right" colspan="2">  
-        <input style="width:100%;" type="text" name="link" value=""
-          tal:attributes="value python:node.getAttribute('link');"  />
+      <td class="invisible align-left" colspan="2">  
+        <label>
+            <input type="radio" name="link_selector" value="hiresimg_url" 
+                tal:attributes="checked python: not not int(node.getAttribute('link_to_hires'))"/>
+            <span style="width:100%">High resolution version of image</span>
+        </label>
+        <br />
+        <input type="radio" name="link_selector" value="entered_url"
+                tal:attributes="checked python:not int(node.getAttribute('link_to_hires'))"/>
+        <input style="width: 100%;" type="text" name="link" value=""
+            tal:attributes="value python:node.getAttribute('link');"  />
+      </td>
+    </tr>
+    <tr>
+      <td class="invisible align-right">
+        target frame
+      </td>
+      <td class="invisible align-left" colspan="2">  
+        <label>
+            <input type="radio" name="target_selector" value="_blank"
+                tal:attributes="checked python:node.getAttribute('target') == '_blank'"/>
+            new window
+        </label>
+        <br />
+        <input type="radio" name="target_selector" value="_user" 
+            tal:attributes="checked python:node.getAttribute('target') != '_blank'"
+        />
+        <input style="width:100%;" type="text" name="target" value=""
+          tal:attributes="value python:node.getAttribute('target');"  />
       </td>
     </tr>
     <tr>

@@ -16,6 +16,7 @@ if not image:
 
 alignment = node.getAttribute('alignment')
 link = node.getAttribute('link')
+target = node.getAttribute('target')
 
 tag = image.image.tag(css_class=alignment)
 
@@ -25,6 +26,6 @@ if alignment.startswith('image-'):
         alignment, image.image.tag(css_class=alignment))
 
 if link:
-    tag = '<a class="image" href="%s">%s</a>' % (link, tag)
+    tag = '<a class="image" href="%s" target="%s">%s</a>' % (link, target, tag)
 
 return tag

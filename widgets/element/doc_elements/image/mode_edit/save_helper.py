@@ -1,8 +1,34 @@
-# $Id: save_helper.py,v 1.2 2003/09/02 14:28:46 jw Exp $
+# $Id: save_helper.py,v 1.3 2003/09/29 16:46:28 zagy Exp $
 from Products.Silva.mangle import String
 
 request = context.REQUEST
 node = request.node
+
+image_path = request['path']
+node.setAttribute('path', String.inputConvert(image_path))
+
+
+link = request.get('link')
+link_selector = request.get('link_selector')
+if link_selector == 'hiresimg_url':
+    node.setAttribute('link_to_hires', '1')
+    image = context.content()
+    if image:
+        link = '/'.join(image_path.split('/') + ['hires_image'] )
+else:
+    node.setAttribute('link_to_hires', '0')
+    
+if link:
+    node.setAttribute('link', String.inputConvert(link))
+else:
+    node.removeAttribute('link')
+
+target = request.get('target')
+target_selector = request.get('target_selector')
+if target_selector == '_blank':
+    target = '_blank'
+node.setAttribute('target', target)
+
 
 if request.has_key('alignment'):
     align_attribute = request['alignment']
@@ -11,11 +37,4 @@ if request.has_key('alignment'):
     else:
         node.removeAttribute('alignment')
 
-if request.has_key('link'):
-    link = request['link']
-    node.setAttribute('link', String.inputConvert(link))
-else:
-    node.removeAttribute('link')
 
-image_path = request['path']
-node.setAttribute('path', String.inputConvert(image_path))
