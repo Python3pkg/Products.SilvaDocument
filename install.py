@@ -153,7 +153,7 @@ def registerDocEditor(root):
     wr.setDisplayName('cite', 'citation')
 
     wr.setAllowed('doc', [
-        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image', 'code',
+        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image', 
         'table', 'nlist', 'toc'])
 
     if externalsource.AVAILABLE:
