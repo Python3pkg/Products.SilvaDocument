@@ -1,12 +1,14 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.4 2003/10/06 08:05:03 zagy Exp $
+# $Id: test_editorsupport.py,v 1.5 2003/10/06 11:33:30 zagy Exp $
 
-import Zope
-Zope.startup()
+import os, sys
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
+
+from Testing import ZopeTestCase
 
 import unittest
-import time
 
 from Products.SilvaDocument.EditorSupportNested import \
     Token, Parser, Interpreter
@@ -348,5 +350,9 @@ def main():
     unittest.TextTestRunner(verbosity=2).run(test_suite())
 
 if __name__ == '__main__':
+    framework()
+else:
+    # While framework.py provides its own test_suite()
+    # method the testrunner utility does not.
     main()
-
+    
