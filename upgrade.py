@@ -48,8 +48,9 @@ class UpgradeDocumentXML:
             next = node.firstChild
             if not next:
                 next = node.nextSibling
-            if not next:
-                next = node.parentNode.nextSibling
+            while not next and node.parentNode:
+                node = node.parentNode
+                next = node.nextSibling
             node = next
         return obj
 
