@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
   
-  Valid for:  Silva 0.9.3+
-  Author:     Christian Zagrodnick
-  Email:      cz+gocept.com
-  CVS:        $Id: README.txt,v 1.4 2004/07/21 11:46:41 jw Exp $
+  Valid for:  Silva 1.1
+  Author:     Christian Zagrodnick, Walco van Loon
+  Email:      cz+gocept.com, walco at infrae.com
+  CVS:        $Id: README.txt,v 1.5 2004/09/14 09:23:14 walco Exp $
 
 Silva Document
 
@@ -22,45 +22,6 @@ Editing
   markup needs to be represendted by some form text. Details about possible
   markup can be found in the Silva documentation[1].
   
-  From Silva 0.9.2 to 0.9.3 the text markup parser has been rewritten -- it
-  tries to be smart now.
-
-
-  Escaping
-
-    The intermediate solution of escaping potential markup characters
-    with entities has been replaced by a more sophistiaced escaping
-    mechanism. The backslash '\' is used as escaping character now:
-
-      A **strong** text is marked up as \**strong\** in Silva.
-    
-    In many cases it is not possible to escape manually. The parser
-    will escape anything implicitly which cannot be interpreted as
-    markup, a so called conceptual escape:
-
-      Now even a ***** (bold asterisk) is possible, or ****** two.
-
-    But note that, once saved, all conceptual escapes will be explicit
-    escapes in the edit box. This means
-
-      our ****** two blod asterisks 
-
-    becomes
-    
-      our **\**** tow bold asterisks
-
-    if saved. 
-
-
-  Links
-
-    Links are automatically recognised and converted to a link element.
-
-
-  Indexs
-
-    Indexes do not have the `index text' part. It just [[index entry]] now.
-
 
 License
   
