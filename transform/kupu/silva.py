@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.18 $'
+__version__='$Revision: 1.19 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -393,14 +393,8 @@ class row_heading(SilvaElement):
   
 class field(SilvaElement):
     def convert(self, context):
-        content = []
-        for child in self.find():
-            if child.name() == 'p':
-                content.append(Frag(child.content.convert(context)))
-            else:
-                content.append(child.convert(context))
         return html.td(
-            Frag(content),
+            self.content.convert(context),
             align=self.attr.align,
             width=self.attr.width
         )
