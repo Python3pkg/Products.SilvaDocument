@@ -1,8 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.14.2.1.2.6 2004/06/02 10:31:22 zagy Exp $
-from __future__ import nested_scopes
-
+# $Id: silvaparser.py,v 1.6.4.14.2.1.2.7 2004/06/28 08:09:00 zagy Exp $
 # python
 import re
 import operator
@@ -681,6 +679,11 @@ class Interpreter:
         return node
 
     def index_end(self, token, node):
+        name = ''
+        if node.hasAttribute('name'):
+            name = node.getAttribute('name')
+        if not name:
+            raise InterpreterError, 'Empty index element'
         self.ruleset('default')
         return node.parentNode
 

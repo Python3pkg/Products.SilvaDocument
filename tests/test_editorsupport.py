@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.8 2004/06/14 11:42:22 jw Exp $
+# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.9 2004/06/28 08:09:00 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -431,6 +431,19 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         self.assertEquals(t[3].kind, Token.INDEX_START)
         self.assertEquals(t[5].kind, Token.INDEX_END)
 
+    def test_index_empty(self):
+        parser = self.parser("A Word[[]] blafasel")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(len(t), 9)
+        self.assertEquals(t[3].kind, Token.CHAR)
+        self.assertEquals(t[4].kind, Token.CHAR)
+        self.assertEquals(t[5].kind, Token.CHAR)
+        self.assertEquals(t[6].kind, Token.CHAR)
+        self.assertEquals(t[3].text, '[')
+        self.assertEquals(t[4].text, '[')
+        self.assertEquals(t[5].text, ']')
+        self.assertEquals(t[6].text, ']')
 
     def test_escape(self):
         parser = self.parser(r"In Silva markup **bold** is marked up as \**bold\**")
