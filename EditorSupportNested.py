@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.5 $
+# $Revision: 1.21.4.6 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -91,10 +91,10 @@ class EditorSupport(SimpleItem):
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_heading_as_html')
-    def render_heading_as_html(self, node):
+    def render_heading_as_html(self, node, show_index=0):
         """Render heading content as HTML.
         """
-        return self.render_text_as_html(node)
+        return self.render_text_as_html(node, show_index)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'render_text_as_editable')
@@ -175,7 +175,7 @@ class EditorSupport(SimpleItem):
         return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
-        'editable_to_dom')
+                              'editable_to_dom')
     def editable_to_dom(self, editable, parser=PParser):
         """convert editable to dom"""
         p = parser(editable)
