@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8 2004/02/14 13:44:10 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.9 2004/03/21 16:43:21 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -261,6 +261,17 @@ Now, it could be called intelligent. You see this at ((http://www.x.yz|http://ww
 sometimes it's too smart for its own good.
 Users think it's dumb.""")
         parser.run()
+
+    def test_manylinks(self):
+        # test for the existence of a certain bug
+        parser = PParser("""A ((broken external link|http://foo.bar/test_doc1)).
+An external link that usually works: ((zlb|http://www.zlb.de/))
+A ((broken internal link|/to_nowhere/doc883)).""")
+        parser.run()
+        t = parser.getResult().tokens
+        # should contain three links:
+        self.assertEquals(3,len([x for x in t if x.kind==Token.LINK_START]))
+
         
     def test_linkmarkup(self):
         p = PParser("Wasser ((H~~2~~O|http://aaaa.com/h2o.html|))")
@@ -685,8 +696,12 @@ def test_suite():
     return suite
 
 def main():
-    from hotshot import Profile
-    p = Profile('paras.hotshot')
+    try:
+        from hotshot import Profile
+    except ImportError:
+        pass
+    else:
+        p = Profile('paras.hotshot')
     unittest.TextTestRunner(verbosity=2).run(test_suite())
 
 if __name__ == '__main__':
