@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.9 2004/02/06 15:59:47 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.10 2004/02/06 16:13:48 guido Exp $
 from __future__ import nested_scopes
 
 # python
@@ -308,7 +308,7 @@ class PParser(Parser):
         (r'(~~)', Token.SUBSCRIPT_END),
        
         (r'(\[\[)', Token.INDEX_START),
-        (r'(\]\])([^A-Za-z0-9]|$)', Token.INDEX_END),
+        (r'(\]\])', Token.INDEX_END),
        
         (r'(\(\()', Token.LINK_START),
         (r'(\|)', Token.LINK_SEP),
@@ -339,7 +339,7 @@ class HeadingParser(Parser):
         (r'(~~)', Token.SUBSCRIPT_END),
           
         (r'(\[\[)', Token.INDEX_START),
-        (r'(\]\])([^A-Za-z0-9]|$)', Token.INDEX_END),
+        (r'(\]\])', Token.INDEX_END),
        
         (r'([ \t\f\v]+)', Token.WHITESPACE),
         (r'(\\)', Token.ESCAPE),
