@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.1 $'
+__version__='$Revision: 1.1.2.2 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -494,7 +494,6 @@ class a(Element):
         if (hasattr(self.attr, 'name') and (not hasattr(self.attr, 'href') or
                 self.attr.href == '#' or self.attr.href is None)):
             text = ''.join([t.convert(context).asBytes('UTF-8') for t in extract_texts(self, context)])
-            print text
             textnode = Frag()
             if text and (text[0] != '[' or text[-1] != ']'):
                 textnode = Text(text)
@@ -508,7 +507,7 @@ class a(Element):
             url = self.getattr('href', 'http://www.infrae.com')
             target = getattr(self.attr, 'target', '')
             if target is None:
-                target = ''
+                target = '_self'
 
             try:
                 img = self.query_one('img')
@@ -525,10 +524,13 @@ class a(Element):
                 if not hasattr(image, 'attr'):
                     # empty frag
                     return image
-                image.attr.link = url
+                if url == '%s/hires_image' % img.attr.src:
+                    image.attr.link_to_hires = '1'
+                else:
+                    image.attr.link_to_hires = '0'
+                    image.attr.link = url
                 image.attr.target = target
                 image.attr.title = title
-                image.attr.link_to_hires = '0'
                 return image
         else:
             return Frag()
@@ -545,12 +547,22 @@ class img(Element):
         src = urlparse(src)[2]
         if src.endswith('/image'):
             src = src[:-len('/image')]
-        return silva.image(
-            self.content.convert(context),
-            path=src,
-            link=getattr(self, 'link', self.getattr('link','nolink')),
-            alignment = self.attr.alignment,
-            )
+        if self.hasattr('link_to_hires') and self.getattr('link_to_hires') == '1':
+            return silva.image(
+                        self.content.convert(context),
+                        path=src,
+                        link='%s/hires_image' % src,
+                        alignment=self.attr.align,
+                        target=self.getattr('target', '_self'),
+                    )
+        else:
+            return silva.image(
+                        self.content.convert(context),
+                        path=src,
+                        link=self.getattr('link', ''),
+                        alignment=self.attr.align,
+                        target=self.getattr('target', '_self'),
+                    )
 
 class br(Element):
     def convert(self, context):

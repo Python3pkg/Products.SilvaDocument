@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.3 $'
+__version__='$Revision: 1.1.2.4 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -168,10 +168,42 @@ class sub(SilvaElement):
 
 class link(SilvaElement):
     def convert(self, context):
-        return html.a(
-            self.content.convert(context),
-            href=self.attr.url,
-        )
+        try:
+            img = self.query_one('image')
+        except ValueError:
+            return html.a(
+                self.content.convert(context),
+                href=self.attr.url,
+            )
+        else:
+            url = str(self.attr.url).strip()
+            if url:
+                return html.img(
+                        img.content.convert(context),
+                        src=img.getattr('path'),
+                        link=url,
+                        align=img.getattr('alignment', 'left'),
+                        target=self.getattr('target', '_self'),
+                )
+            else:
+                if img.hasattr('link_to_hires') and img.getattr('link_to_hires') == '1':
+                    return html.img(
+                            img.content.convert(context),
+                            src=img.getattr('path'),
+                            link_to_hires='1',
+                            link='%s/hires_image' % img.getattr('path'),
+                            align=img.getattr('alignment', 'left'),
+                            target=img.getattr('target', '_self'),
+                    )
+                else:
+                    return html.img(
+                            img.content.convert(context),
+                            src=img.getattr('path'),
+                            link_to_hires='0',
+                            link=img.getattr('link', ''),
+                            align=img.getattr('alignment', 'left'),
+                            target=img.getattr('target', '_self'),
+                    )
 
 class index(SilvaElement):
     def convert(self, context):
@@ -188,16 +220,44 @@ class image(SilvaElement):
             src = src.content
         except AttributeError:
             pass
-   
-        img = html.img(
-                    self.content.convert(context),
-                    src = src+'/image',
-                    align = self.attr.alignment,
-              )
+        if not src:
+            src = ''
 
-        if not self.hasattr('link'):
-            return img
-        return html.a(img, href = self.getattr('link', 'nolink'))
+        if ((not self.hasattr('link') or str(self.getattr('link')).strip() == '')
+                and (not self.hasattr('link_to_hires') or self.getattr('link_to_hires') == '0')):
+            return html.img(
+                        self.content.convert(context),
+                        src = src+'/image',
+                        align = self.attr.alignment,
+                        target=self.getattr('target', '_self'),
+                  )
+        elif not self.hasattr('link') or str(self.getattr('link')).strip() == '':
+            return html.img(
+                        self.content.convert(context),
+                        src='%s/image' % src,
+                        align=self.attr.alignment,
+                        link_to_hires='1',
+                        target=self.getattr('target', '_self'),
+                    ),
+        basesrcpath = src
+        link = self.getattr('link')
+        if link == '%s/hires_image' % src:
+            return html.img(
+                        self.content.convert(context),
+                        src = '%s/image' % src,
+                        align=self.attr.alignment,
+                        link_to_hires='1',
+                        target=self.getattr('target', '_self'),
+                    )
+        else:
+            return html.img(
+                        self.content.convert(context),
+                        src='%s/image' % src,
+                        align=self.attr.alignment,
+                        link_to_hires=self.attr.link_to_hires,
+                        link=self.getattr('link', ''),
+                        target=self.getattr('target', '_self'),
+                )
 
 class pre(SilvaElement):
     def compact(self):
@@ -293,7 +353,6 @@ class toc(SilvaElement):
         depth_string = depth
         if int(depth) == -1:
             depth_string = 'unlimited'
-            print 'unlimited toc'
         return html.div(
             Text('Table of Contents (%s level%s)' % (depth_string, multiple_s)),
             toc_depth = depth,
