@@ -247,7 +247,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             for key in node.attributes.keys():
                 attributes[key] = node.attributes[key].value
         image_object = self.context.get_silva_object().unrestrictedTraverse(
-            attributes['path'].split('/'))
+            attributes['path'].split('/'), None)
         if image_object is not None:
             image = image_object.image
             attributes['title'] = image_object.get_title()
