@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.10 2003/12/16 18:12:45 zagy Exp $
+# $Id: silvaparser.py,v 1.11 2004/01/13 16:06:46 clemens Exp $
 from __future__ import nested_scopes
 
 # python
@@ -19,6 +19,7 @@ def _initialize_patterns(patterns):
         compiled.append((re.compile(pattern_str), token_id))
     return tuple(compiled)
 
+URL_PATTERN = r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
         
 class InterpreterError(Exception):
     pass
@@ -87,11 +88,19 @@ class Token:
         INDEX_END: -1,
     }
 
+    _nesting = {
+        PARENTHESIS_OPEN: 1,
+        PARENTHESIS_CLOSE: 1,
+    }
+    _nesting.update(_start_tokens)
+    _nesting.update(_end_tokens)
+
     def __init__(self, kind, text):
         self.kind = kind
         self.text = text
         self.openclose = self._start_tokens.get(kind,
             self._end_tokens.get(kind, 0))
+        self.isNesting = self._nesting.get(kind, 0)
 
     def __len__(self):
         return len(self.text)
@@ -103,7 +112,7 @@ class Token:
         return self.text
 
     def __repr__(self):
-        return "<%s-%i>" % (self.text, self.kind)
+        return "<%r-%i>" % (self.text, self.kind)
 
 
 class ParserState:
@@ -121,6 +130,7 @@ class ParserState:
         self.parent = parent
         self.kindsum = 0
         self._valid_state = None
+        self.nesting_list = []
         
         openclose = None
         self.parenthesis = 0
@@ -134,6 +144,7 @@ class ParserState:
             self.factor = parent.factor
             self.openclose_map = parent.openclose_map.copy()
             self.kindsum = parent.kindsum
+            self.nesting_list = parent.nesting_list[:]
         if openclose is None:
             openclose = reduce(operator.add,
                 [t.openclose for t in tokens], 0)
@@ -142,8 +153,10 @@ class ParserState:
                 openclose += new_token.openclose
         self.openclose = openclose
         if new_token is not None:
-            self._calculate_parenthesis(new_token)
             self.kindsum += new_token.kind
+            # self._calculate_parenthesis(new_token)
+            if new_token.isNesting:
+                self.nesting_list.append(new_token)
 
     def __repr__(self):
         return "<ParserState: %r>" % self.tokens
@@ -153,7 +166,7 @@ class ParserState:
 
     def toxml(self):
         # parsed is set externally... 
-        if parsed is None:
+        if self.parsed is None:
             raise ValueError, "No interpreted state found"
         return self.parsed.toxml()
 
@@ -180,20 +193,10 @@ class ParserState:
         self._valid_state = 1
         return 1
             
-    def _calculate_parenthesis(self, token):
-        f = self.factor
-        p = self.parenthesis
-        t = token
-        if t.kind == t.PARENTHESIS_OPEN:
-            f += 1
-        elif t.kind == t.PARENTHESIS_CLOSE:
-            f -= 1
-        elif t._start_tokens.get(t.kind, 0):
-            p += f
-        elif t._end_tokens.get(t.kind, 0):
-            p -= f
-        self.factor = f
-        self.parenthesis = p
+    def _new_token(self):
+        if self.parent is None:
+            return None
+        return self.tokens[-1]
 
     def _new_token(self):
         if self.parent is None:
@@ -250,7 +253,12 @@ class Parser(HeuristicSearch):
         tokens = float(len(node.tokens))
         consumed = float(node.consumed)
         kind_sum = node.kindsum
-        parenthesis = -1/1.1**abs(node.parenthesis) + 2
+        parenthesis = 1
+        if (len(node.tokens) > 1 
+                and len(node.nesting_list) > 1
+                and node.tokens[-1].kind == Token.PARENTHESIS_CLOSE
+                and node.nesting_list[-2].kind == Token.PARENTHESIS_OPEN):
+            parenthesis = 0.8
         pattern_badness = 0
         if (len(node.tokens) > 1 and
                 node.tokens[-1].kind == Token.PARENTHESIS_OPEN and
@@ -291,8 +299,7 @@ class PParser(Parser):
         (r'(\(\()', Token.LINK_START),
         (r'(\|)', Token.LINK_SEP),
         (r'(\)\))', Token.LINK_END),
-        (r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))',
-            Token.LINK_URL),
+        (URL_PATTERN, Token.LINK_URL),
        
         (r'([\n\r]+)', Token.SOFTBREAK),
         (r'([ \t\f\v]+)', Token.WHITESPACE),
@@ -301,7 +308,7 @@ class PParser(Parser):
         (r'(\))', Token.PARENTHESIS_CLOSE),
         
         (r'([A-Za-z0-9\.\-&;]+)', Token.CHAR), # catch for long text
-        (r'([^A-Za-z0-9\.\-&; \t\f\v\r\n()])', Token.CHAR),
+        (r'([^A-Za-z0-9\.\-&; \t\f\v\r\n()\\])', Token.CHAR),
         ])
 
 
@@ -327,8 +334,7 @@ class HeadingParser(Parser):
 class LinkParser(Parser):
 
     patterns = _initialize_patterns([
-        (r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))',
-            Token.LINK_URL),
+        (URL_PATTERN, Token.LINK_URL),
         (r'([ \t\f\v]+)', Token.WHITESPACE),
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
@@ -420,6 +426,16 @@ class Interpreter:
         self.rules['link-text'] = {
             Token.PARENTHESIS_OPEN: self.text,
             Token.PARENTHESIS_CLOSE: self.text,
+            Token.STRONG_START: self.strong_start,
+            Token.STRONG_END: self.strong_end,
+            Token.EMPHASIS_START: self.emphasis_start,
+            Token.EMPHASIS_END: self.emphasis_end,
+            Token.UNDERLINE_START: self.underline_start,
+            Token.UNDERLINE_END: self.underline_end,
+            Token.SUPERSCRIPT_START: self.superscript_start,
+            Token.SUPERSCRIPT_END: self.superscript_end,
+            Token.SUBSCRIPT_START: self.subscript_start,
+            Token.SUBSCRIPT_END: self.subscript_end,
             Token.WHITESPACE: self.whitespace,
             Token.CHAR: self.text,
             Token.LINK_URL: self.text,
@@ -434,7 +450,6 @@ class Interpreter:
             Token.LINK_URL: self.link_url,
             Token.LINK_SEP: self.link_sep_afterurl,
             Token.LINK_END: self.link_end,
-            Token.ESCAPE: self.escape,
         }
 
         self.rules['link-afterurl'] = {
@@ -445,7 +460,6 @@ class Interpreter:
         self.rules['link-target'] = {
             Token.CHAR: self.link_target,
             Token.LINK_END: self.link_end,
-            Token.ESCAPE: self.escape,
         }
 
         self.rules['index'] = {
@@ -454,7 +468,6 @@ class Interpreter:
             Token.WHITESPACE: self.index_text,
             Token.CHAR: self.index_text,
             Token.INDEX_END: self.index_end,
-            Token.ESCAPE: self.escape,
         }
 
         self.rules['escape'] = {
@@ -634,7 +647,7 @@ class Interpreter:
         return node
   
     def link_target(self, token, node):
-        target = ''
+        target = node.getAttribute('target')
         node.setAttribute('target', target + token.text)
         return node
     
@@ -680,22 +693,19 @@ class Interpreter:
         return node.parentNode
 
     def escape(self, token, node):
+        self._pre_escape_ruleset = self.ruleset
         self.ruleset = 'escape'
-        return node
-        
-    def escaped_whitespace(self, token, node):
-        self.ruleset = 'default'
         return node
     
     def escaped_text(self, token, node):
-        self.ruleset = 'default'
+        self.ruleset = self._pre_escape_ruleset
         return self.text(token, node)
     
     def escaped_whitespace(self, token, node):
-        self.ruleset = 'default'
+        self.ruleset = self._pre_escape_ruleset
         return self.whitespace(token, node)
     
     def escaped_softbreak(self, token, node):
-        self.ruleset = 'default'
+        self.ruleset = self._pre_escape_ruleset
         return self.softbreak(token, node)
 

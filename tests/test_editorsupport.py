@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.15 2003/12/12 16:08:57 zagy Exp $
+# $Id: test_editorsupport.py,v 1.16 2004/01/13 16:06:46 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -162,7 +162,6 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[10].kind, Token.STRONG_END)
         self.assertEquals(t[18].kind, Token.UNDERLINE_END)
       
-
     def test_inlintestart(self):
         texts = [
             ("This is __ just text", 10),
@@ -180,7 +179,8 @@ voormalig directeur Strategie Aegon N.V."""]
             'http://www.asdf.com',
             'mailto:foo@bar.com',
             'ftp://bla.fasel/',
-            'https://asdf.com/blablubb/sdfa/df/dfa?sdfasd=434&ds=ddf%20#foo'
+            'https://asdf.com/blablubb/sdfa/df/dfa?sdfasd=434&ds=ddf%20#foo',
+            'http://www.x.com/xx/i.html',
         ]
         for url in urls:
             parser = PParser(url)
@@ -191,14 +191,14 @@ voormalig directeur Strategie Aegon N.V."""]
             self.assertEquals(t.kind, t.LINK_URL)
             self.assertEquals(t.text, url)
             
-    def _test_urls(self, texts, url):
+    def _test_urls(self, texts, url, token_id=Token.LINK_URL):
         for text, length, url_at in texts:
             p = PParser(text)
             p.run()
             t = p.getResult().tokens
             self.assertEquals(len(t), length, "%d != %d in %r -> %r" % (
                 len(t), length, text, t))
-            self.assertEquals(t[url_at].kind, Token.LINK_URL)
+            self.assertEquals(t[url_at].kind, token_id)
             self.assertEquals(t[url_at].text, url)
 
     def test_url2(self):
@@ -220,7 +220,28 @@ voormalig directeur Strategie Aegon N.V."""]
             ]
         url = "http://www.x.yz/"
         self._test_urls(texts, url)
-            
+    
+    def test_url4(self):
+        texts = [
+            ("(see http://www.x.com/xx/i.html)", 5, 3),
+            ("software got smarter: http://www.x.com/xx/i.html.", 9, 7),
+            ("at http://www.x.com/xx/i.html, but", 6, 2),
+            ("(see ((foo|http://www.x.com/xx/i.html)))", 9, 6),
+            ("**link**\n((http://www.x.com/xx/i.html|http://www.x.com/xx/i.html))", 9, 7),
+            ]
+        url = "http://www.x.com/xx/i.html"
+        self._test_urls(texts, url)
+           
+    def test_url5(self):
+        texts = [
+            ('foo\nif you ((click this link|edit))', 15, 13),
+            ('foo\nif you ((click this link|edit))).', 17, 13),
+            ('foo\n(if you ((click this link|edit))', 16, 14),
+            ('foo\n(if you ((click this link|edit)))', 17, 14),
+            ]
+        url = "edit"
+        self._test_urls(texts, url, token_id=Token.CHAR)
+           
     def test_link(self):
         parser = PParser("click ((here|http://here.com)) to see")
         parser.run()
@@ -241,6 +262,14 @@ sometimes it's too smart for its own good.
 Users think it's dumb.""")
         parser.run()
         
+    def test_linkmarkup(self):
+        p = PParser("Wasser ((H~~2~~O|http://aaaa.com/h2o.html|))")
+        p.run()
+        t = p.getResult().tokens
+        self.assertEquals(len(t), 12)
+        self.assertEquals(t[4].kind, Token.SUBSCRIPT_START)
+        self.assertEquals(t[6].kind, Token.SUBSCRIPT_END)
+        
 
     def test_linktarget(self):
         parser = PParser("click ((here|http://here.com|_top)) to see")
@@ -253,6 +282,7 @@ Users think it's dumb.""")
         self.assertEquals(t[5].kind, Token.LINK_URL)
         self.assertEquals(t[6].kind, Token.LINK_SEP)
         self.assertEquals(t[7].text, '_')
+        self.assertEquals(t[8].text, 'top')
         self.assertEquals(t[9].kind, Token.LINK_END)
 
     def test_linktarget2(self):
@@ -308,7 +338,6 @@ Users think it's dumb.""")
         self.assertEquals(t[4].kind, Token.SUPERSCRIPT_END)
         self.assertEquals(t[5].kind, Token.STRONG_END)
         
-    
     def test_supersubscript(self):
         parser = PParser("a~~1~~^^2^^+a~~2~~^^2^^=a~~3~~^^2^^")
         parser.run()
@@ -351,12 +380,21 @@ Users think it's dumb.""")
 
 
     def test_escape(self):
-        parser = PParser("In Silva markup **bold** is marked up as \**bold\**")
+        parser = PParser(r"In Silva markup **bold** is marked up as \**bold\**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 23)
         self.assertEquals(t[21].kind, Token.ESCAPE)
 
+    def test_escape(self):
+        parser = PParser(r"In Silva markup **bold** is \\ marked up as \**bold\**")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(len(t), 26)
+        self.assertEquals(t[12].kind, Token.ESCAPE)
+        self.assertEquals(t[13].kind, Token.ESCAPE)
+        self.assertEquals(t[24].kind, Token.ESCAPE)
+        
     def test_alot(self):
         # speed test, this took > 10 minutes some time ago
         parser = PParser("A paragraph. Which includes **bold**, ++italic++, __underlined__, a ((hyperlink|http://www.infrae.com)), and an index item[[index item]]. But we have more **bold** and ++italic++; even **++bold-italic++** or **__bold-underlinded__**. **++__bold-italic-underlined-superscript__++**.")
@@ -553,6 +591,16 @@ class InterpreterTest(unittest.TestCase):
             (t.LINK_SEP, '|'),
             (t.LINK_END, '))'),
             ], '<link url="http://slashdot.org" target="_blank">slashdot</link>'),
+        ([
+            (t.LINK_START, "(("),
+            (t.CHAR, 'slashdot'),
+            (t.LINK_SEP, '|'),
+            (t.LINK_URL, 'http://slashdot.org'),
+            (t.LINK_SEP, '|'),
+            (t.CHAR, '_'),
+            (t.CHAR, 'top'),
+            (t.LINK_END, '))'),
+            ], '<link url="http://slashdot.org" target="_top">slashdot</link>'),
         ]
 
     def test_helper(self):
@@ -563,6 +611,7 @@ class InterpreterTest(unittest.TestCase):
             xml = ph.dom.toxml()
             expected_xml = parseString('<p>'+result+'</p>').toxml()
             self.assertEquals(xml, expected_xml)
+
 
 class EditableTest(unittest.TestCase):
 
@@ -610,7 +659,22 @@ class EditableTest(unittest.TestCase):
             self.assertEquals(expected_html, html,
                 '%s was converted to %s, instead of %s' % (editable,
                     html, expected_html))
-            
+
+    
+    def test_pre(self):
+        cases = [
+            ('&amp;foobar;', '&foobar;'),
+            ('&amp;&lt;&gt;&quot;', '&<>"'),
+            ('foo  bar', 'foo  bar'),
+        ]
+        
+        es = EditorSupport('')
+        for xml_text, expected_editable in cases:
+            dom = parseString('<pre>%s</pre>' % xml_text)
+            editable = es.render_pre_as_editable(dom.firstChild)
+            self.assertEquals(expected_editable, editable,
+                '%s was converted to %s, instead of %s' % (xml_text,
+                    editable, expected_editable))
     
 
 def test_suite():
@@ -626,9 +690,13 @@ def main():
     unittest.TextTestRunner(verbosity=2).run(test_suite())
 
 if __name__ == '__main__':
-    from hotshot import Profile
-    p = Profile('editorsupport.hotshot')
-    p.runcall(framework)
+    try:
+        # if we have hotshot just profile everyting.
+        from hotshot import Profile
+        p = Profile('editorsupport.hotshot')
+        p.runcall(framework)
+    except ImportError:
+        framework()
 else:
     # While framework.py provides its own test_suite()
     # method the testrunner utility does not.

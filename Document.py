@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 # Zope
 
 from StringIO import StringIO
@@ -98,7 +98,7 @@ class Document(CatalogedVersionedContent):
                       and child.nodeName == 'parameter']:
             child.normalize()
             name = child.getAttribute('key').encode('ascii')
-            value = [str(child.nodeValue) for child in child.childNodes 
+            value = [child.nodeValue for child in child.childNodes 
                      if child.nodeType == child.TEXT_NODE]
             value = ' '.join(value)
             parameters[name] = value
@@ -152,15 +152,12 @@ class Document(CatalogedVersionedContent):
             title = silvanode.find_one('title').extract_text()
             docnode = silvanode.find_one('doc')
             content = docnode.asBytes(encoding="UTF8")
-            version.content.manage_edit(content)  # needs utf8-encoded string
-            self.set_title(title)         # needs unicode
-
-            # brute force: invalidate all widget caches for this session
-            try:
-                del self.REQUEST.SESSION['xmlwidgets_service_editor']
-            except AttributeError: pass
-            except KeyError: pass
-
+            version.content.manage_edit(content) # needs utf8-encoded string
+            self.set_title(title) # needs unicode
+            
+            # Clear widget cache for this version.
+            version.clearEditorCache()
+            
     security.declarePrivate('get_indexables')
     def get_indexables(self):
         version = self.get_viewable()
@@ -168,6 +165,17 @@ class Document(CatalogedVersionedContent):
             return []
         return [version]
 
+    def revert_to_previous(self):
+        """ Create a new version of public version, throw away the 
+        current one.
+        
+        Overrides Versioning.revert_to_previous() to be able to clear
+        the widget cache too.
+        """
+        Document.inheritedAttribute('revert_to_previous')(self)
+        version = self.get_editable()
+        version.clearEditorCache()
+    
     def manage_beforeDelete(self, item, container):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
         # Does the widget cache needs be cleared for all versions - I think so...
@@ -207,7 +215,7 @@ class DocumentVersion(CatalogedVersion):
     def manage_afterClone(self, item):
         # if we're a copy, clear cache
         # XXX should be part of workflow system
-        self.service_editor.clearCache(self.content)
+        self.clearEditorCache()
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fulltext')
@@ -233,6 +241,13 @@ class DocumentVersion(CatalogedVersion):
         """
         # XXX this need to be fixed by using ZCTextIndex or the like
         return xmlinput
+    
+    def clearEditorCache(self):
+        """ Clears editor cache for this version
+        """
+        editor_service = self.service_editor
+        document_element = self.content.documentElement
+        editor_service.clearCache(document_element)
         
 InitializeClass(DocumentVersion)
 

@@ -332,8 +332,8 @@ def registerTableEditor(root):
     wr.addWidget('field',
                  ('service_widgets', 'element', 'table_elements', 'field'))
     wr.setDisplayName('table', 'Table')
-    wr.setDisplayName('row', 'Row')
-    wr.setDisplayName('row_heading', 'Row heading')
+    wr.setDisplayName('row', 'row')
+    wr.setDisplayName('row_heading', 'row heading')
     
     wr.setAllowed('table', ['row', 'row_heading'])
 

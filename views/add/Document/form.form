@@ -20,7 +20,7 @@
           <external_validator></external_validator>
           <display_maxwidth></display_maxwidth>
           <display_width type="int">20</display_width>
-          <required type="int">0</required>
+          <required type="int">1</required>
           <css_class></css_class>
           <default></default>
           <title>id</title>
@@ -42,7 +42,7 @@
           <width type="int">40</width>
           <external_validator></external_validator>
           <height type="int">2</height>
-          <required type="int">0</required>
+          <required type="int">1</required>
           <css_class></css_class>
           <default></default>
           <title>title</title>

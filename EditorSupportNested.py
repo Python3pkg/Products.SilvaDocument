@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -18,10 +18,9 @@ from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 
 from Products.SilvaDocument.silvaparser import \
-    PParser, HeadingParser, LinkParser
+    PParser, HeadingParser, LinkParser, URL_PATTERN
 
 # from silvaparser, thanks to zagy:
-URL_PATTERN = r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
 
 class EditorSupport(SimpleItem):
@@ -105,8 +104,7 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(self.escape_text(mangle.entities(
-                    child.nodeValue)))
+                result.append(self.escape_text(child.nodeValue))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -168,6 +166,13 @@ class EditorSupport(SimpleItem):
         """
         return self.render_text_as_editable(node)
 
+    def render_pre_as_editable(self, node):
+        result = ""
+        for child in node.childNodes:
+            assert child.nodeType == child.TEXT_NODE
+            assert child.firstChild is None
+            result += child.nodeValue
+        return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
         'editable_to_dom')
@@ -207,9 +212,7 @@ class EditorSupport(SimpleItem):
         """
         # since we don't use Formulator we get UTF8 from the forms, so encode
         # manually here
-        # use input convert 2, since the 'normal' one strips whitespace
         st = mangle.String.inputConvert(st, preserve_whitespace=1)
-        st = mangle.entities(st)
         st = self._unifyLineBreak(st)
         node = node._node
         doc = node.ownerDocument
@@ -249,9 +252,7 @@ class EditorSupport(SimpleItem):
         text = text.replace('<', '&lt;')
         text = text.replace('>', '&gt;')
         text = text.replace('"', '&quot;')
-        
         return text
-
 
     def _unifyLineBreak(self, data):
         """returns data with unambigous line breaks, i.e only \n.
