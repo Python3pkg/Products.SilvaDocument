@@ -1,29 +1,26 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.16.4.6 $
 # Zope
 
 from StringIO import StringIO
 
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from DateTime import DateTime
 from Globals import InitializeClass
+from Persistence import Persistent
 
 from Products.ParsedXML.ExtraDOM import writeStream
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.PrettyPrinter import _translateCdata
 from Products.ParsedXML.ParsedXML import ParsedXML
 
-# Silva interfaces
-from Products.Silva.IVersionedContent import IVersionedContent, ICatalogedVersionedContent
-from Products.Silva.IVersion import IVersion, ICatalogedVersion
-
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.helpers import add_and_edit, translateCdata, getNewId
+from Products.Silva.helpers import add_and_edit, translateCdata
 from Products.Silva.Version import CatalogedVersion
+from Products.Silva import mangle
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
@@ -32,7 +29,11 @@ from Products.Silva.Metadata import export_metadata
 from transform.Transformer import EditorTransformer
 from transform.base import Context
 
+from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
+from Products.Silva.interfaces import IVersion
+
 icon="www/silvadoc.gif"
+addable_priority = -1
 
 class Document(CatalogedVersionedContent):
     """A Document is the basic unit of information in Silva. A document
@@ -45,7 +46,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    __implements__ = IVersionedContent, ICatalogedVersionedContent
+    __implements__ = IVersionedContent
 
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = CatalogedVersionedContent.manage_options
@@ -62,7 +63,8 @@ class Document(CatalogedVersionedContent):
         That means the document contains no dynamic elements like
         code, datasource or toc.
         """
-        non_cacheable_objects = ['toc', 'code', 'externaldata']
+        non_cacheable_elements = ['toc', 'code', 'externaldata', ]
+        
         is_cacheable = 1 
     
         viewable = self.get_viewable()
@@ -70,16 +72,39 @@ class Document(CatalogedVersionedContent):
         if viewable is None:
             return 0
 
-        # it should suffice to test the children of the root element only,
+        # It should suffice to test the children of the root element only,
         # since currently the only non-cacheable elements are root elements
         for node in viewable.content.documentElement.childNodes:
-            if node.nodeName in non_cacheable_objects:
+            node_name = node.nodeName
+            if node_name in non_cacheable_elements:
                 is_cacheable = 0
                 break
-        
+            # FIXME: how can we make this more generic as it is very
+            # specific now..?
+            if node_name == 'source':
+                is_cacheable = self._source_element_cacheability_helper(node)
+
         return is_cacheable
-        
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+
+    # XXX move to function in SilvaExternalSoucrse!
+    def _source_element_cacheability_helper(self, node):
+        # FIXME: how can we make this more generic as it is very
+        # specific now..?
+        id = node.getAttribute('id').encode('ascii')
+        source = getattr(self.aq_inner, id, None)
+        parameters = {}        
+        for child in [child for child in node.childNodes 
+                      if child.nodeType == child.ELEMENT_NODE 
+                      and child.nodeName == 'parameter']:
+            child.normalize()
+            name = child.getAttribute('key').encode('ascii')
+            value = [child.nodeValue for child in child.childNodes 
+                     if child.nodeType == child.TEXT_NODE]
+            value = ' '.join(value)
+            parameters[name] = value
+        return source.is_cacheable(**parameters)
+    
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
         """Render object to XML.
@@ -100,10 +125,9 @@ class Document(CatalogedVersionedContent):
         version.to_xml(context)        
         f.write('</silva_document>')
 
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
-    def editor_storage(self, string=None, editor='eopro3_0', encoding='UTF-8'):
+    def editor_storage(self, string=None, editor='epoz', encoding=None):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """
@@ -113,10 +137,13 @@ class Document(CatalogedVersionedContent):
             ctx = Context(f=StringIO(), last_version=1, url=self.absolute_url())
             self.to_xml(ctx)
             htmlnode = transformer.to_target(sourceobj=ctx.f.getvalue(), context=ctx)
-            if encoding:
-                return htmlnode.asBytes(encoding=encoding)
+            if encoding is not None:
+                ret = htmlnode.asBytes(encoding=encoding)
+                ret = ret.replace('\xa0', '&nbsp;')
             else:
-                return unicode(htmlnode.asBytes('utf8'),'utf8')
+                ret = unicode(htmlnode.asBytes('utf8'),'utf8')
+                ret = ret.replace(u'\xa0', u'&nbsp;')
+            return ret
         else:
             version = self.get_editable()
             if version is None:
@@ -124,18 +151,15 @@ class Document(CatalogedVersionedContent):
             
             ctx = Context(url=self.absolute_url())
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
-            title = silvanode.find_one('title').extract_text()
-            docnode = silvanode.find_one('doc')
+            title = silvanode.find('title')[0].extract_text()
+            docnode = silvanode.find('doc')[0]
             content = docnode.asBytes(encoding="UTF8")
-            version.content.manage_edit(content)  # needs utf8-encoded string
-            self.set_title(title)         # needs unicode
-
-            # brute force: invalidate all widget caches for this session
-            try:
-                del self.REQUEST.SESSION['xmlwidgets_service_editor']
-            except AttributeError: pass
-            except KeyError: pass
-
+            version.content.manage_edit(content) # needs utf8-encoded string
+            self.set_title(title) # needs unicode
+            
+            # Clear widget cache for this version.
+            version.clearEditorCache()
+            
     security.declarePrivate('get_indexables')
     def get_indexables(self):
         version = self.get_viewable()
@@ -143,13 +167,51 @@ class Document(CatalogedVersionedContent):
             return []
         return [version]
 
+    def revert_to_previous(self):
+        """ Create a new version of public version, throw away the 
+        current one.
+        
+        Overrides Versioning.revert_to_previous() to be able to clear
+        the widget cache too.
+        """
+        Document.inheritedAttribute('revert_to_previous')(self)
+        version = self.get_editable()
+        version.clearEditorCache()
+    
     def manage_beforeDelete(self, item, container):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
         # Does the widget cache needs be cleared for all versions - I think so...
         for version in self._get_indexable_versions():
-            version_object = getattr(self, version, None)
+            version_object = getattr(self, str(version), None)
             if version_object:
                 self.service_editor.clearCache(version_object.content)
+
+    security.declarePublic('PUT')
+    def PUT(self, REQUEST):
+        """PUT support"""
+        try:
+            html = REQUEST['BODYFILE'].read()
+            self.editor_storage(html, 'epoz')
+
+            # invalidate Document cache
+            version = self.get_editable()
+            version.clearEditorCache()
+
+            # XXX This can be removed, right?
+            transformed = self.editor_storage(editor='epoz', encoding="UTF-8")
+
+            return transformed
+        except:
+            # a tad ugly, but for debug purposes it would be nice to see 
+            # what's actually gone wrong
+            import sys, traceback
+            exc, e, tb = sys.exc_info()
+            print '%s: %s' % (exc, e)
+            print '\n%s' % '\n'.join(traceback.format_tb(tb))
+            print
+            # reraise the exception so the enduser at least sees something's 
+            # gone wrong
+            raise
 
 InitializeClass(Document)
 
@@ -157,7 +219,7 @@ class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
     meta_type = "Silva Document Version"
-    __implements__ = IVersion, ICatalogedVersion
+    __implements__ = IVersion
 
     security = ClassSecurityInfo()
 
@@ -182,13 +244,15 @@ class DocumentVersion(CatalogedVersion):
     def manage_afterClone(self, item):
         # if we're a copy, clear cache
         # XXX should be part of workflow system
-        self.service_editor.clearCache(self.content)
+        self.clearEditorCache()
         
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fulltext')
     def fulltext(self):
         """Return the content of this object without any xml"""
-        return self._flattenxml(self.content_xml())
+        if self.version_status() == 'unapproved':
+            return ''
+        return [self.get_title(), self._flattenxml(self.content_xml())]
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'content_xml')
@@ -206,6 +270,13 @@ class DocumentVersion(CatalogedVersion):
         """
         # XXX this need to be fixed by using ZCTextIndex or the like
         return xmlinput
+    
+    def clearEditorCache(self):
+        """ Clears editor cache for this version
+        """
+        editor_service = self.service_editor
+        document_element = self.content.documentElement
+        editor_service.clearCache(document_element)
         
 InitializeClass(DocumentVersion)
 
@@ -214,7 +285,7 @@ manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
 
 def manage_addDocument(self, id, title, REQUEST=None):
     """Add a Document."""
-    if not self.is_id_valid(id):
+    if not mangle.Id(self, id).isValid():
         return
     object = Document(id)
     self._setObject(id, object)
@@ -222,7 +293,6 @@ def manage_addDocument(self, id, title, REQUEST=None):
     object.manage_addProduct['SilvaDocument'].manage_addDocumentVersion(
         '0', title)
     object.create_version('0', None, None)
-    getattr(object, '0').index_object()
     add_and_edit(self, id, REQUEST)
     return ''
 
@@ -245,11 +315,8 @@ def manage_addDocumentVersion(self, id, title, REQUEST=None):
 def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
-    
-    used_ids = object.objectIds()
-    while id in used_ids:
-        id = getNewId(id)
-        
+   
+    id = str(mangle.Id(object, id).unique())
     object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
     
     newdoc = getattr(object, id)
@@ -266,3 +333,14 @@ def xml_import_handler(object, node):
                 child.nodeValue.encode('utf8'))
 
     return newdoc
+
+class _SilvaDocumentPolicy(Persistent):
+
+    __implements__ = IContainerPolicy
+
+    def createDefaultDocument(self, container, title):
+        container.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'index', title)
+        container.index.sec_update_last_author_info()
+        
+SilvaDocumentPolicy = _SilvaDocumentPolicy()

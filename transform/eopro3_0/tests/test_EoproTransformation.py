@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 import unittest
 
 # 
@@ -32,9 +32,9 @@ try:
     from transform.Transformer import Transformer, EditorTransformer
 except ImportError:
     import Zope
-    from Products.Silva.transform.eopro3_0 import silva, html
-    from Products.Silva.transform.base import Context
-    from Products.Silva.transform.Transformer import Transformer, EditorTransformer
+    from Products.SilvaDocument.transform.eopro3_0 import silva, html
+    from Products.SilvaDocument.transform.base import Context
+    from Products.SilvaDocument.transform.Transformer import Transformer, EditorTransformer
 
 # lazy, but in the end we want to test everything anyway
 

@@ -1,13 +1,6 @@
-## Script (Python) "save_helper"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
-# $Id: save_helper.py,v 1.1 2003/06/30 15:38:25 faassen Exp $
+# $Id: save_helper.py,v 1.2 2003/09/02 14:28:46 jw Exp $
+from Products.Silva.mangle import String
+
 request = context.REQUEST
 node = request.node
 model = node.get_content()
@@ -31,7 +24,7 @@ data = data.rstrip()
 if element_type not in ['normal', 'compact']:
     return
 
-node.setAttribute('type', node.input_convert(element_type))
+node.setAttribute('type', String.inputConvert(element_type))
 
 # remove previous items, except for the title node
 childNodes = [ child 

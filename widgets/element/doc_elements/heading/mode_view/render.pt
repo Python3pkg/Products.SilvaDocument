@@ -3,5 +3,5 @@
 <h4 class="heading" tal:condition="python:type == 'sub'" tal:content="structure here/content">heading</h4>
 <h5 class="heading" tal:condition="python:type == 'subsub'" tal:content="structure here/content">heading</h5>
 <h6 class="heading" tal:condition="python:type == 'paragraph'" tal:content="structure here/content">heading</h6>
-<h6 class="minor-heading" tal:condition="python:type == 'subparagraph'" tal:content="structure here/content">heading</h6>
+<h6 class="minor" tal:condition="python:type == 'subparagraph'" tal:content="structure here/content">heading</h6>
 </div>

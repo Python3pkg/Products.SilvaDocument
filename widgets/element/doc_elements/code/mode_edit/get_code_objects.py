@@ -38,7 +38,7 @@ while 1:
         code_objects.extend(
             [value for id, value in code_source.objectItems(
                 interesting_metatypes) if id not in dont_include_ids])
-    if obj.meta_type == 'Silva Root':
+    if obj.implements_root():
         break
     # we want hiding after the first iteration
     want_hiding = 1
@@ -46,12 +46,12 @@ while 1:
 
 code_object_dicts = []
 base_path = model.get_container().getPhysicalPath()
-mangle = model.edit['path_mangler']
 
+from Products.Silva import mangle
 for obj in code_objects:
     title = obj.title_or_id()
     obj_path = obj.getPhysicalPath()
-    path = '/'.join(mangle(base_path, obj_path))
+    path = '/'.join(mangle.Path(base_path, obj_path))
     code_object_dicts.append({'title': title, 'path': path})
 
 code_object_dicts.sort(lambda x, y: cmp(x['title'], y['title']))

@@ -1,9 +1,17 @@
+# Copyright (c) 2002 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id: __init__.py,v 1.6.10.1 2004/01/28 14:44:44 guido Exp $
+
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry
 import EditorSupportNested
+import ServiceCodeSourceCharset
 import install
-from Products.FileSystemSite.DirectoryView import registerDirectory
+
+from Products.Silva.fssite import registerDirectory
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
+
+from Products.SilvaDocument import Document
 
 def initialize(context):
     extensionRegistry.register(
@@ -16,10 +24,24 @@ def initialize(context):
         icon = "www/editorservice.gif"
         )
     
+    context.registerClass(
+        ServiceCodeSourceCharset.CodeSourceCharsetService,
+        constructors = (ServiceCodeSourceCharset.manage_addCodeSourceCharsetServiceForm, 
+                        ServiceCodeSourceCharset.manage_addCodeSourceCharsetService),
+        icon = "www/editorservice.gif"
+        )
+    
     importer_registry.register_tag('silva_document',
                                    Document.xml_import_handler)
     registerDirectory('views', globals())
     registerDirectory('widgets', globals())
     
     registerTypeForMetadata(Document.DocumentVersion.meta_type)
+
+    initialize_upgrade()
+
+
+def initialize_upgrade():
+    from Products.SilvaDocument import upgrade
+    upgrade.initialize()
 

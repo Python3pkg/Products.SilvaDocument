@@ -1,0 +1,10 @@
+How to install SilvaDocument
+
+  If you have SilvaDocument installed in the Products directory, any
+  new Silva root that is placed will automatically have SilvaDocument
+  registered for it.
+  
+  If you want to install this into an existing Silva root, go to 
+  service_extensions in the Silva root using the Zope Management Interfaces
+  (services tab) and press the 'install' button for SilvaDocument.
+  

@@ -1,4 +1,5 @@
 from Products.Formulator.Errors import FormValidationError, ValidationError
+from Products.Silva.mangle import String
 
 request = context.REQUEST
 node = request.node
@@ -27,7 +28,7 @@ if not new_path:
     removeParameterElements(node)
     return
 
-node.setAttribute('path', node.input_convert(new_path))
+node.setAttribute('path', String.inputConvert(new_path))
 datasource = context.get_datasource()
 datasource_parameters = datasource.parameters()
 
@@ -65,14 +66,14 @@ else:
 type = 'list'
 if request.has_key('element_type'):
     type = request['element_type']
-node.setAttribute('type', node.input_convert(type))
+node.setAttribute('type', String.inputConvert(type))
 
 show_headings = 'true'
 if request.has_key('show_headings'):
     show_headings = request['show_headings']
-node.setAttribute('show_headings', node.input_convert(show_headings))
+node.setAttribute('show_headings', String.inputConvert(show_headings))
 
 show_caption = 'true'
 if request.has_key('show_caption'):
     show_caption = request['show_caption']
-node.setAttribute('show_caption', node.input_convert(show_caption))
+node.setAttribute('show_caption', String.inputConvert(show_caption))

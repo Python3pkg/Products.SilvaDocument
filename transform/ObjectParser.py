@@ -13,27 +13,9 @@ Currently only minidom is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1 $'
+__version__='$Revision: 1.2.6.3 $'
 
 from base import Element, Frag, Text
-import inspect
-
-#
-# convert - method wrapper
-#           maintains a conversion-stack in the context
-# 
-class convert_wrapper:
-    def __init__(self, forward):
-        self.forward = forward
-
-    def __call__(self, node, context):
-        print "called"
-        if not hasattr(context, 'stack'):
-            context.stack = []
-        context.stack.append(node)
-        res = self.forward(node, context)
-        context.stack.pop(node)
-        return res
 
 #
 # Transformation from Dom to our Nodes
@@ -48,15 +30,14 @@ class ObjectParser:
         self.typemap = {}
         for x,y in vars(spec).items():
             try:
-                if issubclass(y, Element) or issubclass(y, Text):
+                if issubclass(y, Element):
                     if hasattr(y, 'xmlname'):
                         x = y.xmlname
                     self.typemap[x]=y
-
             except TypeError:
                 pass
 
-    def parse(self, source):
+    def parse(self, source, fix=0):
         """ return xist-like objects parsed from UTF-8 string
             or dom tree.
             
@@ -72,9 +53,18 @@ class ObjectParser:
         else:
             tree = source # try just using it as dom
 
+        if fix:
+            # some dirty work needs to be done on the structure, and since
+            # the api of the object tree doesn't allow some things (requesting
+            # a node's parent, removing stuff from the node) we do that on the
+            # XML DOM instead
+            df = SilvaDOMFixer(tree)
+            tree = df.fixed_tree()
+        
         self.unknown_tags = []
         self.unknown_types = []
-        return self._dom2object(*tree.childNodes)
+        res = self._dom2object(*tree.childNodes)
+        return res
 
     def _dom2object(self, *nodes):
         """ transform dom-nodes to objects """
@@ -91,11 +81,12 @@ class ObjectParser:
                     attrs = {}
                     if node.attributes:
                         for name, item in node.attributes.items():
-                            attrs[name]=item # Text(item) # .nodeValue)
-                    res.append(cls(attrs, *childs))
+                            attrs[name]=Text(item) # .nodeValue)
+                    conv_node = cls(attrs, *childs)
+                    res.append(conv_node)
 
             elif node.nodeType == node.TEXT_NODE:
-                res.append(self.typemap.get('Text', Text)(node.nodeValue))
+                res.append(Text(node.nodeValue))
             else:
                 self.unknown_types.append(node.nodeType)
         return res

@@ -22,14 +22,11 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1 $'
+__version__='$Revision: 1.2 $'
 
-try:
-    from transform.base import Element, Text, Frag
-    import transform.base as base
-except ImportError:
-    from Products.Silva.transform.base import Element, Text, Frag
-    import Products.Silva.transform.base as base 
+
+from Products.SilvaDocument.transform.base import Element, Text, Frag
+import Products.SilvaDocument.transform.base as base 
 
 import silva
 

@@ -1,9 +1,15 @@
-"""Install for Silva Document
+"""Install for Silva Documenrat
 """
 
 from Products.Silva.install import add_fss_directory_view
-import Document
+from Products.SilvaDocument import Document
 import EditorSupportNested
+# See if SilvaExternalSources is installed
+try:
+    from Products import SilvaExternalSources
+    _external_sources_available = 1
+except ImportError:
+    _external_sources_available = 0
 
 def configureMiscServices(root):
     # add editor support service
@@ -21,20 +27,33 @@ def install(root):
     # security
     root.manage_permission('Add Silva Documents',
                            ['Author', 'Editor', 'ChiefEditor', 'Manager'])
+    root.manage_permission('Add Silva Document Versions',
+                           ['Author', 'Editor', 'ChiefEditor', 'Manager'])
 
     # set up/refresh some mandatory services
     configureMiscServices(root)
 
     mapping = root.service_metadata.getTypeMapping()
-    mapping.editMappings('',
-                         [{'type':'Silva Document Version',
-                           'chain':'silva-content, silva-extra'}])
+    mapping.editMappings('', [
+        {'type': 'Silva Document Version',
+        'chain': 'silva-content, silva-extra'},
+        ])
+
+    root.service_containerpolicy.register('Silva Document',
+        Document.SilvaDocumentPolicy, -1)
+
+    if not hasattr(root, 'service_codesource_charset'):
+        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_codesource_charset', 'Service Charset for Codesources')
+        
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     unconfigureXMLWidgets(root)
-    root.service_views.manage_delObjects(['Silva'])
+    root.service_views.manage_delObjects(['SilvaDocument'])
     root.manage_delObjects(['service_editorsupport'])
     # uninstall metadata mapping?
+    root.service_containerpolicy.unregister('Silva Document')
+    if hasattr(root, 'service_codesource_charset'):
+        root.manage_delObjects(['service_codesource_charset'])
     
 def is_installed(root):
     return hasattr(root.service_views, 'SilvaDocument')
@@ -42,13 +61,10 @@ def is_installed(root):
 def registerViews(reg):
     """Register core views on registry.
     """
-
     # edit
-    reg.register('edit', 'Silva Document',
-                 ['edit', 'VersionedContent', 'Document'])
+    reg.register('edit', 'Silva Document', ['edit', 'VersionedContent', 'Document'])
     # public
     reg.register('public', 'Silva Document', ['public', 'Document'])
-
     # add
     reg.register('add', 'Silva Document', ['add', 'Document'])
     
@@ -119,27 +135,36 @@ def registerDocEditor(root):
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_normal'))
 
     for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table',
-                     'nlist', 'dlist', 'code', 'externaldata']:
+                     'nlist', 'dlist', 'code', 'externaldata', 'cite']:
         wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
 
-    wr.setDisplayName('doc', 'Title')
-    wr.setDisplayName('p', 'Paragraph')
-    wr.setDisplayName('heading', 'Heading')
-    wr.setDisplayName('list', 'List')
-    wr.setDisplayName('pre', 'Preformatted')
-    wr.setDisplayName('toc', 'Table of contents')
-    wr.setDisplayName('image', 'Image')
-    wr.setDisplayName('table', 'Table')
-    wr.setDisplayName('nlist', 'Complex list')
-    wr.setDisplayName('dlist', 'Definition list')
-    wr.setDisplayName('code', 'Code Element')
-    wr.setDisplayName('externaldata', 'External Data')
+    wr.setDisplayName('doc', 'title')
+    wr.setDisplayName('p', 'paragraph')
+    wr.setDisplayName('heading', 'heading')
+    wr.setDisplayName('list', 'list')
+    wr.setDisplayName('pre', 'preformatted')
+    wr.setDisplayName('toc', 'table of contents')
+    wr.setDisplayName('image', 'image')
+    wr.setDisplayName('table', 'table')
+    wr.setDisplayName('nlist', 'complex list')
+    wr.setDisplayName('dlist', 'definition list')
+    wr.setDisplayName('code', 'code element')
+    wr.setDisplayName('externaldata', 'external data')
+    wr.setDisplayName('cite', 'citation')
 
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'dlist', 'pre', 'image', 
-                  'table', 'nlist', 'toc', 'code', 'externaldata'])
+    wr.setAllowed('doc', [
+        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image',
+        'table', 'nlist', 'toc'])
 
+    if _external_sources_available:
+        wr.addWidget('source', (
+            'service_widgets', 'element', 'doc_elements', 'source', 'mode_normal'))
+        wr.setDisplayName('source', 'external source')
+        allowed = wr.getAllowed('doc')
+        allowed.append('source')
+        wr.setAllowed('doc', allowed)
 
 def registerDocViewer(root):
     wr = root.service_doc_viewer
@@ -148,9 +173,13 @@ def registerDocViewer(root):
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
     for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist',
-                 'table', 'dlist', 'code', 'externaldata']:
+                 'table', 'dlist', 'code', 'externaldata', 'cite']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
+     
+    if _external_sources_available:
+        wr.addWidget('source', (
+            'service_widgets', 'element', 'doc_elements', 'source', 'mode_view'))
 
 def registerDocPreviewer(root):
     wr = root.service_doc_previewer
@@ -158,17 +187,19 @@ def registerDocPreviewer(root):
 
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
-    for name in ['p', 'list', 'heading', 'pre', 'nlist', 'table',
-                 'dlist', 'externaldata']:
+    for name in ['p', 'list', 'heading', 'pre', 'image', 'nlist', 'table',
+                 'dlist', 'externaldata', 'cite']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
 
     wr.addWidget('toc', ('service_widgets', 'element', 'doc_elements',
                              'toc', 'mode_preview'))
-    wr.addWidget('image', ('service_widgets', 'element', 'doc_elements',
-                                'image', 'mode_preview'))
     wr.addWidget('code', ('service_widgets', 'element', 'doc_elements',
                                'code', 'mode_preview'))
+
+    if _external_sources_available:
+        wr.addWidget('source', (
+            'service_widgets', 'element', 'doc_elements', 'source', 'mode_preview'))
 
 def registerFieldEditor(root):
     wr = root.service_field_editor
@@ -306,8 +337,8 @@ def registerTableEditor(root):
     wr.addWidget('field',
                  ('service_widgets', 'element', 'table_elements', 'field'))
     wr.setDisplayName('table', 'Table')
-    wr.setDisplayName('row', 'Row')
-    wr.setDisplayName('row_heading', 'Row heading')
+    wr.setDisplayName('row', 'row')
+    wr.setDisplayName('row_heading', 'row heading')
     
     wr.setAllowed('table', ['row', 'row_heading'])
 
