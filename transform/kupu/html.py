@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.22 $'
+__version__='$Revision: 1.22.2.1 $'
 
 from zExceptions import NotFound
 
@@ -349,9 +349,13 @@ class h6(h3):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         fixedcontent = fix_allowed_items_in_heading(self.find(), context)
+        eltype = 'paragraph'
+        if (hasattr(self, 'attr') and hasattr(self.attr, 'silva_type') 
+                    and self.attr.silva_type == 'sub'):
+            eltype = 'subparagraph'
         result = silva.heading(
             fixedcontent,
-            type="paragraph",
+            type=eltype,
             )
         return self.process_result(result, context)
     
@@ -477,8 +481,6 @@ class ul(Element):
 
     def get_type(self):
         curtype = getattr(self.attr, 'type', None)
-        if curtype is None:
-            curtype = getattr(self.attr, 'type')
 
         if type(self.default_types) != type({}):
             if curtype not in self.default_types:
@@ -591,6 +593,9 @@ class a(Element):
                 if alignment == 'default' or alignment is None:
                     alignment = ''
                 image.attr.alignment = alignment
+                # XXX this is nonsense, the image *has* an attr attribute, 
+                # since we just added that... Wanted to remove but don't have
+                # time to examine in detail, check later
                 if not hasattr(image, 'attr'):
                     # empty frag
                     return image
@@ -693,7 +698,7 @@ class table(Element):
                     align = 'left'
                     if hasattr(cell, 'attr'):
                         align = self.alignmapping.get(getattr(cell.attr, 'align')) or 'L'
-                        # nasty, this assumes the last char of the field is a %-sign
+                    # nasty, this assumes the last char of the field is a %-sign
                     width = '1'
                     if hasattr(cell, 'attr'):
                         width = getattr(cell.attr, 'width', None)
@@ -750,8 +755,11 @@ class div(Element):
             return Frag()
         self.should_be_removed = 1
         if self.attr.toc_depth:
+            toc_depth = int(str(self.attr.toc_depth))
+            if toc_depth > 0:
+                toc_depth -= 1
             return silva.toc(
-                toc_depth=self.attr.toc_depth
+                toc_depth=toc_depth
             )
         elif self.getattr('is_citation', None):
             content = fix_structure(self.content, context)
