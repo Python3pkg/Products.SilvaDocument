@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: __init__.py,v 1.9 2004/07/22 16:41:19 faassen Exp $
+# $Id: __init__.py,v 1.10 2005/01/19 14:28:50 faassen Exp $
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry

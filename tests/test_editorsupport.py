@@ -1,6 +1,6 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.18 2004/09/06 14:23:54 walco Exp $
+# $Id: test_editorsupport.py,v 1.19 2005/01/19 14:28:51 faassen Exp $
 
 import os, sys
 if __name__ == '__main__':

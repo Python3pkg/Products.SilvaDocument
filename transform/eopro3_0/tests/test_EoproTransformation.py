@@ -1,4 +1,4 @@
-# Copyright (c) 2002-2004 Infrae. All rights reserved.
+# Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
 #
 # Testing of xml<->xhtml bidrectional conversions.
@@ -6,7 +6,7 @@
 # work with python2.1 and python2.2 or better
 # 
 
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 import unittest
 
 # 
