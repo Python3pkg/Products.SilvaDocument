@@ -1,7 +1,6 @@
 # This module contains code to integrate the SilvaExternalSources extension
 # with the SilvaDocument extension.
-
-from Products.SilvaDocument.externalsource import getSourceForId
+from Products.SilvaExternalSources import ExternalSource
 
 def getSourceParameters(context, node):
     """ Extract parameter values for the external source from 
@@ -25,7 +24,7 @@ def isSourceCacheable(context, node):
     defined in the XML node is cacheable.
     """
     id = node.getAttribute('id').encode('ascii')
-    source = getSourceForId(context, id)
+    source = ExternalSource.getSourceForId(context, id)
     if source is None:
         return 1
     parameters = getSourceParameters(context, node)

@@ -19,7 +19,9 @@ except ImportError:
     def getSourceParameters(context, node):
         return {}
 else:
-    availableSources = ExternalSource.availableSources
-    getSourceForId = ExternalSource.getSourceForId
     from _externalsource import getSourceParameters, isSourceCacheable
+    
+    availableSources = ExternalSource.availableSources
+
+    getSourceForId = ExternalSource.getSourceForId
     
