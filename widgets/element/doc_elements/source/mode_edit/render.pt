@@ -55,7 +55,7 @@
                   title python: field['title'] or nothing;
                   description python: field['description'] or nothing;
                   is_required field/is_required | nothing;
-                  current_value current_parameters/id | nothing;
+                  current_value current_parameters/?id | nothing;
                   "
                 tal:attributes="class python: iterate and 'odd' or 'even'"
                 >
