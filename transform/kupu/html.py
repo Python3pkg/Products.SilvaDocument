@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.12 $'
+__version__='$Revision: 1.13 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -74,7 +74,7 @@ def fix_image_links(el, context):
         fix_image_links(child, context)
     context.href = oldhref
 
-def fix_tables(el, context, tables=None):
+def fix_tables_and_divs(el, context, tables=None):
     """get all tables and move them to the current position"""
     # XXX I'd rather use el.query for this but that doesn't retain order
     # so I guess I'm going to have to browse the full tree myself
@@ -85,8 +85,10 @@ def fix_tables(el, context, tables=None):
     else:
         foundtables = tables
     for child in el.find():
-        fix_tables(child, context, foundtables)
-        if child.name() == 'table':
+        fix_tables_and_divs(child, context, foundtables)
+        # XXX yes, this is awful... I found out that citation elements, tocs
+        # and code sources are only allowed on toplevel too...
+        if child.name() == 'table' or child.name() == 'div':
             foundtables.append(child.convert(context))
             child.should_be_removed = 1
     return foundtables
@@ -151,7 +153,7 @@ def fix_structure(inputels, context, allowtables=0):
         if el.name() == 'p' and allowtables:
             ptype = el.getattr('class', 'normal')
             for child in el.find():
-                foundtables = fix_tables(child, context)
+                foundtables = fix_tables_and_divs(child, context)
                 foundtoplevel = find_and_convert_toplevel(el, context)
                 if (child.name() not in CONTAINERS and 
                         child.name() not in TOPLEVEL):
@@ -171,7 +173,7 @@ def fix_structure(inputels, context, allowtables=0):
                 ptype = el.getattr('class', 'normal')
             foundtables = []
             if allowtables:
-                foundtables = fix_tables(el, context)
+                foundtables = fix_tables_and_divs(el, context)
             foundtoplevel = find_and_convert_toplevel(el, context)
             if el.name() not in CONTAINERS and el.name() not in TOPLEVEL:
                 textbuf.append(el.convert(context))
