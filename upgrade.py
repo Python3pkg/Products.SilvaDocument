@@ -34,13 +34,13 @@ class UpgradeDocumentXML:
 
     def upgrade(self, obj):
         # <index name="foo">bar</index> to
-        # bar<index name="foo"/> 
+        # <index name="foo"/>bar
         dom = obj.content
         node = dom.firstChild
         while node:
             if node.nodeType == node.ELEMENT_NODE and node.nodeName == 'index':
                 while node.firstChild:
-                    node.parentNode.insertBefore(node.firstChild, node)
+                    node.parentNode.insertAfter(node.firstChild, node)
             next = node.firstChild
             if not next:
                 next = node.nextSibling
