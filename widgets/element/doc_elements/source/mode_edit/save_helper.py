@@ -1,4 +1,5 @@
 from Products.Formulator.Errors import FormValidationError, ValidationError
+from Products.SilvaExternalSources.ExternalSource import getSourceForId
 
 request = context.REQUEST
 node = request.node
@@ -40,10 +41,11 @@ if node.getAttribute('id') != id:
 # in play and weird acquisition magic may cause 'source' to be a widget 
 # whenever the source object has a widget's id.
 doc = node.get_silva_object()
-source = getattr(doc, id, None)
+source = getSourceForId(doc, id)
 if source is None:
     # should not happen since id was selected from a list...
-    raise ValueError, 'source is a NoneType'
+    # or should we silently ignore this?
+    raise ValueError, 'Source is a NoneType - is it not available anymore?'
 
 form = source.form()
 try:

@@ -1,3 +1,5 @@
+from Products.SilvaExternalSources.ExternalSource import getSourceForId
+
 request = context.REQUEST
 node = request.node
 id = node.getAttribute('id').encode('ascii')
@@ -5,4 +7,4 @@ id = node.getAttribute('id').encode('ascii')
 # in play and weird acquisition magic may cause 'source' to be a widget 
 # whenever the source object has a widget's id.
 doc = node.get_silva_object()
-return getattr(doc, id, None)
+return getSourceForId(context, id)
