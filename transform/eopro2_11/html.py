@@ -12,7 +12,6 @@ WARNING:
 This module is NOT supposed to work for later silva-versions.
 Support is only there for 3.x (see sister directory)
 
-
 This transformation tries to stay close to
 how silva maps its xml to html. I am not sure, though,
 whether this is a good idea because RealObjects 2.11 
@@ -28,7 +27,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 from Products.SilvaDocument.transform.base import Element, Text, Frag
 
