@@ -8,12 +8,12 @@
 <div metal:fill-slot="embed_controls" tal:omit-tag="">
 <table border="0" width="100%" cellspacing="0">
 <tr class="controls">
-  <td>
+  <td i18n:translate="">
     column settings
   </td>
   <td class="align-right">
-    <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="add column" title="accesskey: alt-a" accesskey="a" />
-    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="delete column" title="accesskey: alt-d" accesskey="d" />
+    <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="add column" title="accesskey: alt-a" accesskey="a" i18n:attributes="value;title" />
+    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="delete column" title="accesskey: alt-d" accesskey="d"  i18n:attributes="value;title" />
   </td>
 </tr>
 </table>
@@ -23,13 +23,13 @@
      <div tal:omit-tag="" tal:define="align_name string:column_align_${repeat/info/index};
                                       width_name string:column_width_${repeat/info/index};
                                       align info/align">
-     l<input type="radio" value="left" 
+       <span i18n:translate="">l</span><input type="radio" value="left" 
               tal:attributes="name align_name; checked python:test(align == 'left', 'checked', nothing)" />
-     &nbsp;c<input type="radio" 
+     &nbsp;<span i18n:translate="">c</span><input type="radio" 
               tal:attributes="name align_name; checked python:test(align == 'center', 'checked', nothing)" value="center" />
-     &nbsp;r<input type="radio" 
+     &nbsp;<span i18n:translate="">r</span><input type="radio" 
               tal:attributes="name align_name; checked python:test(align == 'right', 'checked', nothing)" value="right" /><br />
-     relative width&nbsp;<input size="2" type="text" maxlength="2" tal:attributes="name width_name; value info/width" />
+     <span i18n:translate="">relative width</span>&nbsp;<input size="2" type="text" maxlength="2" tal:attributes="name width_name; value info/width" />
      </div>
   </td>
 </tr>
@@ -41,23 +41,23 @@
 </div>
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">
-type 
+  <span i18n:translate="">type</span>
 <select class="manipulator"
   name="element_type" tal:define="type python:here.get_type(node)">
   <option value="plain" 
-          tal:attributes="selected python:test(type == 'plain', 'selected', nothing)">
+          tal:attributes="selected python:test(type == 'plain', 'selected', nothing)" i18n:translate="">
     Plain table (bold heading, no borders)
   </option>
   <option value="list"
-          tal:attributes="selected python:test(type == 'list', 'selected', nothing)">
+          tal:attributes="selected python:test(type == 'list', 'selected', nothing)" i18n:translate="">
     List table (bold underlined heading, borderless rows)
   </option>
   <option value="grid" 
-          tal:attributes="selected python:test(type == 'grid', 'selected', nothing)" >
+          tal:attributes="selected python:test(type == 'grid', 'selected', nothing)" i18n:translate="">
     Grid table (bold bordered heading, bordered rows)
   </option>
   <option value="datagrid"
-          tal:attributes="selected python:test(type == 'datagrid', 'selected', nothing)">
+          tal:attributes="selected python:test(type == 'datagrid', 'selected', nothing)" i18n:translate="">
     Data grid table (bold borderless heading, bordered rows)
   </option>
 </select>
@@ -66,13 +66,13 @@ type
 <tr>
 <td>
 <enable tal:omit-tag="">
-  &nbsp;Move row(s) to position: 
+  &nbsp;<span i18n:translate="">Move row(s) to position:</span>
   <select name="move_to">
-    <option>(not yet)</option>
+    <option i18n:translate="">(not yet)</option>
   </select>
   &nbsp;
   <input class="button" type="submit" value=" Move " 
-    notal:attributes="name string:${rel_url_start}/save:method" />
+    notal:attributes="name string:${rel_url_start}/save:method" i18n:attributes="value" />
 &nbsp;&nbsp;&nbsp;
 </enable>
 </td>

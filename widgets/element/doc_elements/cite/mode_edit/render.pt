@@ -4,7 +4,7 @@
   <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr valign="top">
       <td class="invisible align-right" width="20%">
-        citation<span class="warning">*</span>
+        <tal:block i18n:translate="">citation</tal:block><span class="warning">*</span>
       </td>
       <td class="invisible align-left" colspan="3">
         <textarea class="fixIE6widget" name="citation"
@@ -13,7 +13,7 @@
       </td>
     </tr>
     <tr>
-      <td class="invisible align-right" style="background:#d7e4f0;">
+      <td class="invisible align-right" style="background:#d7e4f0;" i18n:translate="">
         author
       </td>
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">
@@ -22,7 +22,7 @@
       </td>
     </tr>
     <tr>
-      <td class="invisible align-right">
+      <td class="invisible align-right" i18n:translate="">
         source
       </td>
       <td class="invisible align-left" colspan="3">  
@@ -36,7 +36,7 @@
 </metal:block>
 <metal:block fill-slot="edit_notes">
   <ul class="tips">
-    <li>The citation may contain multiple paragraphs. Separate them with an empty line.</li>
+    <li i18n:translate="">The citation may contain multiple paragraphs. Separate them with an empty line.</li>
     <li metal:use-macro="container/macro_notes/macros/markup_notes">markup tips</li>
   </ul>
 </metal:block>

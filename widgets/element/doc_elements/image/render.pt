@@ -5,7 +5,7 @@
       condition="image"
       replace="structure python:here.tag()" />
     <tal:block condition="not:image">
-      <div class="error">[image element is broken]</div>
+      <div class="error" i18n:translate="">[image element is broken]</div>
     </tal:block>
   </metal:block>
 </metal:block>

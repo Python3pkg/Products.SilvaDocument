@@ -10,11 +10,11 @@
   <toc tal:replace="structure here/content" />
 </div>
 <div metal:fill-slot="element_controls" tal:omit-tag="">
-Table of contents depth: 
+  <span i18n:translate="">Table of contents depth:</span>
 <select class="manipulator"
   name="toc_depth">
   <option value="0" 
-    tal:attributes="selected python:test(toc_depth == 1 - 1, 'selected', nothing)">
+    tal:attributes="selected python:test(toc_depth == 1 - 1, 'selected', nothing)" i18n:translate="">
     1 level
   </option>
   <loop 
@@ -23,13 +23,13 @@ Table of contents depth:
     <option 
       tal:attributes="
         value python:ittr - 1;
-        selected python:test(toc_depth == ittr - 1, 'selected', nothing)">
-      <span tal:replace="ittr" />
+        selected python:test(toc_depth == ittr - 1, 'selected', nothing)" i18n:translate="">
+      <span tal:replace="ittr" i18n:name="n"/>
       levels
     </option>
   </loop>
   <option value="-1" 
-    tal:attributes="selected python:test(toc_depth == -1, 'selected', nothing)">
+    tal:attributes="selected python:test(toc_depth == -1, 'selected', nothing)" i18n:translate="">
     unlimited
   </option>
 </select>

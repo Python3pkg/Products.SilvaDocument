@@ -3,19 +3,19 @@
     tal:define="source here/get_source | nothing;"
     >
     <tal:block tal:condition="not:source">
-      <div class="warning"><b>[external source element is broken]</b>
+      <div class="warning"><strong i18n:translate="">[external source element is broken]</strong>
     </tal:block>
     <tal:block tal:condition="source">
     <div class="csvsource">
     <div>
         <h3 class="front5" tal:content="source/meta_type">external source</h3>
-        id:&nbsp;<tal:block content="source/id" />
+        <span i18n:translate="">id:&nbsp;<tal:block content="source/id" i18n:name="id"/></span>
         <br />
-        <span tal:condition='source/get_title'>title:&nbsp;
-          <tal:block content="source/get_title" /> <br />
+        <span tal:condition='source/get_title' i18n:translate="">title:&nbsp;
+          <tal:block content="source/get_title" i18n:name="title"/> <br />
         </span>
-        <span tal:condition='source/description'>description:
-         <tal:block tal:content="source/description" />
+        <span tal:condition='source/description' i18n:translate="">description:
+         <tal:block tal:content="source/description" i18n:name="description"/>
         </span>
       </div>
       <h1></h1>    
@@ -27,16 +27,16 @@
           current_parameters here/get_parameters;
           "
         >
-        <b tal:condition="not: has_parameters">
+        <strong tal:condition="not: has_parameters" i18n:translate="">
           No parameters to be filled for this source.
-        </b>
+        </strong>
         <table cellspacing="0" cellpadding="2" border="0" class="csvtable"
           tal:condition="has_parameters"
           >
           <thead>
             <tr>
               <th colspan="3">
-                <b>Source parameters</b>          
+                <strong i18n:translate="">Source parameters</strong>
               </th>
             </tr>
           </thead>

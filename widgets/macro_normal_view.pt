@@ -1,4 +1,6 @@
-<html>
+<html
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva-document">
 
 <div metal:define-macro="normal_view" tal:omit-tag="">
 <init tal:omit-tag=""
@@ -36,7 +38,7 @@
       tal:attributes="
         href string:${url_start}/edit_mode;
         title python:'edit %s' % display_name_method(node.nodeName).lower();
-"><img tal:attributes="src string:${silva_root}/globals/${edit_or_nest}" width="16" height="16" border="0" alt="edit element" /></a>
+"><img tal:attributes="src string:${silva_root}/globals/${edit_or_nest}" width="16" height="16" border="0" alt="edit element" i18n:attributes="alt" /></a>
   </td>
   <td class="invisible" tal:condition="disable_edit" width="16">
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="16" border="0" />

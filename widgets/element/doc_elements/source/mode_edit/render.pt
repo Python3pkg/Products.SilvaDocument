@@ -6,8 +6,8 @@
       "
     >
     <div>
-      source id&nbsp;<select name="id">
-      <option disabled="disabled">Select an External Source...</option>
+      <tal:block i18n:translate="">source id</tal:block>&nbsp;<select name="id">
+      <option disabled="disabled" i18n:translate="">Select an External Source...</option>
       <option 
         tal:repeat="av_source here/available_sources"
         tal:attributes="
@@ -22,7 +22,7 @@
       </select>
       &nbsp;
       <input class="button" type="submit" value=" update " title="access key: alt-u" accesskey="u"
-        tal:attributes="name string:${rel_url_start}/save:method" />
+        tal:attributes="name string:${rel_url_start}/save:method" i18n:attributes="value;title" />
     </div>
     <tal:block condition="source">
       <div
@@ -33,16 +33,16 @@
           current_parameters here/get_parameters;
           "
         >
-        <b tal:condition="not: has_parameters">
+        <strong tal:condition="not: has_parameters" i18n:translate="">
           No parameters to be filled for this source.
-        </b>
+        </strong>
         <table class="csvtable" cellspacing="0" cellpadding="2" border="0" width="100%"
           tal:condition="has_parameters"
           >
           <thead>
             <tr>
               <th colspan="3">
-                <b>Source parameters</b>
+                <strong i18n:translate="">Source parameters</strong>
               </th>
             </tr>
           </thead>
@@ -77,18 +77,18 @@
   tal:define="source here/get_source | nothing;
     source_desc source/description | nothing">
     <ul class="tips">
-      <li>
+      <li i18n:translate="">
       Select a source from the pulldown list.
       </li>
       <li>
-      <span class="warning">Hit "update" to refresh the reference.</span>
+      <span class="warning" i18n:translate="">Hit "update" to refresh the reference.</span>
       </li>
-      <li>
+      <li i18n:translate="">
         Fill in the parameters (if necessary).
       </li>
     </ul>
 
-    <b tal:condition="source_desc">Source description:</b>
+    <strong tal:condition="source_desc" i18n:translate="">Source description:</strong>
     <span tal:content="source_desc" />
   </metal:block>
 </metal:block>

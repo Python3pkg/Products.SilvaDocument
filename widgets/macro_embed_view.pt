@@ -1,4 +1,6 @@
-<html>
+<html
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva-document">
 
 <div metal:define-macro="embed_view" tal:omit-tag="">
 <init tal:omit-tag="" 
