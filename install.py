@@ -1,8 +1,9 @@
-"""Install for Silva Document
+"""Install for Silva Documenrat
 """
 
 from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
+from Products.SilvaDocument import AutoTOC
 import EditorSupportNested
 
 def configureMiscServices(root):
@@ -26,12 +27,17 @@ def install(root):
     configureMiscServices(root)
 
     mapping = root.service_metadata.getTypeMapping()
-    mapping.editMappings('',
-                         [{'type':'Silva Document Version',
-                           'chain':'silva-content, silva-extra'}])
+    mapping.editMappings('', [
+        {'type': 'Silva Document Version',
+        'chain': 'silva-content, silva-extra'},
+        {'type': 'Silva AutoTOC',
+        'chain': 'silva-content, silva-extra'}
+        ])
 
     root.service_containerpolicy.register('Silva Document',
         Document.SilvaDocumentPolicy)
+    root.service_containerpolicy.register('Auto TOC',
+        AutoTOC.AutoTOCPolicy)
         
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -53,12 +59,13 @@ def registerViews(reg):
                  ['edit', 'VersionedContent', 'Document'])
     # public
     reg.register('public', 'Silva Document', ['public', 'Document'])
+    reg.register('public', 'Silva AutoTOC', ['public', 'Document'])
 
     # add
     reg.register('add', 'Silva Document', ['add', 'Document'])
     
 def unregisterViews(reg):
-    for meta_type in ['Silva Document']:
+    for meta_type in ['Silva Document', 'Silva AutoTOC']:
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)
