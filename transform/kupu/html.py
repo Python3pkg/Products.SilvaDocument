@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.6 $'
+__version__='$Revision: 1.1.2.7 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -671,7 +671,7 @@ class div(Element):
             return silva.toc(
                 toc_depth=self.attr.toc_depth
             )
-        elif self.attr.is_citation:
+        elif self.getattr('is_citation', None):
             content = fix_structure(self.content, context)
             return silva.cite(
                 [silva.author(self.attr.author), 

@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.7 $'
+__version__='$Revision: 1.1.2.8 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -409,22 +409,27 @@ class author(SilvaElement):
 
 class source(SilvaElement):
     def convert(self, context):
-        id = self.attr.id
-        params = {}
-        for child in self.find():
-            if child.name() == 'parameter':
-                params[child.attr.key.convert(context).asBytes('utf-8')] = child.content.convert(context).asBytes('utf-8')
-        divcontent = []
-        for key, value in params.items():
-            divcontent.append(html.div(Text('Key: %s, value: %s\n' % (key, value))))
-        header = html.h3(Text('External Source "%s"' % id))
-        pre = Frag(divcontent, html.br())
-        content = Frag(header, pre);
-        return html.div(content,
-                    source_id=id,
-                    class_='externalsource',
-                    **params
-                )
+        if not self.hasattr('id'):
+            # source element of a citation element
+            return self.content.convert(context)
+        else:
+            # external source element
+            id = self.attr.id
+            params = {}
+            for child in self.find():
+                if child.name() == 'parameter':
+                    params[child.attr.key.convert(context).asBytes('utf-8')] = child.content.convert(context).asBytes('utf-8')
+            divcontent = []
+            for key, value in params.items():
+                divcontent.append(html.div(Text('Key: %s, value: %s\n' % (key, value))))
+            header = html.h3(Text('External Source "%s"' % id))
+            pre = Frag(divcontent, html.br())
+            content = Frag(header, pre);
+            return html.div(content,
+                        source_id=id,
+                        class_='externalsource',
+                        **params
+                    )
 
 class parameter(SilvaElement):
     def convert(self):
