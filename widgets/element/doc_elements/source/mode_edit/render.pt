@@ -36,7 +36,7 @@
         <b tal:condition="not: has_parameters">
           No parameters to be filled for this source.
         </b>
-        <table class="listing" cellspacing="0" cellpadding="2" border="0" width="100%"
+        <table class="csvtable" cellspacing="0" cellpadding="2" border="0" width="100%"
           tal:condition="has_parameters"
           >
           <thead>
