@@ -25,7 +25,7 @@ result = []
 firstNode = childNodes[0]
 viewer = context.service_editor.getViewer()
 if firstNode.nodeName == 'p':
-    editorsupport = model.service_editor
+    editorsupport = model.service_editorsupport
     supp = editorsupport.getMixedContentSupport(model, firstNode)
     result.append(supp.renderHTML(view_type='public'))
 elif firstNode.nodeName == 'image':
