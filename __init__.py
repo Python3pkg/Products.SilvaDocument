@@ -1,14 +1,14 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: __init__.py,v 1.4 2003/09/24 15:08:45 zagy Exp $
+# $Id: __init__.py,v 1.5 2003/09/25 14:12:35 faassen Exp $
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry
 import EditorSupportNested
 import install
-from Products.FileSystemSite.DirectoryView import registerDirectory
-from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 
+from Products.Silva.fssite import registerDirectory
+from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaDocument import Document, upgrade
 
 def initialize(context):
