@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14.2.4 $'
+__version__='$Revision: 1.14.2.5 $'
 
 from zExceptions import NotFound
 
@@ -52,7 +52,7 @@ import re
 
 DEBUG=0
 
-TOPLEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'pre', 'table', 'img', 'ul', 'ol', 'dl']
+TOPLEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'pre', 'table', 'img', 'ul', 'ol', 'dl', 'div']
 CONTAINERS = ['body', 'td', 'li'] # XXX should only contain li's that are descendant of nlist
 
 def fix_image_links(el, context):
