@@ -62,15 +62,18 @@ def registerViews(reg):
     # edit
     reg.register('edit', 'Silva Document', ['edit', 'VersionedContent', 'Document'])
     # public
-    reg.register('public', 'Silva Document', ['public', 'Document'])
+    reg.register('public', 'Silva Document Version', ['public', 'Document', 'view'])
     # add
     reg.register('add', 'Silva Document', ['add', 'Document'])
+    # preview
+    reg.register('preview', 'Silva Document Version', ['public', 'Document', 'preview'])
     
 def unregisterViews(reg):
     for meta_type in ['Silva Document']:
         reg.unregister('edit', meta_type)
-        reg.unregister('public', meta_type)
+        reg.unregister('public', '%s Version' % meta_type)
         reg.unregister('add', meta_type)
+        reg.unregister('preview', '%s Version' % meta_type)
 
 def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'
