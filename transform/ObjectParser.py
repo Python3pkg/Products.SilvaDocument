@@ -13,9 +13,9 @@ Currently only minidom is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1 $'
+__version__='$Revision: 1.2 $'
 
-from base import Element, Frag, Text
+from Products.SilvaDocument.transform.base import Element, Frag, Text
 import inspect
 
 #
@@ -52,10 +52,10 @@ class ObjectParser:
                     if hasattr(y, 'xmlname'):
                         x = y.xmlname
                     self.typemap[x]=y
-
+                
             except TypeError:
                 pass
-
+        
     def parse(self, source):
         """ return xist-like objects parsed from UTF-8 string
             or dom tree.
@@ -79,7 +79,6 @@ class ObjectParser:
     def _dom2object(self, *nodes):
         """ transform dom-nodes to objects """
         res = Frag()
-
         for node in filter(None, nodes):
             if node.nodeType == node.ELEMENT_NODE:
                 childs = self._dom2object(*node.childNodes)

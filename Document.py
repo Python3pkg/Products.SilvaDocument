@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 # Zope
 
 from StringIO import StringIO
@@ -86,7 +86,7 @@ class Document(CatalogedVersionedContent):
                 is_cacheable = self._source_element_cacheability_helper(node)
 
         return is_cacheable
-        
+
     def _source_element_cacheability_helper(self, node):
         # FIXME: how can we make this more generic as it is very
         # specific now..?
@@ -104,7 +104,7 @@ class Document(CatalogedVersionedContent):
             parameters[name] = value
         return source.is_cacheable(**parameters)
     
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
         """Render object to XML.
