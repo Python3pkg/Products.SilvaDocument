@@ -1,6 +1,6 @@
-# Copyright (c) 2002, 2003 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_upgrade.py,v 1.1.8.3 2004/03/10 13:06:02 guido Exp $
+# $Id: test_upgrade.py,v 1.1.8.3.4.1 2004/04/29 16:57:02 roman Exp $
 
 import os, sys
 if __name__ == '__main__':

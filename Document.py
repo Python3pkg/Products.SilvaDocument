@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.6.6.2 $
+# $Revision: 1.16.4.6.6.3 $
 # Zope
 
 from StringIO import StringIO

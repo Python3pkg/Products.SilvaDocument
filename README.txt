@@ -1,4 +1,4 @@
-Copyright (c) 2002, 2003 Infrae. All rights reserved.
+Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
 
 Meta::
@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3+
   Author:     Christian Zagrodnick
   Email:      cz+gocept.com
-  CVS:        $Id: README.txt,v 1.3 2003/11/05 13:24:07 faassen Exp $
+  CVS:        $Id: README.txt,v 1.3.20.1 2004/04/29 16:57:02 roman Exp $
 
 Silva Document
 

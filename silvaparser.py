@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.14.2.1.2.1 2004/04/07 10:06:35 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.14.2.1.2.2 2004/04/29 16:57:02 roman Exp $
 from __future__ import nested_scopes
 
 # python

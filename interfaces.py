@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: interfaces.py,v 1.1.2.2 2003/12/12 16:31:25 zagy Exp $
+# $Id: interfaces.py,v 1.1.2.2.10.1 2004/04/29 16:57:02 roman Exp $
 
 from Interface import Interface, Attribute
 

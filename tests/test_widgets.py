@@ -1,6 +1,6 @@
-# Copyright (c) 2002, 2003 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_widgets.py,v 1.2 2003/10/18 16:47:26 clemens Exp $
+# $Id: test_widgets.py,v 1.2.22.1 2004/04/29 16:57:02 roman Exp $
 
 import os, sys
 if __name__ == '__main__':
