@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.6 $'
+__version__='$Revision: 1.7 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -40,7 +40,7 @@ except ImportError:
 try:
     from Products.Silva.mangle import Path
 except:
-    class _Path:
+    class Path:
         def __call__(self, path1, path2):
             return path2
 
@@ -105,7 +105,8 @@ def fix_toplevel(el, context):
         return silva.p(el.convert(context))
 
 def find_and_convert_toplevel(el, context, els=None):
-    if el.name() == 'Text' or el.name() in CONTAINERS or (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content()):
+    if (el.name() == 'Text' or el.name() in CONTAINERS or 
+            (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content())):
         return []
     if  els is None:
         foundels = []
@@ -113,6 +114,8 @@ def find_and_convert_toplevel(el, context, els=None):
         foundels = els
     children = el.find()
     for child in children:
+        if el.name() in ['ol', 'ul'] and child.name() in ['ol', 'ul']:
+            continue
         find_and_convert_toplevel(child, context, foundels)
         if child.name() in TOPLEVEL and child.name() != 'table':
             foundels.append(child.convert(context))
@@ -413,23 +416,26 @@ class ul(Element):
         return result
 
     def is_nlist(self, context):
+        for i in self.content.compact():
+            if i.name()!='li':
+                return 1
         if (self.query('**/img') or self.query('**/p') or 
                 self.query('**/table') or self.query('**/ul') or
                 self.query('**/ol') or self.query('**/pre')):
             return 1
         else:
             return 0
-        for i in self.content.compact():
-            if i.name()!='li':
-                return 1
 
     def convert_list(self, context):
         type = self.get_type()
 
         # only allow list items in here
         lis = []
-        for el in self.find('li'):
-            lis.append(el.convert(context, 1))
+        for el in self.find():
+            if el.name() == 'li':
+                lis.append(el.convert(context, 1))
+            else:
+                lis.append(silva.li(el.convert(context)))
 
         return silva.list(
             lis,
@@ -442,8 +448,11 @@ class ul(Element):
         
         # only allow list items in here
         lis = []
-        for el in self.find('li'):
-            lis.append(el.convert(context, 1))
+        for el in self.find():
+            if el.name() == 'li':
+                lis.append(el.convert(context, 1))
+            else:
+                lis[-1] = silva.li(lis[-1].content, el.convert(context))
 
         return silva.nlist(
             lis,
@@ -788,8 +797,8 @@ h5  :  list title
 def debug_hook():
     from transform.Transformer import EditorTransformer
     from transform.base import Context
-    data = '<html><head><title>Foo</title></head><body><p>foo<table><tr><td>baz</td></tr></table>bar</p></body></html>'
-    data = '<html><head><title>Foo</title></head><body><div is_citation="1" author="JdB" source="FU!"><p>foo</p></div></body></html>'
+    data = '<html><head><title>Foo</title></head><body><p><ol><li>foo<ol><li>bar</li></ol></li></ol></p></body></html>'
+    data = '<html><head><title>Whatever</title></head><body><h2>foo</h2><ol type="1"><li>dfsfd</li><li>sdfdfs</li><ol><li>dsklfsdfjsfldk</li></ol><li>fsdsdf</li></ol></body></html>'
     ctx = Context(url='http://debris.demon.nl/foo.html')
     transformer = EditorTransformer(editor='kupu')
     node = transformer.to_source(targetobj=data, context=ctx)[0]
