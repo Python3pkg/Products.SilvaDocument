@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_upgrade.py,v 1.1 2003/10/06 14:59:01 zagy Exp $
+# $Id: test_upgrade.py,v 1.1.8.1 2004/03/09 20:28:36 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -26,7 +26,7 @@ class UpgradeTest(unittest.TestCase):
         u = upgrade.UpgradeDocumentXML()
         u.upgrade(obj)
         xml = '\n'.join(obj.content.toxml().split('\n')[1:])
-        self.assertEquals(xml, '<p>foobaz<index name="bar"/>bladibla</p>')
+        self.assertEquals('<p>foo<index name="bar"/>bazbladibla</p>', xml)
         
 def test_suite():
     suite = unittest.TestSuite()
