@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.10 $'
+__version__='$Revision: 1.11 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -439,7 +439,8 @@ class source(SilvaElement):
                     params[child.attr.key.convert(context).asBytes('utf-8')] = child.content.convert(context).asBytes('utf-8')
             divcontent = []
             for key, value in params.items():
-                divcontent.append(html.div(Text('Key: %s, value: %s\n' % (unicode(key, 'UTF-8'), unicode(value, 'UTF-8')))))
+                divcontent.append(Text('Key: %s, value: %s\n' % (unicode(key, 'UTF-8'), unicode(value, 'UTF-8'))))
+                divcontent.append(html.br());
             meta_type = getattr(context.model, str(id)).meta_type
             header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, id)))
             pre = Frag(divcontent, html.br())

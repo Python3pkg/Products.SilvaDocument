@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.13 $'
+__version__='$Revision: 1.14 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -85,12 +85,10 @@ def fix_tables_and_divs(el, context, tables=None):
     else:
         foundtables = tables
     for child in el.find():
-        fix_tables_and_divs(child, context, foundtables)
-        # XXX yes, this is awful... I found out that citation elements, tocs
-        # and code sources are only allowed on toplevel too...
-        if child.name() == 'table' or child.name() == 'div':
+        if child.name() in ['table', 'div']:
             foundtables.append(child.convert(context))
             child.should_be_removed = 1
+        fix_tables_and_divs(child, context, foundtables)
     return foundtables
 
 def fix_toplevel(el, context):
@@ -119,7 +117,7 @@ def find_and_convert_toplevel(el, context, els=None):
         if el.name() in ['ol', 'ul'] and child.name() in ['ol', 'ul']:
             continue
         find_and_convert_toplevel(child, context, foundels)
-        if child.name() in TOPLEVEL and child.name() != 'table':
+        if child.name() in TOPLEVEL and child.name() != 'table' and child.name() != 'div':
             foundels.append(child.convert(context))
             child.should_be_removed = 1
         elif child.name() in CONTAINERS:
@@ -735,7 +733,7 @@ class div(Element):
             content = []
             for key, value in self.attr.__dict__.items():
                 if key != 'source_id' and key != 'class':
-                    content.append(silva.parameter(Text(unicode(value.asBytes('utf-8'), 'UTF-8')), key=key))
+                    content.append(silva.parameter(unicode(str(value), 'UTF-8'), key=key))
             return silva.source(
                         Frag(content), 
                         id=self.attr.source_id,
