@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:doc="http://infrae.com/ns/silva_document"
   version="1.0">
   <xsl:output method="xml" encoding="UTF-8" />
   <xsl:strip-space elements="*" />
   <xsl:preserve-space elements="heading p pre li em strong super sub underline link" />
   
-  <xsl:template match="doc:/">
+  <xsl:template match="/">
     <table>
       <tr>
         <th colspan="2">
           <xsl:apply-templates mode="metadata" />
         </th>
+      </tr>
       <tr>
         <td valign="top">
           <xsl:apply-templates mode="text" />
@@ -143,7 +145,7 @@
     <dd><xsl:apply-templates mode="text-content" /></dd>
   </xsl:template>
 
-  <xsl:template match="doc:text()" mode="pre">
+  <xsl:template match="text()" mode="pre">
     <xsl:copy />
   </xsl:template>
 
@@ -167,7 +169,7 @@
     <a href="{@url}"><xsl:apply-templates mode="text-content" /></a>
   </xsl:template>
 
-  <xsl:template match="doc:text()" mode="images">
+  <xsl:template match="text()" mode="images">
   </xsl:template>
   
   <xsl:template match="doc:image[@link]" mode="images">

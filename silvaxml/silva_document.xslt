@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xsl:stylesheet 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+  xmlns:doc="http://infrae.com/ns/silva_document"
   version="1.0">
   <xsl:output method="xml" encoding="UTF-8" />
   <xsl:strip-space elements="*" />
   <xsl:preserve-space elements="heading p pre li em strong super sub underline link" />
   
-  <xsl:template match="doc:/">
+  <xsl:template match="/">
     <xsl:apply-templates />
   </xsl:template>
   
+  <xsl:template match="silva_document">
+    <xsl:apply-templates />
+  </xsl:template>
+
   <xsl:template match="doc:heading[@type='normal']">
     <h3 class="heading"><xsl:apply-templates mode="text-content" /></h3>
   </xsl:template>
@@ -130,7 +135,7 @@
     <dd><xsl:apply-templates mode="text-content" /></dd>
   </xsl:template>
 
-  <xsl:template match="doc:text()" mode="pre">
+  <xsl:template match="text()" mode="pre">
     <xsl:copy />
   </xsl:template>
 
