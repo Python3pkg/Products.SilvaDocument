@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 # Zope
 
 from StringIO import StringIO
@@ -33,6 +33,10 @@ from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
 from Products.Silva.interfaces import IVersion
 
 from Products.SilvaDocument import externalsource
+
+from xml.sax import make_parser
+from xml.sax.handler import ContentHandler
+from Products.SilvaMetadata.Exceptions import BindingError
 
 icon="www/silvadoc.gif"
 addable_priority = -1
@@ -144,6 +148,14 @@ class Document(CatalogedVersionedContent):
             if version is None:
                 raise "Hey, no version to store to!"
 
+            # get any metadata elements saved to the metadata
+            # XXX currently uses a completely different machinery to parse
+            # the XML, perhaps we want to move that to the transformations
+            # at some point (but would require too much hacking for now)
+            errors = self._set_metadata_from_html(string, version)
+            if errors:
+                raise BindingError, errors
+
             ctx = Context(url=self.absolute_url(),
                             browser=browser,
                             model=self,
@@ -159,6 +171,59 @@ class Document(CatalogedVersionedContent):
             # Clear widget cache for this version.
             version.clearEditorCache()
             #print 'storing:', repr(content)
+
+    def _set_metadata_from_html(self, html, version):
+        """Rip the metadata out of the HTML (meta tags), set it on version"""
+        # XXX obviously it would make sense if the transformations could 
+        # tackle this instead of doing it seperately, however, they are messy
+        # enough as they are now (and not capable of such a thing yet)
+        
+        # XXX SAX took about 2 seconds (!) to get the meta values,
+        # so I decided to try re instead... this made sense, parsing now takes
+        # less than one hundreth of a second (usually even less than one 
+        # thousandth!)
+        metamapping = {}
+        import re
+        reg = re.compile(r'\<meta[^\>]+\/\>')
+        while 1:
+            match = reg.search(html)
+            if not match:
+                break
+            tag = match.group(0)
+            html = html.replace(tag, '')
+            reg_props = re.compile(r'([a-zA-Z_]+)="([^"]+)"')
+            found = {}
+            while 1:
+                match = reg_props.search(tag)
+                if not match:
+                    break
+                tag = tag.replace(match.group(0), '')
+                if match.group(1) in ['name', 'content', 'scheme']:
+                    found[match.group(1)] = self._deentitize(match.group(2))
+                if (found.has_key('name') and found.has_key('content') and 
+                        found.has_key('scheme')):
+                    if not metamapping.has_key(found['scheme']):
+                        metamapping[found['scheme']] = {}
+                    metamapping[found['scheme']][found['name']] = found['content']
+
+        errors = {}
+        binding = self.service_metadata.getMetadata(self.get_editable())
+        for namespace, values in metamapping.items():
+            # %!#$%# metadata system expects UTF-8 :(
+            for key, value in values.items():
+                del values[key]
+                if value is None:
+                    continue
+                values[key.encode('UTF-8')] = value.encode('UTF-8')
+            set = self.service_metadata.getMetadataSetFor(namespace)
+            ret = binding.setValues(set.id, values, reindex=1)
+            if ret:
+                errors.update(ret)
+        return errors
+    
+    def _deentitize(self, xml):
+        return xml.replace('&lt;', '<').replace('&gt;', '>').\
+                replace('&quot;', '"').replace('&amp;', '&')
 
     security.declarePrivate('get_indexables')
     def get_indexables(self):
