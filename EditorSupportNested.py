@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -12,7 +12,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.ParsedXML.ParsedXML import ParsedXML
 
 from Products.Silva import SilvaPermissions
-from Products.Silva.helpers import escape_entities
+from Products.Silva import mangle
 
 def _regular_expression_escape(st):
     result = ""
@@ -73,7 +73,7 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(escape_entities(child.data))
+                result.append(mangle.entities(child.nodeValue))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -95,10 +95,10 @@ class EditorSupport(SimpleItem):
                 result.append('</sub>')
             elif child.nodeName == 'link':
                 result.append('<a href="%s"' %
-                              escape_entities(child.getAttribute('url')))
+                              mangle.entities(child.getAttribute('url')))
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
-                              escape_entities(child.getAttribute('target')))
+                              mangle.entities(child.getAttribute('target')))
                 result.append('>')
                 result.append(self.render_text_as_html(child))
                 result.append('</a>')
@@ -108,7 +108,7 @@ class EditorSupport(SimpleItem):
                 result.append('</u>')
             elif child.nodeName == 'index':
                 result.append('<a class="index-element" name="%s">' %
-                              escape_entities(child.getAttribute('name')))
+                              mangle.entities(child.getAttribute('name')))
                 result.append(self.render_text_as_html(child))
                 result.append('</a>')
             elif child.nodeName == 'br':
@@ -128,13 +128,13 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(escape_entities(child.data))
+                result.append(mangle.entities(child.data))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
             if child.nodeName == 'index':
                 result.append('<a class="index-element" name="%s">' %
-                              escape_entities(child.getAttribute('name')))
+                              mangle.entities(child.getAttribute('name')))
                 result.append(self.render_heading_as_html(child))
                 result.append('</a>')
             else:
