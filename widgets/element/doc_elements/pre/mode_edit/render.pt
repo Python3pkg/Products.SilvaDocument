@@ -7,7 +7,7 @@
 </metal:block>
 <metal:block fill-slot="element_controls">
 <script type="text/javascript" tal:content="structure here/elements.js" />
-element: 
+element 
 <select class="manipulator" name="what" onChange="updateSelectionOptions()">
   <option value="p">paragraph</option>
   <option value="pre" selected="selected">preformatted</option>
@@ -16,7 +16,7 @@ element:
   <option value="dlist">definition list</option>
 </select>
 &nbsp;
-type: 
+type 
 <select class="manipulator"
    name="element_type" tal:define="type here/get_type">
   <option value="none" disabled="1">none</option>
