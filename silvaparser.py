@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.12 2004/02/14 13:46:20 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.13 2004/02/23 13:52:04 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -669,6 +669,8 @@ class Interpreter:
         return node
     
     def link_end(self, token, node):
+        if not node.getAttribute('url') > '':
+            raise InterpreterError, "URL too short"
         if node.hasAttribute('target') and node.getAttribute('target') == '':
             node.setAttribute('target', '_blank')
         self.ruleset = 'default'
