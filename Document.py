@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.6 $
+# $Revision: 1.16.4.7 $
 # Zope
 
 from StringIO import StringIO
@@ -186,7 +186,8 @@ class Document(CatalogedVersionedContent):
             if version_object:
                 self.service_editor.clearCache(version_object.content)
 
-    security.declarePublic('PUT')
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'PUT')
     def PUT(self, REQUEST):
         """PUT support"""
         try:
