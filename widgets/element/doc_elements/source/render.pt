@@ -58,7 +58,7 @@
                     title
                   </span><span class="warning" tal:condition="is_required">*</span>
                 </td>
-                <td tal:content="structure python: field.render_view(value=current_value)" />
+                <td tal:content="structure python: current_value and field.render_view(value=current_value) or ''" />
               </tr>
             </tal:block>
           </tbody>
