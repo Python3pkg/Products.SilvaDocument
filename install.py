@@ -43,7 +43,7 @@ def install(root):
         Document.SilvaDocumentPolicy, -1)
 
     if not hasattr(root, 'service_codesource_charset'):
-        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_codesource_charset', 'Service Charset for Codesources')
+        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_codesource_charset', 'Silva Codesource Service ')
         
 def uninstall(root):
     unregisterViews(root.service_view_registry)
