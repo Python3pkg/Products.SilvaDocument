@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.12 2003/11/17 10:30:28 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13 2003/11/18 16:19:49 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -222,6 +222,15 @@ Users think it's dumb.""")
         t = parser.getResult().tokens
         self.assertEquals(len(t), 29)
         self.assertEquals(t[24].kind, Token.LINK_END)
+
+    def test_linkparen(self):
+        parser = PParser("(((issue tracker|http://issues.infrae.com/silva/issue678)))")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(t[0].kind, Token.PARENTHESIS_OPEN)
+        self.assertEquals(t[0].text, '(')
+        self.assertEquals(t[-1].kind, Token.PARENTHESIS_CLOSE)
+        self.assertEquals(t[-1].text, ')')
 
     def test_superscriptbold(self):
         parser = PParser("**foo^^bar^^**")

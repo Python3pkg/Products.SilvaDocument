@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.5 2003/11/17 10:30:28 zagy Exp $
+# $Id: silvaparser.py,v 1.6 2003/11/18 16:19:49 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -221,7 +221,14 @@ class Parser(HeuristicSearch):
         token_kinds = [ t.kind for t in node.tokens ]
         kind_sum = reduce(operator.add, token_kinds)
         parenthesis = -1/1.1**abs(node.parenthesis) + 2
-        h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed) * parenthesis
+        pattern_badness = 0
+        if (len(node.tokens) > 1 and
+                node.tokens[-1].kind == Token.PARENTHESIS_OPEN and
+                node.tokens[-2].kind == Token.LINK_START):
+            # hm, concider it a hack... but (( ( is worse than ( (( ... 
+            pattern_badness += 1 
+        h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed) * parenthesis + \
+            pattern_badness
         return h
 
     def initialize_patterns(self):
@@ -269,7 +276,7 @@ class PParser(Parser):
         (r'(\))', Token.PARENTHESIS_CLOSE),
         
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
-        (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
+        (r'([^A-Za-z0-9 \t\f\v\r\n()])', Token.CHAR),
         ]
 
 
