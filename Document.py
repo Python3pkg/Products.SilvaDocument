@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.22 $
 # Zope
 
 from StringIO import StringIO
@@ -117,7 +117,7 @@ class Document(CatalogedVersionedContent):
         if not renderer_name or renderer_name == "(Default)":
             renderer_name = self.service_renderer_registry.getDefaultRendererNameForMetaType('Silva Document Version')
 
-        if renderer_name == "Basic HTML":
+        if renderer_name == "Normal View (XMLWidgets)":
             # XXX: a hack to call back into the old XML widgets way
             # of rendering. done like so because the old system is
             # hard to follow, and thus practicality does indeed trump
