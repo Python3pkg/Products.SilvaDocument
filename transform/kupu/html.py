@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.7 $'
+__version__='$Revision: 1.1.2.8 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -36,6 +36,15 @@ try:
     import silva
 except ImportError:
     from transform.kupu import silva
+
+try:
+    from Products.Silva.mangle import Path
+except:
+    class _Path:
+        def __call__(self, path1, path2):
+            return path2
+
+    Path = Path()
 
 DEBUG=0
 
@@ -338,7 +347,6 @@ class p(Element):
             return Frag()
         for child in self.find():
             if child.name() != 'br':
-                print dir(self.attr)
                 return silva.p(self.content.convert(context),
                                 type=self.getattr('_class', 'normal'))
         return Frag(
@@ -554,6 +562,9 @@ class img(Element):
         src = urlparse(src)[2]
         if src.endswith('/image'):
             src = src[:-len('/image')]
+        # turn path into relative if possible
+        modelpath = context.model.aq_parent.getPhysicalPath()
+        src = '/'.join(Path(modelpath, src.split('/')))
         alignment = self.attr.alignment
         if alignment == 'default' or alignment is None:
             alignment = ''
