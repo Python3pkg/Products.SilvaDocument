@@ -26,7 +26,7 @@
         source
       </td>
       <td class="invisible align-left" colspan="3">  
-        <input type="text" name="source" value=""
+        <input class="fixIE6widget" type="text" name="source" value=""
           tal:attributes="value python:here.editable('source')"/>
       </td>
     </tr>
