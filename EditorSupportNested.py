@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -100,7 +100,8 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(mangle.entities(child.nodeValue))
+                result.append(self.escape_text(mangle.entities(
+                    child.nodeValue)))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -245,10 +246,18 @@ class EditorSupport(SimpleItem):
         # looks like unix :)
         return data
 
+    def escape_text(self, text):
+        for escape in ['**', '++', '__', '~~', '^^', '((', '))', '[[', ']]',
+                '\\']:
+            text = text.replace(escape, '\\'+escape)
+        return text
+
 InitializeClass(EditorSupport)
 
 def manage_addEditorSupport(container):
     "editor support service factory"
     id = 'service_editorsupport'
     container._setObject(id, EditorSupport(id))
+
+
 

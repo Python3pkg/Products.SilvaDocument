@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.8 2003/10/18 19:24:24 clemens Exp $
+# $Id: test_editorsupport.py,v 1.9 2003/10/20 13:19:15 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -9,9 +9,12 @@ if __name__ == '__main__':
 from Testing import ZopeTestCase
 
 import unittest
+from xml.dom.minidom import parseString
 
 from Products.SilvaDocument.silvaparser import \
     Token, PParser, Interpreter
+from Products.SilvaDocument.EditorSupportNested import EditorSupport
+
 
 class PParserTest(unittest.TestCase):
 
@@ -148,6 +151,14 @@ class PParserTest(unittest.TestCase):
         self.assertEquals(t[6].kind, Token.LINK_SEP)
         self.assertEquals(t[7].text, '_')
         self.assertEquals(t[9].kind, Token.LINK_END)
+
+    def test_linkwithbraces(self):
+        parser = PParser("click ((Journal & Books|simple?field_search=reference_type:(journal%20book))) to see")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(len(t), 29)
+        self.assertEquals(t[24].kind, Token.LINK_END)
+        
 
     def test_superscriptbold(self):
         parser = PParser("**foo^^bar^^**")
@@ -369,7 +380,11 @@ class InterpreterTest(unittest.TestCase):
             (t.LINK_SEP, '|'),
             (t.CHAR, '../foo'),
             (t.LINK_END, '))'),
-            ], 'click <link url="../foo">here</link>')
+            ], 'click <link url="../foo">here</link>'),
+        ([
+            (t.ESCAPE, '\\'),
+            (t.LINK_START, '(('),
+            ], '(('),
         ]
 
     def test_helper(self):
@@ -382,12 +397,37 @@ class InterpreterTest(unittest.TestCase):
             xml = xml.strip()
             self.assertEquals(xml, '<p>'+result+'</p>')
 
-   
+
+class EditableTest(unittest.TestCase):
+
+    def test_text_as_editable(self):
+        
+        cases = [
+            ('foobar', 'foobar'),
+            ('<em>foobar</em>', '++foobar++'),
+            ('<strong>foobar</strong>', '**foobar**'),
+            ('<strong>foo<em>bar</em></strong>', '**foo++bar++**'),
+            ('<strong>**</strong>', '**\\****'),
+            ('((a+b)*c)', '\\((a+b)*c)'),
+            ('((a+b*c))', '\\((a+b*c\\))'),
+            ('<strong>bold</strong> is **bold**', '**bold** is \\**bold\\**')
+        ]
+        
+        es = EditorSupport('')
+        
+        for xml_text, expected_editable in cases:
+            dom = parseString('<p>%s</p>' % xml_text)
+            editable = es.render_text_as_editable(dom.firstChild)
+            self.assertEquals(expected_editable, editable,
+                '%s was converted to %s, instead of %s' % (xml_text,
+                    editable, expected_editable))
+
 
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(InterpreterTest))
     suite.addTest(unittest.makeSuite(PParserTest))
+    suite.addTest(unittest.makeSuite(EditableTest))
     return suite
 
 def main():
