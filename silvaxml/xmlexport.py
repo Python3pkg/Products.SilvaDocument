@@ -44,28 +44,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 attributes[key] = node.attributes[key].value
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
         if node.nodeName == 'source':
-            # XXX Eventually move this over to SilvaExternalSources
-            from Products.SilvaExternalSources.ExternalSource import getSourceForId
-            source = getSourceForId(self.context, attributes['id'])
-            parameters = {}
-            for child in node.childNodes:
-                if child.nodeName == 'parameter':
-                    self.startElementNS(SilvaDocumentNS, 'parameter', {'key': child.attributes['key'].value})
-                    for grandChild in child.childNodes:
-                        text = ''
-                        if grandChild.nodeType == Node.TEXT_NODE:
-                            if grandChild.nodeValue:
-                                self.handler.characters(grandChild.nodeValue)
-                                text = text + grandChild.nodeValue
-                    parameters[str(child.attributes['key'].value)] = text
-                    self.endElementNS(SilvaDocumentNS, 'parameter')
-                    
-            if self.getSettings().externalRendering():
-                self.startElementNS(SilvaDocumentNS, 'rendered_html')
-                html = source.to_html(self.context.REQUEST, **parameters)
-                # XXX testing. Is this really enough? Suspiciously like magic...
-                saxify(html, self.handler)
-                self.endElementNS(SilvaDocumentNS, 'rendered_html')
+            self.sax_source(node, attributes['id'])
+        elif node.nodeName == 'toc':
+            self.sax_toc(node, attributes['toc_depth'])
         elif node.hasChildNodes():
             for child in node.childNodes:
                 if child.nodeType == Node.TEXT_NODE:
@@ -77,3 +58,56 @@ class DocumentVersionProducer(SilvaBaseProducer):
             if node.nodeValue:
                 self.handler.characters(node.nodeValue)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
+
+    def sax_source(self, node, id):
+        # XXX Eventually move this over to SilvaExternalSources
+        from Products.SilvaExternalSources.ExternalSource import getSourceForId
+        source = getSourceForId(self.context, id)
+        parameters = {}
+        for child in node.childNodes:
+            if child.nodeName == 'parameter':
+                self.startElementNS(SilvaDocumentNS, 'parameter', {'key': child.attributes['key'].value})
+                for grandChild in child.childNodes:
+                    text = ''
+                    if grandChild.nodeType == Node.TEXT_NODE:
+                        if grandChild.nodeValue:
+                            self.handler.characters(grandChild.nodeValue)
+                            text = text + grandChild.nodeValue
+                parameters[str(child.attributes['key'].value)] = text
+                self.endElementNS(SilvaDocumentNS, 'parameter')
+        if self.getSettings().externalRendering():
+            html = source.to_html(self.context.REQUEST, **parameters)
+            self.render_html(html)
+
+    def sax_toc(self, node, depth):
+        public = self.context.version_status() == 'public'
+        if public:
+            tree = self.context.get_public_tree(depth)
+            append_to_url = ''
+        else:
+            tree = self.context.get_tree(depth)
+            append_to_url = 'edit/tab_preview'
+        text = ''
+        for obj in tree:
+            indent = obj[0]
+            item = obj[1]
+            if public:
+                title = item.get_title()
+            else:
+                title = item.get_title_editable()
+            url = item.absolute_url()
+            if indent > 0:
+                text = text + '<img width="%s" height="14" alt="" src="%s/globals/pixel.gif" />' % (
+                    str(indent * 24),
+                    self.context.REQUEST['BASE2']
+                    )
+            text = text + '<a href="%s/%s">%s</a><br />' % (url, append_to_url, title)
+        html = '<p class="toc">%s</p>' % text
+        if self.getSettings().externalRendering():
+            self.render_html(html)
+
+    def render_html(self, html):
+        self.startElementNS(SilvaDocumentNS, 'rendered_html')
+        saxify(html, self.handler)
+        self.endElementNS(SilvaDocumentNS, 'rendered_html')
+       
