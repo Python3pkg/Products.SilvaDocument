@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.14.2.1 2004/03/25 13:48:24 jw Exp $
+# $Id: silvaparser.py,v 1.6.4.14.2.1.2.1 2004/04/07 10:06:35 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -19,7 +19,7 @@ def _initialize_patterns(patterns):
         compiled.append((re.compile(pattern_str), token_id))
     return tuple(compiled)
 
-URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*()/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
         
 class InterpreterError(Exception):
     pass
@@ -273,9 +273,6 @@ class Parser(HeuristicSearch):
             pattern_badness += 1 
         h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed) * parenthesis + \
             pattern_badness
-        #if node.text == "click ((Journal & Books|simple?field_search=reference_type:(journal%20book))) to see":
-        #    print h, node.tokens
-        #print node.text, node.tokens, h
         return h
 
     def getResult(self):
@@ -324,7 +321,6 @@ class PParser(Parser):
         
         (r'([A-Za-z0-9\.\-&;]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9\.\-&; \t\f\v\r\n()\\])', Token.CHAR),
-        (r'([\r\n])', Token.EAT),
         ])
 
 

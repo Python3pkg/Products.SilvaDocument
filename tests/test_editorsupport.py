@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8.4.1 2004/03/25 13:48:24 jw Exp $
+# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.1 2004/04/07 10:06:35 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -272,7 +272,18 @@ A ((broken internal link|/to_nowhere/doc883)).""")
         # should contain three links:
         self.assertEquals(3,len([x for x in t if x.kind==Token.LINK_START]))
 
-        
+    def test_link2(self):
+        p = PParser("((this is my link text|http://locatorplus.gov/cgi-bin/Pwebrecon.cgi?DB=local&v2=1&ti=1,1&Search_Arg=100973416&Search_Code=0359&CNT=20&SID=1|))")
+        p.run()
+        t = p.getResult().tokens
+        self.assertEquals(t[0].kind, Token.LINK_START)
+    
+    def test_link3(self):
+        p = PParser("((this is my link text|http://locatorplus.gov/cgi-bin/Pwebrecon.cgi?\nDB=local&v2=1&ti=1,1&Search_Arg=100973416&Search_Code=0359&CNT=20&SID=1|))")
+        p.run()
+        t = p.getResult().tokens
+        self.assertEquals(t[0].kind, Token.PARENTHESIS_OPEN)
+    
     def test_linkmarkup(self):
         p = PParser("Wasser ((H~~2~~O|http://aaaa.com/h2o.html|))")
         p.run()
