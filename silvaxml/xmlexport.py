@@ -56,9 +56,11 @@ class DocumentVersionProducer(SilvaBaseProducer):
                             text = text + grandChild.nodeValue
                     parameters[child.attributes['key']] = text
             if self.getSettings().externalRendering():
+                self.startElementNS(SilvaDocumentNS, 'rendered_html')
                 html = source.index_html(parameters)
                 # XXX testing. Is this really enough? Suspiciously like magic...
                 saxify(html, self.handler)
+                self.endElementNS(SilvaDocumentNS, 'rendered_html')
         elif node.hasChildNodes():
             for child in node.childNodes:
                 if child.nodeType == Node.TEXT_NODE:

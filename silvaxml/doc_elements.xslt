@@ -171,15 +171,15 @@
   </xsl:template>
 
   <xsl:template match="doc:toc">
-    <p>[a table of contents]</p>
+    <xsl:copy-of select="./rendered_html" />
   </xsl:template>
   
   <xsl:template match="doc:external_data">
-    <p>[an external data element]</p>
+    <xsl:copy-of select="./rendered_html" />
   </xsl:template>
   
   <xsl:template match="doc:code">
-    <p>[a code element]</p>
+    <xsl:copy-of select="./rendered_html" />
   </xsl:template>
   
   <xsl:template match="doc:br">
