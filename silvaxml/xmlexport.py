@@ -43,7 +43,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             for key in node.attributes.keys():
                 attributes[key] = node.attributes[key].value
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
-        if node.nodeName == 'source': 	        
+        if node.nodeName == 'source' and node.parentNode.nodeName != 'cite': 	        
             self.sax_source(node, attributes['id'])
         elif node.nodeName == 'toc' and self.getSettings().externalRendering():
             self.sax_toc(node, attributes['toc_depth'])
