@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 # Zope
 
 from StringIO import StringIO
@@ -66,7 +66,7 @@ class Document(CatalogedVersionedContent):
         code, datasource or toc.
         """
         non_cacheable_elements = ['toc', 'code', 'externaldata', ]
-        
+
         viewable = self.get_viewable()
         if viewable is None:
             return 0
@@ -102,30 +102,74 @@ class Document(CatalogedVersionedContent):
 
         if version_id is None:
             return
-        f.write('<silva_document id="%s">' % self.id) 
+        f.write('<silva_document id="%s">' % self.id)
         version = getattr(self, version_id)
-        version.to_xml(context)        
+        version.to_xml(context)
         f.write('</silva_document>')
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent, "preview")
+    def preview(self, view_type="public"):
+        """Display the preview of this object using the selected renderer."""
+        content = self.get_previewable()
+        renderer_name = self.service_metadata.getMetadataValue(
+            content, "silva-extra", "renderer_name")
+
+        if not renderer_name or renderer_name == "(Default)":
+            renderer_name = self.service_renderer_registry.getDefaultRendererName()
+
+        if renderer_name == "Basic HTML":
+            # XXX: a hack to call back into the old XML widgets way
+            # of rendering. done like so because the old system is
+            # hard to follow, and thus practicality does indeed trump
+            # purity sometimes. :)
+            return CatalogedVersionedContent.preview(self, view_type)
+        else:
+            renderer = self.service_renderer_registry.getRendererByName(
+                renderer_name, 'Silva Document Version')
+            return renderer.render(content)
+
+    security.declareProtected(SilvaPermissions.View, "view")
+    def view(self, view_type='public'):
+        """Display the public view of this object using the selected renderer."""
+        content = self.get_viewable()
+        if content is None:
+            return "Sorry, this document is not published yet."
+        renderer_name = self.service_metadata.getMetadataValue(
+            content, "silva-extra", "renderer_name")
+
+        if not renderer_name or renderer_name == "(Default)":
+            renderer_name = self.service_renderer_registry.getDefaultRendererName()
+
+        if renderer_name == "Basic HTML":
+            # XXX: a hack to call back into the old XML widgets way
+            # of rendering. done like so because the old system is
+            # hard to follow, and thus practicality does indeed trump
+            # purity sometimes. :)
+            return CatalogedVersionedContent.view(self, view_type)
+        else:
+            renderer = self.service_renderer_registry.getRendererByName(
+                renderer_name, 'Silva Document Version')
+            return renderer.render(content)
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'editor_storage')
     def editor_storage(self, string=None, editor='kupu', encoding=None):
-        """provide xml/xhtml/html (GET requests) and (heuristic) 
+        """provide xml/xhtml/html (GET requests) and (heuristic)
            back-transforming to xml/xhtml/html (POST requests)
         """
         transformer = EditorTransformer(editor=editor)
 
-        # we need to know what browser we are dealing with in order to know 
-        # what html to produce, unfortunately Mozilla uses different tags in 
+        # we need to know what browser we are dealing with in order to know
+        # what html to produce, unfortunately Mozilla uses different tags in
         # some cases (b instead of strong, i instead of em)
         browser = 'Mozilla'
         if self.REQUEST['HTTP_USER_AGENT'].find('MSIE') > -1:
             browser = 'IE'
 
         if string is None:
-            ctx = Context(f=StringIO(), 
-                            last_version=1, 
-                            url=self.absolute_url(), 
+            ctx = Context(f=StringIO(),
+                            last_version=1,
+                            url=self.absolute_url(),
                             browser=browser,
                             model=self)
             self.to_xml(ctx)
@@ -143,10 +187,10 @@ class Document(CatalogedVersionedContent):
             version = self.get_editable()
             if version is None:
                 raise "Hey, no version to store to!"
-            
-            ctx = Context(url=self.absolute_url(), 
-                            browser=browser, 
-                            model=self, 
+
+            ctx = Context(url=self.absolute_url(),
+                            browser=browser,
+                            model=self,
                             request=self.REQUEST)
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
             title = silvanode.find('title')[0].extract_text()
@@ -155,11 +199,11 @@ class Document(CatalogedVersionedContent):
             version.content.manage_edit(content) # needs utf8-encoded string
             version.set_title(title) # needs unicode
             version.sec_update_last_author_info()
-            
+
             # Clear widget cache for this version.
             version.clearEditorCache()
             #print 'storing:', repr(content)
-            
+
     security.declarePrivate('get_indexables')
     def get_indexables(self):
         version = self.get_viewable()
@@ -168,16 +212,16 @@ class Document(CatalogedVersionedContent):
         return [version]
 
     def revert_to_previous(self):
-        """ Create a new version of public version, throw away the 
+        """ Create a new version of public version, throw away the
         current one.
-        
+
         Overrides Versioning.revert_to_previous() to be able to clear
         the widget cache too.
         """
         Document.inheritedAttribute('revert_to_previous')(self)
         version = self.get_editable()
         version.clearEditorCache()
-    
+
     def manage_beforeDelete(self, item, container):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
         # Does the widget cache needs be cleared for all versions - I think so...
@@ -202,14 +246,14 @@ class Document(CatalogedVersionedContent):
 
             return transformed
         except:
-            # a tad ugly, but for debug purposes it would be nice to see 
+            # a tad ugly, but for debug purposes it would be nice to see
             # what's actually gone wrong
             import sys, traceback
             exc, e, tb = sys.exc_info()
             print '%s: %s' % (exc, e)
             print '\n%s' % '\n'.join(traceback.format_tb(tb))
             print
-            # reraise the exception so the enduser at least sees something's 
+            # reraise the exception so the enduser at least sees something's
             # gone wrong
             raise
 
@@ -226,7 +270,7 @@ class DocumentVersion(CatalogedVersion):
     manage_options = (
         {'label':'Edit',       'action':'manage_main'},
         ) + CatalogedVersion.manage_options
-    
+
     def __init__(self, id, title):
         DocumentVersion.inheritedAttribute('__init__')(self, id, title)
         self.content = ParsedXML('content', '<doc></doc>')
@@ -234,7 +278,7 @@ class DocumentVersion(CatalogedVersion):
     # display edit screen as main management screen
     security.declareProtected('View management screens', 'manage_main')
     manage_main = PageTemplateFile('www/documentVersionEdit', globals())
-        
+
     def to_xml(self, context):
         f = context.f
         f.write('<title>%s</title>' % translateCdata(self.get_title()))
@@ -245,7 +289,7 @@ class DocumentVersion(CatalogedVersion):
         # if we're a copy, clear cache
         # XXX should be part of workflow system
         self.clearEditorCache()
-        
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fulltext')
     def fulltext(self):
@@ -253,7 +297,7 @@ class DocumentVersion(CatalogedVersion):
         if self.version_status() == 'unapproved':
             return ''
         return [self.get_title(), self._flattenxml(self.content_xml())]
-    
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'content_xml')
     def content_xml(self):
@@ -270,14 +314,14 @@ class DocumentVersion(CatalogedVersion):
         """
         # XXX this need to be fixed by using ZCTextIndex or the like
         return xmlinput
-    
+
     def clearEditorCache(self):
         """ Clears editor cache for this version
         """
         editor_service = self.service_editor
         document_element = self.content.documentElement
         editor_service.clearCache(document_element)
-        
+
 InitializeClass(DocumentVersion)
 
 manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
@@ -305,7 +349,7 @@ def manage_addDocumentVersion(self, id, title, REQUEST=None):
     """Add a Document version to the Silva-instance."""
     version = DocumentVersion(id, title)
     self._setObject(id, version)
-    
+
     version = self._getOb(id)
     version.set_title(title)
 
@@ -315,13 +359,13 @@ def manage_addDocumentVersion(self, id, title, REQUEST=None):
 def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
-   
+
     id = str(mangle.Id(object, id).unique())
     object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
-    
+
     newdoc = getattr(object, id)
     newdoc.sec_update_last_author_info()
-    
+
     for child in node.childNodes:
         if child.nodeName == u'doc':
             version = getattr(newdoc, '0')
@@ -342,4 +386,4 @@ class SilvaDocumentPolicy(Persistent):
         container.manage_addProduct['SilvaDocument'].manage_addDocument(
             'index', title)
         container.index.sec_update_last_author_info()
-        
+
