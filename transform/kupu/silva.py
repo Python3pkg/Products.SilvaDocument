@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.10 $'
+__version__='$Revision: 1.1.2.11 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -427,7 +427,7 @@ class source(SilvaElement):
                     params[child.attr.key.convert(context).asBytes('utf-8')] = child.content.convert(context).asBytes('utf-8')
             divcontent = []
             for key, value in params.items():
-                divcontent.append(html.div(Text('Key: %s, value: %s\n' % (key, value))))
+                divcontent.append(html.div(Text('Key: %s, value: %s\n' % (unicode(key, 'UTF-8'), unicode(value, 'UTF-8')))))
             header = html.h3(Text('External Source "%s"' % id))
             pre = Frag(divcontent, html.br())
             content = Frag(header, pre);

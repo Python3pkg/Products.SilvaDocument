@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.11 $'
+__version__='$Revision: 1.1.2.12 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -698,7 +698,7 @@ class div(Element):
             content = []
             for key, value in self.attr.__dict__.items():
                 if key != 'source_id' and key != 'class':
-                    content.append(silva.parameter(Text(value.asBytes('utf-8')), key=key))
+                    content.append(silva.parameter(Text(unicode(value.asBytes('utf-8'), 'UTF-8')), key=key))
             return silva.source(
                         Frag(content), 
                         id=self.attr.source_id,
