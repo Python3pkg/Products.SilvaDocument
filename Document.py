@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.6.6.7 $
+# $Revision: 1.16.4.6.6.8 $
 # Zope
 
 from StringIO import StringIO
@@ -123,7 +123,11 @@ class Document(CatalogedVersionedContent):
             browser = 'IE'
 
         if string is None:
-            ctx = Context(f=StringIO(), last_version=1, url=self.absolute_url(), browser=browser)
+            ctx = Context(f=StringIO(), 
+                            last_version=1, 
+                            url=self.absolute_url(), 
+                            browser=browser,
+                            model=self)
             self.to_xml(ctx)
             htmlnode = transformer.to_target(sourceobj=ctx.f.getvalue(), context=ctx)
             if encoding is not None:
