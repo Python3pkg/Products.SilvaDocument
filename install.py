@@ -21,6 +21,8 @@ def install(root):
     # security
     root.manage_permission('Add Silva Documents',
                            ['Author', 'Editor', 'ChiefEditor', 'Manager'])
+    root.manage_permission('Add Silva Document Versions',
+                           ['Author', 'Editor', 'ChiefEditor', 'Manager'])
 
     # set up/refresh some mandatory services
     configureMiscServices(root)
