@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.4 $'
+__version__='$Revision: 1.1.2.5 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -182,8 +182,8 @@ class link(SilvaElement):
                         img.content.convert(context),
                         src=img.getattr('path'),
                         link=url,
-                        align=img.getattr('alignment', 'left'),
                         target=self.getattr('target', '_self'),
+                        alignment=img.getattr('alignment', 'default'),
                 )
             else:
                 if img.hasattr('link_to_hires') and img.getattr('link_to_hires') == '1':
@@ -192,8 +192,8 @@ class link(SilvaElement):
                             src=img.getattr('path'),
                             link_to_hires='1',
                             link='%s/hires_image' % img.getattr('path'),
-                            align=img.getattr('alignment', 'left'),
                             target=img.getattr('target', '_self'),
+                            alignment=img.getattr('alignment', 'default'),
                     )
                 else:
                     return html.img(
@@ -201,8 +201,8 @@ class link(SilvaElement):
                             src=img.getattr('path'),
                             link_to_hires='0',
                             link=img.getattr('link', ''),
-                            align=img.getattr('alignment', 'left'),
                             target=img.getattr('target', '_self'),
+                            alignment=img.getattr('alignment', 'default'),
                     )
 
 class index(SilvaElement):
@@ -228,16 +228,16 @@ class image(SilvaElement):
             return html.img(
                         self.content.convert(context),
                         src = src+'/image',
-                        align = self.attr.alignment,
                         target=self.getattr('target', '_self'),
+                        alignment=self.getattr('alignment', 'default'),
                   )
         elif not self.hasattr('link') or str(self.getattr('link')).strip() == '':
             return html.img(
                         self.content.convert(context),
                         src='%s/image' % src,
-                        align=self.attr.alignment,
                         link_to_hires='1',
                         target=self.getattr('target', '_self'),
+                        alignment=self.getattr('alignment', 'default'),
                     ),
         basesrcpath = src
         link = self.getattr('link')
@@ -245,18 +245,18 @@ class image(SilvaElement):
             return html.img(
                         self.content.convert(context),
                         src = '%s/image' % src,
-                        align=self.attr.alignment,
                         link_to_hires='1',
                         target=self.getattr('target', '_self'),
+                        alignment=self.getattr('alignment', 'default'),
                     )
         else:
             return html.img(
                         self.content.convert(context),
                         src='%s/image' % src,
-                        align=self.attr.alignment,
                         link_to_hires=self.attr.link_to_hires,
                         link=self.getattr('link', ''),
                         target=self.getattr('target', '_self'),
+                        alignment=self.getattr('alignment', 'default'),
                 )
 
 class pre(SilvaElement):
@@ -359,6 +359,28 @@ class toc(SilvaElement):
             class_ = 'toc',
             is_toc = '1'
         )
+
+class cite(SilvaElement):
+    def convert(self, context):
+        author = self.find('author')[0].convert(context)
+        source = self.find('source')[0].convert(context)
+        content = [p.convert(context) for p in self.find('p')]
+        
+        return html.div(
+            content,
+            author=author,
+            source=source,
+            class_='citation',
+            is_citation='1',
+        )
+
+class author(SilvaElement):
+    def convert(self, context):
+        return self.content.convert(context)
+
+class source(SilvaElement):
+    def convert(self, context):
+        return self.content.convert(context)
 
 def mixin_paragraphs(container):
     """ wrap silva.p node around text"""

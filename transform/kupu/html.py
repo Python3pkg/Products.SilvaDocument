@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.2 $'
+__version__='$Revision: 1.1.2.3 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -94,7 +94,7 @@ def fix_toplevel(el, context):
         return silva.p(el.convert(context))
 
 def find_and_convert_toplevel(el, context, els=None):
-    if el.name() == 'Text' or el.name() in CONTAINERS:
+    if el.name() == 'Text' or el.name() in CONTAINERS or (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content()):
         return []
     if  els is None:
         foundels = []
@@ -521,6 +521,10 @@ class a(Element):
                     )
             else:
                 image = img.convert(context)
+                alignment = img.getattr('alignment')
+                if alignment == 'default' or alignment is None:
+                    alignment = ''
+                image.attr.alignment = alignment
                 if not hasattr(image, 'attr'):
                     # empty frag
                     return image
@@ -547,21 +551,24 @@ class img(Element):
         src = urlparse(src)[2]
         if src.endswith('/image'):
             src = src[:-len('/image')]
+        alignment = self.getattr('alignment')
+        if alignment == 'default' or alignment is None:
+            alignment = ''
         if self.hasattr('link_to_hires') and self.getattr('link_to_hires') == '1':
             return silva.image(
                         self.content.convert(context),
-                        path=src,
-                        link='%s/hires_image' % src,
-                        alignment=self.attr.align,
-                        target=self.getattr('target', '_self'),
+                        path = src,
+                        link = '%s/hires_image' % src,
+                        alignment = alignment,
+                        target = self.getattr('target', '_self'),
                     )
         else:
             return silva.image(
                         self.content.convert(context),
-                        path=src,
-                        link=self.getattr('link', ''),
-                        alignment=self.attr.align,
-                        target=self.getattr('target', '_self'),
+                        path = src,
+                        link = self.getattr('link', ''),
+                        alignment = alignment,
+                        target = self.getattr('target', '_self'),
                     )
 
 class br(Element):
@@ -657,11 +664,22 @@ class div(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
-        if not hasattr(self.attr, 'toc_depth') or not self.attr.toc_depth:
+        if self.attr.toc_depth:
+            return silva.toc(
+                toc_depth=self.attr.toc_depth
+            )
+        elif self.attr.is_citation:
+            content = fix_structure(self.content, context)
+            return silva.cite(
+                [silva.author(self.attr.author), 
+                silva.source(self.attr.source),
+                Frag(content)]
+            )
+        else:
             return Frag()
-        return silva.toc(
-            toc_depth=self.attr.toc_depth
-        )
+
+    def do_not_fix_content(self):
+        return 1
 
 """
 current mapping of tags with silva
@@ -677,9 +695,12 @@ def debug_hook():
     from transform.Transformer import EditorTransformer
     from transform.base import Context
     data = '<html><head><title>Foo</title></head><body><p>foo<table><tr><td>baz</td></tr></table>bar</p></body></html>'
+    data = '<html><head><title>Foo</title></head><body><div is_citation="1" author="JdB" source="FU!"><p>foo</p></div></body></html>'
     ctx = Context(url='http://debris.demon.nl/foo.html')
     transformer = EditorTransformer(editor='kupu')
     node = transformer.to_source(targetobj=data, context=ctx)[0]
     output = node.asBytes(encoding='UTF-8')
     print output
 
+if __name__ == '__main__':
+    debug_hook()
