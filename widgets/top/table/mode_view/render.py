@@ -20,6 +20,7 @@ nr_of_columns = len(columns_info)
 type = node.getAttribute('type')
 
 table_data = []
+row = 1
 for child in node.childNodes:
     if child.nodeType != node.ELEMENT_NODE:
         continue
@@ -49,8 +50,10 @@ for child in node.childNodes:
                     # this align thingy should not be needed if mozilla would
                     # consider the alignment as specified in the <col />
                 col += 1
+        css_class = row % 2 and "odd" or "even"
+        row += 1
         table_data.append(
-            """<tr>\n%s\n</tr>""" % '\n'.join(row_data))
+            """<tr class="%s">\n%s\n</tr>""" % (css_class, '\n'.join(row_data)))
     if child.nodeName == 'row_heading':
         supp = editorsupport.getMixedContentSupport(model, child)
         table_data.append(
