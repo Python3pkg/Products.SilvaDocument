@@ -50,6 +50,8 @@
       <ref name="br" />
       <ref name="link" />
       <ref name="index" />
+      <ref name="abbreviation" />
+      <ref name="acronym" />
       <text />
     </choice>
   </define>
@@ -390,6 +392,32 @@
   <define name="br">
     <element name="doc:br">
       <empty />
+    </element>
+  </define>
+
+  <define name="abbreviation">
+    <element name="doc:abbr">
+      <optional>
+      <attribute name="title">
+        <text />
+      </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="textmarkup" />
+      </oneOrMore>
+    </element>
+  </define>
+
+  <define name="acronym">
+    <element name="doc:acronym">
+      <optional>
+      <attribute name="title">
+        <text />
+      </attribute>
+      </optional>
+      <oneOrMore>
+        <ref name="textmarkup" />
+      </oneOrMore>
     </element>
   </define>
 

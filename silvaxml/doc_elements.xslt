@@ -147,8 +147,22 @@
     <sub><xsl:apply-templates mode="text-content" /></sub>
   </xsl:template>
 
+  <xsl:template match="doc:acronym" mode="text-content">
+  	<xsl:copy-of select="."/>
+  </xsl:template>
+
+  <xsl:template match="doc:abbr" mode="text-content">
+  	<xsl:copy-of select="."/>
+  </xsl:template>
+
   <xsl:template match="doc:link" mode="text-content">
-    <a href="{@url}"><xsl:apply-templates mode="text-content" /></a>
+    <a href="{@url}">
+	  <xsl:if test="@target">
+	    <xsl:attribute name="target">
+	    	<xsl:value-of select="@target"/>
+	    </xsl:attribute>
+	  </xsl:if>
+	  <xsl:apply-templates mode="text-content" /></a>
   </xsl:template>
 
   <xsl:template match="doc:image[@link]">

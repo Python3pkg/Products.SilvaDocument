@@ -3,12 +3,11 @@
 <metal:block define-macro="markup_notes">
   <li>Text can be formatted &#8211; in <i>italic</i>, <b>bold</b>, etc. &#8211; with &#8220;Silva markup&#8221;:
     <ul class="tips-nested">
-      <li>**bold** ++italic++ __underlined__ ^^superscript^^ ~~subscript~~</li>
-      <li>((link text|http://www.x.yz))</li>
-      <li>((link text|http://www.x.yz|target)) &#8212; if &#8216;target&#8217; is empty a new window opens</li>
-      <li>[[index item]]</li>
-      <li>\**not bold\**</li>
-      <li tal:replace="nothing">{{name of person|name in index}}</li>
+      <li>&lt;b&gt;bold&lt/b&gt; &lt;i&gt;italic&lt;/i&gt; &lt;u&gt;underlined&lt;/u&gt; &lt;sup&gt;superscript&lt;/sup&gt; &lt;sub&gt;subscript&lt;/sub&gt;</li>
+      <li>&lt;a href="http://www.x.yz"&gt;text&lt;/a&gt;</li>
+      <li>&lt;a href="http://www.x.yz" target="target"&gt;text&lt;/a&gt; &#8212; if &#8216;target&#8217; is empty a new window opens</li>
+      <li>&lt;index&gt;index item&lt;/index&gt;</li>
+      <li>&amp;lt; &lt; &#8212; &amp;gt; &gt;</li>
     </ul>
   </li>
 </metal:block>

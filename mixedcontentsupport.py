@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 # Python
 from __future__ import nested_scopes
 import re
@@ -9,6 +9,7 @@ from sys import exc_info
 from StringIO import StringIO
 from xml.dom.minidom import parseString
 from xml.parsers.expat import ExpatError
+from xml.sax.saxutils import escape, unescape, quoteattr
 # Zope
 import Acquisition
 from AccessControl import ClassSecurityInfo
@@ -146,20 +147,14 @@ class ParagraphSupport(MixedContentSupport):
     def parse(self, inputstr):
         """ Parse input string to a DOM
         """
-        # Since we don't use Formulator we get UTF8 from the forms,
-        # so decode to unicode manually here.
-        inputstr = unicode(inputstr, 'utf-8')
-        newdom = self._editableToDOM(inputstr, PParser)
+        from sprout.silvasubset import PARAGRAPH_SUBSET
+
+        inputstr = unicode(inputstr, 'UTF-8')
         node = self._node
-        doc = node.ownerDocument
-       
         # remove all old subnodes of node
         while node.hasChildNodes():
             node.removeChild(node.firstChild)
-            
-        # insert new node
-        for child in newdom.childNodes:
-            self._insertDOM(doc, node, child)
+        PARAGRAPH_SUBSET.filteredParse(inputstr, node)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'renderHTML')
@@ -199,15 +194,31 @@ class ParagraphSupport(MixedContentSupport):
                 result.append('<sub>')
                 result.append(self._renderHtmlHelper(child, view_type))
                 result.append('</sub>')
+            elif child.nodeName == 'abbr':
+                result.append('<abbr')
+                if child.getAttribute('title'):
+                    result.append(
+                        ' title="%s"' % child.getAttribute('title'))
+                result.append('>')
+                result.append(self._renderHtmlHelper(child, view_type))
+                result.append('</abbr>')
+            elif child.nodeName == 'acronym':
+                result.append('<acronym')
+                if child.getAttribute('title'):
+                    result.append(
+                        ' title="%s"' % child.getAttribute('title'))
+                result.append('>')
+                result.append(self._renderHtmlHelper(child, view_type))
+                result.append('</acronym>')
             elif child.nodeName == 'link':
                 path = child.getAttribute('url')
                 url = self._linkHelper(node, path)                
                 result.append('<a href="%s"' %  mangle.entities(url))
-                pass
-                if child.getAttribute('target'):
+                if child.hasAttribute('target'):
+                    target = child.getAttribute('target')
+                    if target == '': target = '_blank'
                     result.append(
-                        ' target="%s"' %
-                        mangle.entities(child.getAttribute('target')))
+                        ' target="%s"' % mangle.entities(target))
                 result.append('>')
                 result.append(self._renderHtmlHelper(child, view_type))
                 result.append('</a>')
@@ -235,53 +246,81 @@ class ParagraphSupport(MixedContentSupport):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(self.escape_text_node(child))
+                result.append(child.nodeValue)
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
             if child.nodeName == 'strong':
-                result.append('**')
+                result.append('<b>')
                 result.append(self._renderEditableHelper(child))
-                result.append('**')
+                result.append('</b>')
             elif child.nodeName == 'em':
-                result.append('++')
+                result.append('<i>')
                 result.append(self._renderEditableHelper(child))
-                result.append('++')
+                result.append('</i>')
             elif child.nodeName == 'super':
-                result.append('^^')
+                result.append('<sup>')
                 result.append(self._renderEditableHelper(child))
-                result.append('^^')
+                result.append('</sup>')
             elif child.nodeName == 'sub':
-                result.append('~~')
+                result.append('<sub>')
                 result.append(self._renderEditableHelper(child))
-                result.append('~~')
+                result.append('</sub>')
+            elif child.nodeName == 'abbr':
+                if child.getAttribute('title'):
+                    result.append(
+                        '<abbr title="%s">' % child.getAttribute('title'))
+                else:
+                    result.append('<abbr>')
+                result.append(self._renderEditableHelper(child))
+                result.append('</abbr>')
             elif child.nodeName == 'link':
                 url = mangle.entities(child.getAttribute('url'))
                 url_comparator = mangle.entities(
                     self._linkHelper(node, child.getAttribute('url')))
-                target = mangle.entities(child.getAttribute('target'))
+                if child.hasAttribute('target'):
+                    target = child.getAttribute('target')
+                    if target == '': target = '_blank'
+                else:
+                    target = mangle.entities(child.getAttribute('target'))
                 linktext = self._renderEditableHelper(child)
                 if (not target and linktext == url_comparator):
+                    # XXX what is this?
                     result.append(url)
                 else:
-                    result.append('((')
-                    result.append(linktext)
-                    result.append('|')
-                    result.append(url)
                     if target:
-                        result.append('|')
-                        result.append(target)
-                    result.append('))')
+                        tag = '<a href="%s" target="%s">' % (url, target)
+                    else:
+                        tag = '<a href="%s">' % url
+                    result.append(tag)
+                    result.append(linktext)
+                    result.append('</a>')
             elif child.nodeName == 'underline':
-                result.append('__')
+                result.append('<u>')
                 result.append(self._renderEditableHelper(child))
-                result.append('__')
+                result.append('</u>')
             elif child.nodeName == 'index':
-                result.append('[[')
+                result.append('<index>')
                 result.append(mangle.entities(child.getAttribute('name')))
-                result.append(']]')
+                result.append('</index>')
+            elif child.nodeName == 'acronym':
+                if child.getAttribute('title'):
+                    result.append(
+                        '<acronym title="%s">' % child.getAttribute('title'))
+                else:
+                    result.append('<acronym>')
+                result.append(self._renderEditableHelper(child))
+                result.append('</acronym>')
+            elif child.nodeName == 'abbr':
+                result.append('<abbr>')
+                if child.getAttribute('title'):
+                    result.append(
+                        ' title="%s"' % child.getAttribute('title'))
+                result.append(self._renderEditableHelper(child))
+                result.append('</acronym>')
             elif child.nodeName == 'br':
-                result.append('\n')
+                # \n is already in XML (or not)
+                result.append('<br>')
             else:
                 result.append(
                     'ERROR %s ERROR ' % self._renderEditableHelper(child))
@@ -329,20 +368,14 @@ class HeadingSupport(ParagraphSupport):
     def parse(self, inputstr):
         """ Parse input string to a DOM
         """
-        # Since we don't use Formulator we get UTF8 from the forms,
-        # so decode to unicode manually here.
-        inputstr = unicode(inputstr, 'utf-8')
-        newdom = self._editableToDOM(inputstr, HeadingParser)
+        from sprout.silvasubset import HEADING_SUBSET
+
+        inputstr = unicode(inputstr, 'UTF-8')
         node = self._node
-        doc = node.ownerDocument
-       
         # remove all old subnodes of node
         while node.hasChildNodes():
             node.removeChild(node.firstChild)
-            
-        # insert new node
-        for child in newdom.childNodes:
-            self._insertDOM(doc, node, child)
+        HEADING_SUBSET.filteredParse(inputstr, node)
 
 InitializeClass(HeadingSupport)            
             
