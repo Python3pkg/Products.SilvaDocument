@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.16 $'
+__version__='$Revision: 1.1.2.17 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -596,6 +596,7 @@ class img(Element):
                         link = '%s?hires' % src,
                         alignment = alignment,
                         target = self.getattr('target', '_self'),
+                        link_to_hires = '1',
                     )
         else:
             return silva.image(
@@ -604,6 +605,7 @@ class img(Element):
                         link = self.getattr('link', ''),
                         alignment = alignment,
                         target = self.getattr('target', '_self'),
+                        link_to_hires = '0',
                     )
 
 class br(Element):
