@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 22 18:58:31 2004\n"
+"POT-Creation-Date: Mon Nov 22 19:14:16 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -19,6 +19,84 @@ msgstr ""
 
 #: /ServiceCodeSourceCharset.py:45
 msgid "Charset set"
+msgstr ""
+
+#: /install.py:145
+msgid "title"
+msgstr ""
+
+#: /install.py:146
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:24
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
+msgid "paragraph"
+msgstr ""
+
+#: /install.py:147
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
+msgid "heading"
+msgstr ""
+
+#: /install.py:148
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
+msgid "list"
+msgstr ""
+
+#: /install.py:149
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
+msgid "preformatted"
+msgstr ""
+
+#: /install.py:150
+msgid "table of contents"
+msgstr ""
+
+#: /install.py:151
+msgid "image"
+msgstr ""
+
+#: /install.py:152
+msgid "table"
+msgstr ""
+
+#: /install.py:153
+msgid "complex list"
+msgstr ""
+
+#: /install.py:154
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:31
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
+msgid "definition list"
+msgstr ""
+
+#: /install.py:155
+msgid "code element"
+msgstr ""
+
+#: /install.py:156
+#: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+msgid "citation"
+msgstr ""
+
+#: /install.py:165
+msgid "external source"
 msgstr ""
 
 #: /install.py:216
@@ -139,10 +217,6 @@ msgstr ""
 msgid "The citation may contain multiple paragraphs. Separate them with an empty line."
 msgstr ""
 
-#: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
-msgid "citation"
-msgstr ""
-
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
 msgid "<span class=\"warning\">[Code element is broken]</span>"
@@ -194,46 +268,6 @@ msgstr ""
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:22
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
 msgid "element"
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:24
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
-msgid "paragraph"
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:29
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
-msgid "preformatted"
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
-msgid "heading"
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
-msgid "list"
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:31
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
-msgid "definition list"
 msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41

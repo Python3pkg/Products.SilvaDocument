@@ -142,18 +142,18 @@ def registerDocEditor(root):
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
 
-    wr.setDisplayName('doc', 'title')
-    wr.setDisplayName('p', 'paragraph')
-    wr.setDisplayName('heading', 'heading')
-    wr.setDisplayName('list', 'list')
-    wr.setDisplayName('pre', 'preformatted')
-    wr.setDisplayName('toc', 'table of contents')
-    wr.setDisplayName('image', 'image')
-    wr.setDisplayName('table', 'table')
-    wr.setDisplayName('nlist', 'complex list')
-    wr.setDisplayName('dlist', 'definition list')
-    wr.setDisplayName('code', 'code element')
-    wr.setDisplayName('cite', 'citation')
+    wr.setDisplayName('doc', _('title'))
+    wr.setDisplayName('p', _('paragraph'))
+    wr.setDisplayName('heading', _('heading'))
+    wr.setDisplayName('list', _('list'))
+    wr.setDisplayName('pre', _('preformatted'))
+    wr.setDisplayName('toc', _('table of contents'))
+    wr.setDisplayName('image', _('image'))
+    wr.setDisplayName('table', _('table'))
+    wr.setDisplayName('nlist', _('complex list'))
+    wr.setDisplayName('dlist', _('definition list'))
+    wr.setDisplayName('code', _('code element'))
+    wr.setDisplayName('cite', _('citation'))
 
     wr.setAllowed('doc', [
         'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image', 
@@ -162,7 +162,7 @@ def registerDocEditor(root):
     if externalsource.AVAILABLE:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_normal'))
-        wr.setDisplayName('source', 'external source')
+        wr.setDisplayName('source', _('external source'))
         allowed = wr.getAllowed('doc')
         allowed.append('source')
         wr.setAllowed('doc', allowed)

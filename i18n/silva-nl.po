@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument 1.1\n"
-"POT-Creation-Date: Mon Nov 22 18:58:31 2004\n"
-"PO-Revision-Date: 2004-11-22 16:33+0100\n"
+"POT-Creation-Date: Mon Nov 22 16:14:16 2004\n"
+"PO-Revision-Date: 2004-11-22 19:22:35+0100\n"
 "Last-Translator: Eric Casteleijn <eric@infrae.com>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -26,6 +26,78 @@ msgstr "Geen charset opgegeven"
 #: /ServiceCodeSourceCharset.py:45
 msgid "Charset set"
 msgstr "Charset ingesteld"
+
+#: /install.py:145
+msgid "title"
+msgstr "titel"
+
+#: /install.py:146 /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:24
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
+msgid "paragraph"
+msgstr "alinea"
+
+#: /install.py:147 /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
+msgid "heading"
+msgstr "kop"
+
+#: /install.py:148 /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
+msgid "list"
+msgstr "lijst"
+
+#: /install.py:149 /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
+msgid "preformatted"
+msgstr "voorgeformatteerd"
+
+#: /install.py:150
+msgid "table of contents"
+msgstr "inhoudsopgave"
+
+#: /install.py:151
+msgid "image"
+msgstr "afbeelding"
+
+#: /install.py:152
+msgid "table"
+msgstr "tabel"
+
+#: /install.py:153
+msgid "complex list"
+msgstr "complexe lijst"
+
+#: /install.py:154 /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:31
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
+msgid "definition list"
+msgstr "definitie-lijst"
+
+#: /install.py:155
+msgid "code element"
+msgstr "code-element"
+
+#: /install.py:156 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+msgid "citation"
+msgstr "citaat"
+
+#: /install.py:165
+msgid "external source"
+msgstr "externe bron"
 
 #: /install.py:216 /install.py:284
 msgid "Paragraph"
@@ -140,12 +212,8 @@ msgid ""
 "The citation may contain multiple paragraphs. Separate them with an empty "
 "line."
 msgstr ""
-"Een 'citation' (citaat) kan bestaan uit meerdere alinea's. Alinea's worden "
+"Een citaat kan bestaan uit meerdere alinea's. Alinea's worden "
 "gescheiden door een lege regel."
-
-#: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
-msgid "citation"
-msgstr ""
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
@@ -207,46 +275,6 @@ msgstr "maak een hyperlink: alt-g"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
 msgid "element"
 msgstr "element"
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:24
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
-msgid "paragraph"
-msgstr "alinea"
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:29
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
-msgid "preformatted"
-msgstr "voorgeformatteerd"
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
-msgid "heading"
-msgstr "kop"
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
-msgid "list"
-msgstr "lijst"
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:31
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
-msgid "definition list"
-msgstr "definitie-lijst"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:33
@@ -685,7 +713,7 @@ msgstr "&lt;acronym title=\"volledige term\"&gt;acroniem&lt;/acronym&gt;"
 
 #: /widgets/macro_notes.pt:14
 msgid "&amp;lt; &lt; &#8212; &amp;gt; &gt;"
-msgstr ""
+msgstr "&amp;lt; &lt; &#8212; &amp;gt; &gt;"
 
 #: /widgets/macro_notes.pt:6
 msgid ""
@@ -710,7 +738,7 @@ msgstr "&lt;a href=\"http://www.x.yz\"&gt;tekst&lt;/a&gt;"
 
 #: /widgets/top/field/render.pt:17
 msgid "&nbsp;subeditor&nbsp;"
-msgstr ""
+msgstr "&nbsp;subeditor&nbsp;"
 
 #: /widgets/top/nlist/render.pt:31
 msgid "Type:"
