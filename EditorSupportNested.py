@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.2 $
+# $Revision: 1.21.4.3 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -105,8 +105,7 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(self.escape_text(mangle.entities(
-                    child.nodeValue)))
+                result.append(self.escape_text(child.nodeValue))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -168,6 +167,13 @@ class EditorSupport(SimpleItem):
         """
         return self.render_text_as_editable(node)
 
+    def render_pre_as_editable(self, node):
+        result = ""
+        for child in node.childNodes:
+            assert child.nodeType == child.TEXT_NODE
+            assert child.firstChild is None
+            result += child.nodeValue
+        return result
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
         'editable_to_dom')
@@ -207,9 +213,7 @@ class EditorSupport(SimpleItem):
         """
         # since we don't use Formulator we get UTF8 from the forms, so encode
         # manually here
-        # use input convert 2, since the 'normal' one strips whitespace
         st = mangle.String.inputConvert(st, preserve_whitespace=1)
-        st = mangle.entities(st)
         st = self._unifyLineBreak(st)
         node = node._node
         doc = node.ownerDocument

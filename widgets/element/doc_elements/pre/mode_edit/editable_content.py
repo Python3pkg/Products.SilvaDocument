@@ -9,4 +9,4 @@
 ##
 node = context.REQUEST.node
 editorsupport = context.service_editorsupport
-return editorsupport.render_text_as_editable(node)
+return editorsupport.render_pre_as_editable(node)

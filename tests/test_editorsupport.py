@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.5 2003/12/29 17:00:04 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.6 2003/12/29 20:28:17 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -597,6 +597,7 @@ class InterpreterTest(unittest.TestCase):
             expected_xml = parseString('<p>'+result+'</p>').toxml()
             self.assertEquals(xml, expected_xml)
 
+
 class EditableTest(unittest.TestCase):
 
     def test_escape(self):
@@ -643,7 +644,22 @@ class EditableTest(unittest.TestCase):
             self.assertEquals(expected_html, html,
                 '%s was converted to %s, instead of %s' % (editable,
                     html, expected_html))
-            
+
+    
+    def test_pre(self):
+        cases = [
+            ('&amp;foobar;', '&foobar;'),
+            ('&amp;&lt;&gt;&quot;', '&<>"'),
+            ('foo  bar', 'foo  bar'),
+        ]
+        
+        es = EditorSupport('')
+        for xml_text, expected_editable in cases:
+            dom = parseString('<pre>%s</pre>' % xml_text)
+            editable = es.render_pre_as_editable(dom.firstChild)
+            self.assertEquals(expected_editable, editable,
+                '%s was converted to %s, instead of %s' % (xml_text,
+                    editable, expected_editable))
     
 
 def test_suite():
