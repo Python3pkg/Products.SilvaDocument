@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xsl:stylesheet 
+<xsl:stylesheet
+  exclude-result-prefixes="doc silva"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
   xmlns:doc="http://infrae.com/ns/silva_document"
+  xmlns:silva="http://www.infrae.com/xml"
   version="1.0">
   <xsl:output method="xml" encoding="UTF-8" />
   <xsl:strip-space elements="*" />
@@ -15,6 +17,14 @@
     <xsl:apply-templates />
   </xsl:template>
 
+  <xsl:template match="doc:doc">
+    <xsl:apply-templates />
+  </xsl:template>
+
+  <xsl:template match="silva:metadata" />
+
+  <xsl:template match="silva:title" />
+  
   <xsl:template match="doc:heading[@type='normal']">
     <h3 class="heading"><xsl:apply-templates mode="text-content" /></h3>
   </xsl:template>
