@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.5 2003/12/29 14:03:20 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.6 2003/12/29 17:00:04 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -88,11 +88,19 @@ class Token:
         INDEX_END: -1,
     }
 
+    _nesting = {
+        PARENTHESIS_OPEN: 1,
+        PARENTHESIS_CLOSE: 1,
+    }
+    _nesting.update(_start_tokens)
+    _nesting.update(_end_tokens)
+
     def __init__(self, kind, text):
         self.kind = kind
         self.text = text
         self.openclose = self._start_tokens.get(kind,
             self._end_tokens.get(kind, 0))
+        self.isNesting = self._nesting.get(kind, 0)
 
     def __len__(self):
         return len(self.text)
@@ -104,7 +112,7 @@ class Token:
         return self.text
 
     def __repr__(self):
-        return "<%s-%i>" % (self.text, self.kind)
+        return "<%r-%i>" % (self.text, self.kind)
 
 
 class ParserState:
@@ -122,6 +130,7 @@ class ParserState:
         self.parent = parent
         self.kindsum = 0
         self._valid_state = None
+        self.nesting_list = []
         
         openclose = None
         self.parenthesis = 0
@@ -135,6 +144,7 @@ class ParserState:
             self.factor = parent.factor
             self.openclose_map = parent.openclose_map.copy()
             self.kindsum = parent.kindsum
+            self.nesting_list = parent.nesting_list[:]
         if openclose is None:
             openclose = reduce(operator.add,
                 [t.openclose for t in tokens], 0)
@@ -143,8 +153,9 @@ class ParserState:
                 openclose += new_token.openclose
         self.openclose = openclose
         if new_token is not None:
-            self._calculate_parenthesis(new_token)
             self.kindsum += new_token.kind
+            if new_token.isNesting:
+                self.nesting_list.append(new_token)
 
     def __repr__(self):
         return "<ParserState: %r>" % self.tokens
@@ -181,21 +192,6 @@ class ParserState:
         self._valid_state = 1
         return 1
             
-    def _calculate_parenthesis(self, token):
-        f = self.factor
-        p = self.parenthesis
-        t = token
-        if t.kind == t.PARENTHESIS_OPEN:
-            f += 1
-        elif t.kind == t.PARENTHESIS_CLOSE:
-            f -= 1
-        elif t._start_tokens.get(t.kind, 0):
-            p += f
-        elif t._end_tokens.get(t.kind, 0):
-            p -= f
-        self.factor = f
-        self.parenthesis = p
-
     def _new_token(self):
         if self.parent is None:
             return None
@@ -251,7 +247,12 @@ class Parser(HeuristicSearch):
         tokens = float(len(node.tokens))
         consumed = float(node.consumed)
         kind_sum = node.kindsum
-        parenthesis = -1/1.1**abs(node.parenthesis) + 2
+        parenthesis = 1
+        if (len(node.tokens) > 1 
+                and len(node.nesting_list) > 1
+                and node.tokens[-1].kind == Token.PARENTHESIS_CLOSE
+                and node.nesting_list[-2].kind == Token.PARENTHESIS_OPEN):
+            parenthesis = 0.8
         pattern_badness = 0
         if (len(node.tokens) > 1 and
                 node.tokens[-1].kind == Token.PARENTHESIS_OPEN and
@@ -260,6 +261,8 @@ class Parser(HeuristicSearch):
             pattern_badness += 1 
         h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed) * parenthesis + \
             pattern_badness
+        #if node.text == "click ((Journal & Books|simple?field_search=reference_type:(journal%20book))) to see":
+        #    print h, node.tokens
         return h
 
     def getResult(self):
@@ -629,7 +632,7 @@ class Interpreter:
         return node
   
     def link_target(self, token, node):
-        target = ''
+        target = node.getAttribute('target')
         node.setAttribute('target', target + token.text)
         return node
     

@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.4 2003/12/29 14:03:20 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.5 2003/12/29 17:00:04 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -192,14 +192,14 @@ voormalig directeur Strategie Aegon N.V."""]
             self.assertEquals(t.kind, t.LINK_URL)
             self.assertEquals(t.text, url)
             
-    def _test_urls(self, texts, url):
+    def _test_urls(self, texts, url, token_id=Token.LINK_URL):
         for text, length, url_at in texts:
             p = PParser(text)
             p.run()
             t = p.getResult().tokens
             self.assertEquals(len(t), length, "%d != %d in %r -> %r" % (
                 len(t), length, text, t))
-            self.assertEquals(t[url_at].kind, Token.LINK_URL)
+            self.assertEquals(t[url_at].kind, token_id)
             self.assertEquals(t[url_at].text, url)
 
     def test_url2(self):
@@ -232,7 +232,17 @@ voormalig directeur Strategie Aegon N.V."""]
             ]
         url = "http://www.x.com/xx/i.html"
         self._test_urls(texts, url)
-            
+           
+    def test_url5(self):
+        texts = [
+            ('foo\nif you ((click this link|edit))', 15, 13),
+            ('foo\nif you ((click this link|edit))).', 17, 13),
+            ('foo\n(if you ((click this link|edit))', 16, 14),
+            ('foo\n(if you ((click this link|edit)))', 17, 14),
+            ]
+        url = "edit"
+        self._test_urls(texts, url, token_id=Token.CHAR)
+           
     def test_link(self):
         parser = PParser("click ((here|http://here.com)) to see")
         parser.run()
@@ -265,6 +275,7 @@ Users think it's dumb.""")
         self.assertEquals(t[5].kind, Token.LINK_URL)
         self.assertEquals(t[6].kind, Token.LINK_SEP)
         self.assertEquals(t[7].text, '_')
+        self.assertEquals(t[8].text, 'top')
         self.assertEquals(t[9].kind, Token.LINK_END)
 
     def test_linktarget2(self):
@@ -565,6 +576,16 @@ class InterpreterTest(unittest.TestCase):
             (t.LINK_SEP, '|'),
             (t.LINK_END, '))'),
             ], '<link url="http://slashdot.org" target="_blank">slashdot</link>'),
+        ([
+            (t.LINK_START, "(("),
+            (t.CHAR, 'slashdot'),
+            (t.LINK_SEP, '|'),
+            (t.LINK_URL, 'http://slashdot.org'),
+            (t.LINK_SEP, '|'),
+            (t.CHAR, '_'),
+            (t.CHAR, 'top'),
+            (t.LINK_END, '))'),
+            ], '<link url="http://slashdot.org" target="_top">slashdot</link>'),
         ]
 
     def test_helper(self):
