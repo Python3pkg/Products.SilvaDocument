@@ -1,10 +1,11 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: __init__.py,v 1.6 2003/09/29 08:20:35 zagy Exp $
+# $Id: __init__.py,v 1.6.10.1 2004/01/28 14:44:44 guido Exp $
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry
 import EditorSupportNested
+import ServiceCodeSourceCharset
 import install
 
 from Products.Silva.fssite import registerDirectory
@@ -20,6 +21,13 @@ def initialize(context):
     context.registerClass(
         EditorSupportNested.EditorSupport,
         constructors = (EditorSupportNested.manage_addEditorSupport, ),
+        icon = "www/editorservice.gif"
+        )
+    
+    context.registerClass(
+        ServiceCodeSourceCharset.CodeSourceCharsetService,
+        constructors = (ServiceCodeSourceCharset.manage_addCodeSourceCharsetServiceForm, 
+                        ServiceCodeSourceCharset.manage_addCodeSourceCharsetService),
         icon = "www/editorservice.gif"
         )
     
