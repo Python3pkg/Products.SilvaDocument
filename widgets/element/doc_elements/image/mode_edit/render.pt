@@ -18,24 +18,26 @@
     </tr>
     <tr>
       <td class="invisible align-right" style="background:#d7e4f0;">
-        url for image hyperlink
+        <input type="button" class="navigation" name="" value="get link reference..." title="create a hyperlink: alt-l" accesskey="l"
+          tal:define="container node/get_container"
+          tal:attributes="onclick python:'getAssetReference(\'%s/edit/hyperlink_lookup?asset_context=%s\', \'_reference_\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
       </td>
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">
-        <label>
-            <input type="radio" name="link_selector" value="hiresimg_url" 
-                tal:attributes="checked python:node.getAttribute('link_to_hires') == '1'"/>
-            <span style="width:100%">High resolution version of image</span>
-        </label>
-        <br />
         <input type="radio" name="link_selector" value="entered_url"
                 tal:attributes="checked python:node.getAttribute('link_to_hires') != '1'"/>
-        <input style="width: 100%;" type="text" name="link" value=""
+        <input id="data" style="width: 100%;" type="text" name="link" value=""
             tal:attributes="value python:node.getAttribute('link');"  />
+        <br />
+        <label>
+          <input type="radio" name="link_selector" value="hiresimg_url" 
+            tal:attributes="checked python:node.getAttribute('link_to_hires') == '1'"/>
+          <span style="width:100%">High resolution version of image</span>
+        </label>
       </td>
     </tr>
     <tr>
       <td class="invisible align-right">
-        title for hyperlink
+        tooltip for hyperlink
       </td>
       <td class="invisible align-left" colspan="3">  
         <input style="width:100%;" type="text" name="title" value=""
@@ -47,17 +49,17 @@
         target frame
       </td>
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">  
-        <label>
-            <input type="radio" name="target_selector" value="_blank"
-              tal:attributes="checked python:node.getAttribute('target') == '_blank'"/>
-            new window
-        </label>
-        <br />
         <input type="radio" name="target_selector" value="_user" 
             tal:attributes="checked python:node.getAttribute('target') != '_blank'"
         />
         <input style="width:100%;" type="text" name="target" value=""
           tal:attributes="value python:node.getAttribute('target');"  />
+        <br />
+        <label>
+          <input type="radio" name="target_selector" value="_blank"
+            tal:attributes="checked python:node.getAttribute('target') == '_blank'"/>
+          new window
+        </label>
       </td>
     </tr>
     <tr>
