@@ -30,20 +30,21 @@ def install(root):
 
     # set up/refresh some mandatory services
     configureMiscServices(root)
+    
+    root.service_metadata.addTypesMapping(
+        ('Silva Document Version', ), ('silva-content', 'silva-extra'))
+    root.service_metadata.initializeMetadata()
 
-    mapping = root.service_metadata.getTypeMapping()
-    mapping.editMappings('', [
-        {'type': 'Silva Document Version',
-        'chain': 'silva-content, silva-extra'},
-        ])
-
-    root.service_containerpolicy.register('Silva Document',
-        Document.SilvaDocumentPolicy, -1)
+    root.service_containerpolicy.register(
+        'Silva Document', Document.SilvaDocumentPolicy, -1)
 
     if hasattr(root, 'service_codesource_charset'):
-        root.manage_renameObject('service_codesource_charset', 'service_old_codesource_charset')
+        root.manage_renameObject(
+            'service_codesource_charset', 'service_old_codesource_charset')
     elif not hasattr(root, 'service_old_codesource_charset'):
-        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_old_codesource_charset', 'Service Charset for Codesources')
+        root.manage_addProduct[
+            'SilvaDocument'].manage_addCodeSourceCharsetService(
+            'service_old_codesource_charset', 'Service Charset for Codesources')
         
 def uninstall(root):
     unregisterViews(root.service_view_registry)
