@@ -35,11 +35,14 @@ for child in childNodes:
 # now add new items
 doc = node.ownerDocument
 
+lines = data.split('\r\n')
+lines = [ line.strip() for line in lines ]
+data = '\r\n'.join(lines)
 items = data.split('\r\n\r\n')
 for item in items:
     item = item.strip()
     if not item:
         continue
     li = doc.createElement('li')
-    editorsupport.replace_text(li, item.strip())
+    editorsupport.replace_text(li, item)
     node.appendChild(li)
