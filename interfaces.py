@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: interfaces.py,v 1.1.2.2.10.2 2004/05/24 20:28:43 zagy Exp $
+# $Id: interfaces.py,v 1.1.2.2.10.3 2004/05/25 09:57:18 zagy Exp $
 
 from Interface import Interface, Attribute
 
@@ -78,7 +78,17 @@ class IParser(Interface):
         
         it should/must (XXX) always return a result
         """
-        
+       
+    def getInterpreter(state):
+        """return interperter instance of given state
+
+        getInterpreter returns an IInterpreter instance on which parse() can be called
+        without further settings. The interpreter must be initialized with the given 
+        state.
+        """
+    
+    def getToken(token_id, token_text):
+        """return IToken instance"""
   
 class IInterpreter(Interface):
     """interprets an IParserState"""
