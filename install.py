@@ -135,27 +135,27 @@ def registerDocEditor(root):
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
 
-    wr.setDisplayName('doc', 'Title')
-    wr.setDisplayName('p', 'Paragraph')
-    wr.setDisplayName('heading', 'Heading')
-    wr.setDisplayName('list', 'List')
-    wr.setDisplayName('pre', 'Preformatted')
-    wr.setDisplayName('toc', 'Table of contents')
-    wr.setDisplayName('image', 'Image')
-    wr.setDisplayName('table', 'Table')
-    wr.setDisplayName('nlist', 'Complex list')
-    wr.setDisplayName('dlist', 'Definition list')
-    wr.setDisplayName('code', 'Code Element')
-    wr.setDisplayName('externaldata', 'External Data')
-    wr.setDisplayName('cite', 'Citation')
+    wr.setDisplayName('doc', 'title')
+    wr.setDisplayName('p', 'paragraph')
+    wr.setDisplayName('heading', 'heading')
+    wr.setDisplayName('list', 'list')
+    wr.setDisplayName('pre', 'preformatted')
+    wr.setDisplayName('toc', 'table of contents')
+    wr.setDisplayName('image', 'image')
+    wr.setDisplayName('table', 'table')
+    wr.setDisplayName('nlist', 'complex list')
+    wr.setDisplayName('dlist', 'definition list')
+    wr.setDisplayName('code', 'code element')
+    wr.setDisplayName('externaldata', 'external data')
+    wr.setDisplayName('cite', 'citation')
 
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'dlist', 'pre', 'image',
-                  'table', 'nlist', 'toc', 'code', 'externaldata', 'cite'])
+    wr.setAllowed('doc', ['p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image',
+                  'table', 'nlist', 'toc', 'code', 'externaldata'])
 
     if _external_sources_available:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_normal'))
-        wr.setDisplayName('source', 'External Source')
+        wr.setDisplayName('source', 'external source')
         allowed = wr.getAllowed('doc')
         allowed.append('source')
         wr.setAllowed('doc', allowed)
