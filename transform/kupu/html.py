@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.13 $'
+__version__='$Revision: 1.1.2.14 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -721,7 +721,7 @@ class div(Element):
                         class_=self.attr.class_
                     )
         else:
-            return Frag()
+            return Frag(fix_structure(self.content, context))
 
     def do_not_fix_content(self):
         return 1
