@@ -3,10 +3,10 @@ See also LICENSE.txt
 
 Meta::
   
-  Valid for:  Silva 1.1
+  Valid for:  Silva 1.2
   Author:     Christian Zagrodnick, Walco van Loon
   Email:      cz+gocept.com, walco at infrae.com
-  CVS:        $Id: README.txt,v 1.6 2005/01/19 14:28:50 faassen Exp $
+  CVS:        $Id: README.txt,v 1.7 2005/01/21 13:56:52 faassen Exp $
 
 Silva Document
 
