@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14.2.1 $'
+__version__='$Revision: 1.14.2.2 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -152,7 +152,9 @@ def fix_structure(inputels, context, allowtables=0):
         # flatten p's by ignoring the element itself and walking through it as 
         # if it's contents are part of the current element's contents
         if el.name() == 'p' and allowtables:
-            ptype = el.getattr('class', 'normal')
+            ptype = str(el.getattr('class', 'normal'))
+            if ptype == 'p':
+                ptype = 'normal'
             for child in el.find():
                 foundtables = fix_tables_and_divs(child, context)
                 foundtoplevel = find_and_convert_toplevel(el, context)
@@ -171,7 +173,9 @@ def fix_structure(inputels, context, allowtables=0):
                 textbuf = []
         else:
             if el.name() == 'p':
-                ptype = el.getattr('class', 'normal')
+                ptype = str(el.getattr('class', 'normal'))
+                if ptype == 'p':
+                    ptype = 'normal'
             foundtables = []
             if allowtables:
                 foundtables = fix_tables_and_divs(el, context)
