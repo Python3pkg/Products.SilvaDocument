@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.16 $'
+__version__='$Revision: 1.17 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -88,6 +88,7 @@ def fix_tables_and_divs(el, context, tables=None):
         if child.name() in ['table', 'div']:
             foundtables.append(child.convert(context))
             child.should_be_removed = 1
+            print 'fixing:', child.getattr('id')
         fix_tables_and_divs(child, context, foundtables)
     return foundtables
 
@@ -106,7 +107,8 @@ def fix_toplevel(el, context):
 
 def find_and_convert_toplevel(el, context, els=None):
     if (el.name() == 'Text' or el.name() in CONTAINERS or 
-            (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content())):
+            (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content()) or
+            hasattr(el, 'should_be_removed')):
         return []
     if  els is None:
         foundels = []
@@ -114,6 +116,8 @@ def find_and_convert_toplevel(el, context, els=None):
         foundels = els
     children = el.find()
     for child in children:
+        if hasattr(child, 'should_be_removed'):
+            continue
         if el.name() in ['ol', 'ul'] and child.name() in ['ol', 'ul']:
             continue
         find_and_convert_toplevel(child, context, foundels)
@@ -654,6 +658,7 @@ class table(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
+        self.should_be_removed = 1
         rows = self.content.find('tr')
         highest = 0
         if len(rows)>0:
@@ -724,7 +729,10 @@ class th(Element):
 class div(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
+            print 'removing', self.getattr('id')
             return Frag()
+        self.should_be_removed = 1
+        print self.getattr('id')
         if self.attr.toc_depth:
             return silva.toc(
                 toc_depth=self.attr.toc_depth
