@@ -14,7 +14,7 @@
     editor python: member and member.editor() or 'forms_editor';
     refresh_time python:19 * 60;
     "
-  i18n:domain="silva">
+  >
 <metal:block use-macro="here/macro_tab_edit/macros/editor">
 
 <metal:block fill-slot="editor_css">
