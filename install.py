@@ -32,7 +32,7 @@ def install(root):
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     unconfigureXMLWidgets(root)
-    root.service_views.manage_delObjects(['Silva'])
+    root.service_views.manage_delObjects(['SilvaDocument'])
     root.manage_delObjects(['service_editorsupport'])
     # uninstall metadata mapping?
     
