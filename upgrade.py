@@ -39,8 +39,12 @@ class UpgradeDocumentXML:
         node = dom.firstChild
         while node:
             if node.nodeType == node.ELEMENT_NODE and node.nodeName == 'index':
-                while node.firstChild:
-                    node.parentNode.insertAfter(node.firstChild, node)
+                if node.nextSibling:
+                    while node.lastChild:
+                        node.parentNode.insertBefore(node.lastChild, node.nextSibling)
+                else:
+                    while node.firstChild:
+                        node.parentNode.appendChild(node.firstChild)
             next = node.firstChild
             if not next:
                 next = node.nextSibling
