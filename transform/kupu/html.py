@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.9 $'
+__version__='$Revision: 1.10 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -716,13 +716,17 @@ class th(Element):
 
 class div(Element):
     def convert(self, context):
+        print 'div'
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
+            print 'should be removed'
             return Frag()
         if self.attr.toc_depth:
+            print 'toc'
             return silva.toc(
                 toc_depth=self.attr.toc_depth
             )
         elif self.getattr('is_citation', None):
+            print 'citation'
             content = fix_structure(self.content, context)
             return silva.cite(
                 [silva.author(self.attr.author), 
@@ -730,6 +734,7 @@ class div(Element):
                 Frag(content)]
             )
         elif self.attr.source_id:
+            print 'source'
             content = []
             for key, value in self.attr.__dict__.items():
                 if key != 'source_id' and key != 'class':
@@ -740,6 +745,7 @@ class div(Element):
                         class_=self.attr.class_
                     )
         else:
+            print 'plain div'
             return Frag(fix_structure(self.content, context))
 
     def do_not_fix_content(self):
