@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.3 $
+# $Revision: 1.21.4.4 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -18,10 +18,9 @@ from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 
 from Products.SilvaDocument.silvaparser import \
-    PParser, HeadingParser, LinkParser
+    PParser, HeadingParser, LinkParser, URL_PATTERN
 
 # from silvaparser, thanks to zagy:
-URL_PATTERN = r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
 
 class EditorSupport(SimpleItem):
