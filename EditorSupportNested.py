@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.7 $
+# $Revision: 1.21.4.8 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -278,10 +278,16 @@ class EditorSupport(SimpleItem):
         return self.render_text_as_html(dom.firstChild)
 
     def _link_absolute_url(self, context, path):
+        # If path is empty (can it be?), just return it
+        if path == '':
+            return path
         # If it is a url already, return it:
         if _url_match.match(path):
             return path
-        # It is not an URL, so treat it as a path.
+        # Is it a query of anchor fragment? If so, return it
+        if path[0] in ['?', '#']:
+            return path
+        # It is not an URL, query or anchor, so treat it as a path.
         # If it is a relative path, treat is as such:
         if not path.startswith('/'):
             container = context.get_container()
