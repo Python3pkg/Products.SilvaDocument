@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_widgets.py,v 1.1 2003/10/18 16:06:55 clemens Exp $
+# $Id: test_widgets.py,v 1.2 2003/10/18 16:47:26 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -88,9 +88,21 @@ class DocumentEditTestCase(SilvaTestCase.SilvaTestCase):
         request.form['element_type']='normal'
         edit_xml[p1_path].edit['save']()
         self.assertEquals(u'',new_paragraph.firstChild.data)
-        # we could test a lot more, but this is enough
-        # to know how to write the next test        
-        
+
+        edit_xml[p1_path].edit['save_and_exit']()
+        self.assertEquals(u'',new_paragraph.firstChild.data)
+
+        edit_xml[p1_path].edit['save_and_insert']()
+        self.assertEquals(u'',new_paragraph.firstChild.data)
+
+        edit_xml[p1_path].edit['insert'](what='p')
+        self.assertEquals(1, len(doc_xml.childNodes))
+
+        edit_xml[p1_path].edit['delete']()
+        self.assertEquals(1, len(doc_xml.childNodes))
+
+        # we could test some more, but we would need more data
+        # (e.g. to move up/down or edit a table ...)
 
 def test_suite():
     suite = unittest.TestSuite()
