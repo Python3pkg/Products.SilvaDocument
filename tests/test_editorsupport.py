@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.6 2004/05/25 07:03:44 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.7 2004/05/25 09:55:34 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -476,6 +476,7 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
 
 class InterpreterTest(unittest.TestCase):
 
+    interpreter = Interpreter
     t = Token
     helper_tests = [
         ([
@@ -659,7 +660,7 @@ class InterpreterTest(unittest.TestCase):
     def test_helper(self):
         for tokens, result in self.helper_tests:
             tokens = [Token(kind, text) for kind, text in tokens]
-            ph = Interpreter(HelperState(tokens))
+            ph = self.interpreter(HelperState(tokens))
             ph.parse()
             xml = ph.dom.toxml()
             expected_xml = parseString('<p>'+result+'</p>').toxml()
