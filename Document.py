@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.26 $
+# $Revision: 1.27 $
 # Zope
 
 from StringIO import StringIO
@@ -32,6 +32,7 @@ from transform.base import Context
 
 from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
 from Products.Silva.interfaces import IVersion
+from Products.Silva.i18n import translate as _
 
 from Products.SilvaDocument import externalsource
 
@@ -43,12 +44,13 @@ icon="www/silvadoc.gif"
 addable_priority = -1
 
 class Document(CatalogedVersionedContent):
+    __doc__ = _(
     """A Document is the basic unit of information in Silva. A document
         can -  much like word processor documents - contain text,
         lists, tables, headers, subheads, images, etc. Documents can have
         two (accessible) versions, one online for the public, another in
         process (editable or approved).
-    """
+    """)
     security = ClassSecurityInfo()
 
     meta_type = "Silva Document"

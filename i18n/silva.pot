@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Nov 23 12:32:51 2004\n"
+"POT-Creation-Date: Tue Nov 30 12:47:02 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -9,8 +9,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
 
-#: /Document.py:150
+#: /Document.py:155
 msgid "No version to store to!"
+msgstr ""
+
+#: /Document.py:50
+msgid ""
+"A Document is the basic unit of information in Silva. A document\n"
+"        can -  much like word processor documents - contain text,\n"
+"        lists, tables, headers, subheads, images, etc. Documents can have\n"
+"        two (accessible) versions, one online for the public, another in\n"
+"        process (editable or approved).\n"
+"    "
 msgstr ""
 
 #: /ServiceCodeSourceCharset.py:43
@@ -177,6 +187,22 @@ msgstr ""
 msgid "${name} attribute not found on tag ${self}"
 msgstr ""
 
+#: /views/add/Document/form.form:28
+msgid "default_add_form_object_id_title"
+msgstr ""
+
+#: /views/add/Document/form.form:30
+msgid "default_add_form_object_id_description"
+msgstr ""
+
+#: /views/add/Document/form.form:50
+msgid "default_add_form_object_title_title"
+msgstr ""
+
+#: /views/add/Document/form.form:51
+msgid "default_add_form_object_title_description"
+msgstr ""
+
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
 msgstr ""
@@ -197,7 +223,7 @@ msgstr ""
 msgid "publish"
 msgstr ""
 
-#: /views/edit/VersionedContent/Document/tab_edit.pt:105
+#: /views/edit/VersionedContent/Document/tab_edit.pt:106
 msgid "edit with the forms editor: alt-)"
 msgstr ""
 

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument 1.1\n"
-"POT-Creation-Date: Tue Nov 23 12:32:51 2004\n"
+"POT-Creation-Date: Tue Nov 30 12:24:41 2004\n"
 "PO-Revision-Date: 2004-11-29 19:10+0100\n"
 "Last-Translator: Eric Casteleijn <eric@infrae.com>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -15,9 +15,19 @@ msgstr ""
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
 
-#: /Document.py:150
+#: /Document.py:155
 msgid "No version to store to!"
 msgstr "Geen versie om naar op te slaan!"
+
+#: /Document.py:50
+msgid ""
+"A Document is the basic unit of information in Silva. A document\n"
+"        can -  much like word processor documents - contain text,\n"
+"        lists, tables, headers, subheads, images, etc. Documents can have\n"
+"        two (accessible) versions, one online for the public, another in\n"
+"        process (editable or approved).\n"
+"    "
+msgstr "Een document is het Silva equivalent van een tekstverwerkerdocument"
 
 #: /ServiceCodeSourceCharset.py:43
 msgid "No charset entered"
@@ -171,6 +181,22 @@ msgstr "not implemented, override in inheriting class"
 msgid "${name} attribute not found on tag ${self}"
 msgstr "${name}-attribuut niet gevonden op tag ${self}"
 
+#: /views/add/Document/form.form:28
+msgid "default_add_form_object_id_title"
+msgstr ""
+
+#: /views/add/Document/form.form:30
+msgid "default_add_form_object_id_description"
+msgstr ""
+
+#: /views/add/Document/form.form:50
+msgid "default_add_form_object_title_title"
+msgstr ""
+
+#: /views/add/Document/form.form:51
+msgid "default_add_form_object_title_description"
+msgstr ""
+
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
 msgstr "bewerken"
@@ -191,7 +217,7 @@ msgstr "toegang"
 msgid "publish"
 msgstr "publiceren"
 
-#: /views/edit/VersionedContent/Document/tab_edit.pt:105
+#: /views/edit/VersionedContent/Document/tab_edit.pt:106
 msgid "edit with the forms editor: alt-)"
 msgstr "bewerken met de forms editor: alt-)"
 
@@ -228,8 +254,9 @@ msgstr "Code-element: ${title_or_id} in ${path}"
 msgid ""
 "They should be located in a (non-Silva) folder in the ZMI named "
 "${code_source}."
-msgstr "Die zouden in een (niet-Silva) map in de ZMI met de naam "
-"${code_source} moeten staan."
+msgstr ""
+"Die zouden in een (niet-Silva) map in de ZMI met de naam ${code_source} "
+"moeten staan."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
