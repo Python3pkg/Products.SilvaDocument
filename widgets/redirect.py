@@ -11,7 +11,7 @@ redirect_url = context.REQUEST.node.content_url() + '/edit/tab_edit#focus'
 
 if context.REQUEST['HTTP_USER_AGENT'].startswith('Mozilla/4.77') \
    or context.REQUEST['HTTP_USER_AGENT'].find('Konqueror') > -1 \
-   or context.REQUEST['HTTP_USER_AGENT'].startswith('Opera/'):
+   or context.REQUEST['HTTP_USER_AGENT'].find('Opera') > -1:
     
     return '<html><head><META HTTP-EQUIV="refresh" CONTENT="0; URL=%s"></head><body bgcolor="#FFFFFF"></body></html>' % redirect_url
 
