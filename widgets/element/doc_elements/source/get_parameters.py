@@ -7,8 +7,8 @@ for child in [child for child in node.childNodes
                      and child.nodeName == 'parameter']:
     child.normalize()
     name = child.getAttribute('key')
-    value = [str(child.nodeValue) for child in child.childNodes 
-                if child.nodeType == child.TEXT_NODE]
+    value = [child.nodeValue for child in child.childNodes 
+             if child.nodeType == child.TEXT_NODE]
     value = ' '.join(value)
     parameters[name] = value
 
