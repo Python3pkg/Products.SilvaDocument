@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -425,7 +425,7 @@ class Parser(HeuristicSearch):
             return 10
         token_kinds = [ t.kind for t in node.tokens ]
         kind_sum = reduce(operator.add, token_kinds)
-        h = ((kind_sum//10)/10.0/tokens + tokens/consumed)
+        h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed)
         return h
 
     def initialize_patterns(self):
