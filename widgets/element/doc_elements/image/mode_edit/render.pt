@@ -111,8 +111,14 @@
     <li>
       Set a URL to make this image a link.
     </li>
+    <li>
+      It&#8217;s good practice to give the link of an image a title, which will appear as a tooltip.
+    </li>
+    <li>
+      Set an optional target for the link, such as &#8216;_blank&#8217; to open a new window.
+    </li>
     <li>A &#8216;float&#8217; alignment allows the next document element
-      to wrap around the image &#8211; if there&#8217;s room.
+      to wrap &#8211; if there&#8217;s room.
     </li>
   </ul>
 </metal:block>
