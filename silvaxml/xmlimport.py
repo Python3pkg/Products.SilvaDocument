@@ -24,7 +24,7 @@ class DocumentHandler(SilvaBaseHandler):
             self._parent._setObject(uid, object)
             self._result = getattr(self._parent, uid)
 
-    def EndElementNS(self, name, qname):
+    def endElementNS(self, name, qname):
         if name == (NS_URI, 'document'):
             pass
         
@@ -46,8 +46,7 @@ class DocumentContentHandler(SilvaBaseHandler):
             
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
-            self._result.set_title(
-                self._metadata['silva-content']['maintitle'])
+            self.setMaintitle()
             self.storeMetadata()
             self.storeWorkflow()
         
