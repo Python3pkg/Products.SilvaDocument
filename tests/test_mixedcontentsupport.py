@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_mixedcontentsupport.py,v 1.2 2004/07/21 11:46:42 jw Exp $
+# $Id: test_mixedcontentsupport.py,v 1.3 2005/01/13 15:53:58 guido Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -99,8 +99,8 @@ def main():
 
 if __name__ == '__main__':
     framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    main()
+#else:
+#    # While framework.py provides its own test_suite()
+#    # method the testrunner utility does not.
+#    main()
     
