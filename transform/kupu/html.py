@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.15 $'
+__version__='$Revision: 1.1.2.16 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -560,7 +560,7 @@ class a(Element):
                 if not hasattr(image, 'attr'):
                     # empty frag
                     return image
-                if url == '%s/hires_image' % img.attr.src:
+                if url == '%s?hires' % img.attr.src:
                     image.attr.link_to_hires = '1'
                 else:
                     image.attr.link_to_hires = '0'

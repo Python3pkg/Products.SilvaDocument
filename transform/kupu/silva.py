@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.19 $'
+__version__='$Revision: 1.1.2.20 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -220,7 +220,7 @@ class link(SilvaElement):
                             img.content.convert(context),
                             src=img.getattr('path'),
                             link_to_hires='1',
-                            link='%s/hires_image' % img.getattr('path'),
+                            link='%s?hires' % img.getattr('path'),
                             target=img.getattr('target', '_self'),
                             alignment=img.getattr('alignment', 'default'),
                     )
