@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.22 $'
+__version__='$Revision: 1.1.2.23 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -110,7 +110,7 @@ class br(Element):
 class list(SilvaElement):
     """ Simple lists """
     def convert(self, context):
-        listtype = self.getattr('type')
+        listtype = self.getattr('type', u'none')
         listtype = listtype or u'none'
 
         attrs = {}
