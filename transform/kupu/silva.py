@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.8 $'
+__version__='$Revision: 1.9 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -259,6 +259,7 @@ class image(SilvaElement):
                         src = src,
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
+                        title = self.getattr('title', ''),
                   )
         elif not self.hasattr('link') or str(self.getattr('link')).strip() == '':
             return html.img(
@@ -267,16 +268,18 @@ class image(SilvaElement):
                         link_to_hires='1',
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
+                        title = self.getattr('title', ''),
                     ),
         basesrcpath = src
         link = self.getattr('link')
         if link == '%s?hires' % src:
             return html.img(
                         self.content.convert(context),
-                        src=src,
-                        link_to_hires='1',
-                        target=self.getattr('target', '_self'),
-                        alignment=self.getattr('alignment', 'default'),
+                        src = src,
+                        link_to_hires = '1',
+                        target = self.getattr('target', '_self'),
+                        alignment = self.getattr('alignment', 'default'),
+                        title = self.getattr('title', ''),
                     )
         else:
             return html.img(
@@ -286,6 +289,7 @@ class image(SilvaElement):
                         link=self.getattr('link', ''),
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
+                        title = self.getattr('title', ''),
                 )
 
 class pre(SilvaElement):
