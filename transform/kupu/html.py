@@ -5,7 +5,7 @@ module for conversion from current
    
        to
 
-   silva (0.9.1) 
+   silva (1.2) 
 
 This transformation tries to stay close to
 how silva maps its xml to html. 
@@ -25,7 +25,9 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.21 $'
+__version__='$Revision: 1.22 $'
+
+from zExceptions import NotFound
 
 try:
     from transform.base import Element, Text, Frag
