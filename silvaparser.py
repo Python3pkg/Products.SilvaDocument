@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.2 2003/12/11 14:24:57 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.3 2003/12/12 16:31:25 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -10,7 +10,7 @@ from xml.dom.minidom import parseString
 
 # sibling
 from Products.SilvaDocument.search import Search, HeuristicSearch
-from Products.SilvaDocument.interfaces import IParserState
+from Products.SilvaDocument.interfaces import IParserState, IHeuristicsNode
 
 class InterpreterError(Exception):
     pass
@@ -101,7 +101,7 @@ class Token:
 class ParserState:
     """State of parsing silva markup"""
     
-    __implements__ = IParserState
+    __implements__ = IParserState, IHeuristicsNode
     
     def __init__(self, text, consumed, tokens, parent=None):
         self.text = text
@@ -112,12 +112,13 @@ class ParserState:
         self.openclose_map = {}
         self.parent = parent
         self.kindsum = 0
+        self._valid_state = None
         
         openclose = None
         self.parenthesis = 0
         self.factor = 0
         
-        new_tokens = self._new_tokens()
+        new_token = self._new_token()
 
         if parent is not None:
             openclose = parent.openclose
@@ -129,15 +130,18 @@ class ParserState:
             openclose = reduce(operator.add,
                 [t.openclose for t in tokens], 0)
         else:
-            for new_token in new_tokens:
+            if new_token is not None:
                 openclose += new_token.openclose
         self.openclose = openclose
-        for new_token in new_tokens:
+        if new_token is not None:
             self._calculate_parenthesis(new_token)
             self.kindsum += new_token.kind
 
     def __repr__(self):
         return "<ParserState: %r>" % self.tokens
+
+    def __cmp__(self, other):
+        return cmp(self.hval, other.hval)
 
     def toxml(self):
         # parsed is set externally... 
@@ -148,18 +152,24 @@ class ParserState:
     def valid(self):
         # returns 0 if self.tokens will not result in something interpretable
         # anyway; this is mainly for speed reasons.
+        if self._valid_state is not None:
+            return self._valid_state
         if self.openclose < 0:
+            self._valid_state = 0
             return 0
         openclose_map = self.openclose_map
-        for token in self._new_tokens():
-            if token.openclose == 0:
-                continue
-            kind = token._start_end_map.get(token.kind, token.kind)
-            old_val = openclose_map.setdefault(kind, 0)
-            new_val = token.openclose + old_val
-            if new_val not in (0, 1):
-                return 0
-            openclose_map[kind] = new_val
+        token = self._new_token()
+        if token.openclose == 0:
+            self._valid_state = 1
+            return 1
+        kind = token._start_end_map.get(token.kind, token.kind)
+        old_val = openclose_map.setdefault(kind, 0)
+        new_val = token.openclose + old_val
+        if new_val not in (0, 1):
+            self._valid_state = 0
+            return 0
+        openclose_map[kind] = new_val
+        self._valid_state = 1
         return 1
             
     def _calculate_parenthesis(self, token):
@@ -177,10 +187,10 @@ class ParserState:
         self.factor = f
         self.parenthesis = p
 
-    def _new_tokens(self):
+    def _new_token(self):
         if self.parent is None:
-            return self.tokens[:]
-        return self.tokens[len(self.parent.tokens):]
+            return None
+        return self.tokens[-1]
 
 
 class Parser(HeuristicSearch):

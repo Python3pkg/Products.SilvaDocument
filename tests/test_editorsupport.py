@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.1 2003/12/10 13:13:45 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.2 2003/12/12 16:31:25 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -337,13 +337,9 @@ Users think it's dumb.""")
         parser.run()
 
     def test_paras(self):
-        def run(): 
-            for p_text in self.complicated_paras:
-                p = PParser(p_text)
-                p.run()
-        from hotshot import Profile
-        p = Profile('paras.hotshot')
-        p.runcall(run)
+        for p_text in self.complicated_paras:
+            p = PParser(p_text)
+            p.run()
             
     def test_index(self):
         parser = PParser("A Word[[Word]] blafasel")
@@ -625,10 +621,14 @@ def test_suite():
     return suite
 
 def main():
+    from hotshot import Profile
+    p = Profile('paras.hotshot')
     unittest.TextTestRunner(verbosity=2).run(test_suite())
 
 if __name__ == '__main__':
-    framework()
+    from hotshot import Profile
+    p = Profile('editorsupport.hotshot')
+    p.runcall(framework)
 else:
     # While framework.py provides its own test_suite()
     # method the testrunner utility does not.
