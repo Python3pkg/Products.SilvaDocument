@@ -21,11 +21,10 @@ follows the ideas used with XIST (but is simpler).
 Note that we can't use XIST itself as long as 
 silva is running on a Zope version that 
 doesn't allow python2.2
-
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.4 $'
+__version__='$Revision: 1.5 $'
 
 from Products.SilvaDocument.transform.base import Element, Text, Frag
 
