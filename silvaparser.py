@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.11 2004/02/12 09:36:45 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.12 2004/02/14 13:46:20 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -19,7 +19,7 @@ def _initialize_patterns(patterns):
         compiled.append((re.compile(pattern_str), token_id))
     return tuple(compiled)
 
-URL_PATTERN = r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*()/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*()/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
         
 class InterpreterError(Exception):
     pass
