@@ -45,7 +45,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
         if node.nodeName == 'source': 	        
             self.sax_source(node, attributes['id'])
-        elif node.nodeName == 'toc':
+        elif node.nodeName == 'toc' and self.getSettings().externalRendering():
             self.sax_toc(node, attributes['toc_depth'])
         elif node.hasChildNodes():
             for child in node.childNodes:
@@ -216,7 +216,6 @@ class DocumentVersionProducer(SilvaBaseProducer):
             ghost_model = getattr(request, 'ghost_model', None)
             if ghost_model is not None:
                 toc_context = ghost_model
-                
         public = self.context.version_status() == 'public'
         if public:
             tree = toc_context.get_public_tree(depth)
@@ -224,28 +223,27 @@ class DocumentVersionProducer(SilvaBaseProducer):
         else:
             tree = toc_context.get_tree(depth)
             append_to_url = 'edit/tab_preview'
-        if self.getSettings().externalRendering():
-            text = ''
-            for obj in tree:
-                indent = obj[0]
-                item = obj[1]
-                if public:
-                    title = item.get_title()
-                else:
-                    title = item.get_title_editable()
-                url = item.absolute_url()
-                if indent > 0:
-                    text = text + '<img width="%s" height="14" alt="" src="%s/globals/pixel.gif" />' % (
-                        str(indent * 24),
-                        self.context.REQUEST['BASE2']
-                        )
-                text = text + '<a href="%s/%s">%s</a><br />' % (
-                    url,
-                    append_to_url,
-                    title
+        text = ''
+        for obj in tree:
+            indent = obj[0]
+            item = obj[1]
+            if public:
+                title = item.get_title()
+            else:
+                title = item.get_title_editable()
+            url = item.absolute_url()
+            if indent > 0:
+                text = text + '<img width="%s" height="14" alt="" src="%s/globals/pixel.gif" />' % (
+                    str(indent * 24),
+                    self.context.REQUEST['BASE2']
                     )
-            html = '<p class="toc">%s</p>' % text
-            self.render_html(html)
+            text = text + '<a href="%s/%s">%s</a><br />' % (
+                url,
+                append_to_url,
+                title
+                )
+        html = '<p class="toc">%s</p>' % text
+        self.render_html(html)
 
     def sax_img(self, node):
         """Unfortunately <image> is a special case, since height and width 
