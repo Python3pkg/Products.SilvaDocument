@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.2 2004/04/29 16:57:02 roman Exp $
+# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.3 2004/05/01 11:47:48 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -262,8 +262,8 @@ sometimes it's too smart for its own good.
 Users think it's dumb.""")
         parser.run()
 
-    def test_manylinks(self):
-        # test for the existence of a certain bug
+    def test_issue897(self):
+        # test for the fixes to issue 897
         parser = PParser("""A ((broken external link|http://foo.bar/test_doc1)).
 An external link that usually works: ((zlb|http://www.zlb.de/))
 A ((broken internal link|/to_nowhere/doc883)).""")
@@ -271,6 +271,23 @@ A ((broken internal link|/to_nowhere/doc883)).""")
         t = parser.getResult().tokens
         # should contain three links:
         self.assertEquals(3,len([x for x in t if x.kind==Token.LINK_START]))
+        
+        # john lane reported this one: (minimal test example)
+        parser = PParser("""Having a ((line
+break|http://issues.infrae.com/Silva/issue897)) in the link text causes problems""")
+        parser.run()
+        t = parser.getResult().tokens
+        # now we should have two links
+        self.assertEquals(1,len([x for x in t if x.kind==Token.LINK_START]))
+
+        # the original text posted by John, just for completness
+        parser = PParser("""Further details of the current system can be found via the ((online 
+help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or 
+((here|https://zope.cam.uk.worldpay.com/Silva/IT_Operations/Live_Service/Change_Control))""")
+        parser.run()
+        t = parser.getResult().tokens
+        # now we should have two links
+        self.assertEquals(2,len([x for x in t if x.kind==Token.LINK_START]))
 
     def test_link2(self):
         p = PParser("((this is my link text|http://locatorplus.gov/cgi-bin/Pwebrecon.cgi?DB=local&v2=1&ti=1,1&Search_Arg=100973416&Search_Code=0359&CNT=20&SID=1|))")
