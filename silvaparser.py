@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.15 2004/03/17 19:26:40 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.16 2004/06/30 14:42:20 guido Exp $
 from __future__ import nested_scopes
 
 # python
@@ -205,7 +205,7 @@ class Parser(HeuristicSearch):
         abstract
     """
     
-    children_per_char = 100
+    children_per_char = 20
 
     def __init__(self, text):
         problem = ParserState(text, 0, [])
