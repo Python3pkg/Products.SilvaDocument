@@ -51,7 +51,4 @@ else:
             return 1
         parameters = getSourceParameters(context, node)
         is_cacheable = source.is_cacheable(**parameters)
-        #print 'isSourceCacheable', repr(
-        #    context.getPhysicalPath()), repr(
-        #        source.getPhysicalPath()), repr(node), repr(is_cacheable)
         return is_cacheable
