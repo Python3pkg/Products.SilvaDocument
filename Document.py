@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.6.6.6 $
+# $Revision: 1.16.4.6.6.7 $
 # Zope
 
 from StringIO import StringIO
@@ -149,7 +149,8 @@ class Document(CatalogedVersionedContent):
             docnode = silvanode.find('doc')[0]
             content = docnode.asBytes(encoding="UTF8")
             version.content.manage_edit(content) # needs utf8-encoded string
-            self.set_title(title) # needs unicode
+            version.set_title(title) # needs unicode
+            version.sec_update_last_author_info()
             
             # Clear widget cache for this version.
             version.clearEditorCache()
