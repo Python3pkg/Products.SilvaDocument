@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.13 $'
+__version__='$Revision: 1.14 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -359,12 +359,12 @@ class row(SilvaElement):
         if cells:
             for i in range(len(cells)):
                 # leave some room for errors
-                if len(aligns) > i and len(widths) > i:
-                    cells[i].attr.align = aligns[i]
-                    cells[i].attr.width = '%s%%' % widths[i]
-                else:
-                    cells[i].attr.align = aligns[0]
-                    cells[i].attr.width = '%s%%' % widths[0]
+                try:
+                    cells[i].attr.align = str(int(aligns[i]))
+                    cells[i].attr.width = '%s%%' % int(widths[i])
+                except (IndexError, ValueError):
+                    cells[i].attr.align = 'L'
+                    cells[i].attr.width = '1'
         tr = html.tr(
             self.content.convert(context),
         )
