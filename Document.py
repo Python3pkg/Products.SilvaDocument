@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.6.6.5 $
+# $Revision: 1.16.4.6.6.6 $
 # Zope
 
 from StringIO import StringIO
@@ -132,15 +132,18 @@ class Document(CatalogedVersionedContent):
             else:
                 ret = unicode(htmlnode.asBytes('utf8'),'utf8')
                 ret = ret.replace(u'\xa0', u'&nbsp;')
-            print 'returning:', repr(ret)
+            #print 'returning:', repr(ret)
             return ret
         else:
-            print 'incoming', repr(string)
+            #print 'incoming', repr(string)
             version = self.get_editable()
             if version is None:
                 raise "Hey, no version to store to!"
             
-            ctx = Context(url=self.absolute_url(), browser=browser)
+            ctx = Context(url=self.absolute_url(), 
+                            browser=browser, 
+                            model=self, 
+                            request=self.REQUEST)
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
             title = silvanode.find('title')[0].extract_text()
             docnode = silvanode.find('doc')[0]
@@ -150,7 +153,7 @@ class Document(CatalogedVersionedContent):
             
             # Clear widget cache for this version.
             version.clearEditorCache()
-            print 'storing:', repr(content)
+            #print 'storing:', repr(content)
             
     security.declarePrivate('get_indexables')
     def get_indexables(self):
