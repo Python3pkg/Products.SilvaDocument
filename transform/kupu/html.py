@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14 $'
+__version__='$Revision: 1.14.2.1 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -39,12 +39,15 @@ except ImportError:
 
 try:
     from Products.Silva.mangle import Path
+    from zExceptions import NotFound
 except:
     class Path:
         def __call__(self, path1, path2):
             return path2
 
     Path = Path()
+
+    NotFound = 'NotFound'
 
 import re
 
@@ -598,9 +601,19 @@ class img(Element):
         src = urlparse(src)[2]
         if src.endswith('/image'):
             src = src[:-len('/image')]
-        # turn path into relative if possible
-        modelpath = context.model.aq_parent.getPhysicalPath()
-        src = '/'.join(Path(modelpath, src.split('/')))
+        # turn path into relative if possible, traverse to the object to
+        # fix an IE problem that adds the current location in front of paths
+        # in an attempt to make them absolute, which leads to nasty paths
+        # such as '/silva/index/edit/index/edit/foo.jpg'
+        try:
+            obj = context.model.unrestrictedTraverse(src.split('/'))
+        except KeyError:
+            pass
+        except NotFound:
+            pass
+        else:
+            modelpath = context.model.aq_parent.getPhysicalPath()
+            src = '/'.join(Path(modelpath, obj.getPhysicalPath()))
         alignment = self.attr.alignment
         if alignment == 'default' or alignment is None:
             alignment = ''
