@@ -13,7 +13,10 @@ data = request['data']
 type = request['element_type']
 
 # split into number of text items
-items = data.strip().split("\r\n\r\n")
+lines = data.split('\r\n')
+lines = [ line.strip() for line in lines ]
+data = '\r\n'.join(lines)
+items = data.split('\r\n\r\n')
 # replace text in node
 editorsupport.replace_text(node, items[0])
 # if necessary, add new paragraphs
