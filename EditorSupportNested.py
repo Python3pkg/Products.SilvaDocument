@@ -1,32 +1,19 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 # python
 from __future__ import nested_scopes
-import re
-import operator
-from sys import exc_info
-from StringIO import StringIO
-from xml.dom.minidom import parseString
-from xml.parsers.expat import ExpatError
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.SimpleItem import SimpleItem
-from Products.ParsedXML.ParsedXML import ParsedXML
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 # SilvaDocument
-from Products.SilvaDocument.silvaparser import \
-    PParser, HeadingParser, LinkParser, URL_PATTERN
-    
 from Products.SilvaDocument import externalsource    
 from Products.SilvaDocument import interfaces
 from Products.SilvaDocument import mixedcontentsupport
-
-# from silvaparser, thanks to zagy:
-_url_match = re.compile(URL_PATTERN)
 
 mixedContentSupportRegistry = mixedcontentsupport.SupportRegistry(
     mixedcontentsupport.ParagraphSupport)
@@ -87,15 +74,6 @@ class EditorSupport(SimpleItem):
     # XXX Original methods left here for backwards compatiblity - other
     # Silva extensions might still be using these... Please use the 
     # getMixedContentSupport() method instead!
-    
-    security.declareProtected(
-        SilvaPermissions.AccessContentsInformation, 'render_links')
-    def render_links(self, text):
-        # This method is completely weird - I'll reproduce it though
-        supp = mixedcontentsupport.MixedContentSupport(None)
-        dom = supp._editableToDOM(text, LinkParser)
-        supp = mixedcontentsupport.ParagraphSupport(dom.firstChild)
-        return supp.renderHTML()        
     
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'render_text_as_html')

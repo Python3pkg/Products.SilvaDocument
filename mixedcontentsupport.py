@@ -1,32 +1,21 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # Python
 from __future__ import nested_scopes
 import re
-import operator
-from sys import exc_info
-from StringIO import StringIO
-from xml.dom.minidom import parseString
-from xml.parsers.expat import ExpatError
 from xml.sax.saxutils import escape, unescape, quoteattr
 # Zope
 import Acquisition
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.SimpleItem import SimpleItem
-from Products.ParsedXML.ParsedXML import ParsedXML
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
-# Silva Document
-from Products.SilvaDocument.silvaparser import \
-    PParser, HeadingParser, LinkParser, URL_PATTERN
-    
-from Products.SilvaDocument import externalsource    
 from Products.SilvaDocument import interfaces
 
-# from silvaparser, thanks to zagy:
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
 
 class SupportRegistry:
@@ -75,28 +64,6 @@ class MixedContentSupport(Acquisition.Explicit):
     
     __implements__ = interfaces.IMixedContentSupport, 
 
-    _escapes = [
-        ('\\', '\\\\'),
-        ('**', '\\*\\*'),
-        ('++', '\\+\\+'),
-        ('__', '\\_\\_'),
-        ('~~', '\\~\\~'),
-        ('^^', '\\^\\^'),
-        ('((', '\\(\\('),
-        ('))', '\\)\\)'),
-        ('[[', '\\[\\['),
-        (']]', '\\]\\]'),]
-    
-    _additional_escape = {
-        'strong': '*',
-        'em': '+',
-        'link': '(',
-        'super': '^',
-        'sub': '~',
-        'underline': '_',
-        'index': '[',
-    }
-
     def __init__(self, node):
         self._node = node
         
@@ -122,22 +89,6 @@ class MixedContentSupport(Acquisition.Explicit):
                 node.appendChild(newnode)
                 self._insertDOM(doc, newnode, child)
     
-    def escape_text(self, text):
-        for replace, with in self._escapes:
-            text = text.replace(replace, with)
-        return text
-
-    def escape_text_node(self, node):
-        parent_name = node.parentNode.nodeName
-        node_text = node.nodeValue
-        node_text = self.escape_text(node_text)
-        escape_too = self._additional_escape.get(parent_name)
-        if not escape_too:
-            return node_text
-        if node_text.startswith(escape_too):
-            node_text = '\\' + node_text
-        return node_text
-        
 class ParagraphSupport(MixedContentSupport):
     """ Mixed content support for SilvaDocument paragraphs.
     """
@@ -427,29 +378,3 @@ class PreSupport(ParagraphSupport):
         return inputstr
 
 InitializeClass(PreSupport)
-    
-class LinkSupport(ParagraphSupport):
-    """ Mixed content support for SilvaDocument link elements
-    """
-    
-    security = ClassSecurityInfo()
-    
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent, 'parse')
-    def parse(self, inputstr):
-        # Since we don't use Formulator we get UTF8 from the forms,
-        # so decode to unicode manually here.
-        inputstr = unicode(inputstr, 'utf-8')
-        newdom = self._editableToDOM(inputstr, LinkParser)
-        node = self._node
-        doc = node.ownerDocument
-
-        # remove all old subnodes of node
-        while node.hasChildNodes():
-            node.removeChild(node.firstChild)
-        node.appendChild(doc.createTextNode(string))
-
-        # insert new node
-        for child in newdom.childNodes:
-            self._insertDOM(doc, node, child)
-
-InitializeClass(LinkSupport)
