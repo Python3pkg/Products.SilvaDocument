@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.15 $
+# $Revision: 1.16 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -247,8 +247,8 @@ class EditorSupport(SimpleItem):
         return data
 
     def escape_text(self, text):
-        for escape in ['**', '++', '__', '~~', '^^', '((', '))', '[[', ']]',
-                '\\']:
+        for escape in ['\\', '**', '++', '__', '~~', '^^', '((', '))',
+            '[[', ']]']:
             text = text.replace(escape, '\\'+escape)
         return text
 
