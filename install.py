@@ -4,6 +4,12 @@
 from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
 import EditorSupportNested
+# See if SilvaExternalSources is installed
+try:
+    from Products import SilvaExternalSources
+    _external_sources_available = 1
+except ImportError:
+    _external_sources_available = 0
 
 def configureMiscServices(root):
     # add editor support service
@@ -127,7 +133,7 @@ def registerDocEditor(root):
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_normal'))
 
     for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table',
-                     'nlist', 'dlist', 'code', 'externaldata']:
+                     'nlist', 'dlist', 'code', 'externaldata',]:
         wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
@@ -148,6 +154,13 @@ def registerDocEditor(root):
     wr.setAllowed('doc', ['p', 'heading', 'list', 'dlist', 'pre', 'image', 
                   'table', 'nlist', 'toc', 'code', 'externaldata'])
 
+    if _external_sources_available:
+        wr.addWidget('source', (
+            'service_widgets', 'element', 'doc_elements', 'source', 'mode_normal'))
+        wr.setDisplayName('source', 'External Source')
+        allowed = wr.getAllowed('doc')
+        allowed.append('source')
+        wr.setAllowed('doc', allowed)
 
 def registerDocViewer(root):
     wr = root.service_doc_viewer
@@ -159,6 +172,10 @@ def registerDocViewer(root):
                  'table', 'dlist', 'code', 'externaldata']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
+     
+    if _external_sources_available:
+        wr.addWidget('source', (
+            'service_widgets', 'element', 'doc_elements', 'source', 'mode_view'))
 
 def registerDocPreviewer(root):
     wr = root.service_doc_previewer
@@ -166,17 +183,19 @@ def registerDocPreviewer(root):
 
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
-    for name in ['p', 'list', 'heading', 'pre', 'nlist', 'table',
+    for name in ['p', 'list', 'heading', 'pre', 'image', 'nlist', 'table',
                  'dlist', 'externaldata']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
 
     wr.addWidget('toc', ('service_widgets', 'element', 'doc_elements',
                              'toc', 'mode_preview'))
-    wr.addWidget('image', ('service_widgets', 'element', 'doc_elements',
-                                'image', 'mode_preview'))
     wr.addWidget('code', ('service_widgets', 'element', 'doc_elements',
                                'code', 'mode_preview'))
+
+    if _external_sources_available:
+        wr.addWidget('source', (
+            'service_widgets', 'element', 'doc_elements', 'source', 'mode_preview'))
 
 def registerFieldEditor(root):
     wr = root.service_field_editor

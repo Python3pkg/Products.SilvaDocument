@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 # Zope
 
 from StringIO import StringIO
@@ -63,7 +63,7 @@ class Document(CatalogedVersionedContent):
         That means the document contains no dynamic elements like
         code, datasource or toc.
         """
-        non_cacheable_objects = ['toc', 'code', 'externaldata']
+        non_cacheable_objects = ['toc', 'code', 'externaldata', 'source']
         is_cacheable = 1 
     
         viewable = self.get_viewable()
@@ -77,7 +77,7 @@ class Document(CatalogedVersionedContent):
             if node.nodeName in non_cacheable_objects:
                 is_cacheable = 0
                 break
-        
+
         return is_cacheable
         
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
