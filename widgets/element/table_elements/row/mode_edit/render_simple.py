@@ -13,6 +13,6 @@ for child in node.childNodes:
   if child.nodeType == node.ELEMENT_NODE:
     break
 node = child
-return '''<textarea cols="20" rows="2" wrap="soft" style="width:100%%;" 
+return '''<textarea cols="20" rows="2" wrap="soft" class="fixIE6widget" 
     name="%s">%s</textarea>''' % (node.getNodePath('widget'), 
         editorsupport.replace_xml_entities(editorsupport.render_text_as_editable(node)))

@@ -1,12 +1,13 @@
 <metal:block use-macro="container/macro_edit_view/macros/edit_view">
 <metal:block fill-slot="edit_input">
+          <div class="fixIE6widget">
   <table cellpadding="3" cellspacing="0" border="0" width="100%">
     <tr valign="top">
       <td class="invisible align-right" width="20%">
         citation<span class="warning">*</span>
       </td>
-      <td class="invisible align-right" colspan="3">  
-        <textarea style="width:100%;" name="citation"
+      <td class="invisible align-right" colspan="3">
+        <textarea class="fixIE6widget" name="citation"
           tal:attributes="rows here/get_lines" 
           tal:content="python: here.editable('p')">Content</textarea>
       </td>
@@ -16,7 +17,7 @@
         author
       </td>
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">
-        <input style="width: 100%;" type="text" name="author" value="" 
+        <input class="fixIE6widget" type="text" name="author" value="" 
           tal:attributes="value python:here.editable('author')"/>
       </td>
     </tr>
@@ -25,12 +26,13 @@
         source
       </td>
       <td class="invisible align-left" colspan="3">  
-        <input style="width:100%;" type="text" name="source" value=""
+        <input type="text" name="source" value=""
           tal:attributes="value python:here.editable('source')"/>
       </td>
     </tr>
     <tr>
     </table>
+</div>
 </metal:block>
 <metal:block fill-slot="edit_notes">
   <ul class="tips">
