@@ -149,8 +149,9 @@ def registerDocEditor(root):
     wr.setDisplayName('externaldata', 'external data')
     wr.setDisplayName('cite', 'citation')
 
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image',
-                  'table', 'nlist', 'toc'])
+    wr.setAllowed('doc', [
+        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image',
+        'table', 'nlist', 'toc'])
 
     if _external_sources_available:
         wr.addWidget('source', (
