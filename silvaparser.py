@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.4 2003/10/28 11:58:38 zagy Exp $
+# $Id: silvaparser.py,v 1.5 2003/11/17 10:30:28 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -411,7 +411,7 @@ class Interpreter:
         }
        
         self.rules['link-target'] = {
-            Token.CHAR: self.text,
+            Token.CHAR: self.link_target,
             Token.LINK_END: self.link_end,
             Token.ESCAPE: self.escape,
         }
@@ -577,6 +577,7 @@ class Interpreter:
     def link_sep_afterurl(self, token, node):
         if node.nodeName != 'link':
             raise InterpreterError, "LINK_SEP out of link"
+        node.setAttribute('target', '')
         self.ruleset = 'link-target'
         return node
    
@@ -602,12 +603,12 @@ class Interpreter:
   
     def link_target(self, token, node):
         target = ''
-        if node.hasAttribute('target'):
-            target = node.getAttribute('target')
         node.setAttribute('target', target + token.text)
         return node
     
     def link_end(self, token, node):
+        if node.hasAttribute('target') and node.getAttribute('target') == '':
+            node.setAttribute('target', '_blank')
         self.ruleset = 'default'
         return self._end_inline(token, node, 'link')
         

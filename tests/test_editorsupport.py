@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.11 2003/10/28 11:58:38 zagy Exp $
+# $Id: test_editorsupport.py,v 1.12 2003/11/17 10:30:28 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -191,13 +191,37 @@ Users think it's dumb.""")
         self.assertEquals(t[7].text, '_')
         self.assertEquals(t[9].kind, Token.LINK_END)
 
+    def test_linktarget2(self):
+        parser = PParser("((slashdot|http://www.slashdot.org|foo))")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(len(t), 7)
+        self.assertEquals(t[0].kind, Token.LINK_START)
+        self.assertEquals(t[1].text, 'slashdot')
+        self.assertEquals(t[2].kind, Token.LINK_SEP)
+        self.assertEquals(t[3].kind, Token.LINK_URL)
+        self.assertEquals(t[4].kind, Token.LINK_SEP)
+        self.assertEquals(t[5].text, 'foo')
+        self.assertEquals(t[6].kind, Token.LINK_END)
+        
+    def test_linktarget3(self):
+        parser = PParser("((slashdot|http://www.slashdot.org|))")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(len(t), 6)
+        self.assertEquals(t[0].kind, Token.LINK_START)
+        self.assertEquals(t[1].text, 'slashdot')
+        self.assertEquals(t[2].kind, Token.LINK_SEP)
+        self.assertEquals(t[3].kind, Token.LINK_URL)
+        self.assertEquals(t[4].kind, Token.LINK_SEP)
+        self.assertEquals(t[5].kind, Token.LINK_END)
+
     def test_linkwithbraces(self):
         parser = PParser("click ((Journal & Books|simple?field_search=reference_type:(journal%20book))) to see")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 29)
         self.assertEquals(t[24].kind, Token.LINK_END)
-        
 
     def test_superscriptbold(self):
         parser = PParser("**foo^^bar^^**")
@@ -434,6 +458,23 @@ class InterpreterTest(unittest.TestCase):
             (t.LINK_END, '))'),
             (t.CHAR, ')'),
             ], '(see <link url="http://www.x.yz">xyz</link>)'),
+        ([
+            (t.LINK_START, "(("),
+            (t.CHAR, 'slashdot'),
+            (t.LINK_SEP, '|'),
+            (t.LINK_URL, 'http://slashdot.org'),
+            (t.LINK_SEP, '|'),
+            (t.CHAR, 'foo'),
+            (t.LINK_END, '))'),
+            ], '<link url="http://slashdot.org" target="foo">slashdot</link>'),
+        ([
+            (t.LINK_START, "(("),
+            (t.CHAR, 'slashdot'),
+            (t.LINK_SEP, '|'),
+            (t.LINK_URL, 'http://slashdot.org'),
+            (t.LINK_SEP, '|'),
+            (t.LINK_END, '))'),
+            ], '<link url="http://slashdot.org" target="_blank">slashdot</link>'),
         ]
 
     def test_helper(self):
@@ -442,10 +483,8 @@ class InterpreterTest(unittest.TestCase):
             ph = Interpreter(tokens)
             ph.parse()
             xml = ph.dom.toxml()
-            xml = '\n'.join(xml.split('\n')[1:])
-            xml = xml.strip()
-            self.assertEquals(xml, '<p>'+result+'</p>')
-
+            expected_xml = parseString('<p>'+result+'</p>').toxml()
+            self.assertEquals(xml, expected_xml)
 
 class EditableTest(unittest.TestCase):
 
@@ -459,7 +498,15 @@ class EditableTest(unittest.TestCase):
             ('<strong>**</strong>', '**\\****'),
             ('((a+b)*c)', '\\((a+b)*c)'),
             ('((a+b*c))', '\\((a+b*c\\))'),
-            ('<strong>bold</strong> is **bold**', '**bold** is \\**bold\\**')
+            ('<strong>bold</strong> is **bold**', '**bold** is \\**bold\\**'),
+            ('<link url="http://slashdot.org">slashdot</link>',
+                '((slashdot|http://slashdot.org))'),
+            ('<link url="http://slashdot.org" target="foo">slashdot</link>',
+                '((slashdot|http://slashdot.org|foo))'),
+            ('<link url="http://slashdot.org" target="_blank">slashdot</link>',
+                '((slashdot|http://slashdot.org|))'),
+            ('<link url="http://slashdot.org">http://slashdot.org</link>',
+                'http://slashdot.org'),
         ]
         
         es = EditorSupport('')
@@ -479,7 +526,7 @@ class EditableTest(unittest.TestCase):
             ('foo http://www.x.yz, and', 'foo <a href="http://www.x.yz">http://www.x.yz</a>, and'),
             ('foo http://www.x.yz/ bla foo', 'foo <a href="http://www.x.yz/">http://www.x.yz/</a> bla foo'),
             ('foo http://www.x.yz, http://zxy.abc bla', 'foo <a href="http://www.x.yz">http://www.x.yz</a>, <a href="http://zxy.abc">http://zxy.abc</a> bla'),
-        ]
+           ]
         for editable, expected_html in cases:
             html = es.render_links(editable)
             self.assertEquals(expected_html, html,

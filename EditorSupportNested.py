@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -133,14 +133,21 @@ class EditorSupport(SimpleItem):
                 result.append(self.render_text_as_editable(child))
                 result.append('~~')
             elif child.nodeName == 'link':
-                result.append('((')
-                result.append(self.render_text_as_editable(child))
-                result.append('|')
-                result.append(mangle.entities(child.getAttribute('url')))
-                if child.getAttribute('target'):
+                url = mangle.entities(child.getAttribute('url'))
+                target = mangle.entities(child.getAttribute('target'))
+                linktext = self.render_text_as_editable(child)
+                if (not target and linktext == url):
+                    result.append(url)
+                else:
+                    result.append('((')
+                    result.append(linktext)
                     result.append('|')
-                    result.append(mangle.entities(child.getAttribute('target')))
-                result.append('))')
+                    result.append(url)
+                    if target:
+                        result.append('|')
+                        if target != '_blank':
+                            result.append(target)
+                    result.append('))')
             elif child.nodeName == 'underline':
                 result.append('__')
                 result.append(self.render_text_as_editable(child))
