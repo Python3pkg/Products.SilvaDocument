@@ -2,9 +2,7 @@
 module for conversion from current 
 
    RealObjects' 2.11 Pseudo-HTML 
-   
        to
-
    silva (0.9.1) 
 
 WARNING: 
@@ -27,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 from Products.SilvaDocument.transform.base import Element, Text, Frag
 
