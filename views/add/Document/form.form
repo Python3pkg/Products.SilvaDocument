@@ -2,10 +2,12 @@
 
 <form>
   <title></title>
-  <name>add_course_form</name>
+  <name>add_document_form</name>
   <action></action>
   <enctype>multipart/form-data</enctype>
   <method>POST</method>
+  <i18n>default_add_form</i18n>
+  <i18n_domain>silva</i18n_domain>
 
   <groups multiple="true">
     <group>
