@@ -3,7 +3,5 @@ SilvaDocument changes
 
   0.9.3
 
-    Features Added
-
-       - Index title along with document XML contents.
+     For the time being, see the HISTORY file in Silva core.
 
