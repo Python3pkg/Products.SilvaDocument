@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.5 $'
+__version__='$Revision: 1.1.2.6 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -135,6 +135,32 @@ class li(SilvaElement):
         return html.li(
             self.content.convert(context)
             )
+
+class dlist(SilvaElement):
+    def convert(self, context):
+        children = []
+        lastchild = None
+        for child in self.find():
+            print child
+            if child.name() == 'dt':
+                if lastchild is not None and lastchild.name() == 'dt':
+                    children.append(html.dd(Text(' ')))
+                children.append(html.dt(child.content.convert(context)))
+                lastchild = child
+            elif child.name() == 'dd':
+                if lastchild is not None and lastchild.name() == 'dd':
+                    children.append(html.dt(Text(' ')))
+                children.append(html.dd(child.content.convert(context)))
+                lastchild = child
+        return html.dl(Frag(children))
+
+class dt(SilvaElement):
+    def convert(self, context):
+        return html.dt(self.content.convert(context))
+
+class dd(SilvaElement):
+    def convert(self, context):
+        return html.dd(self.content.convert(context))
 
 class strong(SilvaElement):
     def convert(self, context):

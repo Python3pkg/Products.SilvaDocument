@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.3 $'
+__version__='$Revision: 1.1.2.4 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -680,6 +680,34 @@ class div(Element):
 
     def do_not_fix_content(self):
         return 1
+
+class dl(Element):
+    def convert(self, context):
+        if hasattr(self, 'should_be_removed') and self.should_be_removed:
+            return Frag()
+
+        children = []
+        lastchild = None
+        for child in self.find():
+            if child.name() == 'dt':
+                if lastchild is not None and lastchild.name() == 'dt':
+                    children.append(silva.dd(Text(' ')))
+                children.append(silva.dt(child.content.convert(context)))
+                lastchild = child
+            elif child.name() == 'dd':
+                if lastchild is not None and lastchild.name() == 'dd':
+                    children.append(silva.dt(Text(' ')))
+                children.append(silva.dd(child.content.convert(context)))
+                lastchild = child
+        return silva.dlist(Frag(children))
+
+class dt(Element):
+    def convert(self, context):
+        return silva.dt(self.content.convert(context))
+
+class dd(Element):
+    def convert(self, context):
+        return silva.dd(self.content.convert(context))
 
 """
 current mapping of tags with silva
