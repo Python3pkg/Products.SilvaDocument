@@ -7,7 +7,7 @@
     </tal:block>
     <tal:block tal:condition="source">
       <div>
-        <h3 class="front5">external source</h3>
+        <h3 class="front5" tal:content="source/meta_type">external source</h3>
         id:&nbsp;<tal:block content="source/id" />
         <br />
         <span tal:condition='source/get_title'>title:&nbsp;
@@ -29,7 +29,7 @@
         <b tal:condition="not: has_parameters">
           No parameters to be filled for this source.
         </b>
-        <table cellspacing="0" cellpadding="2" border="0"
+        <table class="csvtable" cellspacing="0" cellpadding="2" border="0"
           tal:condition="has_parameters"
           >
           <thead>
