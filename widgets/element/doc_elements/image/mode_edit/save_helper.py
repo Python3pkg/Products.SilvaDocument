@@ -1,4 +1,4 @@
-# $Id: save_helper.py,v 1.3 2003/09/29 16:46:28 zagy Exp $
+# $Id: save_helper.py,v 1.4 2003/10/12 21:11:15 zagy Exp $
 from Products.Silva.mangle import String
 
 request = context.REQUEST
@@ -7,6 +7,8 @@ node = request.node
 image_path = request['path']
 node.setAttribute('path', String.inputConvert(image_path))
 
+link_title = request['title']
+node.setAttribute('title', String.inputConvert(link_title))
 
 link = request.get('link')
 link_selector = request.get('link_selector')

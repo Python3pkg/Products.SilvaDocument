@@ -23,14 +23,23 @@
       <td class="invisible align-left" colspan="2">  
         <label>
             <input type="radio" name="link_selector" value="hiresimg_url" 
-                tal:attributes="checked python: not not int(node.getAttribute('link_to_hires'))"/>
+                tal:attributes="checked python:node.getAttribute('link_to_hires') == '1'"/>
             <span style="width:100%">High resolution version of image</span>
         </label>
         <br />
         <input type="radio" name="link_selector" value="entered_url"
-                tal:attributes="checked python:not int(node.getAttribute('link_to_hires'))"/>
+                tal:attributes="checked python:node.getAttribute('link_to_hires') != '1'"/>
         <input style="width: 100%;" type="text" name="link" value=""
             tal:attributes="value python:node.getAttribute('link');"  />
+      </td>
+    </tr>
+    <tr>
+      <td class="invisible align-right">
+        title for hyperlink image
+      </td>
+      <td class="invisible align-left" colspan="2">  
+        <input style="width:100%;" type="text" name="title" value=""
+          tal:attributes="value python:node.getAttribute('title');"  />
       </td>
     </tr>
     <tr>
