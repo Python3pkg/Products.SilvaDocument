@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.11.2.3 $'
+__version__='$Revision: 1.11.2.4 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -76,7 +76,8 @@ class title(SilvaElement):
 class doc(SilvaElement):
     """ subtag of silva_document """
     def asBytes(self, *args, **kwargs):
-        self.attr.xmlns = 'http://xml.infrae.com/document/0.9.3'
+        # disabled xmlns declaration for now, should be solved properly later
+        # self.attr.xmlns = 'http://xml.infrae.com/document/0.9.3'
         return SilvaElement.asBytes(self, *args, **kwargs)
 
 class heading(SilvaElement):
@@ -87,11 +88,19 @@ class heading(SilvaElement):
                  u'sub': html.h4, 
                  u'subsub': html.h5,
                  u'paragraph': html.h6,
-                 u'subparagraph': html.h7,
+                 u'subparagraph': html.h6,
                  }.get(level, html.h3)
+
+        silva_type = None
+        class_ = None
+        if level == 'subparagraph':
+            silva_type = 'sub'
+            class_ = 'sub'
 
         return h_tag(
             self.content.convert(context),
+            silva_type = silva_type,
+            class_ = class_,
             )
 
 class p(SilvaElement):
@@ -384,14 +393,8 @@ class row_heading(SilvaElement):
   
 class field(SilvaElement):
     def convert(self, context):
-        content = []
-        for child in self.find():
-            if child.name() == 'p':
-                content.append(Frag(child.content.convert(context)))
-            else:
-                content.append(child.convert(context))
         return html.td(
-            Frag(content),
+            self.content.convert(context),
             align=self.attr.align,
             width=self.attr.width
         )
@@ -402,9 +405,11 @@ class toc(SilvaElement):
         multiple_s = 's'
         if int(depth) == 1:
             multiple_s = ''
-        depth_string = depth
         if int(depth) == -1:
             depth_string = 'unlimited'
+        else:
+            depth = int(depth) + 1
+            depth_string = depth
         return html.div(
             Text('Table of Contents (%s level%s)' % (depth_string, multiple_s)),
             toc_depth = depth,

@@ -5,7 +5,7 @@ module for conversion from current
    
        to
 
-   silva (0.9.1) 
+   silva (1.2) 
 
 This transformation tries to stay close to
 how silva maps its xml to html. 
@@ -25,7 +25,9 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14.2.2 $'
+__version__='$Revision: 1.14.2.3 $'
+
+from zExceptions import NotFound
 
 try:
     from transform.base import Element, Text, Frag
@@ -39,15 +41,12 @@ except ImportError:
 
 try:
     from Products.Silva.mangle import Path
-    from zExceptions import NotFound
 except:
     class Path:
         def __call__(self, path1, path2):
             return path2
 
     Path = Path()
-
-    NotFound = 'NotFound'
 
 import re
 
@@ -109,7 +108,8 @@ def fix_toplevel(el, context):
 
 def find_and_convert_toplevel(el, context, els=None):
     if (el.name() == 'Text' or el.name() in CONTAINERS or 
-            (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content())):
+            (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content()) or
+            hasattr(el, 'should_be_removed')):
         return []
     if  els is None:
         foundels = []
@@ -117,6 +117,8 @@ def find_and_convert_toplevel(el, context, els=None):
         foundels = els
     children = el.find()
     for child in children:
+        if hasattr(child, 'should_be_removed'):
+            continue
         if el.name() in ['ol', 'ul'] and child.name() in ['ol', 'ul']:
             continue
         find_and_convert_toplevel(child, context, foundels)
@@ -347,9 +349,13 @@ class h6(h3):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         fixedcontent = fix_allowed_items_in_heading(self.find(), context)
+        eltype = 'paragraph'
+        if (hasattr(self, 'attr') and hasattr(self.attr, 'silva_type') 
+                    and self.attr.silva_type == 'sub'):
+            eltype = 'subparagraph'
         result = silva.heading(
             fixedcontent,
-            type="paragraph",
+            type=eltype,
             )
         return self.process_result(result, context)
     
@@ -374,10 +380,15 @@ class p(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
+        # return a p, but only if there's any content besides whitespace 
+        # and <br>s
         for child in self.find():
             if child.name() != 'br':
+                type = self.getattr('silva_type', 'normal')
+                if type == 'p':
+                    type == 'normal'
                 return silva.p(self.content.convert(context),
-                                    type=self.getattr('class', 'normal'))
+                                    type=type)
         return Frag(
         )
 
@@ -470,8 +481,6 @@ class ul(Element):
 
     def get_type(self):
         curtype = getattr(self.attr, 'type', None)
-        if curtype is None:
-            curtype = getattr(self.attr, 'type')
 
         if type(self.default_types) != type({}):
             if curtype not in self.default_types:
@@ -545,16 +554,21 @@ class a(Element):
             title = ''
         if (hasattr(self.attr, 'name') and (not hasattr(self.attr, 'href') or
                 self.attr.href == '#' or self.attr.href is None)):
-            text = ''.join([t.convert(context).asBytes('UTF-8') for t in extract_texts(self, context)])
-            textnode = Frag()
-            if text and (text[0] != '[' or text[-1] != ']'):
-                textnode = Text(text)
-            return Frag(textnode,
-                        silva.index(
-                                name=self.attr.name,
-                                title=title,
+            if self.getattr('class', None) == 'index':
+                # index item
+                text = ''.join([t.convert(context).asBytes('UTF-8') for t in extract_texts(self, context)])
+                textnode = Frag()
+                if text and (text[0] != '[' or text[-1] != ']'):
+                    textnode = Text(text)
+                return Frag(textnode,
+                            silva.index(
+                                    name=self.attr.name,
+                                    title=title,
+                                    )
                                 )
-                            )
+            else:
+                # named anchor, probably pasted from some other page
+                return Frag(self.content.convert(context))
         elif hasattr(self.attr, 'href') and self.attr.href is not None:
             url = self.getattr('href', 'http://www.infrae.com')
             target = getattr(self.attr, 'target', '')
@@ -579,6 +593,9 @@ class a(Element):
                 if alignment == 'default' or alignment is None:
                     alignment = ''
                 image.attr.alignment = alignment
+                # XXX this is nonsense, the image *has* an attr attribute, 
+                # since we just added that... Wanted to remove but don't have
+                # time to examine in detail, check later
                 if not hasattr(image, 'attr'):
                     # empty frag
                     return image
@@ -664,6 +681,7 @@ class table(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
+        self.should_be_removed = 1
         rows = self.content.find('tr')
         highest = 0
         if len(rows)>0:
@@ -680,7 +698,7 @@ class table(Element):
                     align = 'left'
                     if hasattr(cell, 'attr'):
                         align = self.alignmapping.get(getattr(cell.attr, 'align')) or 'L'
-                        # nasty, this assumes the last char of the field is a %-sign
+                    # nasty, this assumes the last char of the field is a %-sign
                     width = '1'
                     if hasattr(cell, 'attr'):
                         width = getattr(cell.attr, 'width', None)
@@ -735,9 +753,13 @@ class div(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
+        self.should_be_removed = 1
         if self.attr.toc_depth:
+            toc_depth = int(str(self.attr.toc_depth))
+            if toc_depth > 0:
+                toc_depth -= 1
             return silva.toc(
-                toc_depth=self.attr.toc_depth
+                toc_depth=toc_depth
             )
         elif self.getattr('is_citation', None):
             content = fix_structure(self.content, context)
