@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.4 $
+# $Revision: 1.16.4.5 $
 # Zope
 
 from StringIO import StringIO
@@ -125,9 +125,10 @@ class Document(CatalogedVersionedContent):
         version.to_xml(context)        
         f.write('</silva_document>')
 
+
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
-    def editor_storage(self, string=None, editor='epoz', encoding='UTF-8'):
+    def editor_storage(self, string=None, editor='eopro3_0', encoding='UTF-8'):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """
@@ -148,8 +149,8 @@ class Document(CatalogedVersionedContent):
             
             ctx = Context(url=self.absolute_url())
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
-            title = silvanode.find('title')[0].extract_text()
-            docnode = silvanode.find('doc')[0]
+            title = silvanode.find_one('title').extract_text()
+            docnode = silvanode.find_one('doc')
             content = docnode.asBytes(encoding="UTF8")
             version.content.manage_edit(content) # needs utf8-encoded string
             self.set_title(title) # needs unicode
@@ -182,34 +183,6 @@ class Document(CatalogedVersionedContent):
             version_object = getattr(self, str(version), None)
             if version_object:
                 self.service_editor.clearCache(version_object.content)
-
-    security.declarePublic('PUT')
-    def PUT(self, REQUEST):
-        """PUT support"""
-        try:
-            html = REQUEST['BODYFILE'].read()
-            self.editor_storage(html, 'epoz')
-
-            # invalidate Document cache
-            version = self.get_editable()
-            version.clearEditorCache()
-
-            # XXX This can be removed, right?
-            transformed = self.editor_storage(editor='epoz', encoding="UTF-8")
-
-            return transformed
-        except:
-            # a tad ugly, but for debug purposes it would be nice to see 
-            # what's actually gone wrong
-            import sys, traceback
-            exc, e, tb = sys.exc_info()
-            print 'Exception in Document.PUT:'
-            print '%s: %s' % (exc, e)
-            print '\n%s' % '\n'.join(traceback.format_tb(tb))
-            print
-            # reraise the exception so the enduser at least sees something's 
-            # gone wrong
-            raise
 
 InitializeClass(Document)
 
