@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.6 $'
+__version__='$Revision: 1.1.2.7 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -96,9 +96,11 @@ class heading(SilvaElement):
 
 class p(SilvaElement):
     def convert(self, context):
+        ptype = self.getattr('type', 'normal')
         return html.p(
             self.content.convert(context),
-            silva_type=self.getattr('type', 'normal')
+            silva_type=ptype,
+            class_=ptype
             )
 
 class br(Element):
@@ -141,7 +143,6 @@ class dlist(SilvaElement):
         children = []
         lastchild = None
         for child in self.find():
-            print child
             if child.name() == 'dt':
                 if lastchild is not None and lastchild.name() == 'dt':
                     children.append(html.dd(Text(' ')))
@@ -164,9 +165,10 @@ class dd(SilvaElement):
 
 class strong(SilvaElement):
     def convert(self, context):
-        return html.strong(
-            self.content.convert(context)
-            )
+        if context.browser == 'Mozilla':
+            return html.b(self.content.convert(context))
+        else:
+            return html.strong(self.content.convert(context))
 
 class underline(SilvaElement):
     def convert(self, context):
@@ -176,9 +178,10 @@ class underline(SilvaElement):
 
 class em(SilvaElement):
     def convert(self, context):
-        return html.em(
-            self.content.convert(context)
-            )
+        if context.browser == 'Mozilla':
+            return html.i(self.content.convert(context))
+        else:
+            return html.em(self.content.convert(context))
 
 class super(SilvaElement):
     def convert(self, context):
@@ -406,7 +409,26 @@ class author(SilvaElement):
 
 class source(SilvaElement):
     def convert(self, context):
-        return self.content.convert(context)
+        id = self.attr.id
+        params = {}
+        for child in self.find():
+            if child.name() == 'parameter':
+                params[child.attr.key.convert(context).asBytes('utf-8')] = child.content.convert(context).asBytes('utf-8')
+        divcontent = []
+        for key, value in params.items():
+            divcontent.append(html.div(Text('Key: %s, value: %s\n' % (key, value))))
+        header = html.h3(Text('External Source "%s"' % id))
+        pre = Frag(divcontent, html.br())
+        content = Frag(header, pre);
+        return html.div(content,
+                    source_id=id,
+                    class_='externalsource',
+                    **params
+                )
+
+class parameter(SilvaElement):
+    def convert(self):
+        return Frag()
 
 def mixin_paragraphs(container):
     """ wrap silva.p node around text"""

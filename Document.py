@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.6.6.4 $
+# $Revision: 1.16.4.6.6.5 $
 # Zope
 
 from StringIO import StringIO
@@ -115,8 +115,15 @@ class Document(CatalogedVersionedContent):
         """
         transformer = EditorTransformer(editor=editor)
 
+        # we need to know what browser we are dealing with in order to know 
+        # what html to produce, unfortunately Mozilla uses different tags in 
+        # some cases (b instead of strong, i instead of em)
+        browser = 'Mozilla'
+        if self.REQUEST['HTTP_USER_AGENT'].find('MSIE') > -1:
+            browser = 'IE'
+
         if string is None:
-            ctx = Context(f=StringIO(), last_version=1, url=self.absolute_url())
+            ctx = Context(f=StringIO(), last_version=1, url=self.absolute_url(), browser=browser)
             self.to_xml(ctx)
             htmlnode = transformer.to_target(sourceobj=ctx.f.getvalue(), context=ctx)
             if encoding is not None:
@@ -133,7 +140,7 @@ class Document(CatalogedVersionedContent):
             if version is None:
                 raise "Hey, no version to store to!"
             
-            ctx = Context(url=self.absolute_url())
+            ctx = Context(url=self.absolute_url(), browser=browser)
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
             title = silvanode.find('title')[0].extract_text()
             docnode = silvanode.find('doc')[0]

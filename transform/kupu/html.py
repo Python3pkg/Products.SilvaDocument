@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.5 $'
+__version__='$Revision: 1.1.2.6 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -122,6 +122,7 @@ def fix_structure(inputels, context, allowtables=0):
         # flatten p's by ignoring the element itself and walking through it as 
         # if it's contents are part of the current element's contents
         if el.name() == 'p' and allowtables:
+            ptype = el.getattr('silva_type', 'normal')
             for child in el.find():
                 foundtables = fix_tables(child, context)
                 foundtoplevel = find_and_convert_toplevel(el, context)
@@ -130,13 +131,13 @@ def fix_structure(inputels, context, allowtables=0):
                     textbuf.append(child.convert(context))
                 else:
                     if textbuf:
-                        fixedrest.append(silva.p(textbuf))
+                        fixedrest.append(silva.p(textbuf, type=ptype))
                         textbuf = []
                     fixedrest.append(fix_toplevel(child, context))
                 fixedrest += foundtables
                 fixedrest += foundtoplevel
             if textbuf:
-                fixedrest.append(silva.p(textbuf))
+                fixedrest.append(silva.p(textbuf, type=ptype))
                 textbuf = []
         else:
             foundtables = []
@@ -337,7 +338,9 @@ class p(Element):
             return Frag()
         for child in self.find():
             if child.name() != 'br':
-                return silva.p(self.content.convert(context))
+                print dir(self.attr)
+                return silva.p(self.content.convert(context),
+                                type=self.getattr('_class', 'normal'))
         return Frag(
         )
 
@@ -675,6 +678,16 @@ class div(Element):
                 silva.source(self.attr.source),
                 Frag(content)]
             )
+        elif self.attr.source_id:
+            content = []
+            for key, value in self.attr.__dict__.items():
+                if key != 'source_id' and key != 'class':
+                    content.append(silva.parameter(Text(value.asBytes('utf-8')), key=key))
+            return silva.source(
+                        Frag(content), 
+                        id=self.attr.source_id,
+                        class_=self.attr.class_
+                    )
         else:
             return Frag()
 
