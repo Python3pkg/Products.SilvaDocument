@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.16.4.1 $
 # Zope
 
 from StringIO import StringIO
@@ -98,7 +98,7 @@ class Document(CatalogedVersionedContent):
                       and child.nodeName == 'parameter']:
             child.normalize()
             name = child.getAttribute('key').encode('ascii')
-            value = [str(child.nodeValue) for child in child.childNodes 
+            value = [child.nodeValue for child in child.childNodes 
                      if child.nodeType == child.TEXT_NODE]
             value = ' '.join(value)
             parameters[name] = value

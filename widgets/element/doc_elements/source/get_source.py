@@ -7,4 +7,4 @@ id = node.getAttribute('id').encode('ascii')
 # in play and weird acquisition magic may cause 'source' to be a widget 
 # whenever the source object has a widget's id.
 doc = node.get_silva_object()
-return getSourceForId(context, id)
+return getSourceForId(doc, id)
