@@ -1,0 +1,7 @@
+
+SilvaDocument changes
+
+  0.9.3
+
+     For the time being, see the HISTORY file in Silva core.
+

@@ -16,15 +16,30 @@ if not image:
 
 alignment = node.getAttribute('alignment')
 link = node.getAttribute('link')
+link_title = node.getAttribute('title')
+target = node.getAttribute('target')
 
-tag = image.image.tag(css_class=alignment)
+if not alignment:
+    alignment = 'default'
 
+if not link_title:
+    link_title = image.get_title()
+
+tag_template = '%s'
 if alignment.startswith('image-'):
-    # I don't want to do this... Oh well, long live CSS...
-    tag = '<div class="%s">%s</div>' % (
-        alignment, image.image.tag(css_class=alignment))
+    # I don't want to do this... Oh well, long live CSS..:
+    # This style with the surrounding div makes the image
+    # align left, center or right but not float.
+    # Are there better ways? "display: block;" maybe?
+    tag_template = '<div class="%s">%%s</div>' % alignment
+
+params = {
+    'class': alignment, 'title': link_title
+    }    
+tag = tag_template % image.image.tag(**params)
 
 if link:
-    tag = '<a class="image" href="%s">%s</a>' % (link, tag)
+    tag = '<a class="image" href="%s" title="%s" target="%s">%s</a>' % (
+        link, link_title, target, tag)
 
 return tag

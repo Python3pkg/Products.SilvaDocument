@@ -4,7 +4,7 @@ function Elements () {
 	this.p = new Array(
         new Option("normal", "normal"),
         new Option("lead", "lead"), 
-        null,
+        new Option("annotation", "annotation"), 
         null,
         null,
         null,

@@ -1,12 +1,8 @@
-## Script (Python) "add_column"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
+from Products.Silva.mangle import String
+
+if not context.check_editable():
+    return context.redirect()
+
 node = context.REQUEST.node
 doc = node.ownerDocument
 for row in node.childNodes:
@@ -22,7 +18,7 @@ for row in node.childNodes:
 
 node.setAttribute(
     'columns', 
-    node.input_convert(str(int(node.getAttribute('columns')) + 1)) )
+    String.inputConvert(str(int(node.getAttribute('columns')) + 1)) )
 
 if node.hasAttribute('column_info'):
     node.setAttribute('column_info', node.getAttribute('column_info') + u' L:1')

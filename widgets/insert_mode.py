@@ -7,11 +7,11 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
-if not node.get_content().sec_create_lock():
+if not context.check_editable():
     return context.redirect()
 
-node.get_content().sec_update_last_author_info()
+node = context.REQUEST.node
+
 allowed_types = context.get_allowed_info(context.REQUEST.wr_name,node)
 if len(allowed_types)==1:
    return context.insert(what = allowed_types[0][1])

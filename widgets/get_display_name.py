@@ -9,4 +9,4 @@
 ##
 wr = getattr(context, wr_name)
 name = wr.getDisplayName(node.nodeName)
-return name.capitalize()
+return name

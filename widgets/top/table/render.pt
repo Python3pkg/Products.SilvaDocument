@@ -9,28 +9,27 @@
 <table border="0" width="100%" cellspacing="0">
 <tr class="controls">
   <td>
-    Column settings
+    column settings
   </td>
   <td class="align-right">
-    <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="Add column" />
-    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="Delete column" />
+    <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="add column" />
+    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="delete column" />
   </td>
 </tr>
 </table>
 <table border="0" width="100%" cellspacing="0">
 <tr class="inter-controls">
-  <td style="text-transform:lowercase;"
-     align="center" tal:repeat="info columns_info" tal:attributes="class string:align-${info/align}; width info/html_width">
+  <td align="center" tal:repeat="info columns_info" tal:attributes="class string:align-${info/align}; width info/html_width">
      <div tal:omit-tag="" tal:define="align_name string:column_align_${repeat/info/index};
                                       width_name string:column_width_${repeat/info/index};
                                       align info/align">
-     L:<input type="radio" value="left" 
+     l<input type="radio" value="left" 
               tal:attributes="name align_name; checked python:test(align == 'left', 'checked', nothing)" />
-     C:<input type="radio" 
-              tal:attributes="name align_name; checked python:test(align == 'center', 'checked', nothing)" value="center" />&nbsp;
-     R:<input type="radio" 
+     &nbsp;c<input type="radio" 
+              tal:attributes="name align_name; checked python:test(align == 'center', 'checked', nothing)" value="center" />
+     &nbsp;r<input type="radio" 
               tal:attributes="name align_name; checked python:test(align == 'right', 'checked', nothing)" value="right" /><br />
-     Relative width:&nbsp;<input size="2" type="text" maxlength="2" tal:attributes="name width_name; value info/width" />
+     relative width&nbsp;<input size="2" type="text" maxlength="2" tal:attributes="name width_name; value info/width" />
      </div>
   </td>
 </tr>
@@ -42,7 +41,7 @@
 </div>
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">
-Type: 
+type 
 <select class="manipulator"
   name="element_type" tal:define="type python:here.get_type(node)">
   <option value="plain" 

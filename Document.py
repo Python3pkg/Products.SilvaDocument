@@ -1,29 +1,26 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.16 $
 # Zope
 
 from StringIO import StringIO
 
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from DateTime import DateTime
 from Globals import InitializeClass
+from Persistence import Persistent
 
 from Products.ParsedXML.ExtraDOM import writeStream
 from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.PrettyPrinter import _translateCdata
 from Products.ParsedXML.ParsedXML import ParsedXML
 
-# Silva interfaces
-from Products.Silva.IVersionedContent import IVersionedContent, ICatalogedVersionedContent
-from Products.Silva.IVersion import IVersion, ICatalogedVersion
-
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.helpers import add_and_edit, translateCdata, getNewId
+from Products.Silva.helpers import add_and_edit, translateCdata
 from Products.Silva.Version import CatalogedVersion
+from Products.Silva import mangle
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
@@ -32,7 +29,11 @@ from Products.Silva.Metadata import export_metadata
 from transform.Transformer import EditorTransformer
 from transform.base import Context
 
+from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
+from Products.Silva.interfaces import IVersion
+
 icon="www/silvadoc.gif"
+addable_priority = -1
 
 class Document(CatalogedVersionedContent):
     """A Document is the basic unit of information in Silva. A document
@@ -45,7 +46,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    __implements__ = IVersionedContent, ICatalogedVersionedContent
+    __implements__ = IVersionedContent
 
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = CatalogedVersionedContent.manage_options
@@ -62,7 +63,8 @@ class Document(CatalogedVersionedContent):
         That means the document contains no dynamic elements like
         code, datasource or toc.
         """
-        non_cacheable_objects = ['toc', 'code', 'externaldata']
+        non_cacheable_elements = ['toc', 'code', 'externaldata', ]
+        
         is_cacheable = 1 
     
         viewable = self.get_viewable()
@@ -70,16 +72,39 @@ class Document(CatalogedVersionedContent):
         if viewable is None:
             return 0
 
-        # it should suffice to test the children of the root element only,
+        # It should suffice to test the children of the root element only,
         # since currently the only non-cacheable elements are root elements
         for node in viewable.content.documentElement.childNodes:
-            if node.nodeName in non_cacheable_objects:
+            node_name = node.nodeName
+            if node_name in non_cacheable_elements:
                 is_cacheable = 0
                 break
-        
+            # FIXME: how can we make this more generic as it is very
+            # specific now..?
+            if node_name == 'source':
+                is_cacheable = self._source_element_cacheability_helper(node)
+
         return is_cacheable
-        
-    security.declareProtected(SilvaPermissions.ApproveSilvaContent,
+
+    # XXX move to function in SilvaExternalSoucrse!
+    def _source_element_cacheability_helper(self, node):
+        # FIXME: how can we make this more generic as it is very
+        # specific now..?
+        id = node.getAttribute('id').encode('ascii')
+        source = getattr(self.aq_inner, id, None)
+        parameters = {}        
+        for child in [child for child in node.childNodes 
+                      if child.nodeType == child.ELEMENT_NODE 
+                      and child.nodeName == 'parameter']:
+            child.normalize()
+            name = child.getAttribute('key').encode('ascii')
+            value = [str(child.nodeValue) for child in child.childNodes 
+                     if child.nodeType == child.TEXT_NODE]
+            value = ' '.join(value)
+            parameters[name] = value
+        return source.is_cacheable(**parameters)
+    
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
         """Render object to XML.
@@ -147,7 +172,7 @@ class Document(CatalogedVersionedContent):
         Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
         # Does the widget cache needs be cleared for all versions - I think so...
         for version in self._get_indexable_versions():
-            version_object = getattr(self, version, None)
+            version_object = getattr(self, str(version), None)
             if version_object:
                 self.service_editor.clearCache(version_object.content)
 
@@ -157,7 +182,7 @@ class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
     meta_type = "Silva Document Version"
-    __implements__ = IVersion, ICatalogedVersion
+    __implements__ = IVersion
 
     security = ClassSecurityInfo()
 
@@ -188,7 +213,9 @@ class DocumentVersion(CatalogedVersion):
                               'fulltext')
     def fulltext(self):
         """Return the content of this object without any xml"""
-        return self._flattenxml(self.content_xml())
+        if self.version_status() == 'unapproved':
+            return ''
+        return [self.get_title(), self._flattenxml(self.content_xml())]
     
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'content_xml')
@@ -214,7 +241,7 @@ manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
 
 def manage_addDocument(self, id, title, REQUEST=None):
     """Add a Document."""
-    if not self.is_id_valid(id):
+    if not mangle.Id(self, id).isValid():
         return
     object = Document(id)
     self._setObject(id, object)
@@ -222,7 +249,6 @@ def manage_addDocument(self, id, title, REQUEST=None):
     object.manage_addProduct['SilvaDocument'].manage_addDocumentVersion(
         '0', title)
     object.create_version('0', None, None)
-    getattr(object, '0').index_object()
     add_and_edit(self, id, REQUEST)
     return ''
 
@@ -245,11 +271,8 @@ def manage_addDocumentVersion(self, id, title, REQUEST=None):
 def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
-    
-    used_ids = object.objectIds()
-    while id in used_ids:
-        id = getNewId(id)
-        
+   
+    id = str(mangle.Id(object, id).unique())
     object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
     
     newdoc = getattr(object, id)
@@ -266,3 +289,14 @@ def xml_import_handler(object, node):
                 child.nodeValue.encode('utf8'))
 
     return newdoc
+
+class _SilvaDocumentPolicy(Persistent):
+
+    __implements__ = IContainerPolicy
+
+    def createDefaultDocument(self, container, title):
+        container.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'index', title)
+        container.index.sec_update_last_author_info()
+        
+SilvaDocumentPolicy = _SilvaDocumentPolicy()

@@ -7,7 +7,7 @@
 ##parameters=
 ##title=
 ##
-if not context.REQUEST.node.get_content().sec_create_lock():
+if not context.check_editable():
     return context.redirect()
 
 context.edit_mode_helper()

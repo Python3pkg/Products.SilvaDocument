@@ -1,0 +1,17 @@
+<div class="citation">
+  <p 
+    tal:repeat="content python:here.viewable('p')"
+    tal:content="structure content">
+      bla fasel
+  </p>
+  <p class="author" 
+    tal:repeat="content python:here.viewable('author')"
+    tal:content="structure content">
+      author
+  </p>
+  <p class="source" 
+    tal:repeat="content python:here.viewable('source')"
+    tal:content="structure content">
+      source
+  </p>
+</div>

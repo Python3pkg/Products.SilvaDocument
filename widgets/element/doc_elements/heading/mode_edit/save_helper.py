@@ -1,12 +1,5 @@
-## Script (Python) "save_helper"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
+from Products.Silva.mangle import String
+
 request = context.REQUEST
 node = request.node
 editor = context.service_editorsupport
@@ -29,4 +22,4 @@ if getattr(request,'element_switched',None):
       editor.replace_heading(p, title)
       node.parentNode.insertBefore(p, node)
 
-node.setAttribute('type', node.input_convert(type))
+node.setAttribute('type', String.inputConvert(type))

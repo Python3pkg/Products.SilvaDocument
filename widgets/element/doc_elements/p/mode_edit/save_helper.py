@@ -1,12 +1,5 @@
-## Script (Python) "save_helper"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
+from Products.Silva.mangle import String
+
 request = context.REQUEST
 node = request.node
 editorsupport = context.service_editorsupport
@@ -20,7 +13,10 @@ data = request['data']
 type = request['element_type']
 
 # split into number of text items
-items = data.strip().split("\r\n\r\n")
+lines = data.split('\r\n')
+lines = [ line.strip() for line in lines ]
+data = '\r\n'.join(lines)
+items = data.split('\r\n\r\n')
 # replace text in node
 editorsupport.replace_text(node, items[0])
 # if necessary, add new paragraphs
@@ -32,4 +28,4 @@ if len(items) > 1:
         editorsupport.replace_text(p, item)
         node.parentNode.insertBefore(p, next)
 
-node.setAttribute('type', node.input_convert(type))
+node.setAttribute('type', String.inputConvert(type))
