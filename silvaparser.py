@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.1 2003/10/10 15:19:23 zagy Exp $
+# $Id: silvaparser.py,v 1.2 2003/10/19 16:47:15 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -337,7 +337,8 @@ class Interpreter:
         self.rules['link-text'] = {
             Token.WHITESPACE: self.whitespace,
             Token.CHAR: self.text,
-            Token.LINK_SEP: self.link_sep_aftertext
+            Token.LINK_SEP: self.link_sep_aftertext,
+            Token.ESCAPE: self.escape,
         }
 
         self.rules['link-url'] = {
@@ -345,17 +346,20 @@ class Interpreter:
             Token.LINK_URL: self.link_url,
             Token.LINK_SEP: self.link_sep_afterurl,
             Token.LINK_END: self.link_end,
+            Token.ESCAPE: self.escape,
         }
        
         self.rules['link-target'] = {
             Token.CHAR: self.text,
             Token.LINK_END: self.link_end,
+            Token.ESCAPE: self.escape,
         }
 
         self.rules['index'] = {
             Token.WHITESPACE: self.index_text,
             Token.CHAR: self.index_text,
             Token.INDEX_END: self.index_end,
+            Token.ESCAPE: self.escape,
         }
 
         self.rules['escape'] = {
@@ -374,6 +378,7 @@ class Interpreter:
             Token.SOFTBREAK: self.escaped_softbreak,
             Token.WHITESPACE: self.escaped_whitespace,
             Token.CHAR: self.escaped_text,
+            Token.ESCAPE: self.escaped_text,
         }
         
     def validate(self):
@@ -390,8 +395,9 @@ class Interpreter:
                 # starts the text block -> ok
                 pass
             elif (prev.nodeType == prev.ELEMENT_NODE and 
-                    prev in self._inline_nodes):
+                    (prev in self._inline_nodes or prev.nodeName == 'br')):
                 # it is an inline node -> ok
+                # follows a soft break -> ok
                 pass
             elif prev.nodeType == prev.TEXT_NODE:
                 last_char = prev.nodeValue[-1]
