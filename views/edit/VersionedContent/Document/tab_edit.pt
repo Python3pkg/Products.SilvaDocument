@@ -7,7 +7,7 @@
   xmlns:notal="http://www.infrae.com/silva/notal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva"
+  i18n:domain="silva_document"
   tal:define="
     global vein string:editor;
     member python:here.service_members.get_member(here.REQUEST.AUTHENTICATED_USER.getUserName());
@@ -95,7 +95,8 @@
   condition="python:hasattr(view, 'kupu')">
   <a title="edit with the kupu WYSIWYG editor: alt-("
     accesskey="("
-    tal:content="python: test(active, 'kupu editor', ' kupu editor...')"
+    i18n:translate=""
+    tal:content="python: here.kupu_display(active)"
     tal:attributes="
       class python: test(active, 'selected', None);
       href python: '%s/edit?editor=kupu' % model.absolute_url()"
@@ -104,7 +105,8 @@
   <div class="air"> </div>
   <a title="edit with the forms editor: alt-)"
     accesskey=")"
-    tal:content="python: test(active, 'forms editor...', 'forms editor')"
+    i18n:translate=""
+    tal:content="python: here.forms_editor_display(not active)"
     tal:attributes="
       class python: test(active, None, 'selected');
       href python: '%s/edit?editor=forms_editor' % model.absolute_url()"

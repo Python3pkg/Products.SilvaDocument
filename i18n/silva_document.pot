@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Nov 30 12:47:02 2004\n"
+"POT-Creation-Date: Tue Nov 30 18:19:51 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -9,11 +9,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
 
-#: /Document.py:155
+#: /Document.py:152
 msgid "No version to store to!"
 msgstr ""
 
-#: /Document.py:50
+#: /Document.py:47
 msgid ""
 "A Document is the basic unit of information in Silva. A document\n"
 "        can -  much like word processor documents - contain text,\n"
@@ -31,135 +31,158 @@ msgstr ""
 msgid "Charset set"
 msgstr ""
 
-#: /install.py:145
+#: /install.py:146
+#: /views/add/Document/form.form:50
+# Default: ""
 msgid "title"
 msgstr ""
 
-#: /install.py:146
+#: /install.py:147
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:26
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:24
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
+# Default: ""
 msgid "paragraph"
 msgstr ""
 
-#: /install.py:147
+#: /install.py:148
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
+# Default: ""
 msgid "heading"
 msgstr ""
 
-#: /install.py:148
+#: /install.py:149
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:28
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:26
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
+# Default: ""
 msgid "list"
 msgstr ""
 
-#: /install.py:149
+#: /install.py:150
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:29
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
+# Default: ""
 msgid "preformatted"
 msgstr ""
 
-#: /install.py:150
+#: /install.py:151
+# Default: ""
 msgid "table of contents"
 msgstr ""
 
-#: /install.py:151
+#: /install.py:152
+# Default: ""
 msgid "image"
 msgstr ""
 
-#: /install.py:152
+#: /install.py:153
+# Default: ""
 msgid "table"
 msgstr ""
 
-#: /install.py:153
+#: /install.py:154
+# Default: ""
 msgid "complex list"
 msgstr ""
 
-#: /install.py:154
+#: /install.py:155
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:31
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:28
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
+# Default: ""
 msgid "definition list"
 msgstr ""
 
-#: /install.py:155
+#: /install.py:156
+# Default: ""
 msgid "code element"
 msgstr ""
 
-#: /install.py:156
+#: /install.py:157
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+# Default: ""
 msgid "citation"
 msgstr ""
 
-#: /install.py:165
+#: /install.py:166
 msgid "external source"
-msgstr ""
-
-#: /install.py:216
-#: /install.py:284
-msgid "Paragraph"
 msgstr ""
 
 #: /install.py:217
 #: /install.py:285
-msgid "Heading"
+# Default: ""
+msgid "Paragraph"
 msgstr ""
 
 #: /install.py:218
 #: /install.py:286
-msgid "List"
+# Default: ""
+msgid "Heading"
 msgstr ""
 
 #: /install.py:219
 #: /install.py:287
-msgid "Image"
+# Default: ""
+msgid "List"
 msgstr ""
 
 #: /install.py:220
-#: /install.py:245
 #: /install.py:288
+# Default: ""
+msgid "Image"
+msgstr ""
+
+#: /install.py:221
+#: /install.py:246
+#: /install.py:289
+# Default: ""
 msgid "Complex list"
 msgstr ""
 
-#: /install.py:246
+#: /install.py:247
+# Default: ""
 msgid "List item"
 msgstr ""
 
-#: /install.py:247
+#: /install.py:248
+# Default: ""
 msgid "List title"
 msgstr ""
 
-#: /install.py:289
+#: /install.py:290
 msgid "Preformatted"
 msgstr ""
 
-#: /install.py:290
+#: /install.py:291
 msgid "Definition list"
 msgstr ""
 
-#: /install.py:340
+#: /install.py:341
+# Default: ""
 msgid "Table"
 msgstr ""
 
-#: /install.py:341
+#: /install.py:342
+# Default: ""
 msgid "row"
 msgstr ""
 
-#: /install.py:342
+#: /install.py:343
+# Default: ""
 msgid "row heading"
 msgstr ""
 
@@ -188,19 +211,19 @@ msgid "${name} attribute not found on tag ${self}"
 msgstr ""
 
 #: /views/add/Document/form.form:28
-msgid "default_add_form_object_id_title"
+msgid "id"
 msgstr ""
 
 #: /views/add/Document/form.form:30
-msgid "default_add_form_object_id_description"
+msgid "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;"
 msgstr ""
 
-#: /views/add/Document/form.form:50
-msgid "default_add_form_object_title_title"
+#: /views/edit/VersionedContent/Document/forms_editor_display.py:12
+msgid "forms editor"
 msgstr ""
 
-#: /views/add/Document/form.form:51
-msgid "default_add_form_object_title_description"
+#: /views/edit/VersionedContent/Document/forms_editor_display.py:12
+msgid "forms editor..."
 msgstr ""
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
@@ -221,6 +244,14 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:21
 msgid "publish"
+msgstr ""
+
+#: /views/edit/VersionedContent/Document/kupu_display.py:13
+msgid " kupu editor..."
+msgstr ""
+
+#: /views/edit/VersionedContent/Document/kupu_display.py:13
+msgid "kupu editor"
 msgstr ""
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:106
@@ -267,6 +298,7 @@ msgstr ""
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:69
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
 msgid "Tip:"
@@ -283,11 +315,13 @@ msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 msgid "get link reference..."
 msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 msgid "create a hyperlink: alt-g"
 msgstr ""
@@ -314,6 +348,7 @@ msgid "Add term on first line, definition on second line. Separate items with an
 msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:69
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 msgid "${tip} tab to the exit button or use alt-e."
 msgstr ""
@@ -480,6 +515,10 @@ msgstr ""
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:60
 #: /widgets/top/nlist/render.pt:51
 msgid "no bullet"
+msgstr ""
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:68
+msgid "Add list items separated by an empty line."
 msgstr ""
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:34

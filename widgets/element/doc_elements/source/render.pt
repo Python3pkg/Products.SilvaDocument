@@ -1,6 +1,6 @@
 <metal:block use-macro="container/macro_normal_view/macros/normal_view"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva">
+  i18n:domain="silva_document">
   <metal:block fill-slot="node_content"
     tal:define="source here/get_source | nothing;"
     >

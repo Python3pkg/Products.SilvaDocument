@@ -1,6 +1,6 @@
 <html
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva">
+  i18n:domain="silva_document">
 
 <div metal:define-macro="edit_top" tal:omit-tag="">
 <tr class="halfline invisible" tal:condition="python:not is_embedded">
@@ -13,7 +13,7 @@
     <img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="16" height="20" border="0" />
   </td>
   <th style="border-left:1px solid #617681;">
-  <span tal:replace="python:here.get_display_name(wr_name, node)">Edit title</span>
+  <tal:block i18n:translate="" content="python:here.get_display_name(wr_name, node)">Edit title</tal:block>
   <a href="#top" title="up to top of page" i18n:attributes="title"><img tal:attributes="src string:${silva_root}/globals/up_to_top.gif" width="16" height="12" border="0" hspace="7" /></a>
   </th>
   <th tal:condition="not:disable_notes" align="left" width="30%" i18n:translate="">Notes</th>
@@ -84,7 +84,9 @@
     <select class="manipulator"
       name="what">
       <option tal:repeat="item python:here.get_allowed_info(wr_name, node)" 
-        tal:attributes="value python:item[1]" tal:content="python:item[0]"></option>
+        tal:attributes="value python:item[1]" 
+        tal:content="python:item[0]"
+        i18n:translate=""></option>
     </select>
     <input tal:attributes="
       name string:${rel_url_start}/insert:method;

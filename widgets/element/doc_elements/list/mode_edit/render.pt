@@ -1,4 +1,6 @@
-<div metal:use-macro="container/macro_edit_view/macros/edit_view">
+<div metal:use-macro="container/macro_edit_view/macros/edit_view"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva_document">
 
 <div metal:fill-slot="edit_input" tal:omit-tag="">
 <script type="text/javascript" 
@@ -16,9 +18,7 @@
   tal:content="here/editable_content">Dummy</textarea><br />
 </div>
 
-<div metal:fill-slot="element_controls" tal:omit-tag=""
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva">
+<div metal:fill-slot="element_controls" tal:omit-tag="">
 <script type="text/javascript" tal:content="structure here/elements.js" />
 <tal:block i18n:translate="">element</tal:block>
 <select class="manipulator"

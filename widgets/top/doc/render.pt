@@ -5,7 +5,7 @@
 <br />
 <div metal:use-macro="container/macro_normal_view/macros/normal_view"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva">
+  i18n:domain="silva_document">
 <div metal:fill-slot="node_content" tal:omit-tag="">
   <div class="front2" tal:content="python:here.get_title_content()">title</div>
 </div>

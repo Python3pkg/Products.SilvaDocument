@@ -1,6 +1,6 @@
 <metal:block use-macro="container/macro_edit_view/macros/edit_view"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva">
+  i18n:domain="silva_document">
 <metal:block fill-slot="edit_input">
           <div class="fixIE6widget">
   <table cellpadding="3" cellspacing="0" border="0" width="100%">

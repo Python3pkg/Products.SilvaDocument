@@ -3,10 +3,11 @@
 
 from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
-from Products.Silva.i18n import translate as _
 import EditorSupportNested
 
 from Products.SilvaDocument import externalsource
+
+_ = lambda x: x
 
 def configureMiscServices(root):
     # add editor support service
@@ -142,8 +143,8 @@ def registerDocEditor(root):
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
 
-    wr.setDisplayName('doc', _('title'))
-    wr.setDisplayName('p', _('paragraph'))
+    wr.setDisplayName('doc', unicode(_('title')))
+    wr.setDisplayName('p', unicode(_('paragraph')))
     wr.setDisplayName('heading', _('heading'))
     wr.setDisplayName('list', _('list'))
     wr.setDisplayName('pre', _('preformatted'))

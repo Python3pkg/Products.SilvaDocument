@@ -7,7 +7,7 @@
 
 <div metal:use-macro="container/macro_embed_view/macros/embed_view"
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva">
+  i18n:domain="silva_document">
 <div metal:fill-slot="embed_controls" tal:omit-tag="">
 <table border="0" width="100%" cellspacing="0">
 <tr class="controls">
