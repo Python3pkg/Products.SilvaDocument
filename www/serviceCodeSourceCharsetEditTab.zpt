@@ -1,25 +1,31 @@
 <!--
 Copyright (c) 2002 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1.2.1 $
+Version of this file: $Revision: 1.1.2.1.6.1 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
 <h2 tal:define="manage_tabs_message options/manage_tabs_message | nothing"
     tal:replace="structure here/manage_tabs">Tabs</h2>
 
+<h4><a href="../manage_services">Silva Services</a></h4>
+
+<h2>Silva CodeSource Charset Service</h2>
 <p class="form-help">
-Edit Silva CodeSource Charset Service.<br /><br />
-Here you can set which character set should be used to interpret codesources. Common character sets are:<br /><br />
-<strong>
-latin-1 (also known as ISO-8859-1)<br />
-ISO-8859-15 (latin-1 with Euro-sign support)<br />
-utf-8<br />
-cp1252 (latin-1 with Windows extensions)<br /><br />
-</strong>
-Which charset you should choose depends on your setup. Most setups will use either <br />
-latin-1 or cp1252, depending on whether the codesources contain m-dashes or other <br />
-Windows-specific characters.<br />
+Here you can choose which character set should be used to interpret codesources <br /> 
+by default. Common character sets are:
+</p>
+<pre>
+latin-1      also known as ISO-8859-1
+ISO-8859-15  latin-1 with Euro-sign support
+utf-8        unicode
+cp1252       latin-1 with Windows extensions
+mac_roman    common Macintosh encoding
+</pre>
+<p class="form-help">
+Which charset you choose depends on your setup. Most setups will use either <br />
+latin-1 or cp1252. This may vary depending on whether the codesources contain<br /> 
+em-dashes, curly quotes, and accented or other special characters.<br />
 </p>
 
 <form action="manage_setCharset" method="post">
@@ -35,8 +41,11 @@ Windows-specific characters.<br />
     </td>
   </tr>
   <tr>
-    <td colSpan="2" align="left" valign="top">
-      <input class="form-text form-element" type="submit" value=" Submit " />
+    <td align="left" valign="top">
+    &nbsp;
+    </td>
+    <td align="left" valign="top">
+      <input class="form-text form-element" type="submit" value=" Save " />
     </td>
   </tr>
 </table>
