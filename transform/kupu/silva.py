@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.16 $'
+__version__='$Revision: 1.17 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -88,11 +88,19 @@ class heading(SilvaElement):
                  u'sub': html.h4, 
                  u'subsub': html.h5,
                  u'paragraph': html.h6,
-                 u'subparagraph': html.h7,
+                 u'subparagraph': html.h6,
                  }.get(level, html.h3)
+
+        silva_type = None
+        class_ = None
+        if level == 'subparagraph':
+            silva_type = 'sub'
+            class_ = 'sub'
 
         return h_tag(
             self.content.convert(context),
+            silva_type = silva_type,
+            class_ = class_,
             )
 
 class p(SilvaElement):
