@@ -1,0 +1,4 @@
+SilvaDocument provides the Silva Document, including its editor, for Silva. 
+While Silva is intended to operate without Silva Document it is not very
+useful out of the box that way.
+
