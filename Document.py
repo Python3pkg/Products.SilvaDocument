@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 # Zope
 
 from StringIO import StringIO
@@ -15,10 +15,6 @@ from Products.ParsedXML.ParsedXML import createDOMDocument
 from Products.ParsedXML.PrettyPrinter import _translateCdata
 from Products.ParsedXML.ParsedXML import ParsedXML
 
-# Silva interfaces
-from Products.Silva.IVersionedContent import IVersionedContent, ICatalogedVersionedContent
-from Products.Silva.IVersion import IVersion, ICatalogedVersion
-
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
@@ -31,6 +27,9 @@ from Products.Silva.Metadata import export_metadata
 # For XML-Conversions for editors
 from transform.Transformer import EditorTransformer
 from transform.base import Context
+
+from Products.Silva.interfaces import IVersionedContent
+from Products.Silva.interfaces import IVersion
 
 icon="www/silvadoc.gif"
 
@@ -45,7 +44,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    __implements__ = IVersionedContent, ICatalogedVersionedContent
+    __implements__ = IVersionedContent
 
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = CatalogedVersionedContent.manage_options
@@ -157,7 +156,7 @@ class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
     meta_type = "Silva Document Version"
-    __implements__ = IVersion, ICatalogedVersion
+    __implements__ = IVersion
 
     security = ClassSecurityInfo()
 
