@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.8.6.3 $
+# $Revision: 1.21.4.8.6.4 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -41,8 +41,6 @@ class EditorSupport(SimpleItem):
         'underline': '_',
         'index': '[',
     }
-        
-
 
     def __init__(self, id):
         self.id = id
