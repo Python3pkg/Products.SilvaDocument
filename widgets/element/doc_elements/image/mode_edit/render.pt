@@ -62,43 +62,43 @@
     </tr>
     <tr>
       <td class="invisible align-right">
-        image alignment
+        alignment
       </td>
       <td class="invisible">
         <input type="radio" name="alignment" value="float-left" id="float-left"
           tal:condition="python:alignment != 'float-left'" />
         <input type="radio" name="alignment" value="float-left" id="float-left" checked=""
           tal:condition="python:alignment == 'float-left'" />
-        <label for="float-left">Float left</label><br />
+        <label for="float-left">float left</label><br />
         <input type="radio" name="alignment" value="image-left" id="image-left"
           tal:condition="python:alignment != 'image-left'" />
         <input type="radio" name="alignment" value="none" id="image-left" checked=""
           tal:condition="python:alignment == 'image-left'" />
-        <label for="image-left">Align left</label><br />
+        <label for="image-left">align left</label><br />
       </td>
       <td class="invisible">
         <input type="radio" name="alignment" value="none" id="none"
           tal:condition="python:alignment != ''" />
         <input type="radio" name="alignment" value="none" id="none" checked=""
           tal:condition="python:alignment == ''" />
-        <label for="none">Default</label><br />
+        <label for="none">default</label><br />
         <input type="radio" name="alignment" value="image-center" id="image-center"
           tal:condition="python:alignment != 'image-center'" />
         <input type="radio" name="alignment" value="image-center" id="image-center" checked=""
           tal:condition="python:alignment == 'image-center'" />
-        <label for="image-center">Align center</label><br />
+        <label for="image-center">align center</label><br />
       </td>
       <td class="invisible">
         <input type="radio" name="alignment" value="float-right" id="float-right"
           tal:condition="python:alignment != 'float-right'" />
         <input type="radio" name="alignment" value="float-right" id="float-right" checked=""
           tal:condition="python:alignment == 'float-right'" />
-        <label for="float-right">Float right</label><br />
+        <label for="float-right">float right</label><br />
         <input type="radio" name="alignment" value="image-right" id="image-right"
           tal:condition="python:alignment != 'image-right'" />
         <input type="radio" name="alignment" value="image-right" id="image-right" checked=""
           tal:condition="python:alignment == 'image-right'" />
-        <label for="image-right">Align right</label><br />
+        <label for="image-right">align right</label><br />
       </td>
     </tr>
   </table>
