@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.1 $
+# $Revision: 1.16.4.2 $
 # Zope
 
 from StringIO import StringIO
@@ -156,6 +156,8 @@ class Document(CatalogedVersionedContent):
             self.set_title(title)         # needs unicode
 
             # brute force: invalidate all widget caches for this session
+            # XXX This is *way* too rigorous! we should clear only the current
+            # document's cache instead of everything...
             try:
                 del self.REQUEST.SESSION['xmlwidgets_service_editor']
             except AttributeError: pass
