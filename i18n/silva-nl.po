@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument 1.1\n"
 "POT-Creation-Date: Tue Nov 23 12:32:51 2004\n"
-"PO-Revision-Date: 2004-11-22 19:22:35+0100\n"
+"PO-Revision-Date: 2004-11-29 19:10+0100\n"
 "Last-Translator: Eric Casteleijn <eric@infrae.com>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
@@ -173,7 +173,7 @@ msgstr "${name}-attribuut niet gevonden op tag ${self}"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
-msgstr "editor"
+msgstr "bewerken"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:18
 msgid "preview"
