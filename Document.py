@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 # Zope
 
 from StringIO import StringIO
@@ -9,6 +9,7 @@ from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from DateTime import DateTime
 from Globals import InitializeClass
+from Persistence import Persistent
 
 from Products.ParsedXML.ExtraDOM import writeStream
 from Products.ParsedXML.ParsedXML import createDOMDocument
@@ -29,7 +30,7 @@ from Products.Silva.Metadata import export_metadata
 from transform.Transformer import EditorTransformer
 from transform.base import Context
 
-from Products.Silva.interfaces import IVersionedContent
+from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
 from Products.Silva.interfaces import IVersion
 
 icon="www/silvadoc.gif"
@@ -263,3 +264,14 @@ def xml_import_handler(object, node):
                 child.nodeValue.encode('utf8'))
 
     return newdoc
+
+class _SilvaDocumentPolicy(Persistent):
+
+    __implements__ = IContainerPolicy
+
+    def createDefaultDocument(self, container, title):
+        container.manage_addProduct['SilvaDocument'].manage_addDocument(
+            'index', title)
+        container.index.sec_update_last_author_info()
+SilvaDocumentPolicy = _SilvaDocumentPolicy()
+

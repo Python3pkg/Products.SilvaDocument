@@ -2,7 +2,7 @@
 """
 
 from Products.Silva.install import add_fss_directory_view
-import Document
+from Products.SilvaDocument import Document
 import EditorSupportNested
 
 def configureMiscServices(root):
@@ -29,12 +29,17 @@ def install(root):
     mapping.editMappings('',
                          [{'type':'Silva Document Version',
                            'chain':'silva-content, silva-extra'}])
+
+    root.service_containerpolicy.register('Silva Document',
+        Document.SilvaDocumentPolicy)
+        
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     unconfigureXMLWidgets(root)
     root.service_views.manage_delObjects(['SilvaDocument'])
     root.manage_delObjects(['service_editorsupport'])
     # uninstall metadata mapping?
+    root.service_containerpolicy.unregister('Silva Document')
     
 def is_installed(root):
     return hasattr(root.service_views, 'SilvaDocument')
