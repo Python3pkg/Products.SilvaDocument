@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.24 $'
+__version__='$Revision: 1.25 $'
 
 from zExceptions import NotFound
 
@@ -755,7 +755,7 @@ class div(Element):
             return Frag()
         self.should_be_removed = 1
         if self.attr.toc_depth:
-            toc_depth = int(self.attr.toc_depth)
+            toc_depth = int(str(self.attr.toc_depth))
             if toc_depth > 0:
                 toc_depth -= 1
             return silva.toc(
