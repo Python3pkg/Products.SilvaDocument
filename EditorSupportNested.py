@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.20 $
+# $Revision: 1.21 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -64,14 +64,8 @@ class EditorSupport(SimpleItem):
                 result.append('</sub>')
             elif child.nodeName == 'link':
                 path = child.getAttribute('url')
-                if not _url_match.match(path):
-                    # it is not an URL, so treat it as a path
-                    splitpath = [p.encode('ascii','ignore') for p in path.split('/')]                    
-                    obj = self.restrictedTraverse(splitpath, None)
-                    if obj is not None:
-                        path = obj.absolute_url()
-                                        
-                result.append('<a href="%s"' %  mangle.entities(path))
+                url = self._link_absolute_url(path)
+                result.append('<a href="%s"' %  mangle.entities(url))
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
                               mangle.entities(child.getAttribute('target')))
@@ -280,6 +274,28 @@ class EditorSupport(SimpleItem):
     def render_links(self, text):
         dom = self.editable_to_dom(text, LinkParser)
         return self.render_text_as_html(dom.firstChild)
+
+    def _link_absolute_url(self, path):
+
+        if _url_match.match(path):
+            # this is a url already, return it
+            return path
+        # it is not an URL, so treat it as a path
+        splitpath = [ p.encode('ascii','ignore')
+            for p in path.split('/') ]
+        obj = self.restrictedTraverse(splitpath, None)
+        if obj is None:
+            # was not found, maybe the link is broken, but maybe it's just 
+            # due to virtual hosting situations or what ever
+            return path
+        if hasattr(obj.aq_base, 'absolute_url'):
+            # there are some cases where the object we found does not have the
+            # absolute_url method
+            return obj.absolute_url()
+        if not path.startswith('/'):
+            container = self.get_container()
+            return container.absolute_url() + '/' + path
+        return path
 
 InitializeClass(EditorSupport)
 
