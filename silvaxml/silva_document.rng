@@ -445,7 +445,7 @@
 
   
   <define name="rendered_html">
-    <element name="rendered_xhtml">
+    <element name="rendered_html">
       <!-- namespacing? -->
       <ref name="anything"/>
     </element>
