@@ -1,6 +1,7 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
+from __future__ import nested_scopes
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -455,4 +456,195 @@ def manage_addEditorSupport(container):
     "editor support service factory"
     id = 'service_editorsupport'
     container._setObject(id, EditorSupport(id))
+
+
+class Token:
+    
+    EMPHASIS_START = 10
+    EMPHASIS_END = 11
+    STRONG_START = 12
+    STRONG_END = 13
+    UNDERLINE_START = 14
+    UNDERLINE_END = 15
+    SUPERSCRIPT_START = 16
+    SUPERSCRIPT_END = 17
+    SUBSCRIPT_START = 18
+    SUBSCRIPT_END = 19
+
+    LINK_START = 50
+    LINK_SEP = 51
+    LINK_END = 52
+    LINK_URL = 54
+    LINK_TARGET = 55
+
+    INDEX_START = 60
+    INDEX_SEP = 61
+    INDEX_END = 62
+    
+    CHAR = 100
+    WHITESPACE = 101
+    PUNCTUATION = 102
+    
+    def __init__(self, kind, text, callback=None):
+        self.kind = kind
+        self.text = text
+        self.callback = callback
+
+    def __len__(self):
+        return len(self.text)
+
+    def __cmp__(self, other):
+        return cmp(self.text, other.text)
+    
+    def __str__(self):
+        return self.text
+
+    def __repr__(self):
+        return "<%s>" % self.text
+
+    def select(self):
+        if callable(self.callback):
+            self.callback()
+
+
+class Scanner:
+    """scanner for silva markup
+    """
+
+    def __init__(self, text):
+        self.text = self._text = text
+        self.tokens = []
+        self.consumed = 0
+        self.initialize_patterns()
+        
+    def initialize_patterns(self):
+        patterns = [
+            (r'(\+\+)[^\s]', self.emphasis_start),
+            (r'''(\+\+)([\s'"\)\]}>\-/:\.,;!\?\\*]|$)''', self.emphasis_end),
+            
+            (r'(\*\*)[^\s]', self.strong_start),
+            (r'''(\*\*)([\s'"\)\]}>\-/:\.,;!\?\\+]|$)''', self.strong_end),
+            
+            (r'(__)[^\s]', self.underline_start),
+            (r'''(__)([\s'"\)\]}>\-/:\.,;!\?\\_]|$)''', self.underline_end),
+            
+            (r'(\(\()[^\s]', self.link_start),
+            (r'\|', self.link_sep),
+            (r'''(\)\))([\s'"\)\]}>\-/:\.,;!\?\\]|$)''', self.link_end),
+            (r'((([^(|)]+)?)(@|mailto\:|(news|(ht|f)tp(s?))\://)[^(|)]+)',
+                Token.LINK_URL),
+            
+            (r'\s+', Token.WHITESPACE),
+            ('.', Token.CHAR),
+            ]
+        self.patterns = []
+        for pattern_str, token_id in patterns:
+            self.patterns.append((re.compile(pattern_str), token_id))
+        
+    def scan(self):
+        text_length = len(self.text)
+        while self.consumed < text_length:
+            self._scan_step()
+        
+    def _scan_step(self):
+        matches = []
+        for pattern, token_id in self.patterns:
+            m = pattern.match(self.text[self.consumed:])
+            if m is None:
+                continue
+            self.match = m
+            if callable(token_id):
+                t = token_id()
+            else:
+                t = Token(token_id, m.group(0))
+            if t is not None:
+                matches.append(t)
+        if not matches:
+            raise ValueError, "Invalid text found at position %i (%s...)" % (
+                self.consumed, self.text[self.consumed:self.consumed+10])
+        token = max(matches)
+        token.select()
+        self.tokens.append(token)
+        self.consumed += len(token)
+        
+       
+    def _inline_start(self, token_name):
+        text = self.match.group(1)
+        attr_name = '_%s_state' % token_name
+        token_id_name = '%s_START' % token_name.upper()
+        if getattr(self, attr_name, 0):
+            return None
+        try:
+            last_token = self.tokens[-1]
+        except IndexError:
+            # Starts a text block -> ok
+            pass
+        else:
+            if last_token.kind in (Token.WHITESPACE, Token.EMPHASIS_START,
+                    Token.STRONG_START):
+                # preceded by white space -> ok
+                pass
+            elif (last_token.kind == Token.CHAR and 
+                    last_token.text in """'"([{<-/:"""):
+                # preceded by some special chars -> ok
+                pass
+            else:
+                # not ok
+                return None
+        cb = lambda: setattr(self, attr_name, 1)
+        return Token(getattr(Token, token_id_name), text, cb)
+   
+    def _inline_end(self, token_name):
+        text = self.match.group(1)
+        attr_name = '_%s_state' % token_name
+        token_id_name = '%s_END' % token_name.upper()
+        if not getattr(self, attr_name, 0):
+            return None
+        if self.tokens[-1].kind == Token.WHITESPACE:
+            # Inline markup end-strings must be immediately preceded by 
+            # non-whitespace.
+            return None
+        cb = lambda: setattr(self, attr_name, 0)
+        return Token(getattr(Token, token_id_name), text, cb)
+     
+    def emphasis_start(self):
+        return self._inline_start('emphasis')
+   
+    def emphasis_end(self):
+        return self._inline_end('emphasis')
+        
+    def strong_start(self):
+        return self._inline_start('strong')
+    
+    def strong_end(self):
+        return self._inline_end('strong')
+    
+    def underline_start(self):
+        return self._inline_start('underline')
+    
+    def underline_end(self):
+        return self._inline_end('underline')
+
+    def superscript_start(self):
+        return self._inline_start('superscript')
+    
+    def superscript_end(self):
+        return self._inline_end('superscript')
+
+    def subscript_start(self):
+        return self._inline_start('subscript')
+    
+    def subscript_end(self):
+        return self._inline_end('subscript')
+
+    def link_start(self):
+        return self._inline_start('link')
+
+    def link_sep(self):
+        if not getattr(self, '_link_state', 0):
+            return None
+        return Token(Token.LINK_SEP, '|')
+        
+    def link_end(self):
+        return self._inline_end('link')
 
