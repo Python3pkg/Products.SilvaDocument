@@ -1,4 +1,4 @@
-"""Install for Silva Documenrat
+"""Install for Silva Document
 """
 
 from Products.Silva.install import add_fss_directory_view
