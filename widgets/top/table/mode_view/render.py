@@ -52,15 +52,15 @@ for child in node.childNodes:
     if child.nodeName == 'row_heading':
         table_data.append(
             '<tr class="rowheading">\n<td colspan="%s">\n  %s\n</td>\n</tr>' % (
-            nr_of_columns, 
+            nr_of_columns,
             context.service_editorsupport.render_heading_as_html(child)))
 
 table = []
-table.append("""<table class="silvatable %s" width="100%%" cellspacing="0" cellpadding="3px">""" % (type))
+table.append("""<table class="silvatable %s" cellspacing="0" cellpadding="3px">""" % (type))
 # this is always empty in rendered html
 # table.append("""<caption>%s</caption>""" % (caption))
 for col in columns_info:
-    table.append("""<col width="%s" class="align-%s" valign="top"/>""" % (
+    table.append("""<col width="%s" class="align-%s" />""" % (
         col['html_width'], col['align']))
 table.append("""<tbody>""")
 table.append('\n'.join(table_data))
