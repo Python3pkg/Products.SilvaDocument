@@ -16,7 +16,7 @@ for child in node.childNodes:
     if child.nodeType == node.ELEMENT_NODE:
         break
     
-supp = editorsupport.getMixedContentSupport(model, node)
+supp = editorsupport.getMixedContentSupport(model, child)
 supp.parse(items[0])
 
 # if necessary, add new list items

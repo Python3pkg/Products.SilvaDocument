@@ -15,9 +15,8 @@ for child in node.childNodes:
   if child.nodeType == node.ELEMENT_NODE:
     break
 
-node = child
-supp = editorsupport.getMixedContentSupport(model, node)
+supp = editorsupport.getMixedContentSupport(model, child)
 text = supp.renderEditable()
 text = editorsupport.replace_xml_entities(text)
 return '''<textarea cols="20" rows="2" wrap="soft" class="fixIE6widget" 
-    name="%s">%s</textarea>''' % (node.getNodePath('widget'), text)
+    name="%s">%s</textarea>''' % (child.getNodePath('widget'), text)
