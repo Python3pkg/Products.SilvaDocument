@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.12 $'
+__version__='$Revision: 1.1.2.13 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -45,6 +45,8 @@ except:
             return path2
 
     Path = Path()
+
+import re
 
 DEBUG=0
 
@@ -119,6 +121,18 @@ def find_and_convert_toplevel(el, context, els=None):
             continue
     return foundels
 
+reg_ignorable = re.compile('^([ \t\n]|<br[^>]*>)*$')
+def get_textbuf(textbuf, context):
+    """given a list of elements this either returns a p element
+        if the list contains non-ignorable elements or it will
+        return an empty fragment if it doesn't
+    """
+    frag = Frag(textbuf)
+    converted = frag.convert(context).asBytes('UTF-8').strip()
+    if not reg_ignorable.search(converted):
+        return silva.p(textbuf)
+    return Frag()
+
 def fix_structure(inputels, context, allowtables=0):
     """walk through all inputels recursively
 
@@ -140,13 +154,13 @@ def fix_structure(inputels, context, allowtables=0):
                     textbuf.append(child.convert(context))
                 else:
                     if textbuf:
-                        fixedrest.append(silva.p(textbuf, type=ptype))
+                        fixedrest.append(get_textbuf(textbuf, context))
                         textbuf = []
                     fixedrest.append(fix_toplevel(child, context))
                 fixedrest += foundtables
                 fixedrest += foundtoplevel
             if textbuf:
-                fixedrest.append(silva.p(textbuf, type=ptype))
+                fixedrest.append(get_textbuf(textbuf, context))
                 textbuf = []
         else:
             foundtables = []
@@ -157,13 +171,13 @@ def fix_structure(inputels, context, allowtables=0):
                 textbuf.append(el.convert(context))
             else:
                 if textbuf:
-                    fixedrest.append(silva.p(textbuf))
+                    fixedrest.append(get_textbuf(textbuf, context))
                     textbuf = []
                 fixedrest.append(fix_toplevel(el, context))
             fixedrest += foundtables
             fixedrest += foundtoplevel
     if textbuf:
-        fixedrest.append(silva.p(textbuf))
+        fixedrest.append(get_textbuf(textbuf, context))
         textbuf = []
     return fixedrest
 
@@ -537,6 +551,8 @@ class a(Element):
                     )
             else:
                 image = img.convert(context)
+                if not image:
+                    return Frag()
                 alignment = img.getattr('alignment')
                 if alignment == 'default' or alignment is None:
                     alignment = ''
