@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Revision: 1.14 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -72,12 +72,12 @@ class EditorSupport(SimpleItem):
                 result.append(self.render_text_as_html(child))
                 result.append('</u>')
             elif child.nodeName == 'index':
+                index = mangle.entities(child.getAttribute('name'))
+                result.append('<a class="index-element" name="%s">' %
+                    index)
                 if show_index:
-                    index = mangle.entities(child.getAttribute('name'))
-                    result.append('<a class="index-element" name="%s">[[' %
-                        index)
-                    result.append(index)
-                    result.append(']]</a>')
+                    result.append('[[%s]]' % index)
+                result.append('</a>')
             elif child.nodeName == 'br':
                 result.append('<br />')
             else:
