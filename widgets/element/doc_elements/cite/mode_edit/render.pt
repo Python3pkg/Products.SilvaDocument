@@ -8,7 +8,7 @@
       <td class="invisible align-right" colspan="3">  
         <textarea style="width:100%;" name="citation"
           tal:attributes="rows here/get_lines" 
-          tal:content="here/editable_content">Content</textarea>
+          tal:content="python: here.editable('p')">Content</textarea>
       </td>
     </tr>
     <tr>
@@ -17,7 +17,7 @@
       </td>
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">
         <input style="width: 100%;" type="text" name="author" value="" 
-          tal:attributes="value python:node.getAttribute('author')"/>
+          tal:attributes="value python:here.editable('author')"/>
       </td>
     </tr>
     <tr>
@@ -26,7 +26,7 @@
       </td>
       <td class="invisible align-left" colspan="3">  
         <input style="width:100%;" type="text" name="source" value=""
-          tal:attributes="value python:node.getAttribute('source')"/>
+          tal:attributes="value python:here.editable('source')"/>
       </td>
     </tr>
     <tr>

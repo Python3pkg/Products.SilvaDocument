@@ -4,7 +4,7 @@
 ##bind namespace=
 ##bind script=script
 ##bind subpath=traverse_subpath
-##parameters=
+##parameters=node_name
 ##title=
 ##
 node = context.REQUEST.node
@@ -13,7 +13,7 @@ editable = []
 for child in node.childNodes:
     if child.nodeType != child.ELEMENT_NODE:
         continue
-    if child.nodeName != 'p':
+    if child.nodeName != node_name:
         continue
     editable.append(editorsupport.render_text_as_editable(child))
 
