@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.2 2003/12/12 16:31:25 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.3 2003/12/23 08:20:24 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -626,9 +626,12 @@ def main():
     unittest.TextTestRunner(verbosity=2).run(test_suite())
 
 if __name__ == '__main__':
-    from hotshot import Profile
-    p = Profile('editorsupport.hotshot')
-    p.runcall(framework)
+    try:
+        from hotshot import Profile
+        p = Profile('editorsupport.hotshot')
+        p.runcall(framework)
+    except ImportError:
+        framework()
 else:
     # While framework.py provides its own test_suite()
     # method the testrunner utility does not.
