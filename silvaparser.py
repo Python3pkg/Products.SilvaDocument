@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.14.2.1.2.3 2004/05/06 15:26:24 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.14.2.1.2.4 2004/05/24 20:28:43 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -10,7 +10,9 @@ from xml.dom.minidom import parseString
 
 # sibling
 from Products.SilvaDocument.search import Search, HeuristicSearch
-from Products.SilvaDocument.interfaces import IParserState, IHeuristicsNode
+from Products.SilvaDocument.interfaces import \
+    ISilvaParserState, IHeuristicsNode, IParser, IInterpreter, \
+    ISilvaParserToken
 
 
 def _initialize_patterns(patterns):
@@ -27,6 +29,8 @@ class InterpreterError(Exception):
 
 class Token:
     """Silva markup tokens"""
+
+    __implements__ = ISilvaParserToken
     
     EMPHASIS_START = 10
     EMPHASIS_END = 11
@@ -119,7 +123,7 @@ class Token:
 class ParserState:
     """State of parsing silva markup"""
     
-    __implements__ = IParserState, IHeuristicsNode
+    __implements__ = ISilvaParserState, IHeuristicsNode
     
     def __init__(self, text, consumed, tokens, parent=None):
         self.text = text
@@ -204,7 +208,9 @@ class Parser(HeuristicSearch):
         
         abstract
     """
-    
+
+    __implements__ = IParser
+
     children_per_char = 100
 
     def __init__(self, text):
@@ -241,7 +247,7 @@ class Parser(HeuristicSearch):
             return 0
         if node.openclose != 0:
             return 0
-        p = Interpreter(node.tokens)
+        p = self.getInterpreter(node)
         try:
             p.parse()
         except InterpreterError:
@@ -278,6 +284,9 @@ class Parser(HeuristicSearch):
     def getResult(self):
         return self.results[0]
     
+    def getInterpreter(self, tokens):
+        return Interpreter(tokens)
+        
     def _generate_fallback_node(self, text):
         token = Token(Token.CHAR, text)
         node = ParserState(text, len(text), tokens=[token])
@@ -369,6 +378,8 @@ class Interpreter:
 
     """
 
+    __implements__ = IInterpreter
+
     _inline_preceeding_map = {
         '(': ')',
         '[': ']',
@@ -382,14 +393,15 @@ class Interpreter:
         ':': None,
     }
 
-    def __init__(self, tokens):
-        self.tokens = tokens
+    def __init__(self, state):
+        self.tokens = state.tokens
         # using minidom, it's *much* faster than ParsedXML
         self.dom = parseString('<p/>')
         self.initialize_rulesets()
         # inline markup nodes: **, ++, __ :
         self._inline_nodes = []
         self.ruleset = 'default'
+        self._finished = 0
        
     def parse(self):
         current_node = self.dom.firstChild
@@ -400,8 +412,11 @@ class Interpreter:
         if current_node != self.dom.firstChild:
             raise InterpreterError, "Not enough close tokens"
         self.validate()
+        self._finished = 1
        
     def toxml(self):
+        if not self._finished:
+            raise ValueError, "No result found."
         return self.dom.toxml()
 
     def handle_token(self, token, node):

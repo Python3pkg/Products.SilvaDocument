@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.4 2004/05/06 15:26:24 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.5 2004/05/24 20:28:43 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -14,7 +14,20 @@ from xml.dom.minidom import parseString
 from Products.SilvaDocument.silvaparser import \
     Token, PParser, Interpreter
 from Products.SilvaDocument.EditorSupportNested import EditorSupport
+from Products.SilvaDocument.interfaces import IParserState
 
+class HelperState:
+
+    __implements__ = IParserState
+
+    def __init__(self, tokens):
+        self.tokens = tokens
+
+    def toxml():
+        raise ValueError
+
+    def valid(self):
+        return 1
 
 class PParserTest(unittest.TestCase):
 
@@ -645,7 +658,7 @@ class InterpreterTest(unittest.TestCase):
     def test_helper(self):
         for tokens, result in self.helper_tests:
             tokens = [Token(kind, text) for kind, text in tokens]
-            ph = Interpreter(tokens)
+            ph = Interpreter(HelperState(tokens))
             ph.parse()
             xml = ph.dom.toxml()
             expected_xml = parseString('<p>'+result+'</p>').toxml()
