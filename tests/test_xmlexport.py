@@ -52,6 +52,47 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         self.assertEquals(part7, '</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:keywords/><silva-extra:lastauthor>unknown user</silva-extra:lastauthor><silva-extra:location>http://nohost/root/testfolder/test_document</silva-extra:location><silva-extra:modificationtime type="datetime">')
         self.assertEquals(part8, '</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><doc:doc>\n            <doc:node foo="bar">\xe6\x89\xbf\xe8\xab\xbe\xe5\xba\x83\xe5\x91\x8a\xef\xbc\x8a\xe6\x97\xa2\xe3\x81\xab\xe3\x80\x81\xef\xbc\x92\xe5\x84\x84\xe3\x80\x81\xef\xbc\x93\xe5\x84\x84\xe3\x80\x81\xef\xbc\x95\xe5\x84\x84\xef\xbc\x99\xe5\x8d\x83\xe4\xb8\x87\xe5\x86\x86\xe5\x8f\x8e\xe5\x85\xa5\xe8\x80\x85\xe3\x81\x8c\xe7\xb6\x9a\xe5\x87\xba<doc:node2>boo</doc:node2>\n            baz</doc:node></doc:doc></content></document></content></folder></silva>')
 
+    def test_xml_document_with_source_export(self):
+        try:
+            self.installExtension('SilvaExternalSources')
+        except:
+            return
+        testfolder = self.add_folder(
+            self.root,
+            'testfolder',
+            'This is <boo>a</boo> testfolder',
+            policy_name='Auto TOC')
+        source_file = open('data/test_csv.csv', 'r')
+        testfolder.manage_addProduct[
+            'SilvaExternalSources'].manage_addCSVSource(
+            'csv',
+            'A CSV Source',
+            source_file
+            )
+        manage_addDocument(
+            testfolder, 'test_document', 'This is (surprise!) a document')
+        doc = testfolder.test_document
+        doc_edit = doc.get_editable()
+        doc_edit.content = ParsedXML(
+            'test_document',
+            """<?xml version="1.0" encoding="utf-8"?><doc>
+            <source id="csv">
+            <parameter key="csvtableclass">grid</parameter>
+            <parameter key="csvbatchsize">2</parameter>
+            </source>
+            </doc>""")
+        BatchStart = {'b_start':2}
+        Request = testfolder.csv.REQUEST
+        Request.form.update(BatchStart)
+        xmlexport.initializeXMLExportRegistry()
+        settings = xmlexport.ExportSettings()
+        settings.setExternalRendering(True)
+        exporter = xmlexport.theXMLExporter
+        exportRoot = xmlexport.SilvaExportRoot(testfolder)
+        xml1, xml2 = exporter.exportToString(exportRoot, settings).split('<doc:doc>')
+        xml_expected = '\n<doc:sourceid="csv"><doc:parameterkey="csvtableclass">grid</doc:parameter><doc:parameterkey="csvbatchsize">2</doc:parameter><doc:rendered_html><div lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">\n  \n  <div class="listingBar">\n\n      <span class="previous"> \n   <a href="http://nohost/noobject?b_start:int=0">\n          \xc2\xab\n          Previous\n          2 \n          items</a>\n      </span>\n\n\n      \n   \n\n      \n    \n      \n      \n        <a href="http://nohost/noobject?b_start:int=0">1</a>\n      \n\n      \n      \n      <span class="brackets">[</span><span class="currentpage">2</span><span class="brackets">]</span>\n      \n    \n      \n\n      \n    \n      \n      \n      \n      \n \n    </div>\n  <table class="silvatable grid">\n    \n    \n      <thead>\n        <tr>\n          <th>h1</th>\n          <th>h2</th>\n          <th>h3</th>\n          <th>h4</th>\n          <th>h5</th>\n          <th>h6</th>\n        </tr>\n      </thead>\n    <tbody>\n      \n        <tr class="even">\n          <td>r3-1</td>\n          <td>r3-2</td>\n          <td>r3-3</td>\n          <td>r3-4</td>\n          <td>r3-5</td>\n          <td>r3-6</td>\n        </tr>\n      \n \n        <tr class="odd">\n          <td>r4-1</td>\n          <td>r4-2</td>\n          <td>r4-3</td>\n          <td>r4-4</td>\n          <td>r4-5</td>\n       <td>r4-6</td>\n        </tr>\n      \n    </tbody>\n    \n  </table>\n</div>\n</doc:rendered_html></doc:source>\n            </doc:doc></content></document></content></folder></silva>'
+        self.assertEquals(xml2.replace(' ',''), xml_expected.replace(' ',''))
+            
 if __name__ == '__main__':
     framework()
 else:
