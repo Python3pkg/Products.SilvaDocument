@@ -6,7 +6,7 @@ Meta::
   Valid for:  Silva 0.9.3+
   Author:     Christian Zagrodnick
   Email:      cz+gocept.com
-  CVS:        $Id: README.txt,v 1.2 2003/11/05 13:03:01 zagy Exp $
+  CVS:        $Id: README.txt,v 1.3 2003/11/05 13:24:07 faassen Exp $
 
 Silva Document
 
@@ -28,20 +28,20 @@ Editing
 
   Escaping
 
-    The intermediate solution of escaping potential markup characters with
-    entities has been replaced by a more sophistiaced escaping mechanism. The
-    backslash `/' is used as escaping character now:
+    The intermediate solution of escaping potential markup characters
+    with entities has been replaced by a more sophistiaced escaping
+    mechanism. The backslash '\' is used as escaping character now:
 
       A **strong** text is marked up as \**strong\** in Silva.
     
-    Althugh in most cases it it is not necessary to do manually escapes. The
-    parser will escape anything implicitly which cannot be interpreted as
+    In many cases it is not possible to escape manually. The parser
+    will escape anything implicitly which cannot be interpreted as
     markup, a so called conceptual escape:
 
       Now even a ***** (bold asterisk) is possible, or ****** two.
 
-    But note that, once saved, all conceptual escapes will be explicit escapes
-    in the edit box. This means
+    But note that, once saved, all conceptual escapes will be explicit
+    escapes in the edit box. This means
 
       our ****** two blod asterisks 
 
