@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.18 $'
+__version__='$Revision: 1.19 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -728,10 +728,8 @@ class th(Element):
 class div(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
-            print 'removing', self.getattr('id')
             return Frag()
         self.should_be_removed = 1
-        print self.getattr('id')
         if self.attr.toc_depth:
             return silva.toc(
                 toc_depth=self.attr.toc_depth
