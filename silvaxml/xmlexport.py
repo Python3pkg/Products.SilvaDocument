@@ -139,7 +139,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             result = []
             for i in range(columns):
                 result.append({'align': 'left', 'width': 1, 'html_width':'%s%%' % (100/columns) })
-            request.set('columns_info', result)
+            node.REQUEST.set('columns_info', result)
             return result
 
         lookup = { 'L':'left', 'C':'center', 'R': 'right' }
