@@ -224,23 +224,27 @@ class DocumentVersionProducer(SilvaBaseProducer):
         else:
             tree = toc_context.get_tree(depth)
             append_to_url = 'edit/tab_preview'
-        text = ''
-        for obj in tree:
-            indent = obj[0]
-            item = obj[1]
-            if public:
-                title = item.get_title()
-            else:
-                title = item.get_title_editable()
-            url = item.absolute_url()
-            if indent > 0:
-                text = text + '<img width="%s" height="14" alt="" src="%s/globals/pixel.gif" />' % (
-                    str(indent * 24),
-                    self.context.REQUEST['BASE2']
-                    )
-            text = text + '<a href="%s/%s">%s</a><br />' % (url, append_to_url, title)
-        html = '<p class="toc">%s</p>' % text
         if self.getSettings().externalRendering():
+            text = ''
+            for obj in tree:
+                indent = obj[0]
+                item = obj[1]
+                if public:
+                    title = item.get_title()
+                else:
+                    title = item.get_title_editable()
+                url = item.absolute_url()
+                if indent > 0:
+                    text = text + '<img width="%s" height="14" alt="" src="%s/globals/pixel.gif" />' % (
+                        str(indent * 24),
+                        self.context.REQUEST['BASE2']
+                        )
+                text = text + '<a href="%s/%s">%s</a><br />' % (
+                    url,
+                    append_to_url,
+                    title
+                    )
+            html = '<p class="toc">%s</p>' % text
             self.render_html(html)
 
     def sax_img(self, node):
