@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.17 $'
+__version__='$Revision: 1.18 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -88,7 +88,6 @@ def fix_tables_and_divs(el, context, tables=None):
         if child.name() in ['table', 'div']:
             foundtables.append(child.convert(context))
             child.should_be_removed = 1
-            print 'fixing:', child.getattr('id')
         fix_tables_and_divs(child, context, foundtables)
     return foundtables
 

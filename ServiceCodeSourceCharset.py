@@ -4,6 +4,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 
 from Products.Silva.helpers import add_and_edit
+from Products.Silva.i18n import translate as _
 
 manage_permission = 'Manage CodeSource Charset Services'
 
@@ -39,9 +40,9 @@ class CodeSourceCharsetService(SimpleItem):
     def manage_setCharset(self, REQUEST):
         """Manage method to set the charset"""
         if not REQUEST.has_key('charset'):
-            return self.edit_tab(manage_tabs_message='No charset entered')
+            return self.edit_tab(manage_tabs_message=_('No charset entered'))
         self.set_charset(REQUEST['charset'])
-        return self.edit_tab(manage_tabs_message='Charset set')
+        return self.edit_tab(manage_tabs_message=_('Charset set'))
 
 Globals.InitializeClass(CodeSourceCharsetService)
 

@@ -1,5 +1,6 @@
 from Products.Formulator.Errors import FormValidationError, ValidationError
 from Products.SilvaExternalSources.ExternalSource import getSourceForId
+from Products.Silva.i18n import translate as _
 
 request = context.REQUEST
 node = request.node
@@ -45,7 +46,7 @@ source = getSourceForId(doc, id)
 if source is None:
     # should not happen since id was selected from a list...
     # or should we silently ignore this?
-    raise ValueError, 'Source is a NoneType - is it not available anymore?'
+    raise ValueError, _('Source is a NoneType - is it not available anymore?')
 
 form = source.form()
 try:

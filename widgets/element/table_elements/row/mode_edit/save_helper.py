@@ -7,6 +7,8 @@
 ##parameters=
 ##title=
 ##
+from Products.Silva.i18n import translate as _
+
 request = context.REQUEST
 row = request.node
 editorsupport = context.service_editorsupport
@@ -26,7 +28,7 @@ while node is not None:
         # basictly this ignores text nodes.
         p_node = p_node.nextSibling
     if not p_node:
-        raise ValueError, "The stored xml is invalid."
+        raise ValueError, _("The stored xml is invalid.")
     data = request[p_node.getNodePath('widget')]
     supp = editorsupport.getMixedContentSupport(model, p_node)
     supp.parse(data)

@@ -3,6 +3,7 @@
 
 from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
+from Products.Silva.i18n import translate as _
 import EditorSupportNested
 
 from Products.SilvaDocument import externalsource
@@ -212,11 +213,11 @@ def registerFieldEditor(root):
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
 
-    wr.setDisplayName('p', 'Paragraph')
-    wr.setDisplayName('heading', 'Heading')
-    wr.setDisplayName('list', 'List')
-    wr.setDisplayName('image', 'Image')
-    wr.setDisplayName('nlist', 'Complex list')
+    wr.setDisplayName('p', _('Paragraph'))
+    wr.setDisplayName('heading', _('Heading'))
+    wr.setDisplayName('list', _('List'))
+    wr.setDisplayName('image', _('Image'))
+    wr.setDisplayName('nlist', _('Complex list'))
 
     wr.setAllowed('doc', ['p', 'heading', 'list', 'nlist', 'image'])
 
@@ -241,9 +242,9 @@ def registerNListEditor(root):
                      ('service_widgets', 'element', 'nlist_elements',
                            nodeName, 'mode_normal'))
         
-    wr.setDisplayName('nlist', 'Complex list')
-    wr.setDisplayName('li', 'List item')
-    wr.setDisplayName('title', 'List title')
+    wr.setDisplayName('nlist', _('Complex list'))
+    wr.setDisplayName('li', _('List item'))
+    wr.setDisplayName('title', _('List title'))
     
     wr.setAllowed('nlist', ['li'])
     
@@ -280,13 +281,13 @@ def registerSubEditor(root):
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
         
-    wr.setDisplayName('p', 'Paragraph')
-    wr.setDisplayName('heading', 'Heading')
-    wr.setDisplayName('list', 'List')
-    wr.setDisplayName('image', 'Image')
-    wr.setDisplayName('nlist', 'Complex list')
-    wr.setDisplayName('pre', 'Preformatted')
-    wr.setDisplayName('dlist', 'Definition list')
+    wr.setDisplayName('p', _('Paragraph'))
+    wr.setDisplayName('heading', _('Heading'))
+    wr.setDisplayName('list', _('List'))
+    wr.setDisplayName('image', _('Image'))
+    wr.setDisplayName('nlist', _('Complex list'))
+    wr.setDisplayName('pre', _('Preformatted'))
+    wr.setDisplayName('dlist', _('Definition list'))
 
     for nodeName in ('doc', 'li', 'field'):
         wr.setAllowed(nodeName,  ['p', 'heading', 'list', 'nlist', 'image',
@@ -336,9 +337,9 @@ def registerTableEditor(root):
     # add a field that doesn't do any displaying, just for sub editor invocation
     wr.addWidget('field',
                  ('service_widgets', 'element', 'table_elements', 'field'))
-    wr.setDisplayName('table', 'Table')
-    wr.setDisplayName('row', 'row')
-    wr.setDisplayName('row_heading', 'row heading')
+    wr.setDisplayName('table', _('Table'))
+    wr.setDisplayName('row', _('row'))
+    wr.setDisplayName('row_heading', _('row heading'))
     
     wr.setAllowed('table', ['row', 'row_heading'])
 

@@ -9,12 +9,13 @@
 ##
 
 from Products.Silva.mangle import entities
+from Products.Silva.i18n import translate as _
 
 node = context.REQUEST.node
 image = context.content()
 
 if not image:
-    return '<div class="error">[image reference is broken]</div>'
+    return _('<div class="error">[image reference is broken]</div>')
 
 alignment = node.getAttribute('alignment')
 link = node.getAttribute('link')

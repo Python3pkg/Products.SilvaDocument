@@ -21,13 +21,14 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 # we only have these dependencies so it runs with python-2.2
 
 import re 
 from UserList import UserList as List
 from UserDict import UserDict as Dict
+from Products.Silva.i18n import translate as _
 
 class Context:
     def __init__(self, **kw):
@@ -68,7 +69,7 @@ class Node:
             return issubclass(self.__class__, tag)
 
     def __eq__(self, other):
-        raise "not implemented, override in inheriting class"
+        raise _("not implemented, override in inheriting class")
 
     def name(self):
         """ return name of tag """
@@ -92,7 +93,9 @@ class Node:
 
         if vars(self.attr).has_key(name):
             return getattr(self.attr, name)
-        raise AttributeError, "%r attribute not found on tag %r" % (name, self)
+        message = _("${name} attribute not found on tag ${self}")
+        message.mapping = {'name': name, 'self': self}
+        raise AttributeError,  message
 
     def conv(self):
         return self.convert(Context())
@@ -101,11 +104,15 @@ class Node:
         """ return exactly one tag pointed to by a simple 'path' or raise a ValueError"""
         dic = self.query(path)
         if len(dic) == 0:
-            raise ValueError, "no %r element" % path
+            message = _("no ${path} element")
+            message.mapping = {'path': path}
+            raise ValueError,  message
         elif len(dic) == 1 and len(dic.values()[0]) == 1:
             return dic.values()[0][0]
         else:
-            raise ValueError, "more than one %r element" % path
+            message = _("more than one ${path} element")
+            message.mapping = {'path': path}
+            raise ValueError, message
 
     def query(self, querypath):
         """ return a dictionary with path -> node mappings matching the querypath. 
@@ -133,7 +140,9 @@ class Node:
             elif i == '**':
                 l.append(r'.+')
             elif '*' in i:
-                raise ValueError, "intermingling * is not allowed %r" % i
+                message = _("intermingling * is not allowed ${i}")
+                message.mapping = {'i': i}
+                raise ValueError,  message
             elif '|' in i:
                 l.append("(%s)" % i)
             else:

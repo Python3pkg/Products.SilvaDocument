@@ -10,7 +10,9 @@ is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
+
+from Products.Silva.i18n import translate as _
 
 class Transformer:
     """ Transform xml trees using pythonic xist-like
@@ -58,4 +60,6 @@ class EditorTransformer(Transformer):
                                  source='kupu.silva', 
                                  target='kupu.html')
         else:
-            raise "Unknown Editor: %s" % editor
+            message = _("Unknown Editor: ${editor}")
+            message.mapping = {'editor': editor}
+            raise message

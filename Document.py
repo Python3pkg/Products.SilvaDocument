@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 # Zope
 
 from StringIO import StringIO
@@ -24,6 +24,7 @@ from Products.Silva import mangle
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
+from Products.Silva.i18n import translate as _
 
 # For XML-Conversions for editors
 from transform.Transformer import EditorTransformer
@@ -146,7 +147,7 @@ class Document(CatalogedVersionedContent):
             #print 'incoming', repr(string)
             version = self.get_editable()
             if version is None:
-                raise "Hey, no version to store to!"
+                raise _("No version to store to!")
 
             # get any metadata elements saved to the metadata
             # XXX currently uses a completely different machinery to parse

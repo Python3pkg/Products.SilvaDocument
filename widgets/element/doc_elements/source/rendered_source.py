@@ -1,3 +1,5 @@
+from Products.Silva.i18n import translate as _
+
 request = context.REQUEST
 source = context.get_source()
 uparameters = context.get_parameters()
@@ -9,15 +11,16 @@ for key, value in uparameters.items():
 try:
     html = source.to_html(request, **parameters)
 except (Exception), err:
-    html = """
+    html = _("""
 <div class="warning"><b>[external source element is broken]</b><br />
-error message: %s
-</div>""" % err
+error message: ${error}
+</div>""")
+html.mapping = {'error': err}
 except:
     # Ugh, bare except to catch *all* cases...
-    html = """
+    html = _("""
 <div class="warning"><b>[external source element is broken]</b><br />
 Unfortunatly however, there no error message available...
-</div>"""
+</div>""")
 
 return html
