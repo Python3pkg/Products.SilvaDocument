@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.7 2003/10/10 15:19:23 zagy Exp $
+# $Id: test_editorsupport.py,v 1.8 2003/10/18 19:24:24 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -210,6 +210,25 @@ class PParserTest(unittest.TestCase):
         parser = PParser("A paragraph. Which includes **bold**, ++italic++, __underlined__, a ((hyperlink|http://www.infrae.com)), and an index item[[index item]]. But we have more **bold** and ++italic++; even **++bold-italic++** or **__bold-underlinded__**. **++__bold-italic-underlined-superscript__++**.")
         parser.run()
         t = parser.getResult().tokens
+
+
+    def test_markup_follows_linebreak(self):
+        parser = PParser("Afteralinebreak\n++markup++ shouldnotbeignored\n")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(t[0].kind, Token.CHAR)
+        self.assertEquals(t[0].text, 'Afteralinebreak')
+        self.assertEquals(t[1].kind, Token.SOFTBREAK)
+        self.assertEquals(t[2].kind, Token.EMPHASIS_START)
+        self.assertEquals(t[3].kind, Token.CHAR)
+        self.assertEquals(t[3].text, 'markup')
+        self.assertEquals(t[4].kind, Token.EMPHASIS_END)
+        self.assertEquals(t[5].kind, Token.WHITESPACE)
+        self.assertEquals(t[6].kind, Token.CHAR)
+        # should the last linebreak be stripped?
+        self.assertEquals(t[7].kind, Token.SOFTBREAK)
+        self.assertEquals(len(t), 8)
+       
 
 
 class InterpreterTest(unittest.TestCase):
