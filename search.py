@@ -1,6 +1,6 @@
 # Copyright (C) 2003 gocept, http://www.gocept.com/ 
 # Christian Zagrodnick, cz@gocept.com
-# $Id: search.py,v 1.2 2003/10/06 15:05:59 zagy Exp $
+# $Id: search.py,v 1.2.8.1 2003/12/10 13:13:45 zagy Exp $
 
 # python
 from bisect import insort_right
@@ -23,6 +23,7 @@ class Decorator:
 
     def __str__(self):
         return str(self.base)
+
 
 class Search:
     """base class for search problems
@@ -62,7 +63,7 @@ class Search:
             if self.result_length is not None:
                 if len(self.results) >= self.result_length:
                     return
-            child_nodes = self._get_childs(node)
+            child_nodes = self._get_children(node)
             self._extend_nodes(child_nodes)
    
     def getResult(self):
@@ -77,7 +78,7 @@ class Search:
     def _get_next_node(self):
         return self.nodes.pop(0)
 
-    def _get_childs(self, node):
+    def _get_children(self, node):
         """returns list of child nodes for given node
         """
         raise NotImplementedError, "Implemented in sub classes"

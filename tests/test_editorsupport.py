@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13 2003/11/18 16:19:49 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.1 2003/12/10 13:13:45 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -19,6 +19,70 @@ from Products.SilvaDocument.EditorSupportNested import EditorSupport
 class PParserTest(unittest.TestCase):
 
     large_text = """Kaum standen am folgenden Tage die hohen Felsengipfel im Glanz des Sonnenlichts, so hüpfte Gustav aus dem Bette und fand - wem kommt dabey nicht das ehemahls selbst genossene kindische Entzücken beym Anblick des Weihnachtsgeschenks ins Gedächtniss? - einen netten Anzug auf dem Stuhle am Bette, den die Gattinn des Schultheissen von den Söhnen eines im Flecken wohnenden Edelmannes, einstweilen angenommen hatte, da sich nicht so schnell, als sie es jetzt wünschte, die Nähnadeln zu Buchenthal in Bewegung setzen liessen. Ewalds hatten ein Weilchen auf das Benehmen des kleinen Lieblings gelauscht, und öffneten das Gemach, als sich eben seine Empfindungen in ein lautes »Ach wie schön!« auflösten. »Guten Tag, Papa, guten Tag, Mama!« schluchzte Gustav, und eilte den Kommenden entgegen, um mit tausend Händeküssen ihnen Dank und Liebe zu zollen. Die guten Alten staunten bey dem seltenen Feingefühl eines so kleinen Knaben, und hätten von diesem Augenblicke gegen die Schätze von Golconda, dem aufgenommenen Pflegling nicht entsagt. Die muthigen Apfelschimmel stampften schon ungeduldig im Hofe den Boden. Gustav stack geschwind mit Ewalds Hülfe in dem ganz passenden Anzuge, und glich einem jungen Liebesgott, indess die Gattin des Schultheissen alle die kleinen häuslichen Angelegenheiten und die Geschäfte des Tages an das Gesinde austheilte, ihm nochmahls Achtsamkeit und Fleiss empfahl, genoss Gustav eine wohlschmeckende Milchsuppe, denn Caffee kam selten, bloss bey ganz ausnehmenden Fällen, in Ewalds Haus, weil diese Leute einen gewissen edlen Stolz im Entsagen allen dessen, was das Ausland zeugte, suchten, und sich genügsam an das, was auf heimathlichem Boden wuchs, hielten. Auch kannte Ewald lebende Beyspiele genug, dass Neigung und Geschmack an dem, das Blut in Wallung setzenden - und schlecht gekocht, den Magen schlaff machenden - Caffee sich beym weiblichen Geschlechte so leicht in Leidenschaft umwandle, als beym männlichen die Liebe zum Schnaps. Seine Familie zählte einige unglückliche Beweise dieses Satzes, die dem wohlwollenden Manne eine unumstössliche Abneigung gegen diese Schote einflössten, obschon seine ökonomische Lage ihm allenfalls auch heutigen Tages, wo Caffee so ungemein gestiegen ist, dass man ihn kaum bezahlen kann - gestattet hätte, denselben ohne deutsche Mengsel und sonstige Hülfsmittel, die Caffee heissen, ohne es zu seyn, zwey Mahl täglich zu geniessen. Dächten und handelten doch alle Deutsche wie Ewald! Zehnmahl hatte die geschäftige Alte alle nöthigen Befehle schon gegeben, und eben so oft noch eine Kleinigkeit nachzuholen. Jetzt suchte sie einen Schlüssel, den sie in den Händen hielt, dann einen Pelzmantel, den sie im Juny doch gewiss nicht nöthig hatte. Ewald lächelte und ging an den Wagen. Das gute Hausweib hatte, obschon es nahe an den Sechzigen stand, noch keinen vollen Tag die Pfähle im Stich gelassen, in denen es von Jugend auf lebte und webte; bloss Theilnahme und Liebe zu Gustav, konnte es zu diesem Entschluss bewegen. Endlich kam sie mit zwey Schachteln von ziemlichem Umfange voll Victualien, eine Magd folgte mit einem dito Sack, und hinten auf dem Wagen blöckten zwey festgebundene Hammel um baldige Entlassung aus so lässigen Fesseln. Die Hofhunde bellten zum Abschiede, Hans schwang die Peitsche, und pfeilschnell flogen die ungeduldigen Apfelschimmel zum Flecken hinaus. Glück auf den Weg!"""
+    complicated_paras = [
+""" Op 25 november 2003 is de CGE&Y Strategy Award, de prijs voor de beste
+universitaire scriptie op het gebied van strategisch management,
+uitgereikt aan drs. Carolien Heemskerk, afgestudeerd bedrijfskundige aan
+de Rotterdam School of Management van de Erasmus Universiteit Rotterdam.""",
+"""De voormalig studente ontvangt voor de award een geldprijs van
+vijfduizend euro, haar begeleider prof.dr. Henk W. Volberda heeft
+vanwege zijn succesvolle begeleiding van deze scriptie
+vijfentwintighonderd euro gewonnen.
+Van de door Nederlandse universiteiten genomineerde scripties blinkt de
+scriptie met als titel Disaggregating the firm by means of Business
+Process Outsourcing uit op toekomstgerichtheid, diepgang en
+theoretische onderbouwing. Carolien Heemskerk gaat in haar scriptie diep
+in op meerdere modellen die organisaties kunnen ontvlechten. Zij heeft
+vooral de complexe theorie kunnen kanaliseren tot een pragmatisch
+toepasbare ontvlechting. Deze scriptie heeft voor bedrijven die
+ontvlechting overwegen grote toegevoegde waarde. Het is inspirerend voor
+de praktijk van strategisch management, aldus drs. P.F. Segaar,
+voorzitter van de zevenhoofdige jury.
+De universiteiten van Nederland hebben twaalf scripties genomineerd voor
+de Strategy Award. De deskundige jury onder voorzitterschap van drs.
+P.F. Segaar (zelfstandig bestuurs- en organisatieadviseur, voormalig
+directeur Strategie Aegon N.V.) bepaalde na meerdere juryronden dat vijf
+scripties in aanmerking kwamen voor deze prijs. De kwaliteit van de
+scripties met de titels Disaggregating the firm by means of Business
+Process Outsourcing (Erasmus Universiteit Rotterdam, Rotterdam School
+of Management, vakgroep Strategie en Omgeving), Co-operative Technology
+Roadmapping (TU Delft), Tussen Droom en Daad (Rijksuniversiteit
+Groningen), Waardecreatie en waarde toe-eigening door ondernemingen:
+een increasing Returns perspectief (Erasmus Universiteit Rotterdam) en
+E-business en de waardeketen (Rijksuniversiteit Groningen) leidde tot
+een uitgebreide discussie binnen de jury. Na een vier uur durend beraad
+waarin de meningen van de juryleden fors uiteen liepen, werd door de
+jury uiteindelijk unaniem besloten dat de beste scriptie op het gebied
+van strategisch management geschreven is door Carolien Heemskerk. De
+kwaliteit van de scripties is dit jaar bijzonder hoog. Het was voor de
+jury dan ook kiezen tussen scripties met een zeer hoog niveau waarin de
+kleine details mee gingen tellen, lichtte de juryvoorzitter toe tijdens
+de uitreiking die plaatsvond op het Nationale Strategie Congres.
+Het Nationale Strategie Congres en de uitreiking van de Strategy Award
+zijn georganiseerd door de Vereniging voor Strategische Beleidsvorming
+(VSB) en Cap Gemini Ernst & Young. Volgend jaar wordt wederom door de
+Vereniging voor Strategische Beleidsvorming het uitreiken van de
+Strategy Award georganiseerd.
+De VSB is sinds 1971 HET Nederlandse platform voor strategie met ruim
+450 aangesloten leden afkomstig uit het bedrijfsleven, de overheid, de
+universitaire wereld of werkend als strategisch adviseur. Naast een
+sterk netwerk in het bedrijfsleven heeft de VSB nauw contact met de
+universitaire wereld.
+Voor meer informatie zie www.strategie-vsb.nl
+Jurysamenstelling""",
+"""De jury is gevormd door een vertegenwoordiging uit het bedrijfsleven en
+de academische wereld met zowel een technische als een
+managementachtergrond:
+dr. P.R. Broholm, Theodoor Gilissen Bankiers;
+drs. Ph. Waalewijn RM, Universitair hoofddocent Marketing, Erasmus
+Universiteit Rotterdam;
+drs. ing. W.J.F. Kels, voormalig directeur Strategische planning ING;
+prof.dr.ir. J.W. Koolhaas, TU Delft;
+prof.dr. J. Strikwerda, Nolan Norton & Company;
+ir. R.W. van der Reijden MBA, manager production, RDM Technology.
+Onder voorzitterschap van:
+drs. P.F. Segaar, zelfstandig bestuurs- en organisatieadviseur,
+voormalig directeur Strategie Aegon N.V."""]
     
     def test_simpleemph(self):
         parser = PParser("++foobar++      blafasel")
@@ -272,6 +336,15 @@ Users think it's dumb.""")
         parser = PParser(self.large_text)
         parser.run()
 
+    def test_paras(self):
+        def run(): 
+            for p_text in self.complicated_paras:
+                p = PParser(p_text)
+                p.run()
+        from hotshot import Profile
+        p = Profile('paras.hotshot')
+        p.runcall(run)
+            
     def test_index(self):
         parser = PParser("A Word[[Word]] blafasel")
         parser.run()

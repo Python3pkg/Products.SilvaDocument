@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6 2003/11/18 16:19:49 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.1 2003/12/10 13:13:45 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -98,6 +98,8 @@ class Token:
 
 class ParserState:
     """State of parsing silva markup"""
+
+    # XXX: this needs to be cleaned up, create an interface
     
     def __init__(self, text, consumed, tokens, parent=None):
         self.text = text
@@ -105,33 +107,38 @@ class ParserState:
         self.consumed = consumed
         self.tokens = tokens
         self.parsed = None
+        self.openclose_map = {}
+        self.parent = parent
+        self.kindsum = 0
         
         openclose = None
         self.parenthesis = 0
         self.factor = 0
         
-        # this is an assumption. This is true in this implementation though
-        new_token = None
-        if tokens:
-            new_token = tokens[-1]
-            
+        new_tokens = self._new_tokens()
 
         if parent is not None:
-            self.openclose = parent.openclose
+            openclose = parent.openclose
             self.parenthesis = parent.parenthesis
             self.factor = parent.factor
+            self.openclose_map = parent.openclose_map.copy()
+            self.kindsum = parent.kindsum
         if openclose is None:
-            self.openclose = reduce(operator.add,
+            openclose = reduce(operator.add,
                 [t.openclose for t in tokens], 0)
-        elif new_token:
-            self.openclose = openclose + new_token.openclose
-        if new_token:
+        else:
+            for new_token in new_tokens:
+                openclose += new_token.openclose
+        self.openclose = openclose
+        for new_token in new_tokens:
             self._calculate_parenthesis(new_token)
+            self.kindsum += new_token.kind
 
     def __repr__(self):
         return "<ParserState: %r>" % self.tokens
 
     def toxml(self):
+        # parsed is set externally... 
         if parsed is None:
             raise ValueError, "No interpreted state found"
         return self.parsed.toxml()
@@ -141,8 +148,8 @@ class ParserState:
         # anyway; this is mainly for speed reasons.
         if self.openclose < 0:
             return 0
-        openclose_map = {}
-        for token in self.tokens:
+        openclose_map = self.openclose_map
+        for token in self._new_tokens():
             if token.openclose == 0:
                 continue
             kind = token._start_end_map.get(token.kind, token.kind)
@@ -168,6 +175,10 @@ class ParserState:
         self.factor = f
         self.parenthesis = p
 
+    def _new_tokens(self):
+        if self.parent is None:
+            return self.tokens[:]
+        return self.tokens[len(self.parent.tokens):]
 
 class Parser(HeuristicSearch):
     """Parser for silva markup
@@ -181,7 +192,7 @@ class Parser(HeuristicSearch):
         Search.__init__(self, problem)
         self.initialize_patterns()
         
-    def _get_childs(self, node):
+    def _get_children(self, node):
         matches = []
         text = node.text[node.consumed:]
         for pattern, token_id in self.patterns:
@@ -218,8 +229,7 @@ class Parser(HeuristicSearch):
         # the lower the token-kind the better
         tokens = float(len(node.tokens))
         consumed = float(node.consumed)
-        token_kinds = [ t.kind for t in node.tokens ]
-        kind_sum = reduce(operator.add, token_kinds)
+        kind_sum = node.kindsum
         parenthesis = -1/1.1**abs(node.parenthesis) + 2
         pattern_badness = 0
         if (len(node.tokens) > 1 and
@@ -275,8 +285,8 @@ class PParser(Parser):
         (r'(\()', Token.PARENTHESIS_OPEN),
         (r'(\))', Token.PARENTHESIS_CLOSE),
         
-        (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
-        (r'([^A-Za-z0-9 \t\f\v\r\n()])', Token.CHAR),
+        (r'([A-Za-z0-9\.\-&;]+)', Token.CHAR), # catch for long text
+        (r'([^A-Za-z0-9\.\-&; \t\f\v\r\n()])', Token.CHAR),
         ]
 
 
@@ -490,7 +500,7 @@ class Interpreter:
                     "No text between start end end markup node"
             if next.nodeType == next.TEXT_NODE and next.nodeValue[0] == ' ':
                 raise InterpreterError,\
-                    "Inline markup start nodes must be followed "\
+                    "Inline markup start nodes must be followed by "\
                     "non-whitespace"
             # test end node
             prev = node.lastChild
