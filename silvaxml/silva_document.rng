@@ -236,6 +236,9 @@
       <attribute name="toc_depth">
         <text />
       </attribute>
+      <optional>
+        <ref name="rendered_html"/>
+      </optional>
     </element>
   </define>
 
@@ -253,7 +256,7 @@
         </element>
       </zeroOrMore>
       <optional>
-        <ref name="rendered_xhtml"/>
+        <ref name="rendered_html"/>
       </optional>
     </element>
   </define>
@@ -441,9 +444,9 @@
   </define>
 
   
-  <define name="rendered_xhtml">
+  <define name="rendered_html">
     <element name="rendered_xhtml">
-      <nsName ns="http://www.w3.org/1999/xhtml"/>
+      <!-- namespacing? -->
       <ref name="anything"/>
     </element>
   </define>
