@@ -1,12 +1,12 @@
 # Copyright (C) 2003 gocept, http://www.gocept.com/ 
 # Christian Zagrodnick, cz@gocept.com
-# $Id: search.py,v 1.1 2003/10/05 19:08:35 zagy Exp $
+# $Id: search.py,v 1.2 2003/10/06 15:05:59 zagy Exp $
 
 # python
 from bisect import insort_right
 
 
-class Decorator(object):
+class Decorator:
     """base class for decorator like things"""
     
     def __getattr__(self, key):
@@ -31,7 +31,7 @@ class Search:
    
     """
 
-    def __init__(self, problem_node, depth_first=True, results=1):
+    def __init__(self, problem_node, depth_first=1, results=1):
         """constructor
 
             depth_first: if ture: depth firsth search, breadth first otherwise
@@ -55,7 +55,7 @@ class Search:
             returns None
         """
         while self.nodes:
-            self._record_stats()
+            #self._record_stats()
             node = self._get_next_node()
             if self.isTarget(node):
                 self.results.append(node)
@@ -87,6 +87,7 @@ class Search:
             self.nodes[0:0] = new_nodes
         else:
             self.nodes.extend(new_nodes)
+
     def _record_stats(self):
         self._tested_nodes += 1
         nodes = len(self.nodes)
@@ -98,8 +99,8 @@ class HeuristicsDecorator(Decorator):
     """Decorator for adding heuristics to an object"""
     
     def __init__(self, base, hval):
-        object.__setattr__(self, 'base', base)
-        object.__setattr__(self, 'hval', hval)
+        self.__dict__['base'] = base
+        self.__dict__['hval'] = hval
 
     def __cmp__(self, other):
         if isinstance(other, HeuristicsDecorator):
