@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -537,8 +537,9 @@ class Parser(HeuristicSearch):
         
     def _get_childs(self, node):
         matches = []
+        text = node.text[node.consumed:]
         for pattern, token_id in self.patterns:
-            m = pattern.match(node.text[node.consumed:])
+            m = pattern.match(text)
             if m is None:
                 continue
             t = Token(token_id, m.group(1))
@@ -556,7 +557,7 @@ class Parser(HeuristicSearch):
             p.parse()
         except ParserError:
             return 0
-        #node.parsed = p
+        node.parsed = p
         return 1
 
     def heuristic(self, node):
@@ -603,7 +604,7 @@ class Parser(HeuristicSearch):
            
             (r'([\n\r]+)', Token.SOFTBREAK),
             (r'([ \t\f\v]+)', Token.WHITESPACE),
-            #(r'(\\)', Token.ESCAPE),
+            (r'(\\)', Token.ESCAPE),
             (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
             (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
             ]
@@ -635,7 +636,8 @@ class Interpreter:
 
     def __init__(self, tokens):
         self.tokens = tokens
-        self.dom = ParsedXML('temp', '<p/>')
+        # using minidom, it's *much* faster than ParsedXML
+        self.dom = parseString('<p/>')
         self.initialize_rulesets()
         # inline markup nodes: **, ++, __ :
         self._inline_nodes = []
@@ -654,8 +656,11 @@ class Interpreter:
     def handle_token(self, token, node):
         ruleset = self.rules[self.ruleset]
         token_handler = ruleset.get(token.kind, None)
-        if not callable(token_handler):
+        if token_handler is None:
             raise ParserError, "Invalid token %r" % token
+        if not callable(token_handler):
+            raise ParserError, \
+                "Found handler for token %r, but it's not callable" % token
         return token_handler(token, node)
 
     def initialize_rulesets(self):
@@ -676,6 +681,7 @@ class Interpreter:
             Token.LINK_URL: self.link_url,
             Token.LINK_END: self.link_end,
             Token.INDEX_START: self.index_start,
+            Token.ESCAPE: self.escape,
             Token.SOFTBREAK: self.softbreak,
             Token.WHITESPACE: self.whitespace,
             Token.CHAR: self.text,
@@ -695,6 +701,25 @@ class Interpreter:
         }
         self.rules['index'] = index
 
+        escape = {
+            Token.STRONG_START: self.escaped_text,
+            Token.STRONG_END: self.escaped_text,
+            Token.EMPHASIS_START: self.escaped_text,
+            Token.EMPHASIS_END: self.escaped_text,
+            Token.UNDERLINE_START: self.escaped_text,
+            Token.UNDERLINE_END: self.escaped_text,
+            Token.SUPERSCRIPT_START: self.escaped_text,
+            Token.SUPERSCRIPT_END: self.escaped_text,
+            Token.SUBSCRIPT_START: self.escaped_text,
+            Token.SUBSCRIPT_END: self.escaped_text,
+            Token.LINK_START: self.escaped_text,
+            Token.INDEX_START: self.escaped_text,
+            Token.SOFTBREAK: self.escaped_softbreak,
+            Token.WHITESPACE: self.escaped_whitespace,
+            Token.CHAR: self.escaped_text,
+        }
+        self.rules['escape'] = escape
+        
     def validate(self):
         self._validate_inline_nodes()
 
@@ -875,3 +900,22 @@ class Interpreter:
         self.ruleset = 'default'
         return node.parentNode
 
+    def escape(self, token, node):
+        self.ruleset = 'escape'
+        return node
+        
+    def escaped_whitespace(self, token, node):
+        self.ruleset = 'default'
+        return node
+    
+    def escaped_text(self, token, node):
+        self.ruleset = 'default'
+        return self.text(token, node)
+    
+    def escaped_whitespace(self, token, node):
+        self.ruleset = 'default'
+        return self.whitespace(token, node)
+    
+    def escaped_softbreak(self, token, node):
+        self.ruleset = 'default'
+        return self.softbreak(token, node)

@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.3 2003/10/05 19:08:35 zagy Exp $
+# $Id: test_editorsupport.py,v 1.4 2003/10/06 08:05:03 zagy Exp $
 
 import Zope
 Zope.startup()
@@ -196,6 +196,13 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[5].kind, Token.INDEX_END)
 
 
+    def test_escape(self):
+        parser = Parser("In Silva markup **bold** is marked up as \**bold\**")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(len(t), 23)
+        self.assertEquals(t[21].kind, Token.ESCAPE)
+
 class InterpreterTest(unittest.TestCase):
 
     t = Token
@@ -305,6 +312,18 @@ class InterpreterTest(unittest.TestCase):
             (t.INDEX_END, ']]'),
             (t.CHAR, 'barf'),
             ], 'some<index name="indexed still"/>barf'),
+        ([
+            (t.CHAR, 'this'),
+            (t.WHITESPACE, ' '),
+            (t.CHAR, 'becomes'),
+            (t.WHITESPACE, ' '),
+            (t.ESCAPE, '\\'),
+            (t.STRONG_START, '**'),
+            (t.CHAR, 'bold'),
+            (t.ESCAPE, '\\'),
+            (t.STRONG_END, '**'),
+            (t.CHAR, '.'),
+            ], 'this becomes **bold**.'),
         ]
 
     def test_helper(self):
@@ -312,7 +331,7 @@ class InterpreterTest(unittest.TestCase):
             tokens = [Token(kind, text) for kind, text in tokens]
             ph = Interpreter(tokens)
             ph.parse()
-            xml = unicode(ph.dom)
+            xml = ph.dom.toxml()
             xml = '\n'.join(xml.split('\n')[1:])
             xml = xml.strip()
             self.assertEquals(xml, '<p>'+result+'</p>')
@@ -329,6 +348,5 @@ def main():
     unittest.TextTestRunner(verbosity=2).run(test_suite())
 
 if __name__ == '__main__':
-    #import profile
-    #profile.run('main()', 'testprof-minidom')
     main()
+
