@@ -2,9 +2,12 @@
   tal:define="global disable_delete python:1;
     global disable_move_up python:1;
     global disable_move_down python:1;
-    global columns_info here/get_columns_info" />
+    global columns_info here/get_columns_info" 
+/>
 
-<div metal:use-macro="container/macro_embed_view/macros/embed_view">
+<div metal:use-macro="container/macro_embed_view/macros/embed_view"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 <div metal:fill-slot="embed_controls" tal:omit-tag="">
 <table border="0" width="100%" cellspacing="0">
 <tr class="controls">

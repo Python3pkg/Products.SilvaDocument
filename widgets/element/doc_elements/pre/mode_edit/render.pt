@@ -1,4 +1,6 @@
-<div metal:use-macro="container/macro_edit_view/macros/edit_view">
+<div metal:use-macro="container/macro_edit_view/macros/edit_view"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 <metal:block fill-slot="edit_input">
 <span class="textarea">
   <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />

@@ -5,7 +5,9 @@
         global toc_depth python:int(test(node.hasAttribute('toc_depth'), node.getAttribute('toc_depth'), -1));
 " />
 
-<div metal:use-macro="container/macro_edit_view/macros/edit_view">
+<div metal:use-macro="container/macro_edit_view/macros/edit_view"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 <div metal:fill-slot="edit_input" tal:omit-tag="">
   <toc tal:replace="structure here/content" />
 </div>

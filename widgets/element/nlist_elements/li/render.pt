@@ -1,7 +1,9 @@
 <init tal:omit-tag="" 
       tal:define="global is_embedded python:1;
 " />
-<div metal:use-macro="container/macro_normal_view/macros/normal_view">
+<div metal:use-macro="container/macro_normal_view/macros/normal_view"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 <div metal:fill-slot="node_content" tal:omit-tag="">
 <init tal:omit-tag=""
       tal:define="global simple python:here.is_simple(node)" />

@@ -1,6 +1,6 @@
 <html
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva-document">
+  i18n:domain="silva">
 
 <metal:block define-macro="markup_notes">
   <li><span i18n:translate="">Text can be formatted &#8211; in <i>italic</i>, <b>bold</b>, etc. &#8211; with &#8220;Silva markup&#8221;:</span>

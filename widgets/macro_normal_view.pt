@@ -1,6 +1,6 @@
 <html
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  i18n:domain="silva-document">
+  i18n:domain="silva">
 
 <div metal:define-macro="normal_view" tal:omit-tag="">
 <init tal:omit-tag=""

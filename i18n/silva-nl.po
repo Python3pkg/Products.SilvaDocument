@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument 1.1\n"
-"POT-Creation-Date: Mon Nov 22 16:07:40 2004\n"
+"POT-Creation-Date: Mon Nov 22 18:58:31 2004\n"
 "PO-Revision-Date: 2004-11-22 16:33+0100\n"
 "Last-Translator: Eric Casteleijn <eric@infrae.com>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -119,6 +119,34 @@ msgstr "toegang"
 msgid "publish"
 msgstr "publiceren"
 
+#: /views/edit/VersionedContent/Document/tab_edit.pt:105
+msgid "edit with the forms editor: alt-)"
+msgstr "bewerken met de forms editor: alt-)"
+
+#: /views/edit/VersionedContent/Document/tab_edit.pt:96
+msgid "edit with the kupu WYSIWYG editor: alt-("
+msgstr "bewerken met de kupu WYSIWYG editor: alt-("
+
+#: /widgets/element/doc_elements/cite/mode_edit/render.pt:18
+msgid "author"
+msgstr "auteur"
+
+#: /widgets/element/doc_elements/cite/mode_edit/render.pt:27
+msgid "source"
+msgstr "bron"
+
+#: /widgets/element/doc_elements/cite/mode_edit/render.pt:41
+msgid ""
+"The citation may contain multiple paragraphs. Separate them with an empty "
+"line."
+msgstr ""
+"Een 'citation' (citaat) kan bestaan uit meerdere alinea's. Alinea's worden "
+"gescheiden door een lege regel."
+
+#: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+msgid "citation"
+msgstr ""
+
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
 msgid "<span class=\"warning\">[Code element is broken]</span>"
@@ -128,13 +156,394 @@ msgstr "<span class=\"warning\">[Code-element is gebroken]</span>"
 msgid "Code element: ${title_or_id} at ${path}"
 msgstr "Code-element: ${title_or_id} in ${path}"
 
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:11
+msgid ""
+"&nbsp;No code objects (Python Scripts, Page Templates, DTML Methods) are "
+"available.<br /> &nbsp;They should be located in a (non-Silva) folder in the "
+"ZMI named ${code_source}."
+msgstr ""
+"&nbsp;Er zijn geen code-objecten (Python Scripts, Page Templates, DTML "
+"Methods) beschikbaar.<br /> &nbsp;Die zouden in een (niet-Silva) map in de "
+"ZMI met de naam ${code_source} moeten staan."
+
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:15
+msgid "Available code objects:"
+msgstr "Beschikbare code-objecten:"
+
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:35
+msgid "Select the code to be executed when document is displayed."
+msgstr ""
+"Selecteer de code die moet worden uitgevoerd als het document wordt "
+"weergegeven."
+
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+msgid "Tip:"
+msgstr "Tip:"
+
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+msgid "${tip} tab to the exit button or alt-e."
+msgstr "${tip} tab naar de knop 'exit' (afsluiten) of druk op alt-e."
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+msgid "get link reference..."
+msgstr "maak een linkverwijzing..."
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+msgid "create a hyperlink: alt-g"
+msgstr "maak een hyperlink: alt-g"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:22
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:22
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
+msgid "element"
+msgstr "element"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:24
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
+msgid "paragraph"
+msgstr "alinea"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
+msgid "preformatted"
+msgstr "voorgeformatteerd"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
+msgid "heading"
+msgstr "kop"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
+msgid "list"
+msgstr "lijst"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:31
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
+msgid "definition list"
+msgstr "definitie-lijst"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:33
+msgid "normal"
+msgstr "normaal"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:43
+msgid "compact"
+msgstr "compact"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:51
+msgid ""
+"Add term on first line, definition on second line. Separate items with an "
+"empty line space."
+msgstr ""
+"Voeg de term toe op de eerste regel, de definitie op de tweede. Scheidt  "
+"items door een lege regel."
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
+msgid "${tip} tab to the exit button or use alt-e."
+msgstr "${tip} tab naar de knop 'exit' (afsluiten) of druk op alt-e."
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
+msgid "${tip} Tab to the exit button or alt-e."
+msgstr "${tip} Tab naar de knop 'exit' (afsluiten) of druk op alt-e."
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:31
+#: /widgets/top/table/render.pt:47
+msgid "type"
+msgstr "type"
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
+msgid "Normal heading"
+msgstr "Normale Kop"
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:28
+msgid "Sub heading"
+msgstr "Sub-kop"
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
+msgid "Sub sub heading"
+msgstr "Sub-sub-kop"
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
+msgid "Paragraph heading"
+msgstr "Alinea-kop"
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:31
+msgid "Sub paragraph heading"
+msgstr "Sub-alinea-kop"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:106
+msgid "float right"
+msgstr "rechts 'floaten'"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:111
+msgid "align right"
+msgstr "rechts uitlijnen"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:120
+msgid ""
+"Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or type "
+"in the full path."
+msgstr ""
+"Gebruik &#8220;maak verwijzing naar afbeelding...&#8221; (alt-g) om een "
+"afbeelding op te zoeken, of type het volledige pad in."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:122
+msgid ""
+"Set a URL to make this image a link (alt-l). To link to other sites, prepend "
+"&#8216;http://&#8217; to the address."
+msgstr ""
+"Stel een URL in, om van deze afbeelding een link te maken (alt-l). Om naar "
+"andere sites te linken, moet &#8216;http://&#8217; voor het adres worden "
+"gezet."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:125
+msgid ""
+"Set an optional target for the link. Turning on &#8220;new window&#8221; "
+"inserts &#8216;_blank&#8217; after saving."
+msgstr ""
+"Stel een (optioneel) 'doel' in voor de link. Door &#8220;nieuw "
+"venster&#8221; te kiezen wordt &#8216;_blank&#8217; ingevoegd na het opslaan."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:128
+msgid ""
+"It&#8217;s good practice to give the link of an image a title, which will "
+"appear as a tooltip."
+msgstr ""
+"Het is goed om de link van een afbeelding een 'title' (titel) te geven, die "
+"als een 'tooltip' zal worden weergegeven."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:131
+msgid ""
+"A float alignment allows the next document element to wrap &#8211; if "
+"there&#8217;s room."
+msgstr ""
+"Een 'float' uitlijning stelt het volgende document-element in staat om "
+"eromheen te lopen &#8211; als er ruimte is."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:14
+msgid "get image reference..."
+msgstr "maak verwijzing naar afbeelding..."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:14
+msgid "access key: alt-g"
+msgstr "sneltoets: alt-g"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:21
+msgid "edit image"
+msgstr "afbeelding bewerken"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:29
+msgid "create a hyperlink: alt-l"
+msgstr "hyperlink maken: alt-l"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:42
+msgid "High resolution version of image"
+msgstr "Hoge resolutie versie van afbeelding"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:47
+msgid "target frame"
+msgstr "doelframe"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:60
+msgid "new window"
+msgstr "nieuw venster"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:65
+msgid "tooltip for link"
+msgstr "tooltip voor link"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:74
+msgid "image alignment"
+msgstr "uitlijning afbeelding"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:82
+msgid "float left"
+msgstr "links 'floaten'"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:87
+msgid "align left"
+msgstr "links uitlijnen"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:94
+msgid "default"
+msgstr "standaard"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:99
+msgid "align center"
+msgstr "centreren"
+
+#: /widgets/element/doc_elements/image/render.pt:10
+msgid "[image element is broken]"
+msgstr "[afbeeldingselement is gebroken]"
+
 #: /widgets/element/doc_elements/image/tag.py:18
 msgid "<div class=\"error\">[image reference is broken]</div>"
 msgstr "<div class=\"error\">[verwijzing naar afbeelding is gebroken]</div>"
 
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:44
+#: /widgets/top/nlist/render.pt:35
+msgid "disc bullets"
+msgstr "dichte ronde bullets"
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:46
+#: /widgets/top/nlist/render.pt:37
+msgid "square bullets"
+msgstr "vierkante bullets"
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:48
+#: /widgets/top/nlist/render.pt:39
+msgid "circle bullets"
+msgstr "open ronde bullets"
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
+#: /widgets/top/nlist/render.pt:41
+msgid "1, 2, 3,.."
+msgstr "1, 2, 3..."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:52
+#: /widgets/top/nlist/render.pt:43
+msgid "I, II, III,.."
+msgstr "I, II, III,.."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:54
+#: /widgets/top/nlist/render.pt:45
+msgid "i, ii, iii,.."
+msgstr "i, ii, iii,.."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:56
+#: /widgets/top/nlist/render.pt:47
+msgid "A, B, C,.."
+msgstr "A, B, C,.."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:58
+#: /widgets/top/nlist/render.pt:49
+msgid "a, b, c,.."
+msgstr "a, b, c,.."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:60
+#: /widgets/top/nlist/render.pt:51
+msgid "no bullet"
+msgstr "geen bullets"
+
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
+msgid "lead"
+msgstr "inleiding"
+
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:35
+msgid "annotation"
+msgstr "noot"
+
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:41
+msgid ""
+"Multiple paragraphs can be entered in one step by adding an empty line space."
+msgstr ""
+"Meerdere alinea's kunnen in één stap worden ingevoerd door een lege regel "
+"tussen te voegen."
+
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:24
+msgid "none"
+msgstr "geen"
+
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:29
+msgid ""
+"Preformatted text will be shown exactly as entered, with all characters "
+"displayed literally. White space is preserved (unless the textarea is empty)."
+msgstr ""
+"Voorgeformatteerde tekst wordt exact weergegeven zoals ze is ingevoerd, met "
+"alle tekens letterlijk getoond. Spaties en regeleinden ('white space') "
+"worden bewaard (tenzij het invoervak leeg blijft)."
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:11
+msgid "source id"
+msgstr "bron id"
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:12
+msgid "Select an External Source..."
+msgstr "Selecteer een Externe Bron..."
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:26
+msgid " update "
+msgstr " bijwerken "
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:26
+msgid "access key: alt-u"
+msgstr "sneltoets: alt-u"
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:82
+msgid "Select a source from the pulldown list."
+msgstr "Selecteer een bron uit de uitklaplijst."
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:86
+msgid "Hit \"update\" to refresh the reference."
+msgstr "Klik op \"bijwerken\" om de verwijzing de verversen."
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:88
+msgid "Fill in the parameters (if necessary)."
+msgstr "Vul (indien nodig) de parameters in."
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:93
+msgid "Source description:"
+msgstr "Bron beschrijving:"
+
 #: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
 msgid "Source is a NoneType - is it not available anymore?"
 msgstr "Source is a NoneType - is it not available anymore?"
+
+#: /widgets/element/doc_elements/source/render.pt:14
+msgid "id:&nbsp;${id}"
+msgstr "id:&nbsp;${id}"
+
+#: /widgets/element/doc_elements/source/render.pt:17
+msgid "title:&nbsp; ${title} <br />"
+msgstr "titel:&nbsp; ${title} <br />"
+
+#: /widgets/element/doc_elements/source/render.pt:20
+msgid "description: ${description}"
+msgstr "beschrijving: ${description}"
+
+#: /widgets/element/doc_elements/source/render.pt:32
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:38
+msgid "No parameters to be filled for this source."
+msgstr "Geen parameters om in te vullen voor deze bron."
+
+#: /widgets/element/doc_elements/source/render.pt:41
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:47
+msgid "Source parameters"
+msgstr "Bron parameters"
+
+#: /widgets/element/doc_elements/source/render.pt:8
+msgid "[external source element is broken]"
+msgstr "[externe bron-element is gebroken]"
 
 #: /widgets/element/doc_elements/source/rendered_source.py:14
 msgid ""
@@ -142,7 +551,7 @@ msgid ""
 "error message: ${error}\n"
 "</div>"
 msgstr ""
-"<div class=\"warning\"><b>[extern bron-element is gebroken]</b><br /> "
+"<div class=\"warning\"><b>[externe bron-element is gebroken]</b><br /> "
 "foutmelding: ${error}\n"
 "</div>"
 
@@ -151,9 +560,227 @@ msgid ""
 "<div class=\"warning\"><b>[external source element is broken]</b><br />\n"
 "Unfortunatly however, there no error message available... </div>"
 msgstr ""
-"<div class=\"warning\"><b>[extern bron-element is gebroken]</b><br />\n"
+"<div class=\"warning\"><b>[externe bron-element is gebroken]</b><br />\n"
 "Helaas is er geen nadere foutmelding beschikbaar... </div>"
+
+#: /widgets/element/doc_elements/toc/mode_edit/render.pt:15
+msgid "Table of contents depth:"
+msgstr "Diepte van inhoudsopgave:"
+
+#: /widgets/element/doc_elements/toc/mode_edit/render.pt:18
+msgid "1 level"
+msgstr "1 niveau"
+
+#: /widgets/element/doc_elements/toc/mode_edit/render.pt:29
+msgid "${n} levels"
+msgstr "${n} niveaus"
+
+#: /widgets/element/doc_elements/toc/mode_edit/render.pt:33
+msgid "unlimited"
+msgstr "onbeperkt"
+
+#: /widgets/element/table_elements/nest_element.pt:4
+#: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:10
+msgid "nest element"
+msgstr "genest element"
+
+#: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
+msgid "nest elements"
+msgstr "geneste elementen"
 
 #: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
 msgid "The stored xml is invalid."
 msgstr "De opgeslagen xml is ongeldig."
+
+#: /widgets/macro_helpers.pt:108
+msgid "delete element"
+msgstr "element verwijderen"
+
+#: /widgets/macro_helpers.pt:109
+msgid "move down"
+msgstr "naar beneden verplaatsen"
+
+#: /widgets/macro_helpers.pt:110
+msgid "move up"
+msgstr "naar boven verplaatsen"
+
+#: /widgets/macro_helpers.pt:17
+msgid "up to top of page"
+msgstr "bovenaan de pagina"
+
+#: /widgets/macro_helpers.pt:19
+msgid "Notes"
+msgstr "Notities"
+
+#: /widgets/macro_helpers.pt:34
+msgid "save"
+msgstr "opslaan"
+
+#: /widgets/macro_helpers.pt:34
+msgid "access key: alt-s"
+msgstr "sneltoets: alt-s"
+
+#: /widgets/macro_helpers.pt:36
+msgid "save + exit"
+msgstr "opslaan + sluiten"
+
+#: /widgets/macro_helpers.pt:36
+msgid "access key: alt-e"
+msgstr "sneltoets: alt-e"
+
+#: /widgets/macro_helpers.pt:40
+msgid "save + insert"
+msgstr "opslaan + invoegen"
+
+#: /widgets/macro_helpers.pt:40
+msgid "access key: alt-i"
+msgstr "sneltoets: alt-i"
+
+#: /widgets/macro_helpers.pt:53 /widgets/macro_helpers.pt:54
+#: /widgets/macro_helpers.pt:55 /widgets/macro_helpers.pt:67
+msgid "insert element"
+msgstr "element invoegen"
+
+#: /widgets/macro_helpers.pt:70
+msgid "insert item"
+msgstr "item invoegen"
+
+#: /widgets/macro_helpers.pt:70
+msgid "insert line item"
+msgstr "regel-item invoegen"
+
+#: /widgets/macro_helpers.pt:83
+msgid "add element&nbsp;"
+msgstr "element toevoegen&nbsp;"
+
+#: /widgets/macro_helpers.pt:89
+msgid "insert"
+msgstr "invoegen"
+
+#: /widgets/macro_normal_view.pt:41
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:23
+#: /widgets/element/table_elements/nest_element.pt:4
+msgid "edit element"
+msgstr "element bewerken"
+
+#: /widgets/macro_notes.pt:10
+msgid ""
+"&lt;a href=\"http://www.x.yz\" target=\"target\"&gt;text&lt;/a&gt; &#8212; "
+"if &#8216;target&#8217; is empty a new window opens"
+msgstr ""
+"&lt;a href=\"http://www.x.yz\" target=\"doel\"&gt;tekst&lt;/a&gt; &#8212; "
+"als &#8216;doel&#8217; leeg is opent zich een nieuw venster"
+
+#: /widgets/macro_notes.pt:11
+msgid "&lt;index&gt;index item&lt;/index&gt;"
+msgstr "&lt;index&gt;index-item&lt;/index&gt;"
+
+#: /widgets/macro_notes.pt:12
+msgid "&lt;abbr title=\"full name\"&gt;abbreviation&lt;/abbr&gt;"
+msgstr "&lt;abbr title=\"volledige term\"&gt;afkorting&lt;/abbr&gt;"
+
+#: /widgets/macro_notes.pt:13
+msgid "&lt;acronym title=\"full name\"&gt;acronym&lt;/acronym&gt;"
+msgstr "&lt;acronym title=\"volledige term\"&gt;acroniem&lt;/acronym&gt;"
+
+#: /widgets/macro_notes.pt:14
+msgid "&amp;lt; &lt; &#8212; &amp;gt; &gt;"
+msgstr ""
+
+#: /widgets/macro_notes.pt:6
+msgid ""
+"Text can be formatted &#8211; in <i>italic</i>, <b>bold</b>, etc. &#8211; "
+"with &#8220;Silva markup&#8221;:"
+msgstr ""
+"Tekst kan &#8211; <i>schuingedrukt</i>, <b>vetgedrukt</b>, etc. &#8211; "
+"opgemaakt worden met &#8220;Silva opmaakcodes&#8221;:"
+
+#: /widgets/macro_notes.pt:8
+msgid ""
+"&lt;b&gt;bold&lt;/b&gt; &lt;i&gt;italic&lt;/i&gt; &lt;u&gt;underlined&lt;/"
+"u&gt; &lt;sup&gt;superscript&lt;/sup&gt; &lt;sub&gt;subscript&lt;/sub&gt;"
+msgstr ""
+"&lt;b&gt;vetgedrukt&lt;/b&gt; &lt;i&gt;schuingedrukt&lt;/i&gt; &lt;u&gt;"
+"onderstreept&lt;/u&gt; &lt;sup&gt;superscript&lt;/sup&gt; &lt;sub&gt;"
+"subscript&lt;/sub&gt;"
+
+#: /widgets/macro_notes.pt:9
+msgid "&lt;a href=\"http://www.x.yz\"&gt;text&lt;/a&gt;"
+msgstr "&lt;a href=\"http://www.x.yz\"&gt;tekst&lt;/a&gt;"
+
+#: /widgets/top/field/render.pt:17
+msgid "&nbsp;subeditor&nbsp;"
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:31
+msgid "Type:"
+msgstr "Type:"
+
+#: /widgets/top/sub/render.pt:14 /widgets/top/field/render.pt:14
+msgid "Up to parent: alt-u"
+msgstr "Eén niveau omhoog: alt-u"
+
+#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
+msgid "edit parent"
+msgstr "hoger niveau bewerken"
+
+#: /widgets/top/sub/render.pt:17
+msgid "&nbsp;Nested element editor&nbsp;"
+msgstr "&nbsp;Genest element-editor&nbsp;"
+
+#: /widgets/top/sub/render.pt:20 /widgets/top/field/render.pt:20
+msgid "Up to parent"
+msgstr "Eén niveau omhoog"
+
+#: /widgets/top/table/render.pt:14
+msgid "column settings"
+msgstr "kolom instellingen"
+
+#: /widgets/top/table/render.pt:18
+msgid "accesskey: alt-a"
+msgstr "sneltoets: alt-a"
+
+#: /widgets/top/table/render.pt:18
+msgid "add column"
+msgstr "kolom toevoegen"
+
+#: /widgets/top/table/render.pt:19
+msgid "delete column"
+msgstr "kolom verwijderen"
+
+#: /widgets/top/table/render.pt:19
+msgid "accesskey: alt-d"
+msgstr "sneltoets: alt-d"
+
+#: /widgets/top/table/render.pt:29
+msgid "l"
+msgstr "l"
+
+#: /widgets/top/table/render.pt:31
+msgid "c"
+msgstr "c"
+
+#: /widgets/top/table/render.pt:33
+msgid "r"
+msgstr "r"
+
+#: /widgets/top/table/render.pt:35
+msgid "relative width"
+msgstr "relatieve breedte"
+
+#: /widgets/top/table/render.pt:50
+msgid "Plain table (bold heading, no borders)"
+msgstr "Gewone tabel (vetgedrukte kop, geen borders)"
+
+#: /widgets/top/table/render.pt:54
+msgid "List table (bold underlined heading, borderless rows)"
+msgstr "Lijsttabel (vetgedrukte, onderstreepte kop, borderloze rijen)"
+
+#: /widgets/top/table/render.pt:58
+msgid "Grid table (bold bordered heading, bordered rows)"
+msgstr "Rastertabel (vetgedrukte kop met borders, rijen met borders)"
+
+#: /widgets/top/table/render.pt:62
+msgid "Data grid table (bold borderless heading, bordered rows)"
+msgstr "Data-rastertabel (vetgedrukte borderloze kop, rijen met borders)"

@@ -1,9 +1,11 @@
 <init tal:omit-tag=""
   tal:define="global disable_delete python:1;
     global disable_move_up python:1;
-    global disable_move_down python:1" />
+    global disable_move_down python:1"/>
 <br />
-<div metal:use-macro="container/macro_normal_view/macros/normal_view">
+<div metal:use-macro="container/macro_normal_view/macros/normal_view"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 <div metal:fill-slot="node_content" tal:omit-tag="">
   <div class="front2" tal:content="python:here.get_title_content()">title</div>
 </div>

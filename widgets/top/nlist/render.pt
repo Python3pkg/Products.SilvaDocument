@@ -3,8 +3,11 @@
     global disable_move_up python:1;
     global disable_move_down python:1;
     global type here/get_list_type;
-    global insert_now python:1" />
-<div metal:use-macro="container/macro_embed_view/macros/embed_view">
+    global insert_now python:1"/>  
+<div metal:use-macro="container/macro_embed_view/macros/embed_view"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
+  
 <div metal:fill-slot="embedded_elements" tal:omit-tag="">
   <content tal:replace="structure here/content" />
 </div>

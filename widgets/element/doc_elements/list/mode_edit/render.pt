@@ -16,7 +16,9 @@
   tal:content="here/editable_content">Dummy</textarea><br />
 </div>
 
-<div metal:fill-slot="element_controls" tal:omit-tag="">
+<div metal:fill-slot="element_controls" tal:omit-tag=""
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  i18n:domain="silva">
 <script type="text/javascript" tal:content="structure here/elements.js" />
 <tal:block i18n:translate="">element</tal:block>
 <select class="manipulator"
