@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.6 $
+# $Revision: 1.7 $
 # Python
 from __future__ import nested_scopes
 import re
@@ -240,17 +240,13 @@ class ParagraphSupport(MixedContentSupport):
                 else:
                     target = mangle.entities(child.getAttribute('target'))
                 linktext = self._renderEditableHelper(child)
-                if (not target and linktext == url_comparator):
-                    # XXX what is this?
-                    result.append(url)
+                if target:
+                    tag = '<a href="%s" target="%s">' % (url, target)
                 else:
-                    if target:
-                        tag = '<a href="%s" target="%s">' % (url, target)
-                    else:
-                        tag = '<a href="%s">' % url
-                    result.append(tag)
-                    result.append(linktext)
-                    result.append('</a>')
+                    tag = '<a href="%s">' % url
+                result.append(tag)
+                result.append(linktext)
+                result.append('</a>')
             elif child.nodeName == 'underline':
                 result.append('<u>')
                 result.append(self._renderEditableHelper(child))
