@@ -12,7 +12,7 @@ from Products.Silva.i18n import translate as _
 code = context.get_code_object()
 
 if not code:
-    return _('<span class="warning">[Code element is broken]</span>')
+    return '<span class="warning">[' + unicode(_('Code element is broken')) + ']</span>'
 
 # this is also done in get_code(), but I need to get to path:
 node = context.REQUEST.node
