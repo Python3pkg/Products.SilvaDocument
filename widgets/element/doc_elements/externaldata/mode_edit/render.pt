@@ -13,12 +13,12 @@
           <td width="10%">
           </td>
           <td colspan="2">  
-            <input type="button" class="button" name="" value="Get data source reference" title="Access key: alt-g" accesskey="g"
+            <input type="button" class="button" name="" value="get data source reference" title="access key: alt-g" accesskey="g"
               tal:attributes="onclick python:'getAssetReference(\'%s/edit/asset_lookup?filter=Silva%%20SQL%%20Data%%20Source\', \'_reference_\', \'focusbox\', \'path\');;return false;;' % here.get_start_container().absolute_url();" /><br />
             <input style="width:75%;" type="text" name="path" value=""
               tal:attributes="value python:node.getAttribute('path');" />
             &nbsp;
-            <input class="button" type="submit" value=" Update " title="Access key: alt-s" accesskey="u"
+            <input class="button" type="submit" value=" update " title="access key: alt-s" accesskey="s"
               tal:attributes="name string:${rel_url_start}/save:method" />
           </td>
         </tr>
@@ -67,7 +67,7 @@
         </tr>
         <tr>
           <td>
-            Caption:
+            Caption
           </td>
           <td colspan="2" align="left"
             tal:define="show_caption python:node.getAttribute('show_caption')">
@@ -81,7 +81,7 @@
         </tr>
         <tr>
           <td>
-            Headings:
+            Headings
           </td>
           <td colspan="2" align="left"
             tal:define="show_headings python:node.getAttribute('show_headings')">
@@ -95,7 +95,7 @@
         </tr>
         <tr>
           <td>
-            Table&nbsp;style:
+            Table&nbsp;style
           </td>
           <td colspan="2" align="left">
             <select class="manipulator"
