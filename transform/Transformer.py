@@ -10,7 +10,7 @@ is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 from Products.Silva.i18n import translate as _
 
@@ -61,5 +61,5 @@ class EditorTransformer(Transformer):
                                  target='kupu.html')
         else:
             message = _("Unknown Editor: ${editor}")
-            message.mapping = {'editor': editor}
+            message.set_mapping({'editor': editor})
             raise message

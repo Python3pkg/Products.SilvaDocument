@@ -13,7 +13,7 @@ try:
 except (Exception), err:
     html = _("""<div class="warning"><b>[external source element is broken]</b><br /> error message: ${error}
 </div>""")
-    html.mapping = {'error': err}
+    html.set_mapping({'error': err})
 except:
     # Ugh, bare except to catch *all* cases...
     html = _("""<div class="warning"><b>[external source element is broken]</b><br />

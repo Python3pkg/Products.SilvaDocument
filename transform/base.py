@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -94,7 +94,7 @@ class Node:
         if vars(self.attr).has_key(name):
             return getattr(self.attr, name)
         message = _("${name} attribute not found on tag ${self}")
-        message.mapping = {'name': name, 'self': self}
+        message.set_mapping({'name': name, 'self': self})
         raise AttributeError,  message
 
     def conv(self):
@@ -105,13 +105,13 @@ class Node:
         dic = self.query(path)
         if len(dic) == 0:
             message = _("no ${path} element")
-            message.mapping = {'path': path}
+            message.set_mapping({'path': path})
             raise ValueError,  message
         elif len(dic) == 1 and len(dic.values()[0]) == 1:
             return dic.values()[0][0]
         else:
             message = _("more than one ${path} element")
-            message.mapping = {'path': path}
+            message.set_mapping({'path': path})
             raise ValueError, message
 
     def query(self, querypath):
@@ -141,7 +141,7 @@ class Node:
                 l.append(r'.+')
             elif '*' in i:
                 message = _("intermingling * is not allowed ${i}")
-                message.mapping = {'i': i}
+                message.set_mapping({'i': i})
                 raise ValueError,  message
             elif '|' in i:
                 l.append("(%s)" % i)

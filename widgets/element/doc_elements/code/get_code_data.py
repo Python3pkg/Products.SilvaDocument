@@ -19,7 +19,7 @@ node = context.REQUEST.node
 path = node.getAttribute('path')
 
 message = _('Code element: ${title_or_id} at ${path}')
-message.mapping = {'title_or_id': code.title_or_id(), 'path': path}
+message.set_mapping({'title_or_id': code.title_or_id(), 'path': path})
 
 return  message
 
