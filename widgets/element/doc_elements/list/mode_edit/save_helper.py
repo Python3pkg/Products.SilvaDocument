@@ -37,6 +37,9 @@ doc = node.ownerDocument
 
 items = data.split('\r\n\r\n')
 for item in items:
-   li = doc.createElement('li')
-   editorsupport.replace_text(li, item)
-   node.appendChild(li)
+    item = item.strip()
+    if not item:
+        continue
+    li = doc.createElement('li')
+    editorsupport.replace_text(li, item.strip())
+    node.appendChild(li)
