@@ -7,15 +7,15 @@
     </tal:block>
     <tal:block tal:condition="source">
       <div>
-        <h3 class="front5">External Source settings:</h3>
-        Id:&nbsp;<tal:block content="source/id" />
+        <h3 class="front5">external source</h3>
+        id:&nbsp;<tal:block content="source/id" />
         <br />
-        Title:&nbsp;<tal:block content="source/title" />
-        <br />
-        Description:
-        <p 
-          tal:condition="source/description"
-          tal:content="source/description" />
+        <span tal:condition='source/get_title'>title:&nbsp;
+          <tal:block content="source/get_title" /> <br />
+        </span>
+        <span tal:condition='source/description'>description:
+         <tal:block tal:content="source/description" />
+        </span>
       </div>
       <h1></h1>    
       <div
