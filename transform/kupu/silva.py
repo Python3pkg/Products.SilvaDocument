@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.15 $'
+__version__='$Revision: 1.16 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -76,7 +76,8 @@ class title(SilvaElement):
 class doc(SilvaElement):
     """ subtag of silva_document """
     def asBytes(self, *args, **kwargs):
-        self.attr.xmlns = 'http://xml.infrae.com/document/0.9.3'
+        # disabled xmlns declaration for now, should be solved properly later
+        # self.attr.xmlns = 'http://xml.infrae.com/document/0.9.3'
         return SilvaElement.asBytes(self, *args, **kwargs)
 
 class heading(SilvaElement):
