@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -128,9 +128,11 @@ class EditorSupport(SimpleItem):
                 result.append('~~')
             elif child.nodeName == 'link':
                 url = mangle.entities(child.getAttribute('url'))
+                url_comparator = mangle.entities(self._link_absolute_url(
+                    node, child.getAttribute('url')))
                 target = mangle.entities(child.getAttribute('target'))
                 linktext = self.render_text_as_editable(child)
-                if (not target and linktext == url):
+                if (not target and linktext == url_comparator):
                     result.append(url)
                 else:
                     result.append('((')
