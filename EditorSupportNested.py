@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.6 $
+# $Revision: 1.21.4.7 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -139,8 +139,7 @@ class EditorSupport(SimpleItem):
                     result.append(url)
                     if target:
                         result.append('|')
-                        if target != '_blank':
-                            result.append(target)
+                        result.append(target)
                     result.append('))')
             elif child.nodeName == 'underline':
                 result.append('__')
