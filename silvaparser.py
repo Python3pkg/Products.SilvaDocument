@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.14 2004/03/04 20:49:17 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.15 2004/03/17 19:26:40 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -56,6 +56,7 @@ class Token:
     PARENTHESIS_CLOSE = 94
     
     CHAR = 100
+    EAT = 200
 
     
     _start_end_map = {
@@ -204,7 +205,7 @@ class Parser(HeuristicSearch):
         abstract
     """
     
-    children_per_char = 20
+    children_per_char = 100
 
     def __init__(self, text):
         problem = ParserState(text, 0, [])
@@ -323,6 +324,7 @@ class PParser(Parser):
         
         (r'([A-Za-z0-9\.\-&;]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9\.\-&; \t\f\v\r\n()\\])', Token.CHAR),
+        (r'([\r\n])', Token.EAT),
         ])
 
 
@@ -345,6 +347,7 @@ class HeadingParser(Parser):
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
+        (r'([\r\n])', Token.EAT),
         ])
 
 
@@ -356,6 +359,7 @@ class LinkParser(Parser):
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
+        (r'([\r\n])', Token.EAT),
         ])
 
 
@@ -438,6 +442,7 @@ class Interpreter:
             Token.PARENTHESIS_OPEN: self.text,
             Token.PARENTHESIS_CLOSE: self.text,
             Token.CHAR: self.text,
+            Token.EAT: self.eat,
         }
 
         self.rules['link-text'] = {
@@ -727,4 +732,8 @@ class Interpreter:
     def escaped_softbreak(self, token, node):
         self.ruleset = self._pre_escape_ruleset
         return self.softbreak(token, node)
+
+    def eat(self, token, node):
+        return node
+
 
