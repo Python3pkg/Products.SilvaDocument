@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.3 2003/12/23 08:20:24 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.4 2003/12/29 14:03:20 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -180,7 +180,8 @@ voormalig directeur Strategie Aegon N.V."""]
             'http://www.asdf.com',
             'mailto:foo@bar.com',
             'ftp://bla.fasel/',
-            'https://asdf.com/blablubb/sdfa/df/dfa?sdfasd=434&ds=ddf%20#foo'
+            'https://asdf.com/blablubb/sdfa/df/dfa?sdfasd=434&ds=ddf%20#foo',
+            'http://www.x.com/xx/i.html',
         ]
         for url in urls:
             parser = PParser(url)
@@ -219,6 +220,17 @@ voormalig directeur Strategie Aegon N.V."""]
             ("(see ((foo|http://www.x.yz/)))", 9, 6),
             ]
         url = "http://www.x.yz/"
+        self._test_urls(texts, url)
+    
+    def test_url4(self):
+        texts = [
+            ("(see http://www.x.com/xx/i.html)", 5, 3),
+            ("software got smarter: http://www.x.com/xx/i.html.", 9, 7),
+            ("at http://www.x.com/xx/i.html, but", 6, 2),
+            ("(see ((foo|http://www.x.com/xx/i.html)))", 9, 6),
+            ("**link**\n((http://www.x.com/xx/i.html|http://www.x.com/xx/i.html))", 9, 7),
+            ]
+        url = "http://www.x.com/xx/i.html"
         self._test_urls(texts, url)
             
     def test_link(self):

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.4 2003/12/16 18:16:02 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.5 2003/12/29 14:03:20 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -19,6 +19,7 @@ def _initialize_patterns(patterns):
         compiled.append((re.compile(pattern_str), token_id))
     return tuple(compiled)
 
+URL_PATTERN = r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
         
 class InterpreterError(Exception):
     pass
@@ -291,8 +292,7 @@ class PParser(Parser):
         (r'(\(\()', Token.LINK_START),
         (r'(\|)', Token.LINK_SEP),
         (r'(\)\))', Token.LINK_END),
-        (r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))',
-            Token.LINK_URL),
+        (URL_PATTERN, Token.LINK_URL),
        
         (r'([\n\r]+)', Token.SOFTBREAK),
         (r'([ \t\f\v]+)', Token.WHITESPACE),
@@ -327,8 +327,7 @@ class HeadingParser(Parser):
 class LinkParser(Parser):
 
     patterns = _initialize_patterns([
-        (r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))',
-            Token.LINK_URL),
+        (URL_PATTERN, Token.LINK_URL),
         (r'([ \t\f\v]+)', Token.WHITESPACE),
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
@@ -424,7 +423,6 @@ class Interpreter:
             Token.CHAR: self.text,
             Token.LINK_URL: self.text,
             Token.LINK_SEP: self.link_sep_aftertext,
-            Token.ESCAPE: self.escape,
         }
 
         self.rules['link-url'] = {
@@ -434,7 +432,6 @@ class Interpreter:
             Token.LINK_URL: self.link_url,
             Token.LINK_SEP: self.link_sep_afterurl,
             Token.LINK_END: self.link_end,
-            Token.ESCAPE: self.escape,
         }
 
         self.rules['link-afterurl'] = {
@@ -445,7 +442,6 @@ class Interpreter:
         self.rules['link-target'] = {
             Token.CHAR: self.link_target,
             Token.LINK_END: self.link_end,
-            Token.ESCAPE: self.escape,
         }
 
         self.rules['index'] = {
@@ -454,7 +450,6 @@ class Interpreter:
             Token.WHITESPACE: self.index_text,
             Token.CHAR: self.index_text,
             Token.INDEX_END: self.index_end,
-            Token.ESCAPE: self.escape,
         }
 
         self.rules['escape'] = {
