@@ -254,7 +254,11 @@ class DocumentVersionProducer(SilvaBaseProducer):
             width, height = image_object.getDimensions(image)
             attributes['width'] = str(width)
             attributes['height'] = str(height)
-        print attributes
+        if attributes.has_key('alignment'):
+            if not(attributes['alignment']):
+                attributes['alignment'] = 'default'
+        else:
+            attributes['alignment'] = 'default'
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
         
