@@ -1,7 +1,8 @@
 <metal:block use-macro="container/macro_edit_view/macros/edit_view">
   <metal:block fill-slot="edit_input">
-    <script type="text/javascript"
-      tal:content="structure here/asset_reference.js" />  
+      <script type="text/javascript" 
+        tal:attributes="src python:request.model.get_container().absolute_url()+'/edit/reference.js'">
+      </script>
       <table cellspacing="0" cellpadding="2" border="0" width="100%">
         <tr>
           <td colspan="3">
