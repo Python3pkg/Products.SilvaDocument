@@ -10,19 +10,20 @@
       <option disabled="disabled">Select an External Source...</option>
       <option 
         tal:repeat="av_source here/available_sources"
-        tal:content="structure string:${av_source/id} &#34;${av_source/title}&#34;"
         tal:attributes="
           value av_source/id;
           title av_source/description;
           selected python: (source_id == av_source.id) and 'selected' or nothing;
-          "
-      />
+          ">
+          <span tal:replace="structure av_source/id" />
+          <tal:block tal:condition="av_source/get_title" 
+          tal:replace="structure string:&#34;${av_source/get_title}&#34;" />
+        </option>
       </select>
       &nbsp;
       <input class="button" type="submit" value=" update " title="access key: alt-u" accesskey="u"
         tal:attributes="name string:${rel_url_start}/save:method" />
     </div>
-    <h1></h1>
     <tal:block condition="source">
       <div
         tal:define="
@@ -73,25 +74,21 @@
   </metal:block>
 
   <metal:block fill-slot="edit_notes"
-    tal:define="source here/get_source | nothing;">
+  tal:define="source here/get_source | nothing;
+    source_desc source/description | nothing">
     <ul class="tips">
       <li>
-        Select an source from the pulldown list,
+      Select a source from the pulldown list.
       </li>
       <li>
-        <span class="warning">Hit "Update" to update the parameters form.</span>
+      <span class="warning">Hit "update" to refresh the reference.</span>
       </li>
       <li>
-        Fill in the parameters (if available).
+        Fill in the parameters (if necessary).
       </li>
     </ul>
 
-    <b tal:condition="source">Source description:</b>
-    <br />
-    <tal:block 
-      define="source here/get_source"
-      content="source/description | nothing" />
-    <br />
-
+    <b tal:condition="source_desc">Source description:</b>
+    <span tal:content="source_desc" />
   </metal:block>
 </metal:block>
