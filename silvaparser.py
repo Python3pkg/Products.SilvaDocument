@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.11 2004/01/13 16:06:46 clemens Exp $
+# $Id: silvaparser.py,v 1.12 2004/02/06 16:19:53 guido Exp $
 from __future__ import nested_scopes
 
 # python
@@ -154,7 +154,6 @@ class ParserState:
         self.openclose = openclose
         if new_token is not None:
             self.kindsum += new_token.kind
-            # self._calculate_parenthesis(new_token)
             if new_token.isNesting:
                 self.nesting_list.append(new_token)
 
@@ -194,14 +193,8 @@ class ParserState:
         return 1
             
     def _new_token(self):
-        if self.parent is None:
-            return None
-        return self.tokens[-1]
-
-    def _new_token(self):
-        if self.parent is None:
-            return None
-        return self.tokens[-1]
+        if self.tokens:
+            return self.tokens[-1]
 
 
 class Parser(HeuristicSearch):
@@ -210,9 +203,14 @@ class Parser(HeuristicSearch):
         
         abstract
     """
+    
+    children_per_char = 10
 
     def __init__(self, text):
         problem = ParserState(text, 0, [])
+        self.children_generated = 0
+        self.max_children = len(text) * self.children_per_char
+        self._fallback_node = None
         Search.__init__(self, problem)
         
     def _get_children(self, node):
@@ -230,6 +228,11 @@ class Parser(HeuristicSearch):
             if not p.valid():
                 continue
             matches.append(p)
+            self.children_generated += 1
+            if self.children_generated > self.max_children:
+                fb = self._generate_fallback_node(node.text)
+                self._fallback_node = fb
+                matches.append(fb)
         return matches
     
     def isTarget(self, node):
@@ -250,6 +253,8 @@ class Parser(HeuristicSearch):
         # the more text consumed the better
         # the fewer tokens the better
         # the lower the token-kind the better
+        if node is self._fallback_node:
+            return 0
         tokens = float(len(node.tokens))
         consumed = float(node.consumed)
         kind_sum = node.kindsum
@@ -267,11 +272,20 @@ class Parser(HeuristicSearch):
             pattern_badness += 1 
         h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed) * parenthesis + \
             pattern_badness
+        #if node.text == "click ((Journal & Books|simple?field_search=reference_type:(journal%20book))) to see":
+        #    print h, node.tokens
+        #print node.text, node.tokens, h
         return h
 
     def getResult(self):
         return self.results[0]
     
+    def _generate_fallback_node(self, text):
+        token = Token(Token.CHAR, text)
+        node = ParserState(text, len(text), tokens=[token])
+        assert node.valid()
+        return node
+
 
 class PParser(Parser):
     """Parser for silva markup P nodes
@@ -294,7 +308,7 @@ class PParser(Parser):
         (r'(~~)', Token.SUBSCRIPT_END),
        
         (r'(\[\[)', Token.INDEX_START),
-        (r'(\]\])([^A-Za-z0-9]|$)', Token.INDEX_END),
+        (r'(\]\])', Token.INDEX_END),
        
         (r'(\(\()', Token.LINK_START),
         (r'(\|)', Token.LINK_SEP),
@@ -324,6 +338,9 @@ class HeadingParser(Parser):
         (r'(~~)', Token.SUBSCRIPT_START),
         (r'(~~)', Token.SUBSCRIPT_END),
           
+        (r'(\[\[)', Token.INDEX_START),
+        (r'(\]\])', Token.INDEX_END),
+       
         (r'([ \t\f\v]+)', Token.WHITESPACE),
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
