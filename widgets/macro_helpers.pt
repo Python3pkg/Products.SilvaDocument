@@ -66,7 +66,7 @@
   </td>
   <td class="invisible" align="left" width="16"
     tal:condition="python:is_embedded"><a title="insert line item" tal:attributes="href string:${url_start}/insert_mode" href="insert_mode"><img tal:attributes="src string:${silva_root}/globals/insert_now.gif" width="16" height="7" alt="insert item" border="0" /></a></td>
-  <td tal:attributes="class insert_cell_class" colspan="2"><span class="halfline">&nbsp;</span></td>
+  <td tal:attributes="class insert_cell_class" colspan="2">&nbsp;</td>
   <td class="invisible" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
 </tr>
 <form tal:condition="python:mode == 'insert'" action="." method="POST" tal:omit-tag="is_embedded">
