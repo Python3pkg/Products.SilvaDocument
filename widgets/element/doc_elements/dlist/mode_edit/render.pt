@@ -14,7 +14,7 @@
 
 <div metal:fill-slot="element_controls" tal:omit-tag="">
 <script type="text/javascript" tal:content="structure here/elements.js" />
-Element: 
+element: 
 <select class="manipulator"
    name="what" onChange="updateSelectionOptions()">
   <option value="p">paragraph</option>
@@ -31,7 +31,7 @@ Element:
 <check tal:condition="python:not node.hasAttribute('type')" tal:omit-tag="">
 <init tal:define="global type nothing" tal:omit-tag="" />
 </check>
-Type: 
+type: 
 <select class="manipulator" name="element_type">
 <option value="normal"
   tal:attributes="selected python:test(type == 'normal', 'selected', nothing)">normal</option>
