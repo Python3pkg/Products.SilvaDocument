@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.19 $
+# $Revision: 1.20 $
 # Zope
 
 from StringIO import StringIO
@@ -123,29 +123,6 @@ class Document(CatalogedVersionedContent):
             # hard to follow, and thus practicality does indeed trump
             # purity sometimes. :)
             return CatalogedVersionedContent.preview(self, view_type)
-        else:
-            renderer = self.service_renderer_registry.getRendererByName(
-                renderer_name, 'Silva Document Version')
-            return renderer.render(content)
-
-    security.declareProtected(SilvaPermissions.View, "view")
-    def view(self, view_type='public'):
-        """Display the public view of this object using the selected renderer."""
-        content = self.get_viewable()
-        if content is None:
-            return "Sorry, this document is not published yet."
-        renderer_name = self.service_metadata.getMetadataValue(
-            content, "silva-extra", "renderer_name")
-
-        if not renderer_name or renderer_name == "(Default)":
-            renderer_name = self.service_renderer_registry.getDefaultRendererName()
-
-        if renderer_name == "Basic HTML":
-            # XXX: a hack to call back into the old XML widgets way
-            # of rendering. done like so because the old system is
-            # hard to follow, and thus practicality does indeed trump
-            # purity sometimes. :)
-            return CatalogedVersionedContent.view(self, view_type)
         else:
             renderer = self.service_renderer_registry.getRendererByName(
                 renderer_name, 'Silva Document Version')
