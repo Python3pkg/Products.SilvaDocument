@@ -64,6 +64,10 @@ def registerViews(reg):
     # edit
     reg.register('edit', 'Silva Document', ['edit', 'VersionedContent', 'Document'])
     # public
+    # XXX SilvaDocument needs an explicit public view (besides the ones on 
+    # its versions) to allow using '/public' as a view method explicitly.
+    # This is used e.g. in the subscription feature.
+    reg.register('public', 'Silva Document', ['public', 'Document'])
     reg.register('public', 'Silva Document Version', ['public', 'Document', 'view'])
     # add
     reg.register('add', 'Silva Document', ['add', 'Document'])
