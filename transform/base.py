@@ -21,7 +21,7 @@ doesn't allow python2.2 or better.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.1.1.16.3 $'
+__version__='$Revision: 1.1.1.1.16.3.6.1 $'
 
 # we only have these dependencies so it runs with python-2.2
 
@@ -428,7 +428,7 @@ class CharacterData(Node):
 class Text(CharacterData):
     def compact(self):
         if self.content.isspace():
-            return None
+            return Text(' ')
         else:
             return self
 
