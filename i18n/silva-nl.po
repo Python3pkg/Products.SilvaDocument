@@ -1,0 +1,159 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SilvaDocument 1.1\n"
+"POT-Creation-Date: Mon Nov 22 16:07:40 2004\n"
+"PO-Revision-Date: 2004-11-22 16:33+0100\n"
+"Last-Translator: Eric Casteleijn <eric@infrae.com>\n"
+"Language-Team: Silva i18n team <walco@infrae.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/translation_files/extract.py\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-code: nl\n"
+"Language-name: Nederlands\n"
+"Preferred-encodings: utf-8\n"
+"Domain: silva\n"
+
+#: /Document.py:150
+msgid "No version to store to!"
+msgstr "Geen versie om naar op te slaan!"
+
+#: /ServiceCodeSourceCharset.py:43
+msgid "No charset entered"
+msgstr "Geen charset opgegeven"
+
+#: /ServiceCodeSourceCharset.py:45
+msgid "Charset set"
+msgstr "Charset ingesteld"
+
+#: /install.py:216 /install.py:284
+msgid "Paragraph"
+msgstr "Alinea"
+
+#: /install.py:217 /install.py:285
+msgid "Heading"
+msgstr "Kop"
+
+#: /install.py:218 /install.py:286
+msgid "List"
+msgstr "Lijst"
+
+#: /install.py:219 /install.py:287
+msgid "Image"
+msgstr "Afbeelding"
+
+#: /install.py:220 /install.py:245 /install.py:288
+msgid "Complex list"
+msgstr "Complexe lijst"
+
+#: /install.py:246
+msgid "List item"
+msgstr "Lijst-item"
+
+#: /install.py:247
+msgid "List title"
+msgstr "Lijst-titel"
+
+#: /install.py:289
+msgid "Preformatted"
+msgstr "Voorgeformatteerd"
+
+#: /install.py:290
+msgid "Definition list"
+msgstr "Definitielijst"
+
+#: /install.py:340
+msgid "Table"
+msgstr "Tabel"
+
+#: /install.py:341
+msgid "row"
+msgstr "rij"
+
+#: /install.py:342
+msgid "row heading"
+msgstr "kop-rij"
+
+#: /transform/Transformer.py:63
+msgid "Unknown Editor: ${editor}"
+msgstr "Onbekende Editor: ${editor}"
+
+#: /transform/base.py:107
+msgid "no ${path} element"
+msgstr "geen ${path} element"
+
+#: /transform/base.py:113
+msgid "more than one ${path} element"
+msgstr "meer dan één ${path} element"
+
+#: /transform/base.py:143
+msgid "intermingling * is not allowed ${i}"
+msgstr "het doorelkaar gebruiken van * is niet toegestaan ${i}"
+
+#: /transform/base.py:72
+msgid "not implemented, override in inheriting class"
+msgstr "not implemented, override in inheriting class"
+
+#: /transform/base.py:96
+msgid "${name} attribute not found on tag ${self}"
+msgstr "${name}-attribuut niet gevonden op tag ${self}"
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:17
+msgid "editor"
+msgstr "editor"
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:18
+msgid "preview"
+msgstr "preview"
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:19
+msgid "properties"
+msgstr "eigenschappen"
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:20
+msgid "access"
+msgstr "toegang"
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:21
+msgid "publish"
+msgstr "publiceren"
+
+#: /widgets/element/doc_elements/code/get_code_data.py:15
+#: /widgets/element/doc_elements/code/get_rendered_code.py:6
+msgid "<span class=\"warning\">[Code element is broken]</span>"
+msgstr "<span class=\"warning\">[Code-element is gebroken]</span>"
+
+#: /widgets/element/doc_elements/code/get_code_data.py:21
+msgid "Code element: ${title_or_id} at ${path}"
+msgstr "Code-element: ${title_or_id} in ${path}"
+
+#: /widgets/element/doc_elements/image/tag.py:18
+msgid "<div class=\"error\">[image reference is broken]</div>"
+msgstr "<div class=\"error\">[verwijzing naar afbeelding is gebroken]</div>"
+
+#: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
+msgid "Source is a NoneType - is it not available anymore?"
+msgstr "Source is a NoneType - is it not available anymore?"
+
+#: /widgets/element/doc_elements/source/rendered_source.py:14
+msgid ""
+"<div class=\"warning\"><b>[external source element is broken]</b><br /> "
+"error message: ${error}\n"
+"</div>"
+msgstr ""
+"<div class=\"warning\"><b>[extern bron-element is gebroken]</b><br /> "
+"foutmelding: ${error}\n"
+"</div>"
+
+#: /widgets/element/doc_elements/source/rendered_source.py:19
+msgid ""
+"<div class=\"warning\"><b>[external source element is broken]</b><br />\n"
+"Unfortunatly however, there no error message available... </div>"
+msgstr ""
+"<div class=\"warning\"><b>[extern bron-element is gebroken]</b><br />\n"
+"Helaas is er geen nadere foutmelding beschikbaar... </div>"
+
+#: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
+msgid "The stored xml is invalid."
+msgstr "De opgeslagen xml is ongeldig."
