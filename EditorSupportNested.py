@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21 $
+# $Revision: 1.21.4.1 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -64,7 +64,7 @@ class EditorSupport(SimpleItem):
                 result.append('</sub>')
             elif child.nodeName == 'link':
                 path = child.getAttribute('url')
-                url = self._link_absolute_url(path)
+                url = self._link_absolute_url(node, path)                
                 result.append('<a href="%s"' %  mangle.entities(url))
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
@@ -275,26 +275,28 @@ class EditorSupport(SimpleItem):
         dom = self.editable_to_dom(text, LinkParser)
         return self.render_text_as_html(dom.firstChild)
 
-    def _link_absolute_url(self, path):
-
+    def _link_absolute_url(self, context, path):
+        # If it is a url already, return it:
         if _url_match.match(path):
-            # this is a url already, return it
             return path
-        # it is not an URL, so treat it as a path
-        splitpath = [ p.encode('ascii','ignore')
-            for p in path.split('/') ]
-        obj = self.restrictedTraverse(splitpath, None)
+        # It is not an URL, so treat it as a path.
+        # If it is a relative path, treat is as such:
+        if not path.startswith('/'):
+            container = context.get_container()
+            return container.absolute_url() + '/' + path
+        # If it is an absolute path, try to traverse it to
+        # a Zope/Silva object and get the URL for that.
+        splitpath = [p.encode('ascii','ignore') for p in path.split('/') ]
+        obj = context.restrictedTraverse(splitpath, None)
         if obj is None:
-            # was not found, maybe the link is broken, but maybe it's just 
-            # due to virtual hosting situations or what ever
+            # Was not found, maybe the link is broken, but maybe it's just 
+            # due to virtual hosting situations or whatever.
             return path
         if hasattr(obj.aq_base, 'absolute_url'):
-            # there are some cases where the object we found does not have the
-            # absolute_url method
+            # There are some cases where the object we find 
+            # does not have the absolute_url method.
             return obj.absolute_url()
-        if not path.startswith('/'):
-            container = self.get_container()
-            return container.absolute_url() + '/' + path
+        # In all other cases:
         return path
 
 InitializeClass(EditorSupport)
@@ -303,6 +305,3 @@ def manage_addEditorSupport(container):
     "editor support service factory"
     id = 'service_editorsupport'
     container._setObject(id, EditorSupport(id))
-
-
-
