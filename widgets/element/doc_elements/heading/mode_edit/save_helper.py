@@ -4,6 +4,8 @@ request = context.REQUEST
 node = request.node
 editor = context.service_editorsupport
 
+model = node.get_content()
+
 if request['what'] != 'heading':
     context.element_switch()
     return
@@ -11,7 +13,8 @@ if request['what'] != 'heading':
 data = request['data']
 type = request['element_type']
 
-editor.replace_heading(node, data)
+supp = editor.getMixedContentSupport(model, node)
+supp.parse(data)
 
 # special case of element switching:
 if getattr(request,'element_switched',None):
@@ -19,7 +22,8 @@ if getattr(request,'element_switched',None):
    if title:
       doc = node.ownerDocument
       p = doc.createElement('heading')
-      editor.replace_heading(p, title)
       node.parentNode.insertBefore(p, node)
+      supp = editor.getMixedContentSupport(model, p)
+      supp.parse(title)
 
 node.setAttribute('type', String.inputConvert(type))

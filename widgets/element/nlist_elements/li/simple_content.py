@@ -7,9 +7,13 @@
 ##parameters=node
 ##title=
 ##
+request = context.REQUEST
+model = request.model
 editorsupport = context.service_editorsupport
+
 for child in node.childNodes:
     if child.nodeType == node.ELEMENT_NODE:
         break
-content = node.get_content()
-return editorsupport.render_text_as_editable(child)
+    
+supp = editorsupport.getMixedContentSupport(model, node)
+return supp.renderEditable()

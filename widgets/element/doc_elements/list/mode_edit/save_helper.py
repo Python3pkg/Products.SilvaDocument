@@ -9,10 +9,8 @@ if request['what'] != 'list':
     context.element_switch()
     return
 
-# don't need to convert it, will do so in replace_text later
-data = request['data']
-
 # strip off trailing whitespace, so empty lines do not lead to empty listitems
+data = request['data']
 data = data.rstrip()
 
 if not request.has_key('element_type'):
@@ -44,5 +42,6 @@ for item in items:
     if not item:
         continue
     li = doc.createElement('li')
-    editorsupport.replace_text(li, item)
     node.appendChild(li)
+    supp = editorsupport.getMixedContentSupport(model, li)
+    supp.parse(item)

@@ -1,4 +1,4 @@
-# $Id: save_helper.py,v 1.2 2003/09/02 14:28:46 jw Exp $
+# $Id: save_helper.py,v 1.2.28.1 2004/06/14 11:42:22 jw Exp $
 from Products.Silva.mangle import String
 
 request = context.REQUEST
@@ -15,10 +15,8 @@ if not request.has_key('element_type'):
 else:
     element_type = request['element_type']
 
-# don't need to convert it, will do so in replace_text later
-data = request['data']
-
 # strip off empty newlines at the end
+data = request['data']
 data = data.rstrip()
 
 if element_type not in ['normal', 'compact']:
@@ -45,11 +43,13 @@ items = data.split('\r\n\r\n')
 for item in items:
     pair = item.split('\r\n')
     dt = doc.createElement('dt')
-    editorsupport.replace_text(dt, pair[0])
-    node.appendChild(dt)
+    node.appendChild(dt)    
+    supp = editorsupport.getMixedContentSupport(model, dt)
+    supp.parse(pair[0])    
     dd = doc.createElement('dd')
-    if len(pair) > 1:
-        editorsupport.replace_text(dd, '\n'.join(pair[1:]))
-    else:
-        editorsupport.replace_text(dd, '')
     node.appendChild(dd)
+    supp = editorsupport.getMixedContentSupport(model, dd)
+    if len(pair) > 1:
+        supp.parse('\n'.join(pair[1:]))
+    else:
+        supp.parse('')

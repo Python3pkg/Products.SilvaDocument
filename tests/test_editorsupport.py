@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.7 2004/05/25 09:55:34 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.8 2004/06/14 11:42:22 jw Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -694,6 +694,7 @@ class EditableTest(unittest.TestCase):
         
         for xml_text, expected_editable in cases:
             dom = parseString('<p>%s</p>' % xml_text)
+            # This tests the old style API in EditorSupport
             editable = es.render_text_as_editable(dom.firstChild)
             self.assertEquals(expected_editable, editable,
                 '%s was converted to %s, instead of %s' % (xml_text,
@@ -709,6 +710,7 @@ class EditableTest(unittest.TestCase):
             ('foo http://www.x.yz, http://zxy.abc bla', 'foo <a href="http://www.x.yz">http://www.x.yz</a>, <a href="http://zxy.abc">http://zxy.abc</a> bla'),
            ]
         for editable, expected_html in cases:
+            # This tests the old style API in EditorSupport
             html = es.render_links(editable)
             self.assertEquals(expected_html, html,
                 '%s was converted to %s, instead of %s' % (editable,
@@ -725,6 +727,7 @@ class EditableTest(unittest.TestCase):
         es = EditorSupport('')
         for xml_text, expected_editable in cases:
             dom = parseString('<pre>%s</pre>' % xml_text)
+            # This tests the old style API in EditorSupport
             editable = es.render_pre_as_editable(dom.firstChild)
             self.assertEquals(expected_editable, editable,
                 '%s was converted to %s, instead of %s' % (xml_text,

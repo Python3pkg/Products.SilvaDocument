@@ -7,14 +7,20 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
+import string
+
+request = context.REQUEST
+model = request.model
+node = request.node
 editorsupport = context.service_editorsupport
+
 items = []
 for child in node.childNodes:
     if child.nodeType != node.ELEMENT_NODE:
         continue
     if child.nodeName == 'li':
-        items.append(editorsupport.render_text_as_editable(child))
-import string
+        supp = editorsupport.getMixedContentSupport(model, child)
+        items.append(supp.renderEditable())
+
 items = map(string.strip, items)
 return '\r\n\r\n'.join(items)

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: interfaces.py,v 1.1.2.2.10.3 2004/05/25 09:57:18 zagy Exp $
+# $Id: interfaces.py,v 1.1.2.2.10.4 2004/06/14 11:42:22 jw Exp $
 
 from Interface import Interface, Attribute
 
@@ -110,3 +110,31 @@ class IInterpreter(Interface):
                 properly
         """
 
+class IMixedContentSupport(Interface):
+    """ Support of editing and rendering mixed content XML (i.e.
+    XML elements containing both text- and child nodes).
+    """
+    
+    _node = Attribute("XXX something on the node attritbute here")
+    
+    def parse(input_string):
+        """ Parse the user input to a DOM fragment for inclusion
+        in the Document being edited.
+        
+        Complementary to render_editable().
+        """
+        pass
+    
+    def renderHTML(view_type='public'):
+        """ Render the node to HTML.
+        
+        Specify the view_type for this render: 'public' or 'edit'.
+        """
+        pass
+    
+    def renderEditable():
+        """ Render the node to user editable text.
+        
+        Complementary to parse().
+        """
+        pass

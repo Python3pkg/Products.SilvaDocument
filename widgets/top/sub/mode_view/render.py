@@ -7,19 +7,27 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
+request = context.REQUEST
+model = request.model
+node = request.node
+
 # only element nodes
-childNodes = [child for child in node.childNodes if child.nodeType == child.ELEMENT_NODE]
+childNodes = [
+    child for child in node.childNodes 
+    if child.nodeType == child.ELEMENT_NODE]
+
 # nothing, so return empty string
 if len(childNodes) == 0:
     return ''
+
 # handle case of starting p or image specially
 result = []
 firstNode = childNodes[0]
-
 viewer = context.service_editor.getViewer()
 if firstNode.nodeName == 'p':
-    result.append(context.service_editorsupport.render_text_as_html(firstNode))
+    editorsupport = model.service_editor
+    supp = editorsupport.getMixedContentSupport(model, firstNode)
+    result.append(supp.renderHTML(view_type='public'))
 elif firstNode.nodeName == 'image':
     result.append(viewer.getWidget(firstNode).tag())
 else:

@@ -1,10 +1,12 @@
-# $Id: save_helper.py,v 1.2 2003/11/08 13:04:32 zagy Exp $
+# $Id: save_helper.py,v 1.2.20.1 2004/06/14 11:42:22 jw Exp $
 from Products.Silva import mangle
 
 request = context.REQUEST
 node = request.node
 doc = node.ownerDocument
 editorsupport = context.service_editorsupport
+
+model = node.get_content()
 
 # node_name, editable, multiple paragraphs allowed
 cite_elements = [
@@ -24,5 +26,5 @@ for node_name, content, multiple in cite_elements:
         content = [content]
     for p in content:
         p_node = node.appendChild(doc.createElement(node_name))
-        editorsupport.replace_text(p_node, p)
-
+        supp = editorsupport.getMixedContentSupport(model, p_node)
+        supp.parse(p)

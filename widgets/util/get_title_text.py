@@ -7,12 +7,16 @@
 ##parameters=node, html_encoded=None
 ##title=helper: get the rendered content of the <title> tag
 ##
+request = context.REQUEST
+model = request.model
 editorsupport = context.service_editorsupport
+
 for child in node.childNodes:
-  if child.nodeName=='title':
-     if html_encoded:
-       return editorsupport.render_heading_as_html(child)
-     else:
-       return editorsupport.render_heading_as_editable(child)
+    if child.nodeName == 'title':
+        supp = editorsupport.getMixedContentSupport(model, child)
+        if html_encoded:
+            view_type = (context.id == 'mode_view') and 'public' or 'edit'
+            return supp.renderHTML(view_type=view_type)
+        return supp.renderEditable()
 
 return ''
