@@ -36,10 +36,14 @@ if node.getAttribute('id') != id:
     # is changed, so remove all attrs.
     node.setAttribute('id', ustr(id))
 
-source = getattr(context, id, None)
+# Use Document's context. If not, the complete widgets hierarchy comes
+# in play and weird acquisition magic may cause 'source' to be a widget 
+# whenever the source object has a widget's id.
+doc = node.get_silva_object()
+source = getattr(doc, id, None)
 if source is None:
     # should not happen since id was selected from a list...
-    raise "Blerrrrrk!"
+    raise ValueError, 'source is a NoneType'
 
 form = source.form()
 try:
