@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.15 $'
+__version__='$Revision: 1.16 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -540,16 +540,21 @@ class a(Element):
             title = ''
         if (hasattr(self.attr, 'name') and (not hasattr(self.attr, 'href') or
                 self.attr.href == '#' or self.attr.href is None)):
-            text = ''.join([t.convert(context).asBytes('UTF-8') for t in extract_texts(self, context)])
-            textnode = Frag()
-            if text and (text[0] != '[' or text[-1] != ']'):
-                textnode = Text(text)
-            return Frag(textnode,
-                        silva.index(
-                                name=self.attr.name,
-                                title=title,
+            if self.getattr('class', None) == 'index':
+                # index item
+                text = ''.join([t.convert(context).asBytes('UTF-8') for t in extract_texts(self, context)])
+                textnode = Frag()
+                if text and (text[0] != '[' or text[-1] != ']'):
+                    textnode = Text(text)
+                return Frag(textnode,
+                            silva.index(
+                                    name=self.attr.name,
+                                    title=title,
+                                    )
                                 )
-                            )
+            else:
+                # named anchor, probably pasted from some other page
+                return Frag(self.content.convert(context))
         elif hasattr(self.attr, 'href') and self.attr.href is not None:
             url = self.getattr('href', 'http://www.infrae.com')
             target = getattr(self.attr, 'target', '')
