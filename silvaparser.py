@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.9 2003/12/12 16:08:57 zagy Exp $
+# $Id: silvaparser.py,v 1.10 2003/12/16 18:12:45 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -12,6 +12,14 @@ from xml.dom.minidom import parseString
 from Products.SilvaDocument.search import Search, HeuristicSearch
 from Products.SilvaDocument.interfaces import IParserState, IHeuristicsNode
 
+
+def _initialize_patterns(patterns):
+    compiled = []
+    for pattern_str, token_id in patterns:
+        compiled.append((re.compile(pattern_str), token_id))
+    return tuple(compiled)
+
+        
 class InterpreterError(Exception):
     pass
 
@@ -203,7 +211,6 @@ class Parser(HeuristicSearch):
     def __init__(self, text):
         problem = ParserState(text, 0, [])
         Search.__init__(self, problem)
-        self.initialize_patterns()
         
     def _get_children(self, node):
         matches = []
@@ -254,12 +261,6 @@ class Parser(HeuristicSearch):
             pattern_badness
         return h
 
-    def initialize_patterns(self):
-        patterns = self.patterns
-        self.patterns = []
-        for pattern_str, token_id in patterns:
-            self.patterns.append((re.compile(pattern_str), token_id))
-
     def getResult(self):
         return self.results[0]
     
@@ -268,7 +269,7 @@ class PParser(Parser):
     """Parser for silva markup P nodes
     """
 
-    patterns = [
+    patterns = _initialize_patterns([
         (r'(\+\+)[^\s]', Token.EMPHASIS_START),
         (r'(\+\+)([^A-Za-z0-9]|$)', Token.EMPHASIS_END),
         
@@ -301,12 +302,12 @@ class PParser(Parser):
         
         (r'([A-Za-z0-9\.\-&;]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9\.\-&; \t\f\v\r\n()])', Token.CHAR),
-        ]
+        ])
 
 
 class HeadingParser(Parser):
     
-    patterns = [
+    patterns = _initialize_patterns([
         (r'(\+\+)[^\s]', Token.EMPHASIS_START),
         (r'(\+\+)([^A-Za-z0-9]|$)', Token.EMPHASIS_END),
         
@@ -320,19 +321,19 @@ class HeadingParser(Parser):
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
-        ]
+        ])
 
 
 class LinkParser(Parser):
 
-    patterns = [
+    patterns = _initialize_patterns([
         (r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))',
             Token.LINK_URL),
         (r'([ \t\f\v]+)', Token.WHITESPACE),
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
-        ]
+        ])
 
 
 class Interpreter:
