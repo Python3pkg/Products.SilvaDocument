@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -20,6 +20,9 @@ from Products.Silva import mangle
 from Products.SilvaDocument.silvaparser import \
     PParser, HeadingParser, LinkParser
 
+# from silvaparser, thanks to zagy:
+URL_PATTERN = r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+_url_match = re.compile(URL_PATTERN)
 
 class EditorSupport(SimpleItem):
     """XML editor support. """
@@ -60,8 +63,17 @@ class EditorSupport(SimpleItem):
                 result.append(self.render_text_as_html(child))
                 result.append('</sub>')
             elif child.nodeName == 'link':
-                result.append('<a href="%s"' %
-                              mangle.entities(child.getAttribute('url')))
+                path = child.getAttribute('url')
+                if not _url_match.match(path):
+                    # it is not an URL, so treat it as a path
+                    splitpath = [p.encode('ascii','ignore') for p in path.split('/')]                    
+                    try:
+                        obj = self.restrictedTraverse(splitpath)
+                        path = obj.absolute_url()
+                    except (KeyError, AttributeError), err:
+                        pass
+                
+                result.append('<a href="%s"' %  mangle.entities(path))
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
                               mangle.entities(child.getAttribute('target')))

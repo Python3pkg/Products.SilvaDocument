@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.14 $
+# $Revision: 1.15 $
 # Zope
 
 from StringIO import StringIO
@@ -87,6 +87,7 @@ class Document(CatalogedVersionedContent):
 
         return is_cacheable
 
+    # XXX move to function in SilvaExternalSoucrse!
     def _source_element_cacheability_helper(self, node):
         # FIXME: how can we make this more generic as it is very
         # specific now..?
