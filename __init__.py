@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: __init__.py,v 1.5 2003/09/25 14:12:35 faassen Exp $
+# $Id: __init__.py,v 1.6 2003/09/29 08:20:35 zagy Exp $
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry
@@ -9,7 +9,8 @@ import install
 
 from Products.Silva.fssite import registerDirectory
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
-from Products.SilvaDocument import Document, upgrade
+
+from Products.SilvaDocument import Document
 
 def initialize(context):
     extensionRegistry.register(
@@ -28,4 +29,11 @@ def initialize(context):
     registerDirectory('widgets', globals())
     
     registerTypeForMetadata(Document.DocumentVersion.meta_type)
+
+    initialize_upgrade()
+
+
+def initialize_upgrade():
+    from Products.SilvaDocument import upgrade
+    upgrade.initialize()
 
