@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1.2.1.6.2 $
+Version of this file: $Revision: 1.1.2.1.6.3 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -12,7 +12,7 @@ Version of this file: $Revision: 1.1.2.1.6.2 $
 
 <h2>Silva CodeSource Charset Service</h2>
 <p class="form-help">
-Here you can choose which character set should be used to interpret codesources <br /> 
+Here you can choose which character set should be used to interpret old codesources <br /> 
 by default. Common character sets are:
 </p>
 <pre>
@@ -24,7 +24,7 @@ mac_roman    common Macintosh encoding
 </pre>
 <p class="form-help">
 Which charset you choose depends on your setup. Most setups will use either <br />
-latin-1 or cp1252. This may vary depending on whether the codesources contain<br /> 
+latin-1 or cp1252. This may vary depending on whether the old codesources contain<br /> 
 em-dashes, curly quotes, and accented or other special characters.<br />
 </p>
 

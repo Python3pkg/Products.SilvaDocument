@@ -38,8 +38,10 @@ def install(root):
     root.service_containerpolicy.register('Silva Document',
         Document.SilvaDocumentPolicy, -1)
 
-    if not hasattr(root, 'service_codesource_charset'):
-        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_codesource_charset', 'Service Charset for Codesources')
+    if hasattr(root, 'service_codesource_charset'):
+        root.manage_renameObject('service_codesource_charset', 'service_old_codesource_charset')
+    elif not hasattr(root, 'service_old_codesource_charset'):
+        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_old_codesource_charset', 'Service Charset for Codesources')
         
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -48,8 +50,8 @@ def uninstall(root):
     root.manage_delObjects(['service_editorsupport'])
     # uninstall metadata mapping?
     root.service_containerpolicy.unregister('Silva Document')
-    if hasattr(root, 'service_codesource_charset'):
-        root.manage_delObjects(['service_codesource_charset'])
+    if hasattr(root, 'service_old_codesource_charset'):
+        root.manage_delObjects(['service_old_codesource_charset'])
     
 def is_installed(root):
     return hasattr(root.service_views, 'SilvaDocument')
@@ -151,7 +153,7 @@ def registerDocEditor(root):
     wr.setDisplayName('cite', 'citation')
 
     wr.setAllowed('doc', [
-        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image',
+        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image', 'code',
         'table', 'nlist', 'toc'])
 
     if externalsource.AVAILABLE:

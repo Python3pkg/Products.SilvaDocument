@@ -5,7 +5,7 @@ if not code:
 
 ret = code()
 if not same_type(ret, u''):
-    encoding = context.service_codesource_charset.charset()
+    encoding = context.service_old_codesource_charset.charset()
     ret = unicode(ret, encoding, 'replace')
 
 return ret

@@ -1,7 +1,7 @@
 <!--
 Copyright (c) 2002-2004 Infrae. All rights reserved.
 See also LICENSE.txt
-Version of this file: $Revision: 1.1.2.2.6.1 $
+Version of this file: $Revision: 1.1.2.2.6.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
@@ -21,7 +21,7 @@ Add Silva CodeSource Charset Service.
     </div>
     </td>
     <td align="left" valign="top">
-    <input type="text" name="id" size="40" value="service_codesource_charset" />
+    <input type="text" name="id" size="40" value="service_old_codesource_charset" />
     </td>
   </tr>
   <tr>
