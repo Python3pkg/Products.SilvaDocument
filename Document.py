@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 # Zope
 
 from StringIO import StringIO
@@ -64,7 +64,8 @@ class Document(CatalogedVersionedContent):
         That means the document contains no dynamic elements like
         code, datasource or toc.
         """
-        non_cacheable_objects = ['toc', 'code', 'externaldata', 'source']
+        non_cacheable_elements = ['toc', 'code', 'externaldata', ]
+        
         is_cacheable = 1 
     
         viewable = self.get_viewable()
@@ -72,15 +73,37 @@ class Document(CatalogedVersionedContent):
         if viewable is None:
             return 0
 
-        # it should suffice to test the children of the root element only,
+        # It should suffice to test the children of the root element only,
         # since currently the only non-cacheable elements are root elements
         for node in viewable.content.documentElement.childNodes:
-            if node.nodeName in non_cacheable_objects:
+            node_name = node.nodeName
+            if node_name in non_cacheable_elements:
                 is_cacheable = 0
                 break
+            # FIXME: how can we make this more generic as it is very
+            # specific now..?
+            if node_name == 'source':
+                is_cacheable = self._source_element_cacheability_helper(node)
 
         return is_cacheable
         
+    def _source_element_cacheability_helper(self, node):
+        # FIXME: how can we make this more generic as it is very
+        # specific now..?
+        id = node.getAttribute('id').encode('ascii')
+        source = getattr(self.aq_inner, id, None)
+        parameters = {}        
+        for child in [child for child in node.childNodes 
+                      if child.nodeType == child.ELEMENT_NODE 
+                      and child.nodeName == 'parameter']:
+            child.normalize()
+            name = child.getAttribute('key').encode('ascii')
+            value = [str(child.nodeValue) for child in child.childNodes 
+                     if child.nodeType == child.TEXT_NODE]
+            value = ' '.join(value)
+            parameters[name] = value
+        return source.is_cacheable(**parameters)
+    
     security.declareProtected(SilvaPermissions.ApproveSilvaContent,
                               'to_xml')
     def to_xml(self, context):
