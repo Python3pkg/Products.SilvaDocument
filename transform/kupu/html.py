@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.5 $'
+__version__='$Revision: 1.6 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -415,7 +415,7 @@ class ul(Element):
     def is_nlist(self, context):
         if (self.query('**/img') or self.query('**/p') or 
                 self.query('**/table') or self.query('**/ul') or
-                self.query('**/ol')):
+                self.query('**/ol') or self.query('**/pre')):
             return 1
         else:
             return 0
