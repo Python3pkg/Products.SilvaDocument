@@ -5,7 +5,7 @@ module for conversion from current
        to
    silva (0.9.1) 
 
-WARNING: 
+WARNING: this is basically depricated and not maintained nymore. 
 
 This module is NOT supposed to work for later silva-versions.
 Support is only there for 3.x (see sister directory)
@@ -24,7 +24,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.5 $'
+__version__='$Revision: 1.6 $'
 
 from Products.SilvaDocument.transform.base import Element, Text, Frag
 
