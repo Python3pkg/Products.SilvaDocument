@@ -38,7 +38,7 @@ while 1:
         code_objects.extend(
             [value for id, value in code_source.objectItems(
                 interesting_metatypes) if id not in dont_include_ids])
-    if obj.meta_type == 'Silva Root': #implements_root():
+    if obj.implements_root():
         break
     # we want hiding after the first iteration
     want_hiding = 1
