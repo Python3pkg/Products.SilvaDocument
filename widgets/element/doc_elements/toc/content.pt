@@ -1,8 +1,3 @@
-===================================================================
-Checking out content.pt
-RCS:  /cvs/infrae/SilvaDocument/widgets/element/doc_elements/toc/Attic/content.pt,v
-VERS: 1.1
-***************
 <tal:block
   define="
     node request/node;
