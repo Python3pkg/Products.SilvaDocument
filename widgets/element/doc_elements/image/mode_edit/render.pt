@@ -42,10 +42,10 @@
       </td>
     </tr>
     <tr>
-      <td class="invisible align-right" style="background:#d7e4f0;">
+      <td class="invisible align-right">
         target frame
       </td>
-      <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">  
+      <td class="invisible align-left" colspan="3">  
         <input type="radio" name="target_selector" value="_user" 
           tal:attributes="checked python:node.getAttribute('target') != '_blank'"
         />
@@ -60,10 +60,10 @@
       </td>
     </tr>
     <tr>
-      <td class="invisible align-right">
+      <td class="invisible align-right" style="background:#d7e4f0;">
         tooltip for link
       </td>
-      <td class="invisible align-left" colspan="3">  
+      <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">  
         <input style="width:100%;" type="text" name="title" value=""
           tal:attributes="value python:node.getAttribute('title');"  />
       </td>
