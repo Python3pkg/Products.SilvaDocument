@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.7 $'
+__version__='$Revision: 1.8 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -452,7 +452,10 @@ class ul(Element):
             if el.name() == 'li':
                 lis.append(el.convert(context, 1))
             else:
-                lis[-1] = silva.li(lis[-1].content, el.convert(context))
+                if lis:
+                    lis[-1] = silva.li(lis[-1].content, el.convert(context))
+                else:
+                    lis.append(silva.li(el.convert(context)))
 
         return silva.nlist(
             lis,
