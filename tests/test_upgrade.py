@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_upgrade.py,v 1.1.8.1 2004/03/09 20:28:36 clemens Exp $
+# $Id: test_upgrade.py,v 1.1.8.2 2004/03/09 21:08:16 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -14,20 +14,48 @@ import unittest
 
 from Products.SilvaDocument import upgrade
 
+
+class Rec:
+    pass
+
 class UpgradeTest(unittest.TestCase):
 
+    def setUp(self):
+        self.obj = Rec()
+
+    def _xml_string(self,content):
+        # dom to string; also ger rid of the first line, containing the '<?xml version=...?>
+        return '\n'.join(content.toxml().split('\n')[1:])
 
     def test_xmlupgrade(self):
-        class Rec:
-            pass
         dom = parseString('<p>foo<index name="bar">baz</index>bladibla</p>')
-        obj = Rec()
-        obj.content = dom
+        self.obj.content = dom
         u = upgrade.UpgradeDocumentXML()
-        u.upgrade(obj)
-        xml = '\n'.join(obj.content.toxml().split('\n')[1:])
+        u.upgrade(self.obj)
+        xml = self._xml_string(self.obj.content)
         self.assertEquals('<p>foo<index name="bar"/>bazbladibla</p>', xml)
-        
+
+    def test_xmlupgrade2(self):
+        # XXX copy & paste tests ... could be done more elegant
+        dom = parseString('<doc><p><em>foo</em></p><p><index name="bar">baz</index>bla</p></doc>')
+        self.obj.content = dom
+        u = upgrade.UpgradeDocumentXML()
+        u.upgrade(self.obj)
+        xml = self._xml_string(self.obj.content)
+        self.assertEquals('<doc><p><em>foo</em></p><p><index name="bar"/>bazbla</p></doc>', xml)
+
+    def test_xmlupgrade_table(self):
+        # XXX copy & paste tests ... could be done more elegant
+        # anyway, this test better does not fail, or the error message is pretty unreadable
+        dom = parseString('<doc><p type="lead"><strong>a paragraph <index name="index_1">containing an index</index></strong></p><table columns="3"><row><field><p><strong>also <index name="index2">index</index> here</strong></p></field><field><p>and <index name="index3">index</index> here</p></field><field><p/><p type="normal">and <index name="index4"><strong>here</strong></index></p></field></row></table></doc>')
+
+        self.obj.content = dom
+        u = upgrade.UpgradeDocumentXML()
+        u.upgrade(self.obj)
+        xml = self._xml_string(self.obj.content)
+        self.assertEquals('<doc><p type="lead"><strong>a paragraph <index name="index_1"/>containing an index</strong></p><table columns="3"><row><field><p><strong>also <index name="index2"/>index here</strong></p></field><field><p>and <index name="index3"/>index here</p></field><field><p/><p type="normal">and <index name="index4"/><strong>here</strong></p></field></row></table></doc>', xml)
+
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(UpgradeTest))
