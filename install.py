@@ -40,7 +40,7 @@ def install(root):
         ])
 
     root.service_containerpolicy.register('Silva Document',
-        Document.SilvaDocumentPolicy)
+        Document.SilvaDocumentPolicy, -1)
         
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -56,18 +56,15 @@ def is_installed(root):
 def registerViews(reg):
     """Register core views on registry.
     """
-
     # edit
-    reg.register('edit', 'Silva Document',
-                 ['edit', 'VersionedContent', 'Document'])
+    reg.register('edit', 'Silva Document', ['edit', 'VersionedContent', 'Document'])
     # public
     reg.register('public', 'Silva Document', ['public', 'Document'])
-
     # add
     reg.register('add', 'Silva Document', ['add', 'Document'])
     
 def unregisterViews(reg):
-    for meta_type in ['Silva Document', 'Silva AutoTOC']:
+    for meta_type in ['Silva Document']:
         reg.unregister('edit', meta_type)
         reg.unregister('public', meta_type)
         reg.unregister('add', meta_type)

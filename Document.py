@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 # Zope
 
 from StringIO import StringIO
@@ -298,5 +298,5 @@ class _SilvaDocumentPolicy(Persistent):
         container.manage_addProduct['SilvaDocument'].manage_addDocument(
             'index', title)
         container.index.sec_update_last_author_info()
+        
 SilvaDocumentPolicy = _SilvaDocumentPolicy()
-
