@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.8 $'
+__version__='$Revision: 1.1.2.9 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -345,11 +345,13 @@ class p(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
+        ret = []
         for child in self.find():
             if child.name() != 'br':
-                return silva.p(self.content.convert(context),
-                                type=self.getattr('_class', 'normal'))
+                ret.append(silva.p(self.content.convert(context),
+                                    type=self.getattr('_class', 'normal')))
         return Frag(
+            ret
         )
 
 class ul(Element):
@@ -452,9 +454,12 @@ class li(Element):
             return Frag()
             
         if context.listtype == 'nlist':
+            content = []
+            for child in self.find():
+                content.append(fix_toplevel(child, context))
             return silva.li(
-                    self.content.convert(context)
-                )
+                        Frag(content)
+                    )
         else:
             return silva.li(
                 self.content.convert(context)
