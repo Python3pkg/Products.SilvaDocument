@@ -7,8 +7,9 @@
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
 <div align="right">
   <input type="button" class="transport" name="" value="get link reference..." title="create a hyperlink: alt-g" accesskey="g"
-    tal:define="container node/get_container"
-    tal:attributes="onclick python:'getAssetReference(\'%s/edit/hyperlink_lookup?asset_context=%s\', \' ((_id_|_reference_))\', \'focusbox\', \'data\', 1);;return false;;' % (container.absolute_url(), '/'.join(container.getPhysicalPath()))" />
+    tal:define="container node/get_container" 
+    tal:attributes="
+      onclick python: here.asset_reference_helper('hyperlink', container.absolute_url(), None, container.getPhysicalPath())"/>
 </div>
 <textarea class="fixIE6widget" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
   tal:content="here/editable_content">Dummy</textarea><br />
