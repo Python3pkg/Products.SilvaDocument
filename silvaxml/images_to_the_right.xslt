@@ -7,93 +7,106 @@
   <xsl:preserve-space elements="heading p pre li em strong super sub underline link" />
   
   <xsl:template match="doc:/">
-    <xsl:apply-templates />
+    <table>
+      <tr>
+        <th colspan="2">
+          <xsl:apply-templates mode="metadata" />
+        </th>
+      <tr>
+        <td valign="top">
+          <xsl:apply-templates mode="text" />
+        </td>
+        <td valign="top">
+          <xsl:apply-templates mode="images" />
+        </td>
+      </tr>
+    </table>
   </xsl:template>
   
-  <xsl:template match="doc:heading[@type='normal']">
+  <xsl:template match="doc:heading[@type='normal']" mode="text">
     <h3 class="heading"><xsl:apply-templates mode="text-content" /></h3>
   </xsl:template>
   
-  <xsl:template match="doc:heading[@type='sub']">
+  <xsl:template match="doc:heading[@type='sub']" mode="text">
     <h4 class="heading"><xsl:apply-templates mode="text-content" /></h4>
   </xsl:template>
 
-  <xsl:template match="doc:heading[@type='subsub']">
+  <xsl:template match="doc:heading[@type='subsub']" mode="text">
     <h5 class="heading"><xsl:apply-templates mode="text-content" /></h5>
   </xsl:template>
 
-  <xsl:template match="doc:heading[@type='paragraph']">
+  <xsl:template match="doc:heading[@type='paragraph']" mode="text">
     <h6 class="heading"><xsl:apply-templates mode="text-content" /></h6>
   </xsl:template>
 
-  <xsl:template match="doc:heading[@type='subparagraph']">
+  <xsl:template match="doc:heading[@type='subparagraph']" mode="text">
     <h6 class="minor"><xsl:apply-templates mode="text-content" /></h6>
   </xsl:template>
 
-  <xsl:template match="doc:p[@type='normal']">
+  <xsl:template match="doc:p[@type='normal']" mode="text">
     <p class="p"><xsl:apply-templates mode="text-content" /></p>
   </xsl:template>
 
-  <xsl:template match="doc:p">
+  <xsl:template match="doc:p" mode="text">
     <p class="{@type}"><xsl:apply-templates mode="text-content" /></p>
   </xsl:template>
 
-  <xsl:template match="doc:list[@type='disc']">
+  <xsl:template match="doc:list[@type='disc']" mode="text">
     <ul class="disc">
       <xsl:apply-templates mode="list" />
     </ul>
   </xsl:template>
 
-  <xsl:template match="doc:list[@type='square']">
+  <xsl:template match="doc:list[@type='square']" mode="text">
     <ul class="square">
       <xsl:apply-templates mode="list" />
     </ul>
   </xsl:template>
   
-  <xsl:template match="doc:list[@type='circle']">
+  <xsl:template match="doc:list[@type='circle']" mode="text">
     <ul class="circle">
       <xsl:apply-templates mode="list" />
     </ul>
   </xsl:template>
 
-  <xsl:template match="doc:list[@type='1']">
+  <xsl:template match="doc:list[@type='1']" mode="text">
     <ol class="decimal">
       <xsl:apply-templates mode="list" />
     </ol>
   </xsl:template>
 
-  <xsl:template match="doc:list[@type='I']">
+  <xsl:template match="doc:list[@type='I']" mode="text">
     <ol class="upper-roman">
       <xsl:apply-templates mode="list" />
     </ol>
   </xsl:template>
   
-  <xsl:template match="doc:list[@type='i']">
+  <xsl:template match="doc:list[@type='i']" mode="text">
     <ol class="lower-roman">
       <xsl:apply-templates mode="list" />
     </ol>
   </xsl:template>
 
-  <xsl:template match="doc:list[@type='A']">
+  <xsl:template match="doc:list[@type='A']" mode="text">
     <ol class="upper-alpha">
       <xsl:apply-templates mode="list" />
     </ol>
   </xsl:template>
 
-  <xsl:template match="doc:list[@type='a']">
+  <xsl:template match="doc:list[@type='a']" mode="text">
     <ol class="lower-alpha">
       <xsl:apply-templates mode="list" />
     </ol>
   </xsl:template>
   
   <!-- need IE support? -->
-  <xsl:template match="doc:list[@type='none']">
+  <xsl:template match="doc:list[@type='none']" mode="text">
     <ul class="nobullet">
       <xsl:apply-templates mode="list" />
     </ul>
   </xsl:template>
 
-  <xsl:template match="doc:dlist">
+  <xsl:template match="doc:dlist" mode="text">
     <dl class="dl">
       <xsl:if test="@type='compact'">
         <xsl:attribute name="compact">compact</xsl:attribute>
@@ -102,11 +115,11 @@
     </dl>
   </xsl:template>
   
-  <xsl:template match="doc:pre">
+  <xsl:template match="doc:pre" mode="text">
     <pre class="pre"><xsl:apply-templates mode="pre" /></pre>
   </xsl:template>
   
-  <xsl:template match="doc:nlist[@type='disc']">
+  <xsl:template match="doc:nlist[@type='disc']" mode="text">
     <ul class="disc">
       <xsl:apply-templates mode="nlist" />
     </ul>
@@ -118,7 +131,7 @@
   
   <xsl:template match="doc:li" mode="nlist">
     <li>
-      <xsl:apply-templates />
+      <xsl:apply-templates mode="text" />
     </li>
   </xsl:template>
 
@@ -154,14 +167,17 @@
     <a href="{@url}"><xsl:apply-templates mode="text-content" /></a>
   </xsl:template>
 
-  <xsl:template match="doc:image[@link]">
+  <xsl:template match="doc:text()" mode="images">
+  </xsl:template>
+  
+  <xsl:template match="doc:image[@link]" mode="images">
     <a href="{@link}">
       <img src="{@path}" />
     </a>
     <br />
   </xsl:template>
 
-  <xsl:template match="doc:image[not(@link)]">
+  <xsl:template match="doc:image[not(@link)]" mode="images">
     <img src="{@path}" /><br />
   </xsl:template>
   
