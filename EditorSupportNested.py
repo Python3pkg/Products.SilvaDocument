@@ -1,10 +1,12 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.7 $
+# $Revision: 1.8 $
 from __future__ import nested_scopes
 import re
+import operator
 from sys import exc_info
 from StringIO import StringIO
+from xml.dom.minidom import parseString
 from xml.parsers.expat import ExpatError
 
 from AccessControl import ClassSecurityInfo
@@ -14,6 +16,8 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
+
+from Products.SilvaDocument.search import Search, HeuristicSearch
 
 def _regular_expression_escape(st):
     result = ""
@@ -458,6 +462,9 @@ def manage_addEditorSupport(container):
     container._setObject(id, EditorSupport(id))
 
 
+class ParserError(Exception):
+    pass
+
 class Token:
     
     EMPHASIS_START = 10
@@ -466,10 +473,11 @@ class Token:
     STRONG_END = 13
     UNDERLINE_START = 14
     UNDERLINE_END = 15
-    SUPERSCRIPT_START = 16
-    SUPERSCRIPT_END = 17
-    SUBSCRIPT_START = 18
-    SUBSCRIPT_END = 19
+
+    SUPERSCRIPT_START = 20
+    SUPERSCRIPT_END = 21
+    SUBSCRIPT_START = 22
+    SUBSCRIPT_END = 23
 
     LINK_START = 50
     LINK_SEP = 51
@@ -478,13 +486,14 @@ class Token:
     LINK_TARGET = 55
 
     INDEX_START = 60
-    INDEX_SEP = 61
-    INDEX_END = 62
+    INDEX_END = 61
+    
+    WHITESPACE = 90
+    SOFTBREAK = 91
+    ESCAPE = 92
     
     CHAR = 100
-    WHITESPACE = 101
-    PUNCTUATION = 102
-    
+
     def __init__(self, kind, text, callback=None):
         self.kind = kind
         self.text = text
@@ -500,151 +509,369 @@ class Token:
         return self.text
 
     def __repr__(self):
-        return "<%s>" % self.text
+        return "<%s-%i>" % (self.text, self.kind)
 
     def select(self):
         if callable(self.callback):
             self.callback()
 
 
-class Scanner:
-    """scanner for silva markup
-    """
+class ParserState:
+
+    def __init__(self, text, consumed, tokens):
+        self.text = text
+        self.text_length = len(text)
+        self.consumed = consumed
+        self.tokens = tokens
+
+    def __repr__(self):
+        return "<ParserState: %r>" % self.tokens
+
+
+class Parser(HeuristicSearch):
 
     def __init__(self, text):
-        self.text = self._text = text
-        self.tokens = []
-        self.consumed = 0
+        problem = ParserState(text, 0, [])
+        Search.__init__(self, problem)
         self.initialize_patterns()
         
+    def _get_childs(self, node):
+        matches = []
+        for pattern, token_id in self.patterns:
+            m = pattern.match(node.text[node.consumed:])
+            if m is None:
+                continue
+            t = Token(token_id, m.group(1))
+            tokens = node.tokens[:]
+            tokens.append(t)
+            p = ParserState(node.text, node.consumed + len(t.text), tokens)
+            matches.append(p)
+        return matches
+    
+    def isTarget(self, node):
+        if node.consumed != node.text_length:
+            return 0
+        p = Interpreter(node.tokens)
+        try:
+            p.parse()
+        except ParserError:
+            return 0
+        #node.parsed = p
+        return 1
+
+    def heuristic(self, node):
+        # the more consumed the better
+        # the fewer tokens the better
+        tokens = float(len(node.tokens))
+        consumed = float(node.consumed)
+        if consumed == 0 or tokens == 0:
+            # XXX: how can this happen anyway??
+            # for all tokens, consumed: tokens <= consumed
+            # -> max(tokens/consumed) = 1
+            # -> returning > 1
+            return 10
+        token_kinds = [ t.kind for t in node.tokens ]
+        kind_sum = reduce(operator.add, token_kinds)
+        h = (kind_sum//10)/10.0/tokens + tokens/consumed
+        return h
+
     def initialize_patterns(self):
         patterns = [
-            (r'(\+\+)[^\s]', self.emphasis_start),
-            (r'''(\+\+)([\s'"\)\]}>\-/:\.,;!\?\\*]|$)''', self.emphasis_end),
+            (r'(\+\+)[^\s]', Token.EMPHASIS_START),
+            (r'(\+\+)([^A-Za-z0-9]|$)', Token.EMPHASIS_END),
             
-            (r'(\*\*)[^\s]', self.strong_start),
-            (r'''(\*\*)([\s'"\)\]}>\-/:\.,;!\?\\+]|$)''', self.strong_end),
+            (r'(\*\*)[^\s]', Token.STRONG_START),
+            (r'(\*\*)([^A-Za-z0-9]|$)', Token.STRONG_END),
             
-            (r'(__)[^\s]', self.underline_start),
-            (r'''(__)([\s'"\)\]}>\-/:\.,;!\?\\_]|$)''', self.underline_end),
+            (r'(__)[^\s]', Token.UNDERLINE_START),
+            (r'(__)([^A-Za-z0-9]|$)', Token.UNDERLINE_END),
+           
+            (r'(\^\^)', Token.SUPERSCRIPT_START),
+            (r'(\^\^)', Token.SUPERSCRIPT_END),
             
-            (r'(\(\()[^\s]', self.link_start),
-            (r'\|', self.link_sep),
-            (r'''(\)\))([\s'"\)\]}>\-/:\.,;!\?\\]|$)''', self.link_end),
+            (r'(~~)', Token.SUBSCRIPT_START),
+            (r'(~~)', Token.SUBSCRIPT_END),
+           
+            (r'(\[\[)', Token.INDEX_START),
+            (r'(\]\])([^A-Za-z0-9]|$)', Token.INDEX_END),
+           
+            (r'(\(\()', Token.LINK_START),
+            (r'(\|)', Token.LINK_SEP),
+            (r'(\)\))', Token.LINK_END),
             (r'((([^(|)]+)?)(@|mailto\:|(news|(ht|f)tp(s?))\://)[^(|)]+)',
                 Token.LINK_URL),
-            
-            (r'\s+', Token.WHITESPACE),
-            ('.', Token.CHAR),
+           
+            (r'([\n\r]+)', Token.SOFTBREAK),
+            (r'([ \t\f\v]+)', Token.WHITESPACE),
+            #(r'(\\)', Token.ESCAPE),
+            (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
+            (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
             ]
         self.patterns = []
         for pattern_str, token_id in patterns:
             self.patterns.append((re.compile(pattern_str), token_id))
-        
-    def scan(self):
-        text_length = len(self.text)
-        while self.consumed < text_length:
-            self._scan_step()
-        
-    def _scan_step(self):
-        matches = []
-        for pattern, token_id in self.patterns:
-            m = pattern.match(self.text[self.consumed:])
-            if m is None:
-                continue
-            self.match = m
-            if callable(token_id):
-                t = token_id()
-            else:
-                t = Token(token_id, m.group(0))
-            if t is not None:
-                matches.append(t)
-        if not matches:
-            raise ValueError, "Invalid text found at position %i (%s...)" % (
-                self.consumed, self.text[self.consumed:self.consumed+10])
-        token = max(matches)
-        token.select()
-        self.tokens.append(token)
-        self.consumed += len(token)
-        
+
+    def getResult(self):
+        return self.results[0]
+
+class Interpreter:
+    """parse the tokens to a dom
+
+        be *very* pedantic
+    """
+
+    _inline_preceeding_map = {
+        '(': ')',
+        '[': ']',
+        '{': '}',
+        '<': '>',
+        '"': '"',
+        "'": "'",
+        ' ': None,
+        '-': None,
+        '/': None,
+        ':': None,
+    }
+
+    def __init__(self, tokens):
+        self.tokens = tokens
+        self.dom = ParsedXML('temp', '<p/>')
+        self.initialize_rulesets()
+        # inline markup nodes: **, ++, __ :
+        self._inline_nodes = []
+        self.ruleset = 'default'
        
-    def _inline_start(self, token_name):
-        text = self.match.group(1)
-        attr_name = '_%s_state' % token_name
-        token_id_name = '%s_START' % token_name.upper()
-        if getattr(self, attr_name, 0):
-            return None
-        try:
-            last_token = self.tokens[-1]
-        except IndexError:
-            # Starts a text block -> ok
-            pass
-        else:
-            if last_token.kind in (Token.WHITESPACE, Token.EMPHASIS_START,
-                    Token.STRONG_START):
-                # preceded by white space -> ok
+    def parse(self):
+        current_node = self.dom.firstChild
+        for token in self.tokens:
+            current_node = self.handle_token(token, current_node)
+            if current_node is None or current_node == self.dom:
+                raise ParserError, "Too many close tokens"
+        if current_node != self.dom.firstChild:
+            raise ParserError, "Not enough close tokens"
+        self.validate()
+        
+    def handle_token(self, token, node):
+        ruleset = self.rules[self.ruleset]
+        token_handler = ruleset.get(token.kind, None)
+        if not callable(token_handler):
+            raise ParserError, "Invalid token %r" % token
+        return token_handler(token, node)
+
+    def initialize_rulesets(self):
+        self.rules = {}
+        default_rules = {
+            Token.STRONG_START: self.strong_start,
+            Token.STRONG_END: self.strong_end,
+            Token.EMPHASIS_START: self.emphasis_start,
+            Token.EMPHASIS_END: self.emphasis_end,
+            Token.UNDERLINE_START: self.underline_start,
+            Token.UNDERLINE_END: self.underline_end,
+            Token.SUPERSCRIPT_START: self.superscript_start,
+            Token.SUPERSCRIPT_END: self.superscript_end,
+            Token.SUBSCRIPT_START: self.subscript_start,
+            Token.SUBSCRIPT_END: self.subscript_end,
+            Token.LINK_START: self.link_start,
+            Token.LINK_SEP: self.link_sep,
+            Token.LINK_URL: self.link_url,
+            Token.LINK_END: self.link_end,
+            Token.INDEX_START: self.index_start,
+            Token.SOFTBREAK: self.softbreak,
+            Token.WHITESPACE: self.whitespace,
+            Token.CHAR: self.text,
+        }
+        self.rules['default'] = default_rules
+        
+        link_target = {
+            Token.CHAR: self.text,
+            Token.LINK_END: self.link_end,
+        }
+        self.rules['link-target'] = link_target
+
+        index = {
+            Token.WHITESPACE: self.index_text,
+            Token.CHAR: self.index_text,
+            Token.INDEX_END: self.index_end,
+        }
+        self.rules['index'] = index
+
+    def validate(self):
+        self._validate_inline_nodes()
+
+    def _validate_inline_nodes(self):
+        # XXX maybe this can be done easier?
+        for node in self._inline_nodes:
+            corresponding_char = None
+            # test start node
+            prev = node.previousSibling
+            next = node.firstChild
+            if prev is None:
+                # starts the text block -> ok
                 pass
-            elif (last_token.kind == Token.CHAR and 
-                    last_token.text in """'"([{<-/:"""):
-                # preceded by some special chars -> ok
+            elif (prev.nodeType == prev.ELEMENT_NODE and 
+                    prev in self._inline_nodes):
+                # it is an inline node -> ok
                 pass
+            elif prev.nodeType == prev.TEXT_NODE:
+                last_char = prev.nodeValue[-1]
+                if self._inline_preceeding_map.has_key(last_char):
+                    # there is a valid char preceeding, remember 
+                    # corresponding_char, if it is not None the char following
+                    # must match corresponding_char
+                    corresponding_char = self._inline_preceeding_map[
+                        last_char]
+                else:
+                    raise ParserError, "Invalid char %s preceeding "\
+                        "inline markup start node" % last_char
             else:
-                # not ok
-                return None
-        cb = lambda: setattr(self, attr_name, 1)
-        return Token(getattr(Token, token_id_name), text, cb)
+                raise ParserError,\
+                    "Invalid token preceeding inline markup start node"
+            if next is None:
+                raise ParserError,\
+                    "No text between start end end markup node"
+            if next.nodeType == next.TEXT_NODE and next.nodeValue[0] == ' ':
+                raise ParserError,\
+                    "Inline markup start nodes must be followed "\
+                    "non-whitespace"
+            # test end node
+            prev = node.lastChild
+            next = node.nextSibling
+            if prev.nodeType == prev.TEXT_NODE and prev.nodeValue[-1] == ' ':
+                raise ParserError, "Inline markup end nodes must be "\
+                    "preceeded by non-whitespace"
+            if next is not None and next.nodeType == next.TEXT_NODE:
+                first_char = next.nodeValue[0]
+                if corresponding_char and corresponding_char != first_char:
+                    raise ParserError, "wrong corresponding char"
+                if first_char not in ' .,;!?\\':
+                    raise ParserError, "Wrong char following end node"
+
+    def _get_text_node(self, node):
+        if node.nodeType == node.TEXT_NODE:
+            return node
+        last_child = node.lastChild
+        if (last_child is not None and 
+                last_child.nodeType != last_child.TEXT_NODE):
+            last_child = None
+        if last_child is None:
+            last_child = node.appendChild(
+                self.dom.createTextNode(''))
+        return last_child
    
-    def _inline_end(self, token_name):
-        text = self.match.group(1)
-        attr_name = '_%s_state' % token_name
-        token_id_name = '%s_END' % token_name.upper()
-        if not getattr(self, attr_name, 0):
-            return None
-        if self.tokens[-1].kind == Token.WHITESPACE:
-            # Inline markup end-strings must be immediately preceded by 
-            # non-whitespace.
-            return None
-        cb = lambda: setattr(self, attr_name, 0)
-        return Token(getattr(Token, token_id_name), text, cb)
-     
-    def emphasis_start(self):
-        return self._inline_start('emphasis')
+    def _start_inline(self, token, node, node_name):
+        self._fail_if_open(node, node_name)
+        inline_node = node.appendChild(self.dom.createElement(node_name))
+        self._inline_nodes.append(inline_node)
+        return inline_node
+
+    def _end_inline(self, token, node, node_name):
+        inline_node = node
+        if node_name != inline_node.nodeName:
+            raise ParserError, "Invalid nesting while </%s>" % node_name
+        return inline_node.parentNode
+
+    def _fail_if_open(self, node, node_name):
+        test_node = node
+        while test_node:
+            if test_node.nodeName == node_name:
+                raise ParserError, "<%s> already open" % node_name
+            test_node = test_node.parentNode
    
-    def emphasis_end(self):
-        return self._inline_end('emphasis')
+    def text(self, token, node):
+        text_node = self._get_text_node(node)
+        text_node.appendData(token.text)
+        return node
+
+    def whitespace(self, token, node):
+        text_node = self._get_text_node(node)
+        text_node.appendData(' ') # whitespace is normalised
+        return node
+
+    def softbreak(self, token, node):
+        # softbreak is empty
+        node.appendChild(self.dom.createElement('br'))
+        return node
+
+    def strong_start(self, token, node):
+        return self._start_inline(token, node, 'strong')
         
-    def strong_start(self):
-        return self._inline_start('strong')
-    
-    def strong_end(self):
-        return self._inline_end('strong')
-    
-    def underline_start(self):
-        return self._inline_start('underline')
-    
-    def underline_end(self):
-        return self._inline_end('underline')
+    def strong_end(self, token, node):
+        return self._end_inline(token, node, 'strong')
 
-    def superscript_start(self):
-        return self._inline_start('superscript')
-    
-    def superscript_end(self):
-        return self._inline_end('superscript')
-
-    def subscript_start(self):
-        return self._inline_start('subscript')
-    
-    def subscript_end(self):
-        return self._inline_end('subscript')
-
-    def link_start(self):
-        return self._inline_start('link')
-
-    def link_sep(self):
-        if not getattr(self, '_link_state', 0):
-            return None
-        return Token(Token.LINK_SEP, '|')
+    def emphasis_start(self, token, node):
+        return self._start_inline(token, node, 'em')
         
-    def link_end(self):
-        return self._inline_end('link')
+    def emphasis_end(self, token, node):
+        return self._end_inline(token, node, 'em')
+       
+    def underline_start(self, token, node):
+        return self._start_inline(token, node, 'underline')
+        
+    def underline_end(self, token, node):
+        return self._end_inline(token, node, 'underline')
+
+    def link_start(self, token, node):
+        return self._start_inline(token, node, 'link')
+
+    def link_sep(self, token, node):
+        if node.nodeName != 'link':
+            raise ParserError, "LINK_SEP out of link"
+        if node.hasAttribute('url'):
+            self.ruleset = 'link-target'
+        return node
+    
+    def link_url(self, token, node):
+        if node.nodeName == 'link':
+            node.setAttribute('url', token.text)
+        else:
+            link_node = node.appendChild(self.dom.createElement('link'))
+            link_node.setAttribute('url', token.text)
+            link_node.appendChild(self.dom.createTextNode(token.text))
+        return node
+   
+    def link_target(self, token, node):
+        target = ''
+        if node.hasAttribute('target'):
+            target = node.getAttribute('target')
+        node.setAttribute('target', target + token.text)
+        return node
+    
+    def link_end(self, token, node):
+        self.ruleset = 'default'
+        return self._end_inline(token, node, 'link')
+        
+    def superscript_start(self, token, node):
+        self._fail_if_open(node, 'super')
+        self._fail_if_open(node, 'sub')
+        return node.appendChild(self.dom.createElement('super'))
+
+    def superscript_end(self, token, node):
+        return self._end_inline(token, node, 'super')
+    
+    def subscript_start(self, token, node):
+        self._fail_if_open(node, 'sub')
+        self._fail_if_open(node, 'super')
+        return node.appendChild(self.dom.createElement('sub'))
+
+    def subscript_end(self, token, node):
+        return self._end_inline(token, node, 'sub')
+ 
+    def index_start(self, token, node):
+        self.ruleset = 'index'
+        return node.appendChild(self.dom.createElement('index'))
+
+    def index_text(self, token, node):
+        name = ''
+        if node.hasAttribute('name'):
+            name = node.getAttribute('name')
+        if token.kind == token.WHITESPACE:
+            text = ' '
+        else:
+            text = token.text
+        node.setAttribute('name', name + text)
+        return node
+
+    def index_end(self, token, node):
+        self.ruleset = 'default'
+        return node.parentNode
 
