@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.8.6.2 $
+# $Revision: 1.21.4.8.6.3 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -31,6 +31,18 @@ class EditorSupport(SimpleItem):
     security = ClassSecurityInfo()
 
     meta_type = 'Silva Editor Support Service'
+
+    _additional_escape = {
+        'strong': '*',
+        'em': '+',
+        'link': '(',
+        'super': '^',
+        'sub': '~',
+        'underline': '_',
+        'index': '[',
+    }
+        
+
 
     def __init__(self, id):
         self.id = id
@@ -89,6 +101,7 @@ class EditorSupport(SimpleItem):
                 path = child.getAttribute('url')
                 url = self._link_absolute_url(node, path)                
                 result.append('<a href="%s"' %  mangle.entities(url))
+                pass
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
                               mangle.entities(child.getAttribute('target')))
@@ -128,7 +141,7 @@ class EditorSupport(SimpleItem):
         result = []
         for child in node.childNodes:
             if child.nodeType == child.TEXT_NODE:
-                result.append(self.escape_text(child.nodeValue))
+                result.append(self.escape_text_node(child))
                 continue
             if child.nodeType != child.ELEMENT_NODE:
                 continue
@@ -292,10 +305,31 @@ class EditorSupport(SimpleItem):
         return data
 
     def escape_text(self, text):
-        for escape in ['\\', '**', '++', '__', '~~', '^^', '((', '))',
-            '[[', ']]']:
-            text = text.replace(escape, '\\'+escape)
+        for replace, with in [
+            ('\\', '\\\\'),
+            ('**', '\\*\\*'),
+            ('++', '\\+\\+'),
+            ('__', '\\_\\_'),
+            ('~~', '\\~\\~'),
+            ('^^', '\\^\\^'),
+            ('((', '\\(\\('),
+            ('))', '\\)\\)'),
+            ('[[', '\\[\\['),
+            (']]', '\\]\\]'),
+            ]:
+            text = text.replace(replace, with)
         return text
+
+    def escape_text_node(self, node):
+        parent_name = node.parentNode.nodeName
+        node_text = node.nodeValue
+        node_text = self.escape_text(node_text)
+        escape_too = self._additional_escape.get(parent_name)
+        if not escape_too:
+            return node_text
+        if node_text.startswith(escape_too):
+            node_text = '\\' + node_text
+        return node_text
 
     def render_links(self, text):
         dom = self.editable_to_dom(text, LinkParser)

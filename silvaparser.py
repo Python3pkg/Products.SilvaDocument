@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.14.2.1.2.2 2004/04/29 16:57:02 roman Exp $
+# $Id: silvaparser.py,v 1.6.4.14.2.1.2.3 2004/05/06 15:26:24 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -455,6 +455,7 @@ class Interpreter:
             Token.SUBSCRIPT_START: self.subscript_start,
             Token.SUBSCRIPT_END: self.subscript_end,
             Token.WHITESPACE: self.whitespace,
+            Token.SOFTBREAK: self.softbreak,
             Token.CHAR: self.text,
             Token.LINK_URL: self.text,
             Token.LINK_SEP: self.link_sep_aftertext,
@@ -510,7 +511,8 @@ class Interpreter:
         }
         
     def validate(self):
-        self._validate_inline_nodes()
+        pass
+        #self._validate_inline_nodes()
 
     def _validate_inline_nodes(self):
         # XXX maybe this can be done easier?

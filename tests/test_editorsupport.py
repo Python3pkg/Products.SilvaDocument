@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.3 2004/05/01 11:47:48 clemens Exp $
+# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.4 2004/05/06 15:26:24 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -97,31 +97,31 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[4].text, 'blafasel')
         
     def test_boldasterix(self):
-        parser = PParser("*****")
-        parser.run()
-        t = parser.getResult().tokens
-        self.assertEquals(len(t), 3)
-        self.assertEquals(t[0].kind, Token.STRONG_START)
-        self.assertEquals(t[1].text, '*')
-        self.assertEquals(t[2].kind, Token.STRONG_END)
-       
-    def test_boldasterix2(self):
-        parser = PParser("******")
+        parser = PParser("**\***")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 4)
         self.assertEquals(t[0].kind, Token.STRONG_START)
-        self.assertEquals(t[1].text, '*')
+        self.assertEquals(t[2].text, '*')
         self.assertEquals(t[3].kind, Token.STRONG_END)
-      
-    def test_italicplus(self):
-        parser = PParser("+++++")
+       
+    def test_boldasterix2(self):
+        parser = PParser("**\*\***")
         parser.run()
         t = parser.getResult().tokens
-        self.assertEquals(len(t), 3)
+        self.assertEquals(len(t), 6)
+        self.assertEquals(t[0].kind, Token.STRONG_START)
+        self.assertEquals(t[2].text, '*')
+        self.assertEquals(t[5].kind, Token.STRONG_END)
+      
+    def test_italicplus(self):
+        parser = PParser("++\+++")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(len(t), 4)
         self.assertEquals(t[0].kind, Token.EMPHASIS_START)
-        self.assertEquals(t[1].text, '+')
-        self.assertEquals(t[2].kind, Token.EMPHASIS_END)
+        self.assertEquals(t[2].text, '+')
+        self.assertEquals(t[3].kind, Token.EMPHASIS_END)
 
     def test_bolditalic(self):
         parser = PParser("**++foobar++**")
@@ -152,15 +152,15 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[6].kind, Token.UNDERLINE_END)
          
     def test_underline2(self):
-        parser = PParser("__under**lined and **bold** and st__uff__")
+        parser = PParser("__under\**lined and **bold** and st\__uff__")
         parser.run()
         t = parser.getResult().tokens
-        self.assertEquals(len(t), 19)
+        self.assertEquals(len(t), 21)
         self.assertEquals(t[0].kind, Token.UNDERLINE_START)
-        self.assertEquals(t[3].text, '*')
-        self.assertEquals(t[8].kind, Token.STRONG_START)
-        self.assertEquals(t[10].kind, Token.STRONG_END)
-        self.assertEquals(t[18].kind, Token.UNDERLINE_END)
+        self.assertEquals(t[4].text, '*')
+        self.assertEquals(t[9].kind, Token.STRONG_START)
+        self.assertEquals(t[11].kind, Token.STRONG_END)
+        self.assertEquals(t[20].kind, Token.UNDERLINE_END)
       
     def test_inlintestart(self):
         texts = [
@@ -661,10 +661,10 @@ class EditableTest(unittest.TestCase):
             ('<em>foobar</em>', '++foobar++'),
             ('<strong>foobar</strong>', '**foobar**'),
             ('<strong>foo<em>bar</em></strong>', '**foo++bar++**'),
-            ('<strong>**</strong>', '**\\****'),
-            ('((a+b)*c)', '\\((a+b)*c)'),
-            ('((a+b*c))', '\\((a+b*c\\))'),
-            ('<strong>bold</strong> is **bold**', '**bold** is \\**bold\\**'),
+            ('<strong>**</strong>', '**\\*\\***'),
+            ('((a+b)*c)', '\\(\\(a+b)*c)'),
+            ('((a+b*c))', '\\(\\(a+b*c\\)\\)'),
+            ('<strong>bold</strong> is **bold**', '**bold** is \\*\\*bold\\*\\*'),
             ('<link url="http://slashdot.org">slashdot</link>',
                 '((slashdot|http://slashdot.org))'),
             ('<link url="http://slashdot.org" target="foo">slashdot</link>',
