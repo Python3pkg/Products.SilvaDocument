@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.14 $'
+__version__='$Revision: 1.1.2.15 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -237,7 +237,7 @@ class link(SilvaElement):
 class index(SilvaElement):
     def convert(self, context):
         return html.a(
-            Text('[%s]' % self.attr.name),
+            Text('[%s]' % unicode(self.attr.name.asBytes('utf-8'), 'utf-8')),
             name=self.attr.name,
             class_='index',
         )
