@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.9 $'
+__version__='$Revision: 1.1.2.10 $'
 
 try:
     from transform.base import Element, Frag, Text
@@ -256,7 +256,7 @@ class image(SilvaElement):
                 and (not self.hasattr('link_to_hires') or self.getattr('link_to_hires') == '0')):
             return html.img(
                         self.content.convert(context),
-                        src = src+'/image',
+                        src = src,
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
                   )
@@ -273,7 +273,7 @@ class image(SilvaElement):
         if link == '%s/hires_image' % src:
             return html.img(
                         self.content.convert(context),
-                        src = '%s/image' % src,
+                        src = '%s' % src,
                         link_to_hires='1',
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
@@ -281,7 +281,7 @@ class image(SilvaElement):
         else:
             return html.img(
                         self.content.convert(context),
-                        src='%s/image' % src,
+                        src='%s' % src,
                         link_to_hires=self.attr.link_to_hires,
                         link=self.getattr('link', ''),
                         target=self.getattr('target', '_self'),
