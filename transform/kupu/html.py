@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.10 $'
+__version__='$Revision: 1.11 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -551,8 +551,8 @@ class a(Element):
         elif hasattr(self.attr, 'href') and self.attr.href is not None:
             url = self.getattr('href', 'http://www.infrae.com')
             target = getattr(self.attr, 'target', '')
-            if target is None:
-                target = '_self'
+            #if target is None:
+            #    target = ''
 
             try:
                 img = self.query_one('img')
