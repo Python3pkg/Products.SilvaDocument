@@ -259,6 +259,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if image_object is not None:
             image = image_object.image
             attributes['title'] = image_object.get_title()
+            attributes['path'] = image_object.absolute_url()
             width, height = image_object.getDimensions(image)
             attributes['width'] = str(width)
             attributes['height'] = str(height)
