@@ -64,6 +64,7 @@ def registerViews(reg):
     # edit
     reg.register('edit', 'Silva Document', ['edit', 'VersionedContent', 'Document'])
     # public
+    reg.register('public', 'Silva Document', ['public', 'Document'])
     reg.register('public', 'Silva Document Version', ['public', 'Document', 'view'])
     # add
     reg.register('add', 'Silva Document', ['add', 'Document'])
