@@ -15,7 +15,7 @@ node = context.REQUEST.node
 image = context.content()
 
 if not image:
-    return _('<div class="error">[image reference is broken]</div>')
+    return '<div class="error">[' + unicode(_('image reference is broken')) + ']</div>'
 
 alignment = node.getAttribute('alignment')
 link = node.getAttribute('link')
