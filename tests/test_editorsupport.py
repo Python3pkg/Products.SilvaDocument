@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.9 2003/10/20 13:19:15 zagy Exp $
+# $Id: test_editorsupport.py,v 1.10 2003/10/22 10:50:23 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -115,7 +115,6 @@ class PParserTest(unittest.TestCase):
         urls = [
             'http://www.asdf.com',
             'mailto:foo@bar.com',
-            'foo@bar.com',
             'ftp://bla.fasel/',
             'https://asdf.com/blablubb/sdfa/df/dfa?sdfasd=434&ds=ddf%20#foo'
         ]
@@ -123,11 +122,41 @@ class PParserTest(unittest.TestCase):
             parser = PParser(url)
             parser.run()
             t = parser.getResult().tokens
-            self.assertEquals(len(t), 1)
+            self.assertEquals(len(t), 1, "%r -> %r" % (url, t))
             t = t[0]
             self.assertEquals(t.kind, t.LINK_URL)
             self.assertEquals(t.text, url)
+            
+    def _test_urls(self, texts, url):
+        for text, length, url_at in texts:
+            p = PParser(text)
+            p.run()
+            t = p.getResult().tokens
+            self.assertEquals(len(t), length, "%d != %d in %r -> %r" % (
+                len(t), length, text, t))
+            self.assertEquals(t[url_at].kind, Token.LINK_URL)
+            self.assertEquals(t[url_at].text, url)
 
+    def test_url2(self):
+        texts = [
+            ("(see http://www.x.yz)", 5, 3),
+            ("software got smarter: http://www.x.yz.", 9, 7),
+            ("at http://www.x.yz, but", 6, 2),
+            ("(see ((foo|http://www.x.yz)))", 9, 6),
+            ]
+        url = "http://www.x.yz"
+        self._test_urls(texts, url)
+
+    def test_url3(self):
+        texts = [
+            ("(see http://www.x.yz/)", 5, 3),
+            ("software got smarter: http://www.x.yz/.", 9, 7),
+            ("at http://www.x.yz/, but", 6, 2),
+            ("(see ((foo|http://www.x.yz/)))", 9, 6),
+            ]
+        url = "http://www.x.yz/"
+        self._test_urls(texts, url)
+            
     def test_link(self):
         parser = PParser("click ((here|http://here.com)) to see")
         parser.run()
@@ -138,6 +167,16 @@ class PParserTest(unittest.TestCase):
         self.assertEquals(t[4].kind, Token.LINK_SEP)
         self.assertEquals(t[5].kind, Token.LINK_URL)
         self.assertEquals(t[6].kind, Token.LINK_END)
+
+    def test_morelinks(self):
+        # mainly a speed test
+        parser = PParser("""Once upon a time, users had to learn markup (see ((http://www.x.yz|http://www.x.yz))).
+Then, software got smarter: ((http://www.x.yz|http://www.x.yz)).
+Now, it could be called intelligent. You see this at ((http://www.x.yz|http://www.x.yz)), but
+sometimes it's too smart for its own good.
+Users think it's dumb.""")
+        parser.run()
+        
 
     def test_linktarget(self):
         parser = PParser("click ((here|http://here.com|_top)) to see")
@@ -385,6 +424,16 @@ class InterpreterTest(unittest.TestCase):
             (t.ESCAPE, '\\'),
             (t.LINK_START, '(('),
             ], '(('),
+        ([
+            (t.CHAR, "(see"),
+            (t.WHITESPACE, " "),
+            (t.LINK_START, '(('),
+            (t.CHAR, 'xyz'),
+            (t.LINK_SEP, '|'),
+            (t.LINK_URL, 'http://www.x.yz'),
+            (t.LINK_END, '))'),
+            (t.CHAR, ')'),
+            ], '(see <link url="http://www.x.yz">xyz</link>)'),
         ]
 
     def test_helper(self):
@@ -400,7 +449,7 @@ class InterpreterTest(unittest.TestCase):
 
 class EditableTest(unittest.TestCase):
 
-    def test_text_as_editable(self):
+    def test_escape(self):
         
         cases = [
             ('foobar', 'foobar'),

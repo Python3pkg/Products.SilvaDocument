@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.2 2003/10/19 16:47:15 zagy Exp $
+# $Id: silvaparser.py,v 1.3 2003/10/22 10:50:23 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -41,6 +41,8 @@ class Token:
     WHITESPACE = 90
     SOFTBREAK = 91
     ESCAPE = 92
+    PARENTHESIS_OPEN = 93
+    PARENTHESIS_CLOSE = 94
     
     CHAR = 100
 
@@ -97,17 +99,34 @@ class Token:
 class ParserState:
     """State of parsing silva markup"""
     
-    def __init__(self, text, consumed, tokens, openclose=None):
+    def __init__(self, text, consumed, tokens, parent=None):
         self.text = text
         self.text_length = len(text)
         self.consumed = consumed
         self.tokens = tokens
         self.parsed = None
+        
+        openclose = None
+        self.parenthesis = 0
+        self.factor = 0
+        
+        # this is an assumption. This is true in this implementation though
+        new_token = None
+        if tokens:
+            new_token = tokens[-1]
+            
+
+        if parent is not None:
+            self.openclose = parent.openclose
+            self.parenthesis = parent.parenthesis
+            self.factor = parent.factor
         if openclose is None:
             self.openclose = reduce(operator.add,
                 [t.openclose for t in tokens], 0)
-        else:
-            self.openclose = openclose
+        elif new_token:
+            self.openclose = openclose + new_token.openclose
+        if new_token:
+            self._calculate_parenthesis(new_token)
 
     def __repr__(self):
         return "<ParserState: %r>" % self.tokens
@@ -134,6 +153,21 @@ class ParserState:
             openclose_map[kind] = new_val
         return 1
             
+    def _calculate_parenthesis(self, token):
+        f = self.factor
+        p = self.parenthesis
+        t = token
+        if t.kind == t.PARENTHESIS_OPEN:
+            f += 1
+        elif t.kind == t.PARENTHESIS_CLOSE:
+            f -= 1
+        elif t._start_tokens.get(t.kind, 0):
+            p += f
+        elif t._end_tokens.get(t.kind, 0):
+            p -= f
+        self.factor = f
+        self.parenthesis = p
+
 
 class Parser(HeuristicSearch):
     """Parser for silva markup
@@ -158,7 +192,7 @@ class Parser(HeuristicSearch):
             tokens = node.tokens[:]
             tokens.append(t)
             p = ParserState(node.text, node.consumed + len(t.text), tokens,
-                node.openclose + t.openclose)
+                parent=node)
             if not p.valid():
                 continue
             matches.append(p)
@@ -186,7 +220,8 @@ class Parser(HeuristicSearch):
         consumed = float(node.consumed)
         token_kinds = [ t.kind for t in node.tokens ]
         kind_sum = reduce(operator.add, token_kinds)
-        h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed)
+        parenthesis = -1/1.1**abs(node.parenthesis) + 2
+        h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed) * parenthesis
         return h
 
     def initialize_patterns(self):
@@ -224,12 +259,15 @@ class PParser(Parser):
         (r'(\(\()', Token.LINK_START),
         (r'(\|)', Token.LINK_SEP),
         (r'(\)\))', Token.LINK_END),
-        (r'((([^(|)]+)?)(@|mailto\:|(news|(ht|f)tp(s?))\://)[^(|)]+)',
+        (r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))',
             Token.LINK_URL),
        
         (r'([\n\r]+)', Token.SOFTBREAK),
         (r'([ \t\f\v]+)', Token.WHITESPACE),
         (r'(\\)', Token.ESCAPE),
+        (r'(\()', Token.PARENTHESIS_OPEN),
+        (r'(\))', Token.PARENTHESIS_CLOSE),
+        
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
         ]
@@ -331,22 +369,34 @@ class Interpreter:
             Token.ESCAPE: self.escape,
             Token.SOFTBREAK: self.softbreak,
             Token.WHITESPACE: self.whitespace,
+            Token.PARENTHESIS_OPEN: self.text,
+            Token.PARENTHESIS_CLOSE: self.text,
             Token.CHAR: self.text,
         }
 
         self.rules['link-text'] = {
+            Token.PARENTHESIS_OPEN: self.text,
+            Token.PARENTHESIS_CLOSE: self.text,
             Token.WHITESPACE: self.whitespace,
             Token.CHAR: self.text,
+            Token.LINK_URL: self.text,
             Token.LINK_SEP: self.link_sep_aftertext,
             Token.ESCAPE: self.escape,
         }
 
         self.rules['link-url'] = {
+            Token.PARENTHESIS_OPEN: self.link_url_fromtext,
+            Token.PARENTHESIS_CLOSE: self.link_url_fromtext,
             Token.CHAR: self.link_url_fromtext,
             Token.LINK_URL: self.link_url,
             Token.LINK_SEP: self.link_sep_afterurl,
             Token.LINK_END: self.link_end,
             Token.ESCAPE: self.escape,
+        }
+
+        self.rules['link-afterurl'] = {
+            Token.LINK_SEP: self.link_sep_afterurl,
+            Token.LINK_END: self.link_end,
         }
        
         self.rules['link-target'] = {
@@ -356,6 +406,8 @@ class Interpreter:
         }
 
         self.rules['index'] = {
+            Token.PARENTHESIS_OPEN: self.index_text,
+            Token.PARENTHESIS_CLOSE: self.index_text,
             Token.WHITESPACE: self.index_text,
             Token.CHAR: self.index_text,
             Token.INDEX_END: self.index_end,
@@ -377,6 +429,8 @@ class Interpreter:
             Token.INDEX_START: self.escaped_text,
             Token.SOFTBREAK: self.escaped_softbreak,
             Token.WHITESPACE: self.escaped_whitespace,
+            Token.PARENTHESIS_OPEN: self.escaped_text,
+            Token.PARENTHESIS_CLOSE: self.escaped_text,
             Token.CHAR: self.escaped_text,
             Token.ESCAPE: self.escaped_text,
         }
@@ -430,8 +484,10 @@ class Interpreter:
                 first_char = next.nodeValue[0]
                 if corresponding_char and corresponding_char != first_char:
                     raise InterpreterError, "wrong corresponding char"
-                if first_char not in ' .,;!?\\':
-                    raise InterpreterError, "Wrong char following end node"
+                if first_char not in """ '")]}>-/:.,;!?\\""":
+                    raise InterpreterError, \
+                        "Wrong char %r following end node </%s>" % (
+                            first_char, node.nodeName)
 
     def _get_text_node(self, node):
         if node.nodeType == node.TEXT_NODE:
@@ -514,6 +570,7 @@ class Interpreter:
         return node
    
     def link_url(self, token, node):
+        self.ruleset = 'link-afterurl'
         node.setAttribute('url', token.text)
         return node
   
