@@ -37,7 +37,7 @@
     <a href="edit_mode" title="edit element" 
       tal:attributes="
         href string:${url_start}/edit_mode;
-        title python:'edit %s' % display_name_method(node.nodeName).lower();
+        title python:'edit %s' % unicode(display_name_method(node.nodeName)).lower();
 "><img tal:attributes="src string:${silva_root}/globals/${edit_or_nest}" width="16" height="16" border="0" alt="edit element" i18n:attributes="alt" /></a>
   </td>
   <td class="invisible" tal:condition="disable_edit" width="16">
