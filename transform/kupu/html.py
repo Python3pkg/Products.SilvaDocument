@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.4 $'
+__version__='$Revision: 1.5 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -130,7 +130,7 @@ def get_textbuf(textbuf, context, ptype):
     frag = Frag(textbuf)
     converted = frag.convert(context).asBytes('UTF-8').strip()
     if not reg_ignorable.search(converted):
-        return silva.p(textbuf, silva_type=ptype)
+        return silva.p(textbuf, type=ptype)
     return Frag()
 
 def fix_structure(inputels, context, allowtables=0):
@@ -146,7 +146,7 @@ def fix_structure(inputels, context, allowtables=0):
         # flatten p's by ignoring the element itself and walking through it as 
         # if it's contents are part of the current element's contents
         if el.name() == 'p' and allowtables:
-            ptype = el.getattr('silva_type', 'normal')
+            ptype = el.getattr('class', 'normal')
             for child in el.find():
                 foundtables = fix_tables(child, context)
                 foundtoplevel = find_and_convert_toplevel(el, context)
@@ -165,7 +165,7 @@ def fix_structure(inputels, context, allowtables=0):
                 textbuf = []
         else:
             if el.name() == 'p':
-                ptype = el.getattr('silva_type', 'normal')
+                ptype = el.getattr('class', 'normal')
             foundtables = []
             if allowtables:
                 foundtables = fix_tables(el, context)
@@ -367,7 +367,7 @@ class p(Element):
         for child in self.find():
             if child.name() != 'br':
                 return silva.p(self.content.convert(context),
-                                    silva_type=self.getattr('_class', 'normal'))
+                                    type=self.getattr('class', 'normal'))
         return Frag(
         )
 
@@ -452,7 +452,7 @@ class ul(Element):
     def get_type(self):
         curtype = getattr(self.attr, 'type', None)
         if curtype is None:
-            curtype = getattr(self.attr, 'silva_type')
+            curtype = getattr(self.attr, 'type')
 
         if type(self.default_types) != type({}):
             if curtype not in self.default_types:
