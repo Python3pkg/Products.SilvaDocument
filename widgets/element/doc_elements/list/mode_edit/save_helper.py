@@ -1,12 +1,5 @@
-## Script (Python) "save_helper"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
+from Products.Silva.mangle import String
+
 request = context.REQUEST
 node = request.node
 model = node.get_content()
@@ -31,7 +24,7 @@ if element_type not in ['circle', 'square', 'disc',
                         '1', 'A', 'a', 'I', 'i', 'none']:
     return
 
-node.setAttribute('type', node.input_convert(element_type))
+node.setAttribute('type', String.inputConvert(element_type))
 
 # remove previous items, except for the title node
 childNodes = [ child for child in  node.childNodes if child.nodeName=='li' ]

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 import re
 from sys import exc_info
 from StringIO import StringIO
@@ -238,7 +238,7 @@ class EditorSupport(SimpleItem):
         """
         # since we don't use Formulator we get UTF8 from the forms, so encode
         # manually here
-        st = self.input_convert2(st)
+        st = mangle.String.inputConvert(st, preserve_whitespace=1)
         st = self.replace_xml_entities(st)
         st = self._unifyLineBreak(st)
         while 1:
@@ -280,7 +280,7 @@ class EditorSupport(SimpleItem):
                     match.group(2)))
         st = st.replace('\n', '<br/>')
         # reduce whitespace
-        st = self.reduce_whitespace(st)
+        st = mangle.String.reduceWhitespace(st)
 
         st = self._replace_silva_entities(st)
         node = node._node
@@ -303,7 +303,7 @@ class EditorSupport(SimpleItem):
         # since we don't use Formulator we get UTF8 from the forms, so encode
         # manually here
         # use input convert 2, since the 'normal' one strips whitespace
-        st = self.input_convert2(st)
+        st = mangle.String.inputConvert(st, preserve_whitespace=1)
         st = self.replace_xml_entities(st)
         st = self._unifyLineBreak(st)
         st = self._replace_silva_entities(st)
@@ -322,7 +322,7 @@ class EditorSupport(SimpleItem):
     def replace_heading(self, node, st):
         """'Parse' the markup into XML using regular expressions
         """
-        st = self.input_convert(st)
+        st = mangle.String.inputConvert(st)
         st = self.replace_xml_entities(st)
         st = self._unifyLineBreak(st)
         reg_i = re.compile(r"\[{2}(.*?)\|(.*?)\]{2}", re.S)

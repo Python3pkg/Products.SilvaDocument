@@ -1,12 +1,5 @@
-## Script (Python) "remove_column"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
+from Products.Silva.mangle import String
+
 node = context.REQUEST.node
 doc = node.ownerDocument
 columns = int(node.getAttribute('columns'))
@@ -24,7 +17,7 @@ for row in node.childNodes:
 #    context.service_editor.invalidateCache(node,
 #       ('service_document_editor_widgets', 'element', 'table', mode))
 
-node.setAttribute('columns', node.input_convert(str(columns - 1)))
+node.setAttribute('columns', String.inputConvert(str(columns - 1)))
 if node.hasAttribute('column_info'):
     column_info = node.getAttribute('column_info').split()
     node.setAttribute('column_info', u' '.join(column_info[:-1]))

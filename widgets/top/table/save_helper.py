@@ -1,16 +1,9 @@
-## Script (Python) "save_helper"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
+from Products.Silva.mangle import String
+
 request = context.REQUEST
 node = request.node
 
-node.setAttribute('type', node.input_convert(request['element_type']))
+node.setAttribute('type', String.inputConvert(request['element_type']))
 
 lookup = {'left':'L', 'center':'C', 'right':'R'}
 
@@ -36,4 +29,4 @@ for column in range(columns):
        width = 1
     column_info.append('%s:%s' % (align, width))
 
-node.setAttribute('column_info', node.input_convert(' '.join(column_info)))
+node.setAttribute('column_info', String.inputConvert(' '.join(column_info)))

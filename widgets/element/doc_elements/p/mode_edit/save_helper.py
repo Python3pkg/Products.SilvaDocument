@@ -1,12 +1,5 @@
-## Script (Python) "save_helper"
-##bind container=container
-##bind context=context
-##bind namespace=
-##bind script=script
-##bind subpath=traverse_subpath
-##parameters=
-##title=
-##
+from Products.Silva.mangle import String
+
 request = context.REQUEST
 node = request.node
 editorsupport = context.service_editorsupport
@@ -32,4 +25,4 @@ if len(items) > 1:
         editorsupport.replace_text(p, item)
         node.parentNode.insertBefore(p, next)
 
-node.setAttribute('type', node.input_convert(type))
+node.setAttribute('type', String.inputConvert(type))
