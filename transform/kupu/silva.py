@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.17 $'
+__version__='$Revision: 1.18 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -411,9 +411,11 @@ class toc(SilvaElement):
         multiple_s = 's'
         if int(depth) == 1:
             multiple_s = ''
-        depth_string = depth
         if int(depth) == -1:
             depth_string = 'unlimited'
+        else:
+            depth = int(depth) + 1
+            depth_string = depth
         return html.div(
             Text('Table of Contents (%s level%s)' % (depth_string, multiple_s)),
             toc_depth = depth,
