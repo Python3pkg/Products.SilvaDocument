@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.1 2003/12/10 13:13:45 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.2 2003/12/11 14:24:57 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -10,9 +10,11 @@ from xml.dom.minidom import parseString
 
 # sibling
 from Products.SilvaDocument.search import Search, HeuristicSearch
+from Products.SilvaDocument.interfaces import IParserState
 
 class InterpreterError(Exception):
     pass
+
 
 class Token:
     """Silva markup tokens"""
@@ -98,8 +100,8 @@ class Token:
 
 class ParserState:
     """State of parsing silva markup"""
-
-    # XXX: this needs to be cleaned up, create an interface
+    
+    __implements__ = IParserState
     
     def __init__(self, text, consumed, tokens, parent=None):
         self.text = text
@@ -180,6 +182,7 @@ class ParserState:
             return self.tokens[:]
         return self.tokens[len(self.parent.tokens):]
 
+
 class Parser(HeuristicSearch):
     """Parser for silva markup
 
@@ -250,6 +253,7 @@ class Parser(HeuristicSearch):
     def getResult(self):
         return self.results[0]
     
+
 class PParser(Parser):
     """Parser for silva markup P nodes
     """
