@@ -1,7 +1,5 @@
 
 SilvaDocument changes
 
-  1.0 alpha 1
-
      For the time being, see the HISTORY file in Silva core.
 

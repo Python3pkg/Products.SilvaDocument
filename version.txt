@@ -1,1 +1,1 @@
-SilvaDocument 1.0a1
+SilvaDocument 1.0b1
