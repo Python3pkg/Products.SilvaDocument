@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.22.2.1 $'
+__version__='$Revision: 1.22.2.2 $'
 
 from zExceptions import NotFound
 
@@ -87,7 +87,14 @@ def fix_tables_and_divs(el, context, tables=None):
     else:
         foundtables = tables
     for child in el.find():
-        if child.name() in ['table', 'div']:
+        if (child.name() == 'table' or 
+                (child.name() == 'div' and 
+                    (child.getattr('is_citation', None) or 
+                        child.getattr('toc_depth', None) or 
+                        child.getattr('source_id', None)
+                    )
+                )
+            ):
             foundtables.append(child.convert(context))
             child.should_be_removed = 1
         fix_tables_and_divs(child, context, foundtables)
@@ -436,7 +443,10 @@ class ul(Element):
     def is_nlist(self, context):
         for i in self.content.compact():
             if i.name()!='li':
-                return 1
+                # XXX this is nonsense, a list should *never* have children
+                # that are not list items!
+                # return 1
+                continue
         if (self.query('**/img') or self.query('**/p') or 
                 self.query('**/table') or self.query('**/ul') or
                 self.query('**/ol') or self.query('**/pre')):
@@ -452,8 +462,9 @@ class ul(Element):
         for el in self.find():
             if el.name() == 'li':
                 lis.append(el.convert(context, 1))
-            else:
-                lis.append(silva.li(el.convert(context)))
+            # remove non-li items
+            #else:
+            #    lis.append(silva.li(el.convert(context)))
 
         return silva.list(
             lis,
@@ -469,11 +480,12 @@ class ul(Element):
         for el in self.find():
             if el.name() == 'li':
                 lis.append(el.convert(context, 1))
-            else:
-                if lis:
-                    lis[-1] = silva.li(lis[-1].content, el.convert(context))
-                else:
-                    lis.append(silva.li(el.convert(context)))
+            # filter out non-li elements
+            #else:
+            #    if lis:
+            #        lis[-1] = silva.li(lis[-1].content, el.convert(context))
+            #    else:
+            #        lis.append(silva.li(el.convert(context)))
 
         return silva.nlist(
             lis,
@@ -497,17 +509,28 @@ class li(Element):
     def convert(self, context, parentislist=0):
         if not parentislist:
             return Frag()
+
+        # remove all top-level divs, IE seems to place them for some
+        # unknown reason and they screw stuff up in fix_toplevel
+        children = []
+        for child in self.find():
+            if child.name() == 'div':
+                for cchild in child.find():
+                    children.append(cchild)
+            else:
+                children.append(child)
             
         if context.listtype == 'nlist':
-            content = []
-            for child in self.find():
-                content.append(fix_toplevel(child, context))
+            content = fix_structure(self.find(), context)
             return silva.li(
                         Frag(content)
                     )
         else:
+            content = []
+            for child in children:
+                content.append(child.convert(context))
             return silva.li(
-                self.content.convert(context)
+                content
             )
 
 class strong(Element):
