@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: __init__.py,v 1.3 2003/07/29 09:17:23 zagy Exp $
+# $Id: __init__.py,v 1.4 2003/09/24 15:08:45 zagy Exp $
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry
@@ -9,7 +9,7 @@ import install
 from Products.FileSystemSite.DirectoryView import registerDirectory
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 
-from Products.SilvaDocument import Document
+from Products.SilvaDocument import Document, upgrade
 
 def initialize(context):
     extensionRegistry.register(
