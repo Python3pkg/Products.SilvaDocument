@@ -1,6 +1,6 @@
 """
 module for conversion from current silva (0.9.1) XML to
-epoz (HEAD) version HTML. 
+kupu (HEAD) version HTML. 
 
 the notation used for the transformation roughly
 follows the ideas used with XIST (but simpler).  
@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.3.4.1 $'
+__version__='$Revision: 1.1.2.1 $'
 
 try:
     from transform.base import Element, Frag, Text

@@ -10,7 +10,7 @@ is supported.
 """
 
 __author__='Holger P. Krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.1.1.16.3 $'
+__version__='$Revision: 1.1.1.1.16.3.6.1 $'
 
 class Transformer:
     """ Transform xml trees using pythonic xist-like
@@ -18,7 +18,7 @@ class Transformer:
     """
     from ObjectParser import ObjectParser
 
-    def __init__(self, source='epoz.silva', target='epoz.html'):
+    def __init__(self, source='kupu.silva', target='kupu.html'):
         """ provide a transformer from source to target 
             (and possibly back).
         """
@@ -52,10 +52,10 @@ class Transformer:
         return ret
 
 class EditorTransformer(Transformer):
-    def __init__(self, editor='epoz'):
-        if editor == 'epoz':
+    def __init__(self, editor='kupu'):
+        if editor == 'kupu':
             Transformer.__init__(self, 
-                                 source='epoz.silva', 
-                                 target='epoz.html')
+                                 source='kupu.silva', 
+                                 target='kupu.html')
         else:
             raise "Unknown Editor: %s" % editor

@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.6 $
+# $Revision: 1.16.4.6.6.1 $
 # Zope
 
 from StringIO import StringIO
@@ -127,7 +127,7 @@ class Document(CatalogedVersionedContent):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
-    def editor_storage(self, string=None, editor='epoz', encoding=None):
+    def editor_storage(self, string=None, editor='kupu', encoding=None):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """
@@ -191,14 +191,14 @@ class Document(CatalogedVersionedContent):
         """PUT support"""
         try:
             html = REQUEST['BODYFILE'].read()
-            self.editor_storage(html, 'epoz')
+            self.editor_storage(html, 'kupu')
 
             # invalidate Document cache
             version = self.get_editable()
             version.clearEditorCache()
 
             # XXX This can be removed, right?
-            transformed = self.editor_storage(editor='epoz', encoding="UTF-8")
+            transformed = self.editor_storage(editor='kupu', encoding="UTF-8")
 
             return transformed
         except:

@@ -1,7 +1,7 @@
 """
 module for conversion from current 
 
-   epoz - (cvs version)
+   kupu - (cvs version)
    
        to
 
@@ -12,7 +12,7 @@ how silva maps its xml to html.
 
 There are tests for this transformation in 
 
-    Silva/tests/test_epoztransformation.py
+    Silva/tests/test_kuputransformation.py
 
 please make sure to run them if you change anything here.
 
@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.4.2.4 $'
+__version__='$Revision: 1.1.2.1 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -35,7 +35,7 @@ except ImportError:
 try:
     import silva
 except ImportError:
-    from transform.epoz import silva
+    from transform.kupu import silva
 
 DEBUG=0
 
@@ -666,7 +666,7 @@ def debug_hook():
     from transform.base import Context
     data = '<html><head><title>Foo</title></head><body><p>foo<table><tr><td>baz</td></tr></table>bar</p></body></html>'
     ctx = Context(url='http://debris.demon.nl/foo.html')
-    transformer = EditorTransformer(editor='epoz')
+    transformer = EditorTransformer(editor='kupu')
     node = transformer.to_source(targetobj=data, context=ctx)[0]
     output = node.asBytes(encoding='UTF-8')
     print output
