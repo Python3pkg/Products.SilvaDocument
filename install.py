@@ -4,12 +4,8 @@
 from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
 import EditorSupportNested
-# See if SilvaExternalSources is installed
-try:
-    from Products import SilvaExternalSources
-    _external_sources_available = 1
-except ImportError:
-    _external_sources_available = 0
+
+from Products.SilvaDocument import externalsource
 
 def configureMiscServices(root):
     # add editor support service
@@ -43,7 +39,7 @@ def install(root):
         Document.SilvaDocumentPolicy, -1)
 
     if not hasattr(root, 'service_codesource_charset'):
-        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_codesource_charset', 'Silva Codesource Service ')
+        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_codesource_charset', 'Service Charset for Codesources')
         
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -158,7 +154,7 @@ def registerDocEditor(root):
         'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image',
         'table', 'nlist', 'toc'])
 
-    if _external_sources_available:
+    if externalsource.AVAILABLE:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_normal'))
         wr.setDisplayName('source', 'external source')
@@ -177,7 +173,7 @@ def registerDocViewer(root):
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
      
-    if _external_sources_available:
+    if externalsource.AVAILABLE:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_view'))
 
@@ -197,7 +193,7 @@ def registerDocPreviewer(root):
     wr.addWidget('code', ('service_widgets', 'element', 'doc_elements',
                                'code', 'mode_preview'))
 
-    if _external_sources_available:
+    if externalsource.AVAILABLE:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_preview'))
 

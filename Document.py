@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16.4.6.6.3 $
+# $Revision: 1.16.4.6.6.4 $
 # Zope
 
 from StringIO import StringIO
@@ -31,6 +31,8 @@ from transform.base import Context
 
 from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
 from Products.Silva.interfaces import IVersion
+
+from Products.SilvaDocument import externalsource
 
 icon="www/silvadoc.gif"
 addable_priority = -1
@@ -65,10 +67,7 @@ class Document(CatalogedVersionedContent):
         """
         non_cacheable_elements = ['toc', 'code', 'externaldata', ]
         
-        is_cacheable = 1 
-    
         viewable = self.get_viewable()
-
         if viewable is None:
             return 0
 
@@ -77,33 +76,16 @@ class Document(CatalogedVersionedContent):
         for node in viewable.content.documentElement.childNodes:
             node_name = node.nodeName
             if node_name in non_cacheable_elements:
-                is_cacheable = 0
-                break
+                return 0
             # FIXME: how can we make this more generic as it is very
             # specific now..?
             if node_name == 'source':
-                is_cacheable = self._source_element_cacheability_helper(node)
+                is_cacheable = externalsource.isSourceCacheable(
+                    self.aq_inner, node)
+                if not is_cacheable:
+                    return 0
+        return 1
 
-        return is_cacheable
-
-    # XXX move to function in SilvaExternalSoucrse!
-    def _source_element_cacheability_helper(self, node):
-        # FIXME: how can we make this more generic as it is very
-        # specific now..?
-        id = node.getAttribute('id').encode('ascii')
-        source = getattr(self.aq_inner, id, None)
-        parameters = {}        
-        for child in [child for child in node.childNodes 
-                      if child.nodeType == child.ELEMENT_NODE 
-                      and child.nodeName == 'parameter']:
-            child.normalize()
-            name = child.getAttribute('key').encode('ascii')
-            value = [child.nodeValue for child in child.childNodes 
-                     if child.nodeType == child.TEXT_NODE]
-            value = ' '.join(value)
-            parameters[name] = value
-        return source.is_cacheable(**parameters)
-    
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
