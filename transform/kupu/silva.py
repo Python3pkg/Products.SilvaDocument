@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.6 $'
+__version__='$Revision: 1.7 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -203,7 +203,7 @@ class link(SilvaElement):
             return html.a(
                 self.content.convert(context),
                 href=self.attr.url,
-                target=self.attr.target,
+                target=getattr(self.attr,'target', None),
             )
         else:
             url = str(self.attr.url).strip()
