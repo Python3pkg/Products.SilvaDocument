@@ -27,9 +27,16 @@ if not link_title:
 
 tag_template = '%s'
 if alignment.startswith('image-'):
-    # I don't want to do this... Oh well, long live CSS...
+    # I don't want to do this... Oh well, long live CSS..:
+    # This style with the surrounding div makes the image
+    # align left, center or right but not float.
+    # Are there better ways? "display: block;" maybe?
     tag_template = '<div class="%s">%%s</div>' % alignment
-tag = tag_template % image.image.tag(css_class=alignment, title=link_title)
+
+params = {
+    'class': alignment, 'title': link_title
+    }    
+tag = tag_template % image.image.tag(**params)
 
 if link:
     tag = '<a class="image" href="%s" title="%s" target="%s">%s</a>' % (
