@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14.2.3 $'
+__version__='$Revision: 1.14.2.4 $'
 
 from zExceptions import NotFound
 
@@ -52,7 +52,7 @@ import re
 
 DEBUG=0
 
-TOPLEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'pre', 'table', 'img', 'ul', 'ol', 'dl', 'div']
+TOPLEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'pre', 'table', 'img', 'ul', 'ol', 'dl']
 CONTAINERS = ['body', 'td', 'li'] # XXX should only contain li's that are descendant of nlist
 
 def fix_image_links(el, context):
@@ -87,7 +87,14 @@ def fix_tables_and_divs(el, context, tables=None):
     else:
         foundtables = tables
     for child in el.find():
-        if child.name() in ['table', 'div']:
+        if (child.name() == 'table' or 
+                (child.name() == 'div' and 
+                    (child.getattr('is_citation', None) or 
+                        child.getattr('toc_depth', None) or 
+                        child.getattr('source_id', None)
+                    )
+                )
+            ):
             foundtables.append(child.convert(context))
             child.should_be_removed = 1
         fix_tables_and_divs(child, context, foundtables)
@@ -497,17 +504,31 @@ class li(Element):
     def convert(self, context, parentislist=0):
         if not parentislist:
             return Frag()
+
+        # remove all top-level divs, IE seems to place them for some
+        # unknown reason and they screw stuff up in fix_toplevel
+        children = []
+        for child in self.find():
+            if child.name() == 'div':
+                print 'removing div'
+                for cchild in child.find():
+                    children.append(cchild)
+            else:
+                children.append(child)
             
         if context.listtype == 'nlist':
             content = []
-            for child in self.find():
+            for child in children:
                 content.append(fix_toplevel(child, context))
             return silva.li(
                         Frag(content)
                     )
         else:
+            content = []
+            for child in children:
+                content.append(child.convert(context))
             return silva.li(
-                self.content.convert(context)
+                content
             )
 
 class strong(Element):
