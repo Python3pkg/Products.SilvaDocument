@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 # Zope
 
 from StringIO import StringIO
@@ -106,27 +106,6 @@ class Document(CatalogedVersionedContent):
         version = getattr(self, version_id)
         version.to_xml(context)
         f.write('</silva_document>')
-
-    security.declareProtected(SilvaPermissions.ReadSilvaContent, "preview")
-    def preview(self, view_type="public"):
-        """Display the preview of this object using the selected renderer."""
-        content = self.get_previewable()
-        renderer_name = self.service_metadata.getMetadataValue(
-            content, "silva-extra", "renderer_name")
-
-        if not renderer_name or renderer_name == "(Default)":
-            renderer_name = self.service_renderer_registry.getDefaultRendererNameForMetaType('Silva Document Version')
-
-        if renderer_name == "Normal View (XMLWidgets)":
-            # XXX: a hack to call back into the old XML widgets way
-            # of rendering. done like so because the old system is
-            # hard to follow, and thus practicality does indeed trump
-            # purity sometimes. :)
-            return CatalogedVersionedContent.preview(self, view_type)
-        else:
-            renderer = self.service_renderer_registry.getRendererByName(
-                renderer_name, 'Silva Document Version')
-            return renderer.render(content)
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                               'editor_storage')
