@@ -1,7 +1,7 @@
 
 SilvaDocument changes
 
-  0.9.3 kupu 1 beta
+  1.0 alpha 1
 
      For the time being, see the HISTORY file in Silva core.
 

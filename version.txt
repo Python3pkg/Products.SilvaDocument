@@ -1,1 +1,1 @@
-SilvaDocument 0.9.3 kupu 1 beta
+SilvaDocument 1.0a1
