@@ -7,6 +7,8 @@
       <li>&lt;a href="http://www.x.yz"&gt;text&lt;/a&gt;</li>
       <li>&lt;a href="http://www.x.yz" target="target"&gt;text&lt;/a&gt; &#8212; if &#8216;target&#8217; is empty a new window opens</li>
       <li>&lt;index&gt;index item&lt;/index&gt;</li>
+      <li>&lt;abbr title="full name"&gt;abbreviation&lt;/abbr&gt;</li>
+      <li>&lt;acronym title="full name"&gt;acronym&lt;/acronym&gt;</li>
       <li>&amp;lt; &lt; &#8212; &amp;gt; &gt;</li>
     </ul>
   </li>
