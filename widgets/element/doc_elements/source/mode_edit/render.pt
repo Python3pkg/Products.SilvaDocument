@@ -6,7 +6,7 @@
       "
     >
     <div>
-      Source id&nbsp;<select name="id">
+      source id&nbsp;<select name="id">
       <option disabled="disabled">Select an External Source...</option>
       <option 
         tal:repeat="av_source here/available_sources"
@@ -19,7 +19,7 @@
       />
       </select>
       &nbsp;
-      <input class="button" type="submit" value=" Update " title="Access key: alt-s" accesskey="u"
+      <input class="button" type="submit" value=" update " title="access key: alt-u" accesskey="u"
         tal:attributes="name string:${rel_url_start}/save:method" />
     </div>
     <h1></h1>
@@ -41,7 +41,7 @@
           <thead>
             <tr>
               <th colspan="3">
-                <b>Source parameters</b>          
+                <b>Source parameters</b>
               </th>
             </tr>
           </thead>
@@ -72,20 +72,21 @@
       </div></tal:block>
   </metal:block>
 
-  <metal:block fill-slot="edit_notes">
+  <metal:block fill-slot="edit_notes"
+    tal:define="source here/get_source | nothing;">
     <ul class="tips">
       <li>
         Select an source from the pulldown list,
       </li>
       <li>
-        <span class="warning">Hit "Update" to update the parameters form!</span>
+        <span class="warning">Hit "Update" to update the parameters form.</span>
       </li>
       <li>
         Fill in the parameters (if available).
       </li>
     </ul>
 
-    <b>Source's description:</b>
+    <b tal:condition="source">Source description:</b>
     <br />
     <tal:block 
       define="source here/get_source"
