@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.5 2004/05/24 20:28:43 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.8.4.1.2.6 2004/05/25 07:03:44 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -31,6 +31,7 @@ class HelperState:
 
 class PParserTest(unittest.TestCase):
 
+    parser = PParser
     large_text = """Kaum standen am folgenden Tage die hohen Felsengipfel im Glanz des Sonnenlichts, so hŸpfte Gustav aus dem Bette und fand - wem kommt dabey nicht das ehemahls selbst genossene kindische EntzŸcken beym Anblick des Weihnachtsgeschenks ins GedŠchtniss? - einen netten Anzug auf dem Stuhle am Bette, den die Gattinn des Schultheissen von den Sšhnen eines im Flecken wohnenden Edelmannes, einstweilen angenommen hatte, da sich nicht so schnell, als sie es jetzt wŸnschte, die NŠhnadeln zu Buchenthal in Bewegung setzen liessen. Ewalds hatten ein Weilchen auf das Benehmen des kleinen Lieblings gelauscht, und šffneten das Gemach, als sich eben seine Empfindungen in ein lautes ÈAch wie schšn!Ç auflšsten. ÈGuten Tag, Papa, guten Tag, Mama!Ç schluchzte Gustav, und eilte den Kommenden entgegen, um mit tausend HŠndekŸssen ihnen Dank und Liebe zu zollen. Die guten Alten staunten bey dem seltenen FeingefŸhl eines so kleinen Knaben, und hŠtten von diesem Augenblicke gegen die SchŠtze von Golconda, dem aufgenommenen Pflegling nicht entsagt. Die muthigen Apfelschimmel stampften schon ungeduldig im Hofe den Boden. Gustav stack geschwind mit Ewalds HŸlfe in dem ganz passenden Anzuge, und glich einem jungen Liebesgott, indess die Gattin des Schultheissen alle die kleinen hŠuslichen Angelegenheiten und die GeschŠfte des Tages an das Gesinde austheilte, ihm nochmahls Achtsamkeit und Fleiss empfahl, genoss Gustav eine wohlschmeckende Milchsuppe, denn Caffee kam selten, bloss bey ganz ausnehmenden FŠllen, in Ewalds Haus, weil diese Leute einen gewissen edlen Stolz im Entsagen allen dessen, was das Ausland zeugte, suchten, und sich genŸgsam an das, was auf heimathlichem Boden wuchs, hielten. Auch kannte Ewald lebende Beyspiele genug, dass Neigung und Geschmack an dem, das Blut in Wallung setzenden - und schlecht gekocht, den Magen schlaff machenden - Caffee sich beym weiblichen Geschlechte so leicht in Leidenschaft umwandle, als beym mŠnnlichen die Liebe zum Schnaps. Seine Familie zŠhlte einige unglŸckliche Beweise dieses Satzes, die dem wohlwollenden Manne eine unumstšssliche Abneigung gegen diese Schote einflšssten, obschon seine škonomische Lage ihm allenfalls auch heutigen Tages, wo Caffee so ungemein gestiegen ist, dass man ihn kaum bezahlen kann - gestattet hŠtte, denselben ohne deutsche Mengsel und sonstige HŸlfsmittel, die Caffee heissen, ohne es zu seyn, zwey Mahl tŠglich zu geniessen. DŠchten und handelten doch alle Deutsche wie Ewald! Zehnmahl hatte die geschŠftige Alte alle nšthigen Befehle schon gegeben, und eben so oft noch eine Kleinigkeit nachzuholen. Jetzt suchte sie einen SchlŸssel, den sie in den HŠnden hielt, dann einen Pelzmantel, den sie im Juny doch gewiss nicht nšthig hatte. Ewald lŠchelte und ging an den Wagen. Das gute Hausweib hatte, obschon es nahe an den Sechzigen stand, noch keinen vollen Tag die PfŠhle im Stich gelassen, in denen es von Jugend auf lebte und webte; bloss Theilnahme und Liebe zu Gustav, konnte es zu diesem Entschluss bewegen. Endlich kam sie mit zwey Schachteln von ziemlichem Umfange voll Victualien, eine Magd folgte mit einem dito Sack, und hinten auf dem Wagen blšckten zwey festgebundene Hammel um baldige Entlassung aus so lŠssigen Fesseln. Die Hofhunde bellten zum Abschiede, Hans schwang die Peitsche, und pfeilschnell flogen die ungeduldigen Apfelschimmel zum Flecken hinaus. GlŸck auf den Weg!"""
     complicated_paras = [
 """ Op 25 november 2003 is de CGE&Y Strategy Award, de prijs voor de beste
@@ -98,7 +99,7 @@ drs. P.F. Segaar, zelfstandig bestuurs- en organisatieadviseur,
 voormalig directeur Strategie Aegon N.V."""]
     
     def test_simpleemph(self):
-        parser = PParser("++foobar++      blafasel")
+        parser = self.parser("++foobar++      blafasel")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 5)
@@ -110,7 +111,7 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[4].text, 'blafasel')
         
     def test_boldasterix(self):
-        parser = PParser("**\***")
+        parser = self.parser("**\***")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 4)
@@ -119,7 +120,7 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[3].kind, Token.STRONG_END)
        
     def test_boldasterix2(self):
-        parser = PParser("**\*\***")
+        parser = self.parser("**\*\***")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 6)
@@ -128,7 +129,7 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[5].kind, Token.STRONG_END)
       
     def test_italicplus(self):
-        parser = PParser("++\+++")
+        parser = self.parser("++\+++")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 4)
@@ -137,7 +138,7 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[3].kind, Token.EMPHASIS_END)
 
     def test_bolditalic(self):
-        parser = PParser("**++foobar++**")
+        parser = self.parser("**++foobar++**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 5)
@@ -147,7 +148,7 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[4].kind, Token.STRONG_END)
        
     def test_italicbold(self):
-        parser = PParser("++**foobar**++")
+        parser = self.parser("++**foobar**++")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 5)
@@ -157,7 +158,7 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[4].kind, Token.EMPHASIS_END)
        
     def test_underline(self):
-        parser = PParser("__i am underlined__")
+        parser = self.parser("__i am underlined__")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 7)
@@ -165,7 +166,7 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[6].kind, Token.UNDERLINE_END)
          
     def test_underline2(self):
-        parser = PParser("__under\**lined and **bold** and st\__uff__")
+        parser = self.parser("__under\**lined and **bold** and st\__uff__")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 21)
@@ -182,7 +183,7 @@ voormalig directeur Strategie Aegon N.V."""]
             ("This alike: [**]", 9),
             ]
         for text, length in texts:
-            parser = PParser(text)
+            parser = self.parser(text)
             parser.run()
             t = parser.getResult().tokens
             self.assertEquals(len(t), length)
@@ -196,7 +197,7 @@ voormalig directeur Strategie Aegon N.V."""]
             'http://www.x.com/xx/i.html',
         ]
         for url in urls:
-            parser = PParser(url)
+            parser = self.parser(url)
             parser.run()
             t = parser.getResult().tokens
             self.assertEquals(len(t), 1, "%r -> %r" % (url, t))
@@ -206,7 +207,7 @@ voormalig directeur Strategie Aegon N.V."""]
             
     def _test_urls(self, texts, url, token_id=Token.LINK_URL):
         for text, length, url_at in texts:
-            p = PParser(text)
+            p = self.parser(text)
             p.run()
             t = p.getResult().tokens
             self.assertEquals(len(t), length, "%d != %d in %r -> %r" % (
@@ -256,7 +257,7 @@ voormalig directeur Strategie Aegon N.V."""]
         self._test_urls(texts, url, token_id=Token.CHAR)
            
     def test_link(self):
-        parser = PParser("click ((here|http://here.com)) to see")
+        parser = self.parser("click ((here|http://here.com)) to see")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 11)
@@ -268,7 +269,7 @@ voormalig directeur Strategie Aegon N.V."""]
 
     def test_morelinks(self):
         # mainly a speed test
-        parser = PParser("""Once upon a time, users had to learn markup (see ((http://www.x.yz|http://www.x.yz))).
+        parser = self.parser("""Once upon a time, users had to learn markup (see ((http://www.x.yz|http://www.x.yz))).
 Then, software got smarter: ((http://www.x.yz|http://www.x.yz)).
 Now, it could be called intelligent. You see this at ((http://www.x.yz|http://www.x.yz)), but
 sometimes it's too smart for its own good.
@@ -277,7 +278,7 @@ Users think it's dumb.""")
 
     def test_issue897(self):
         # test for the fixes to issue 897
-        parser = PParser("""A ((broken external link|http://foo.bar/test_doc1)).
+        parser = self.parser("""A ((broken external link|http://foo.bar/test_doc1)).
 An external link that usually works: ((zlb|http://www.zlb.de/))
 A ((broken internal link|/to_nowhere/doc883)).""")
         parser.run()
@@ -286,7 +287,7 @@ A ((broken internal link|/to_nowhere/doc883)).""")
         self.assertEquals(3,len([x for x in t if x.kind==Token.LINK_START]))
         
         # john lane reported this one: (minimal test example)
-        parser = PParser("""Having a ((line
+        parser = self.parser("""Having a ((line
 break|http://issues.infrae.com/Silva/issue897)) in the link text causes problems""")
         parser.run()
         t = parser.getResult().tokens
@@ -294,7 +295,7 @@ break|http://issues.infrae.com/Silva/issue897)) in the link text causes problems
         self.assertEquals(1,len([x for x in t if x.kind==Token.LINK_START]))
 
         # the original text posted by John, just for completness
-        parser = PParser("""Further details of the current system can be found via the ((online 
+        parser = self.parser("""Further details of the current system can be found via the ((online 
 help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or 
 ((here|https://zope.cam.uk.worldpay.com/Silva/IT_Operations/Live_Service/Change_Control))""")
         parser.run()
@@ -303,19 +304,19 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         self.assertEquals(2,len([x for x in t if x.kind==Token.LINK_START]))
 
     def test_link2(self):
-        p = PParser("((this is my link text|http://locatorplus.gov/cgi-bin/Pwebrecon.cgi?DB=local&v2=1&ti=1,1&Search_Arg=100973416&Search_Code=0359&CNT=20&SID=1|))")
+        p = self.parser("((this is my link text|http://locatorplus.gov/cgi-bin/Pwebrecon.cgi?DB=local&v2=1&ti=1,1&Search_Arg=100973416&Search_Code=0359&CNT=20&SID=1|))")
         p.run()
         t = p.getResult().tokens
         self.assertEquals(t[0].kind, Token.LINK_START)
     
     def test_link3(self):
-        p = PParser("((this is my link text|http://locatorplus.gov/cgi-bin/Pwebrecon.cgi?\nDB=local&v2=1&ti=1,1&Search_Arg=100973416&Search_Code=0359&CNT=20&SID=1|))")
+        p = self.parser("((this is my link text|http://locatorplus.gov/cgi-bin/Pwebrecon.cgi?\nDB=local&v2=1&ti=1,1&Search_Arg=100973416&Search_Code=0359&CNT=20&SID=1|))")
         p.run()
         t = p.getResult().tokens
         self.assertEquals(t[0].kind, Token.PARENTHESIS_OPEN)
     
     def test_linkmarkup(self):
-        p = PParser("Wasser ((H~~2~~O|http://aaaa.com/h2o.html|))")
+        p = self.parser("Wasser ((H~~2~~O|http://aaaa.com/h2o.html|))")
         p.run()
         t = p.getResult().tokens
         self.assertEquals(len(t), 12)
@@ -324,7 +325,7 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         
 
     def test_linktarget(self):
-        parser = PParser("click ((here|http://here.com|_top)) to see")
+        parser = self.parser("click ((here|http://here.com|_top)) to see")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 14)
@@ -338,7 +339,7 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         self.assertEquals(t[9].kind, Token.LINK_END)
 
     def test_linktarget2(self):
-        parser = PParser("((slashdot|http://www.slashdot.org|foo))")
+        parser = self.parser("((slashdot|http://www.slashdot.org|foo))")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 7)
@@ -351,7 +352,7 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         self.assertEquals(t[6].kind, Token.LINK_END)
         
     def test_linktarget3(self):
-        parser = PParser("((slashdot|http://www.slashdot.org|))")
+        parser = self.parser("((slashdot|http://www.slashdot.org|))")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 6)
@@ -363,14 +364,14 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         self.assertEquals(t[5].kind, Token.LINK_END)
 
     def test_linkwithbraces(self):
-        parser = PParser("click ((Journal & Books|simple?field_search=reference_type:(journal%20book))) to see")
+        parser = self.parser("click ((Journal & Books|simple?field_search=reference_type:(journal%20book))) to see")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 29)
         self.assertEquals(t[24].kind, Token.LINK_END)
 
     def test_linkparen(self):
-        parser = PParser("(((issue tracker|http://issues.infrae.com/silva/issue678)))")
+        parser = self.parser("(((issue tracker|http://issues.infrae.com/silva/issue678)))")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(t[0].kind, Token.PARENTHESIS_OPEN)
@@ -379,7 +380,7 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         self.assertEquals(t[-1].text, ')')
 
     def test_superscriptbold(self):
-        parser = PParser("**foo^^bar^^**")
+        parser = self.parser("**foo^^bar^^**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 6)
@@ -391,7 +392,7 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         self.assertEquals(t[5].kind, Token.STRONG_END)
         
     def test_supersubscript(self):
-        parser = PParser("a~~1~~^^2^^+a~~2~~^^2^^=a~~3~~^^2^^")
+        parser = self.parser("a~~1~~^^2^^+a~~2~~^^2^^=a~~3~~^^2^^")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 23)
@@ -402,7 +403,7 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         self.assertEquals(t[6].kind, Token.SUPERSCRIPT_END)
 
     def test_softbreak(self):
-        parser = PParser("a\nb\n\n\n\nc")
+        parser = self.parser("a\nb\n\n\n\nc")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 5)
@@ -414,16 +415,16 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
        
     def test_largesimpletext(self):
         # this is basicly a speed test
-        parser = PParser(self.large_text)
+        parser = self.parser(self.large_text)
         parser.run()
 
     def test_paras(self):
         for p_text in self.complicated_paras:
-            p = PParser(p_text)
+            p = self.parser(p_text)
             p.run()
             
     def test_index(self):
-        parser = PParser("A Word[[Word]] blafasel")
+        parser = self.parser("A Word[[Word]] blafasel")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 8)
@@ -432,14 +433,14 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
 
 
     def test_escape(self):
-        parser = PParser(r"In Silva markup **bold** is marked up as \**bold\**")
+        parser = self.parser(r"In Silva markup **bold** is marked up as \**bold\**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 23)
         self.assertEquals(t[21].kind, Token.ESCAPE)
 
     def test_escape(self):
-        parser = PParser(r"In Silva markup **bold** is \\ marked up as \**bold\**")
+        parser = self.parser(r"In Silva markup **bold** is \\ marked up as \**bold\**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 26)
@@ -449,13 +450,13 @@ help|https://db1.cam.uk.worldpay.com/cc_online/help.php)) or
         
     def test_alot(self):
         # speed test, this took > 10 minutes some time ago
-        parser = PParser("A paragraph. Which includes **bold**, ++italic++, __underlined__, a ((hyperlink|http://www.infrae.com)), and an index item[[index item]]. But we have more **bold** and ++italic++; even **++bold-italic++** or **__bold-underlinded__**. **++__bold-italic-underlined-superscript__++**.")
+        parser = self.parser("A paragraph. Which includes **bold**, ++italic++, __underlined__, a ((hyperlink|http://www.infrae.com)), and an index item[[index item]]. But we have more **bold** and ++italic++; even **++bold-italic++** or **__bold-underlinded__**. **++__bold-italic-underlined-superscript__++**.")
         parser.run()
         t = parser.getResult().tokens
 
 
     def test_markup_follows_linebreak(self):
-        parser = PParser("Afteralinebreak\n++markup++ shouldnotbeignored\n")
+        parser = self.parser("Afteralinebreak\n++markup++ shouldnotbeignored\n")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(t[0].kind, Token.CHAR)
@@ -736,15 +737,6 @@ def test_suite():
     suite.addTest(unittest.makeSuite(EditableTest))
     return suite
 
-def main():
-    try:
-        from hotshot import Profile
-    except ImportError:
-        pass
-    else:
-        p = Profile('paras.hotshot')
-    unittest.TextTestRunner(verbosity=2).run(test_suite())
-
 if __name__ == '__main__':
     try:
         # if we have hotshot just profile everyting.
@@ -753,8 +745,4 @@ if __name__ == '__main__':
         p.runcall(framework)
     except ImportError:
         framework()
-else:
-    # While framework.py provides its own test_suite()
-    # method the testrunner utility does not.
-    main()
     
