@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.10 $'
+__version__='$Revision: 1.1.2.11 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -167,14 +167,16 @@ def fix_structure(inputels, context, allowtables=0):
         textbuf = []
     return fixedrest
 
-def extract_texts(item, context):
+def extract_texts(item, context, allow_indexes=0):
     """extract all text content from a tag"""
     res = []
     for i in item.find():
         if i.name() == 'br':
             res.append(Text(u'\n'))
+        elif allow_indexes and i.name() == 'a' and not i.getattr('href', None):
+            res.append(i.convert(context))
         elif i.name() != 'Text':
-            res += extract_texts(i, context)
+            res += extract_texts(i, context, allow_indexes)
         else:
             res.append(i.convert(context))
     return res
@@ -657,7 +659,7 @@ class tr(Element):
                 cells
             )
 
-        texts = extract_texts(self, context)
+        texts = extract_texts(self, context, 1)
 
         return silva.row_heading(
             texts
@@ -726,6 +728,8 @@ class dl(Element):
                     children.append(silva.dt(Text(' ')))
                 children.append(silva.dd(child.content.convert(context)))
                 lastchild = child
+        if lastchild is not None and lastchild.name() == 'dt':
+            children.append(silva.dd(Text(' ')))
         return silva.dlist(Frag(children))
 
 class dt(Element):
