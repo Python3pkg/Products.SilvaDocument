@@ -10,7 +10,7 @@
       <option disabled="disabled">Select an External Source...</option>
       <option 
         tal:repeat="av_source here/available_sources"
-        tal:content="av_source/title"
+        tal:content="structure string:${av_source/id} &#34;${av_source/title}&#34;"
         tal:attributes="
           value av_source/id;
           title av_source/description;
