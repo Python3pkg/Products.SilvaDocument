@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.5 2003/10/06 11:33:30 zagy Exp $
+# $Id: test_editorsupport.py,v 1.6 2003/10/06 14:59:01 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -204,6 +204,12 @@ class ParserTest(unittest.TestCase):
         t = parser.getResult().tokens
         self.assertEquals(len(t), 23)
         self.assertEquals(t[21].kind, Token.ESCAPE)
+
+    def test_alot(self):
+        # speed test, this took > 10 minutes some time ago
+        parser = Parser("A paragraph. Which includes **bold**, ++italic++, __underlined__, a ((hyperlink|http://www.infrae.com)), and an index item[[index item]]. But we have more **bold** and ++italic++; even **++bold-italic++** or **__bold-underlinded__**. **++__bold-italic-underlined-superscript__++**.")
+        parser.run()
+        t = parser.getResult().tokens
 
 class InterpreterTest(unittest.TestCase):
 

@@ -28,9 +28,32 @@ class SwitchClass:
     def __repr__(self):
         return "<SwitchClass %r>" % self.new_class
 
+class UpgradeDocumentXML:
+
+    __implements__ = IUpgrader
+
+    def upgrade(self, obj):
+        # <index name="foo">bar</index> to
+        # bar<index name="foo"/> 
+        dom = obj.content
+        node = dom.firstChild
+        while node:
+            if node.nodeType == node.ELEMENT_NODE and node.nodeName == 'index':
+                while node.firstChild:
+                    node.parentNode.insertBefore(node.firstChild, node)
+            next = node.firstChild
+            if not next:
+                next = node.nextSibling
+            if not next:
+                next = node.parentNode.nextSibling
+            node = next
+        return obj
+
 def initialize():
     upgrade.registry.registerUpgrader(SwitchClass(Document),
         '0.9.3', Document.meta_type)
     upgrade.registry.registerUpgrader(SwitchClass(DocumentVersion,
         args=('', )), '0.9.3', DocumentVersion.meta_type)
+    upgrade.registry.registerUpgrader(UpgradeDocumentXML(), '0.9.3',
+        DocumentVersion.meta_type)
 
