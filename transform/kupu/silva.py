@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14 $'
+__version__='$Revision: 1.15 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -99,8 +99,7 @@ class p(SilvaElement):
         ptype = self.getattr('type', 'normal')
         return html.p(
             self.content.convert(context),
-            class_=ptype,
-            silva_type=ptype
+            class_=ptype
             )
 
 class br(Element):
@@ -352,19 +351,21 @@ class row(SilvaElement):
         else:
             context.tablestack[-1].row_count += 1
             
-        units = 100 / reduce(operator.add, relwidths)
-        widths = [units * i for i in relwidths]
+        widths = []
+        if relwidths:
+            units = 100 / reduce(operator.add, relwidths)
+            widths = [units * i for i in relwidths]
         aligns = context.tablestack[-1].aligns
         cells = self.find('field')
         if cells:
             for i in range(len(cells)):
                 # leave some room for errors
                 try:
-                    cells[i].attr.align = str(int(aligns[i]))
+                    cells[i].attr.align = aligns[i]
                     cells[i].attr.width = '%s%%' % int(widths[i])
                 except (IndexError, ValueError):
-                    cells[i].attr.align = 'L'
-                    cells[i].attr.width = '1'
+                    cells[i].attr.align = 'left'
+                    cells[i].attr.width = ''
         tr = html.tr(
             self.content.convert(context),
         )
