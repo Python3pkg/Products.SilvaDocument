@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.6 2003/12/29 17:00:04 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.7 2004/01/08 12:47:15 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -165,7 +165,7 @@ class ParserState:
 
     def toxml(self):
         # parsed is set externally... 
-        if parsed is None:
+        if self.parsed is None:
             raise ValueError, "No interpreted state found"
         return self.parsed.toxml()
 
@@ -304,7 +304,7 @@ class PParser(Parser):
         (r'(\))', Token.PARENTHESIS_CLOSE),
         
         (r'([A-Za-z0-9\.\-&;]+)', Token.CHAR), # catch for long text
-        (r'([^A-Za-z0-9\.\-&; \t\f\v\r\n()])', Token.CHAR),
+        (r'([^A-Za-z0-9\.\-&; \t\f\v\r\n()\\])', Token.CHAR),
         ])
 
 
@@ -422,10 +422,21 @@ class Interpreter:
         self.rules['link-text'] = {
             Token.PARENTHESIS_OPEN: self.text,
             Token.PARENTHESIS_CLOSE: self.text,
+            Token.STRONG_START: self.strong_start,
+            Token.STRONG_END: self.strong_end,
+            Token.EMPHASIS_START: self.emphasis_start,
+            Token.EMPHASIS_END: self.emphasis_end,
+            Token.UNDERLINE_START: self.underline_start,
+            Token.UNDERLINE_END: self.underline_end,
+            Token.SUPERSCRIPT_START: self.superscript_start,
+            Token.SUPERSCRIPT_END: self.superscript_end,
+            Token.SUBSCRIPT_START: self.subscript_start,
+            Token.SUBSCRIPT_END: self.subscript_end,
             Token.WHITESPACE: self.whitespace,
             Token.CHAR: self.text,
             Token.LINK_URL: self.text,
             Token.LINK_SEP: self.link_sep_aftertext,
+            Token.ESCAPE: self.escape,
         }
 
         self.rules['link-url'] = {
@@ -678,22 +689,19 @@ class Interpreter:
         return node.parentNode
 
     def escape(self, token, node):
+        self._pre_escape_ruleset = self.ruleset
         self.ruleset = 'escape'
-        return node
-        
-    def escaped_whitespace(self, token, node):
-        self.ruleset = 'default'
         return node
     
     def escaped_text(self, token, node):
-        self.ruleset = 'default'
+        self.ruleset = self._pre_escape_ruleset
         return self.text(token, node)
     
     def escaped_whitespace(self, token, node):
-        self.ruleset = 'default'
+        self.ruleset = self._pre_escape_ruleset
         return self.whitespace(token, node)
     
     def escaped_softbreak(self, token, node):
-        self.ruleset = 'default'
+        self.ruleset = self._pre_escape_ruleset
         return self.softbreak(token, node)
 

@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.13.4.6 2003/12/29 20:28:17 zagy Exp $
+# $Id: test_editorsupport.py,v 1.13.4.7 2004/01/08 12:47:15 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -162,7 +162,6 @@ voormalig directeur Strategie Aegon N.V."""]
         self.assertEquals(t[10].kind, Token.STRONG_END)
         self.assertEquals(t[18].kind, Token.UNDERLINE_END)
       
-
     def test_inlintestart(self):
         texts = [
             ("This is __ just text", 10),
@@ -263,6 +262,14 @@ sometimes it's too smart for its own good.
 Users think it's dumb.""")
         parser.run()
         
+    def test_linkmarkup(self):
+        p = PParser("Wasser ((H~~2~~O|http://aaaa.com/h2o.html|))")
+        p.run()
+        t = p.getResult().tokens
+        self.assertEquals(len(t), 12)
+        self.assertEquals(t[4].kind, Token.SUBSCRIPT_START)
+        self.assertEquals(t[6].kind, Token.SUBSCRIPT_END)
+        
 
     def test_linktarget(self):
         parser = PParser("click ((here|http://here.com|_top)) to see")
@@ -331,7 +338,6 @@ Users think it's dumb.""")
         self.assertEquals(t[4].kind, Token.SUPERSCRIPT_END)
         self.assertEquals(t[5].kind, Token.STRONG_END)
         
-    
     def test_supersubscript(self):
         parser = PParser("a~~1~~^^2^^+a~~2~~^^2^^=a~~3~~^^2^^")
         parser.run()
@@ -374,12 +380,21 @@ Users think it's dumb.""")
 
 
     def test_escape(self):
-        parser = PParser("In Silva markup **bold** is marked up as \**bold\**")
+        parser = PParser(r"In Silva markup **bold** is marked up as \**bold\**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 23)
         self.assertEquals(t[21].kind, Token.ESCAPE)
 
+    def test_escape(self):
+        parser = PParser(r"In Silva markup **bold** is \\ marked up as \**bold\**")
+        parser.run()
+        t = parser.getResult().tokens
+        self.assertEquals(len(t), 26)
+        self.assertEquals(t[12].kind, Token.ESCAPE)
+        self.assertEquals(t[13].kind, Token.ESCAPE)
+        self.assertEquals(t[24].kind, Token.ESCAPE)
+        
     def test_alot(self):
         # speed test, this took > 10 minutes some time ago
         parser = PParser("A paragraph. Which includes **bold**, ++italic++, __underlined__, a ((hyperlink|http://www.infrae.com)), and an index item[[index item]]. But we have more **bold** and ++italic++; even **++bold-italic++** or **__bold-underlinded__**. **++__bold-italic-underlined-superscript__++**.")
@@ -676,6 +691,7 @@ def main():
 
 if __name__ == '__main__':
     try:
+        # if we have hotshot just profile everyting.
         from hotshot import Profile
         p = Profile('editorsupport.hotshot')
         p.runcall(framework)

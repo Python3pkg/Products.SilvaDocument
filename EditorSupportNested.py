@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.4 $
+# $Revision: 1.21.4.5 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -252,9 +252,7 @@ class EditorSupport(SimpleItem):
         text = text.replace('<', '&lt;')
         text = text.replace('>', '&gt;')
         text = text.replace('"', '&quot;')
-        
         return text
-
 
     def _unifyLineBreak(self, data):
         """returns data with unambigous line breaks, i.e only \n.
