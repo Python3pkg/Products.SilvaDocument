@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.16 $'
+__version__='$Revision: 1.1.2.17 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -331,9 +331,11 @@ class table(SilvaElement):
     def compute_aligns_relwidths(self):
         """ return a list with the alignments """
         infos = str(self.attr.column_info).split(' ')
-        aligns = [(len(self.alignmapping) > i and 
-                        self.alignmapping[infos[i][0]] or 'l')
-                    for i in range(len(infos))]
+        print infos
+        aligns = [(self.alignmapping.has_key(i[0]) and 
+                        self.alignmapping[i[0]] or 'left')
+                    for i in infos]
+        print aligns
         relwidths = [int(i[2:]) for i in infos]
         return aligns, relwidths
    
