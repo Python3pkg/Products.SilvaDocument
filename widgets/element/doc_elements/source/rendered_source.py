@@ -13,7 +13,7 @@ try:
 except (Exception), err:
     html = """<div class="warning"><b>[""" + \
     unicode(_("external source element is broken")) + \
-    "]</b><br /> " + unicode(_("error message:")) + " " + err + "</div>"
+    "]</b><br /> " + unicode(_("error message:")) + " " + str(err) + "</div>"
 except:
     # Ugh, bare except to catch *all* cases...
     html = """<div class="warning"><b>[""" + \
