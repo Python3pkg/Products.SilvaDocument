@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -757,6 +757,20 @@ class dt(Element):
 class dd(Element):
     def convert(self, context):
         return silva.dd(self.content.convert(context))
+
+class abbr(Element):
+    def convert(self, context):
+        return silva.abbr(
+                self.content.convert(context),
+                title=self.attr.title
+            )
+
+class acronym(Element):
+    def convert(self, context):
+        return silva.acronym(
+                self.content.convert(context),
+                title=self.attr.title
+            )
 
 """
 current mapping of tags with silva

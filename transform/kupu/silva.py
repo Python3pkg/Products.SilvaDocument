@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.2 $'
+__version__='$Revision: 1.3 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -443,6 +443,20 @@ class source(SilvaElement):
 class parameter(SilvaElement):
     def convert(self):
         return Frag()
+
+class abbr(SilvaElement):
+    def convert(self, context):
+        return html.abbr(
+                self.content.convert(context),
+                title=self.attr.title
+            )
+
+class acronym(SilvaElement):
+    def convert(self, context):
+        return html.acronym(
+                self.content.convert(context),
+                title=self.attr.title
+            )
 
 def mixin_paragraphs(container):
     """ wrap silva.p node around text"""
