@@ -134,27 +134,23 @@ class DocumentVersionProducer(SilvaBaseProducer):
     def sax_field(self, node, col_info):
         child_attrs = {'class': 'align-' + col_info['align']}
         self.startElementNS(SilvaDocumentNS, 'field', child_attrs)
-        if node.hasChildNodes:
-            child_count = 0
+        if node.hasChildNodes():
             for child in node.childNodes:
                 if child.nodeType == Node.TEXT_NODE:
                     if child.nodeValue:
                         self.handler.characters(child.nodeValue)
-                elif child.nodeType == Node.ELEMENT_NODE:
+                else:
                     # XXX UGLY EVIL HACK to make this behave the same as 
                     # the widget renderer, i.e. remove the tags of the
                     # first child if it is a <p>
-                    if child.nodeName == 'p' and child_count == 0:
-                        if child.hasChildNodes:
-                            for grandchild in child.childNodes:
-                                if grandchild.nodeType == Node.TEXT_NODE:
-                                    if grandchild.nodeValue:
-                                        self.handler.characters(grandchild.nodeValue)
-                                elif grandchild.nodeType == Node.ELEMENT_NODE:
-                                    self.sax_node(grandchild)
+                    if child is node.firstChild and child.nodeName == 'p':
+                        for grandchild in child.childNodes:
+                            if grandchild.nodeType == Node.TEXT_NODE:
+                                self.handler.characters(grandchild.nodeValue)
+                            else:
+                                self.sax_node(grandchild)
                     else:
                         self.sax_node(child)
-                child_count += 1
         self.endElementNS(SilvaDocumentNS, 'field')
         
     def get_columns_info(self, node):
