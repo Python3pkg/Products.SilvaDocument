@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.12 $
+# $Revision: 1.13 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -219,6 +219,17 @@ class EditorSupport(SimpleItem):
                         child.attributes.item(i).value)
                 node.appendChild(newnode)
                 self._replace_helper(doc, newnode, child)
+
+    security.declarePublic('replace_xml_entities')
+    def replace_xml_entities(self, text):
+        """Replace all disallowed characters with XML-entities"""
+        text = text.replace('&', '&amp;')
+        text = text.replace('<', '&lt;')
+        text = text.replace('>', '&gt;')
+        text = text.replace('"', '&quot;')
+        
+        return text
+
 
     def _unifyLineBreak(self, data):
         """returns data with unambigous line breaks, i.e only \n.
