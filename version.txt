@@ -1,1 +1,1 @@
-SilvaDocument 0.9.3.6
+SilvaDocument 0.9.3.7
