@@ -36,7 +36,7 @@ if alignment.startswith('image-'):
 params = {
     'class': alignment, 'title': link_title
     }    
-tag = tag_template % image.image.tag(**params)
+tag = tag_template % image.tag(**params)
 
 if link:
     tag = '<a class="image" href="%s" title="%s" target="%s">%s</a>' % (
