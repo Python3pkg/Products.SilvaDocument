@@ -115,7 +115,7 @@
       It&#8217;s good practice to give the link of an image a title, which will appear as a tooltip.
     </li>
     <li>
-      Set an optional target for the link, such as &#8216;_blank&#8217; to open a new window.
+      Set an optional target for the link. Turning on &#8220;new window&#8221; inserts &#8216;_blank&#8217;.
     </li>
     <li>A &#8216;float&#8217; alignment allows the next document element
       to wrap &#8211; if there&#8217;s room.
