@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.6 2003/10/06 14:59:01 zagy Exp $
+# $Id: test_editorsupport.py,v 1.7 2003/10/10 15:19:23 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -10,15 +10,15 @@ from Testing import ZopeTestCase
 
 import unittest
 
-from Products.SilvaDocument.EditorSupportNested import \
-    Token, Parser, Interpreter
+from Products.SilvaDocument.silvaparser import \
+    Token, PParser, Interpreter
 
-class ParserTest(unittest.TestCase):
+class PParserTest(unittest.TestCase):
 
     large_text = """Kaum standen am folgenden Tage die hohen Felsengipfel im Glanz des Sonnenlichts, so hŸpfte Gustav aus dem Bette und fand - wem kommt dabey nicht das ehemahls selbst genossene kindische EntzŸcken beym Anblick des Weihnachtsgeschenks ins GedŠchtniss? - einen netten Anzug auf dem Stuhle am Bette, den die Gattinn des Schultheissen von den Sšhnen eines im Flecken wohnenden Edelmannes, einstweilen angenommen hatte, da sich nicht so schnell, als sie es jetzt wŸnschte, die NŠhnadeln zu Buchenthal in Bewegung setzen liessen. Ewalds hatten ein Weilchen auf das Benehmen des kleinen Lieblings gelauscht, und šffneten das Gemach, als sich eben seine Empfindungen in ein lautes ÈAch wie schšn!Ç auflšsten. ÈGuten Tag, Papa, guten Tag, Mama!Ç schluchzte Gustav, und eilte den Kommenden entgegen, um mit tausend HŠndekŸssen ihnen Dank und Liebe zu zollen. Die guten Alten staunten bey dem seltenen FeingefŸhl eines so kleinen Knaben, und hŠtten von diesem Augenblicke gegen die SchŠtze von Golconda, dem aufgenommenen Pflegling nicht entsagt. Die muthigen Apfelschimmel stampften schon ungeduldig im Hofe den Boden. Gustav stack geschwind mit Ewalds HŸlfe in dem ganz passenden Anzuge, und glich einem jungen Liebesgott, indess die Gattin des Schultheissen alle die kleinen hŠuslichen Angelegenheiten und die GeschŠfte des Tages an das Gesinde austheilte, ihm nochmahls Achtsamkeit und Fleiss empfahl, genoss Gustav eine wohlschmeckende Milchsuppe, denn Caffee kam selten, bloss bey ganz ausnehmenden FŠllen, in Ewalds Haus, weil diese Leute einen gewissen edlen Stolz im Entsagen allen dessen, was das Ausland zeugte, suchten, und sich genŸgsam an das, was auf heimathlichem Boden wuchs, hielten. Auch kannte Ewald lebende Beyspiele genug, dass Neigung und Geschmack an dem, das Blut in Wallung setzenden - und schlecht gekocht, den Magen schlaff machenden - Caffee sich beym weiblichen Geschlechte so leicht in Leidenschaft umwandle, als beym mŠnnlichen die Liebe zum Schnaps. Seine Familie zŠhlte einige unglŸckliche Beweise dieses Satzes, die dem wohlwollenden Manne eine unumstšssliche Abneigung gegen diese Schote einflšssten, obschon seine škonomische Lage ihm allenfalls auch heutigen Tages, wo Caffee so ungemein gestiegen ist, dass man ihn kaum bezahlen kann - gestattet hŠtte, denselben ohne deutsche Mengsel und sonstige HŸlfsmittel, die Caffee heissen, ohne es zu seyn, zwey Mahl tŠglich zu geniessen. DŠchten und handelten doch alle Deutsche wie Ewald! Zehnmahl hatte die geschŠftige Alte alle nšthigen Befehle schon gegeben, und eben so oft noch eine Kleinigkeit nachzuholen. Jetzt suchte sie einen SchlŸssel, den sie in den HŠnden hielt, dann einen Pelzmantel, den sie im Juny doch gewiss nicht nšthig hatte. Ewald lŠchelte und ging an den Wagen. Das gute Hausweib hatte, obschon es nahe an den Sechzigen stand, noch keinen vollen Tag die PfŠhle im Stich gelassen, in denen es von Jugend auf lebte und webte; bloss Theilnahme und Liebe zu Gustav, konnte es zu diesem Entschluss bewegen. Endlich kam sie mit zwey Schachteln von ziemlichem Umfange voll Victualien, eine Magd folgte mit einem dito Sack, und hinten auf dem Wagen blšckten zwey festgebundene Hammel um baldige Entlassung aus so lŠssigen Fesseln. Die Hofhunde bellten zum Abschiede, Hans schwang die Peitsche, und pfeilschnell flogen die ungeduldigen Apfelschimmel zum Flecken hinaus. GlŸck auf den Weg!"""
     
     def test_simpleemph(self):
-        parser = Parser("++foobar++      blafasel")
+        parser = PParser("++foobar++      blafasel")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 5)
@@ -30,7 +30,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[4].text, 'blafasel')
         
     def test_boldasterix(self):
-        parser = Parser("*****")
+        parser = PParser("*****")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 3)
@@ -39,7 +39,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[2].kind, Token.STRONG_END)
        
     def test_boldasterix2(self):
-        parser = Parser("******")
+        parser = PParser("******")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 4)
@@ -48,7 +48,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[3].kind, Token.STRONG_END)
       
     def test_italicplus(self):
-        parser = Parser("+++++")
+        parser = PParser("+++++")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 3)
@@ -57,7 +57,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[2].kind, Token.EMPHASIS_END)
 
     def test_bolditalic(self):
-        parser = Parser("**++foobar++**")
+        parser = PParser("**++foobar++**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 5)
@@ -67,7 +67,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[4].kind, Token.STRONG_END)
        
     def test_italicbold(self):
-        parser = Parser("++**foobar**++")
+        parser = PParser("++**foobar**++")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 5)
@@ -77,7 +77,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[4].kind, Token.EMPHASIS_END)
        
     def test_underline(self):
-        parser = Parser("__i am underlined__")
+        parser = PParser("__i am underlined__")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 7)
@@ -85,7 +85,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[6].kind, Token.UNDERLINE_END)
          
     def test_underline2(self):
-        parser = Parser("__under**lined and **bold** and st__uff__")
+        parser = PParser("__under**lined and **bold** and st__uff__")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 19)
@@ -103,7 +103,7 @@ class ParserTest(unittest.TestCase):
             ("This alike: [**]", 9),
             ]
         for text, length in texts:
-            parser = Parser(text)
+            parser = PParser(text)
             parser.run()
             t = parser.getResult().tokens
             self.assertEquals(len(t), length)
@@ -117,7 +117,7 @@ class ParserTest(unittest.TestCase):
             'https://asdf.com/blablubb/sdfa/df/dfa?sdfasd=434&ds=ddf%20#foo'
         ]
         for url in urls:
-            parser = Parser(url)
+            parser = PParser(url)
             parser.run()
             t = parser.getResult().tokens
             self.assertEquals(len(t), 1)
@@ -126,7 +126,7 @@ class ParserTest(unittest.TestCase):
             self.assertEquals(t.text, url)
 
     def test_link(self):
-        parser = Parser("click ((here|http://here.com)) to see")
+        parser = PParser("click ((here|http://here.com)) to see")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 11)
@@ -137,7 +137,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[6].kind, Token.LINK_END)
 
     def test_linktarget(self):
-        parser = Parser("click ((here|http://here.com|_top)) to see")
+        parser = PParser("click ((here|http://here.com|_top)) to see")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 14)
@@ -150,7 +150,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[9].kind, Token.LINK_END)
 
     def test_superscriptbold(self):
-        parser = Parser("**foo^^bar^^**")
+        parser = PParser("**foo^^bar^^**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 6)
@@ -163,7 +163,7 @@ class ParserTest(unittest.TestCase):
         
     
     def test_supersubscript(self):
-        parser = Parser("a~~1~~^^2^^+a~~2~~^^2^^=a~~3~~^^2^^")
+        parser = PParser("a~~1~~^^2^^+a~~2~~^^2^^=a~~3~~^^2^^")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 23)
@@ -174,7 +174,7 @@ class ParserTest(unittest.TestCase):
         self.assertEquals(t[6].kind, Token.SUPERSCRIPT_END)
 
     def test_softbreak(self):
-        parser = Parser("a\nb\n\n\n\nc")
+        parser = PParser("a\nb\n\n\n\nc")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 5)
@@ -186,11 +186,11 @@ class ParserTest(unittest.TestCase):
        
     def test_largesimpletext(self):
         # this is basicly a speed test
-        parser = Parser(self.large_text)
+        parser = PParser(self.large_text)
         parser.run()
 
     def test_index(self):
-        parser = Parser("A Word[[Word]] blafasel")
+        parser = PParser("A Word[[Word]] blafasel")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 8)
@@ -199,7 +199,7 @@ class ParserTest(unittest.TestCase):
 
 
     def test_escape(self):
-        parser = Parser("In Silva markup **bold** is marked up as \**bold\**")
+        parser = PParser("In Silva markup **bold** is marked up as \**bold\**")
         parser.run()
         t = parser.getResult().tokens
         self.assertEquals(len(t), 23)
@@ -207,9 +207,10 @@ class ParserTest(unittest.TestCase):
 
     def test_alot(self):
         # speed test, this took > 10 minutes some time ago
-        parser = Parser("A paragraph. Which includes **bold**, ++italic++, __underlined__, a ((hyperlink|http://www.infrae.com)), and an index item[[index item]]. But we have more **bold** and ++italic++; even **++bold-italic++** or **__bold-underlinded__**. **++__bold-italic-underlined-superscript__++**.")
+        parser = PParser("A paragraph. Which includes **bold**, ++italic++, __underlined__, a ((hyperlink|http://www.infrae.com)), and an index item[[index item]]. But we have more **bold** and ++italic++; even **++bold-italic++** or **__bold-underlinded__**. **++__bold-italic-underlined-superscript__++**.")
         parser.run()
         t = parser.getResult().tokens
+
 
 class InterpreterTest(unittest.TestCase):
 
@@ -332,6 +333,24 @@ class InterpreterTest(unittest.TestCase):
             (t.STRONG_END, '**'),
             (t.CHAR, '.'),
             ], 'this becomes **bold**.'),
+        ([
+            (t.CHAR, 'click'),
+            (t.WHITESPACE, ' '),
+            (t.LINK_START, '(('),
+            (t.CHAR, 'here'),
+            (t.LINK_SEP, '|'),
+            (t.LINK_URL, 'http://www.asdf.com'),
+            (t.LINK_END, '))'),
+            ], 'click <link url="http://www.asdf.com">here</link>'),
+        ([
+            (t.CHAR, 'click'),
+            (t.WHITESPACE, ' '),
+            (t.LINK_START, '(('),
+            (t.CHAR, 'here'),
+            (t.LINK_SEP, '|'),
+            (t.CHAR, '../foo'),
+            (t.LINK_END, '))'),
+            ], 'click <link url="../foo">here</link>')
         ]
 
     def test_helper(self):
@@ -349,7 +368,7 @@ class InterpreterTest(unittest.TestCase):
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(InterpreterTest))
-    suite.addTest(unittest.makeSuite(ParserTest))
+    suite.addTest(unittest.makeSuite(PParserTest))
     return suite
 
 def main():
