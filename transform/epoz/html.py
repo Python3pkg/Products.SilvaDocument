@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.1.2.3 $'
+__version__='$Revision: 1.1.2.4 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -498,7 +498,7 @@ class a(Element):
                 self.attr.href == '#' or self.attr.href is None)):
             has_only_index = 1
             for child in self.find():
-                if child.name() != 'Text' or child.asBytes(encoding='UTF-8') != u'index':
+                if child.name() != 'Text' or child.asBytes(encoding='UTF-8') != 'index':
                     return Frag(self.content.convert(context),
                                     silva.index(
                                     name=self.attr.name,
