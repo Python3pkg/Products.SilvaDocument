@@ -7,14 +7,21 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
-content = node.get_content()
-texts = [context.service_editorsupport.render_text_as_html(child) 
-            for child in node.childNodes 
-            if child.nodeType == node.ELEMENT_NODE and child.nodeName == 'li'
-        ]
+request = context.REQUEST
+model = request.model
+node = request.node
+editorsupport = model.service_editorsupport
+view_type = (context.id == 'mode_view') and 'public' or 'edit'
+
+texts = []
+for child in node.childNodes:
+    if child.nodeType == node.ELEMENT_NODE and child.nodeName == 'li':
+        supp = editorsupport.getMixedContentSupport(model, child)
+        texts.append(supp.renderHTML(view_type=view_type))
+        
 if node.hasAttribute('type'):
     type = node.getAttribute('type')
 else:
     type = 'disc'
+    
 return context.util.render_list(type, texts)

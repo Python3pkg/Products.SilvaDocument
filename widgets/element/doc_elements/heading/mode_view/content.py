@@ -10,8 +10,7 @@
 request = context.REQUEST
 model = request.model
 node = request.node
-editorsupport = model.service_editorsupport
-view_type = (context.id == 'mode_view') and 'public' or 'edit'
+editosupport = model.service_editorsupport
 
-supp = editorsupport.getMixedContentSupport(model, node)
-return supp.renderHTML(view_type=view_type)
+supp = editosupport.getMixedContentSupport(model, node)
+return supp.renderHTML(view_type='public')

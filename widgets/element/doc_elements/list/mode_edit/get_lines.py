@@ -7,7 +7,9 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
+request = context.REQUEST
+model = request.model
+node = request.node
 editorsupport = context.service_editorsupport
 
 l = 0
@@ -15,7 +17,8 @@ for child in node.childNodes:
     if child.nodeType != node.ELEMENT_NODE:
         continue
     if child.nodeName == 'li':
-        text = editorsupport.render_text_as_editable(child)
+        supp = editorsupport.getMixedContentSupport(model, child)
+        text = supp.renderEditable()
         t = len(text) / 40
         if t == 0:
             t = 1

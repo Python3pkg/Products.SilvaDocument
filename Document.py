@@ -1,6 +1,6 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.17 $
+# $Revision: 1.18 $
 # Zope
 
 from StringIO import StringIO
@@ -31,6 +31,8 @@ from transform.base import Context
 
 from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
 from Products.Silva.interfaces import IVersion
+
+from Products.SilvaDocument import externalsource
 
 icon="www/silvadoc.gif"
 addable_priority = -1
@@ -65,10 +67,7 @@ class Document(CatalogedVersionedContent):
         """
         non_cacheable_elements = ['toc', 'code', 'externaldata', ]
         
-        is_cacheable = 1 
-    
         viewable = self.get_viewable()
-
         if viewable is None:
             return 0
 
@@ -77,33 +76,16 @@ class Document(CatalogedVersionedContent):
         for node in viewable.content.documentElement.childNodes:
             node_name = node.nodeName
             if node_name in non_cacheable_elements:
-                is_cacheable = 0
-                break
+                return 0
             # FIXME: how can we make this more generic as it is very
             # specific now..?
             if node_name == 'source':
-                is_cacheable = self._source_element_cacheability_helper(node)
+                is_cacheable = externalsource.isSourceCacheable(
+                    self.aq_inner, node)
+                if not is_cacheable:
+                    return 0
+        return 1
 
-        return is_cacheable
-
-    # XXX move to function in SilvaExternalSoucrse!
-    def _source_element_cacheability_helper(self, node):
-        # FIXME: how can we make this more generic as it is very
-        # specific now..?
-        id = node.getAttribute('id').encode('ascii')
-        source = getattr(self.aq_inner, id, None)
-        parameters = {}        
-        for child in [child for child in node.childNodes 
-                      if child.nodeType == child.ELEMENT_NODE 
-                      and child.nodeName == 'parameter']:
-            child.normalize()
-            name = child.getAttribute('key').encode('ascii')
-            value = [child.nodeValue for child in child.childNodes 
-                     if child.nodeType == child.TEXT_NODE]
-            value = ' '.join(value)
-            parameters[name] = value
-        return source.is_cacheable(**parameters)
-    
     security.declareProtected(SilvaPermissions.ReadSilvaContent,
                               'to_xml')
     def to_xml(self, context):
@@ -125,38 +107,58 @@ class Document(CatalogedVersionedContent):
         version.to_xml(context)        
         f.write('</silva_document>')
 
-
     security.declareProtected(SilvaPermissions.ChangeSilvaContent, 
                               'editor_storage')
-    def editor_storage(self, string=None, editor='eopro3_0', encoding='UTF-8'):
+    def editor_storage(self, string=None, editor='kupu', encoding=None):
         """provide xml/xhtml/html (GET requests) and (heuristic) 
            back-transforming to xml/xhtml/html (POST requests)
         """
         transformer = EditorTransformer(editor=editor)
 
+        # we need to know what browser we are dealing with in order to know 
+        # what html to produce, unfortunately Mozilla uses different tags in 
+        # some cases (b instead of strong, i instead of em)
+        browser = 'Mozilla'
+        if self.REQUEST['HTTP_USER_AGENT'].find('MSIE') > -1:
+            browser = 'IE'
+
         if string is None:
-            ctx = Context(f=StringIO(), last_version=1, url=self.absolute_url())
+            ctx = Context(f=StringIO(), 
+                            last_version=1, 
+                            url=self.absolute_url(), 
+                            browser=browser,
+                            model=self)
             self.to_xml(ctx)
             htmlnode = transformer.to_target(sourceobj=ctx.f.getvalue(), context=ctx)
-            if encoding:
-                return htmlnode.asBytes(encoding=encoding)
+            if encoding is not None:
+                ret = htmlnode.asBytes(encoding=encoding)
+                ret = ret.replace('\xa0', '&nbsp;')
             else:
-                return unicode(htmlnode.asBytes('utf8'),'utf8')
+                ret = unicode(htmlnode.asBytes('utf8'),'utf8')
+                ret = ret.replace(u'\xa0', u'&nbsp;')
+            #print 'returning:', repr(ret)
+            return ret
         else:
+            #print 'incoming', repr(string)
             version = self.get_editable()
             if version is None:
                 raise "Hey, no version to store to!"
             
-            ctx = Context(url=self.absolute_url())
+            ctx = Context(url=self.absolute_url(), 
+                            browser=browser, 
+                            model=self, 
+                            request=self.REQUEST)
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
-            title = silvanode.find_one('title').extract_text()
-            docnode = silvanode.find_one('doc')
+            title = silvanode.find('title')[0].extract_text()
+            docnode = silvanode.find('doc')[0]
             content = docnode.asBytes(encoding="UTF8")
             version.content.manage_edit(content) # needs utf8-encoded string
-            self.set_title(title) # needs unicode
+            version.set_title(title) # needs unicode
+            version.sec_update_last_author_info()
             
             # Clear widget cache for this version.
             version.clearEditorCache()
+            #print 'storing:', repr(content)
             
     security.declarePrivate('get_indexables')
     def get_indexables(self):
@@ -183,6 +185,33 @@ class Document(CatalogedVersionedContent):
             version_object = getattr(self, str(version), None)
             if version_object:
                 self.service_editor.clearCache(version_object.content)
+
+    security.declarePublic('PUT')
+    def PUT(self, REQUEST):
+        """PUT support"""
+        try:
+            html = REQUEST['BODYFILE'].read()
+            self.editor_storage(html, 'kupu')
+
+            # invalidate Document cache
+            version = self.get_editable()
+            version.clearEditorCache()
+
+            # XXX This can be removed, right?
+            transformed = self.editor_storage(editor='kupu', encoding="UTF-8")
+
+            return transformed
+        except:
+            # a tad ugly, but for debug purposes it would be nice to see 
+            # what's actually gone wrong
+            import sys, traceback
+            exc, e, tb = sys.exc_info()
+            print '%s: %s' % (exc, e)
+            print '\n%s' % '\n'.join(traceback.format_tb(tb))
+            print
+            # reraise the exception so the enduser at least sees something's 
+            # gone wrong
+            raise
 
 InitializeClass(Document)
 
@@ -305,7 +334,7 @@ def xml_import_handler(object, node):
 
     return newdoc
 
-class _SilvaDocumentPolicy(Persistent):
+class SilvaDocumentPolicy(Persistent):
 
     __implements__ = IContainerPolicy
 
@@ -314,4 +343,3 @@ class _SilvaDocumentPolicy(Persistent):
             'index', title)
         container.index.sec_update_last_author_info()
         
-SilvaDocumentPolicy = _SilvaDocumentPolicy()

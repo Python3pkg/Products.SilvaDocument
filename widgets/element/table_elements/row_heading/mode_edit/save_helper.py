@@ -10,6 +10,9 @@
 request = context.REQUEST
 node = request.node
 data = request['data']
-editorsupport = context.service_editorsupport
 
-editorsupport.replace_heading(node, data)
+model = node.get_content()
+
+editorsupport = context.service_editorsupport
+supp = editorsupport.getMixedContentSupport(model, node)
+supp.parse(data)

@@ -7,8 +7,11 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
-content = node.get_content()
+request = context.REQUEST
+model = request.model
+node = request.node
+editorsupport = model.service_editorsupport
+view_type = (context.id == 'mode_view') and 'public' or 'edit'
 
 type = None
 if node.hasAttribute('type'):
@@ -27,11 +30,12 @@ while 1:
     pair = []
     child = items[i]
     if child.nodeName == 'dt':
-        pair.append(context.service_editorsupport.render_text_as_html(child))
+        supp = editorsupport.getMixedContentSupport(model, child)
+        pair.append(supp.renderHTML(view_type=view_type))
         nextChild = items[i+1]
         if nextChild.nodeName == 'dd':
-            pair.append(context.service_editorsupport.render_text_as_html(
-                nextChild))
+            supp = editorsupport.getMixedContentSupport(model, nextChild)
+            pair.append(supp.renderHTML(view_type=view_type))
             pairs.append(pair)
             i += 1
         else:
@@ -41,7 +45,8 @@ while 1:
     else:
         # as with the dt following a dt, a dd following a dd should not happen,
         # but let's allow it anyway
-        pair = ['', context.service_editorsupport.render_text_as_html(child)]
+        supp = editorsupport.getMixedContentSupport(model, child)
+        pair = ['', supp.renderHTML(view_type=view_type)]
     i += 1
 
 return context.util.render_dlist(type, pairs)

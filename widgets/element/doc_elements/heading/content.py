@@ -7,5 +7,10 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
-return context.service_editorsupport.render_heading_as_html(node)
+request = context.REQUEST
+model = request.model
+node = request.node
+editorsupport = model.service_editorsupport
+
+supp = editorsupport.getMixedContentSupport(model, node)
+return supp.renderHTML(view_type='edit')

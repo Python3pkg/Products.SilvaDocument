@@ -11,11 +11,12 @@ editorsupport = context.service_editorsupport
 request = context.REQUEST
 node = request.node
 
+model = node.get_content()
+
 if request['what'] != 'pre':
     context.element_switch()
     return
 
-# don't need to conver this, later on we will convert it in replace_text()
 data = request['data']
-
-editorsupport.replace_pre(node, data)
+supp = editorsupport.getMixedContentSupport(model, node)
+supp.parse(data)

@@ -7,7 +7,10 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
+request = context.REQUEST
+model = request.model
+node = request.node
+editorsupport = model.service_editorsupport
 columns_info = context.get_columns_info()
 
 # FIXME: Using CSS this hairball is slightly less hairy
@@ -32,9 +35,8 @@ for child in node.childNodes:
                     for p_node in field.childNodes:
                         if p_node.nodeType == node.ELEMENT_NODE:
                             break
-                    content = \
-                        context.service_editorsupport.render_text_as_html(
-                            p_node)
+                    supp = editorsupport.getMixedContentSupport(model, p_node)
+                    content = supp.renderHTML(view_type='public')
                 else:
                     context.service_editor.setViewer('service_sub_previewer')
                     content = context.service_editor.renderView(field)
@@ -50,17 +52,17 @@ for child in node.childNodes:
         table_data.append(
             """<tr>\n%s\n</tr>""" % '\n'.join(row_data))
     if child.nodeName == 'row_heading':
+        supp = editorsupport.getMixedContentSupport(model, child)
         table_data.append(
             '<tr class="rowheading">\n<td colspan="%s">\n  %s\n</td>\n</tr>' % (
-            nr_of_columns, 
-            context.service_editorsupport.render_heading_as_html(child)))
+            nr_of_columns, supp.renderHTML(view_type='public')))
 
 table = []
-table.append("""<table class="silvatable %s" width="100%%" cellspacing="0" cellpadding="3px">""" % (type))
+table.append("""<table class="silvatable %s" cellspacing="0" cellpadding="3px">""" % (type))
 # this is always empty in rendered html
 # table.append("""<caption>%s</caption>""" % (caption))
 for col in columns_info:
-    table.append("""<col width="%s" class="align-%s" valign="top"/>""" % (
+    table.append("""<col width="%s" class="align-%s" />""" % (
         col['html_width'], col['align']))
 table.append("""<tbody>""")
 table.append('\n'.join(table_data))

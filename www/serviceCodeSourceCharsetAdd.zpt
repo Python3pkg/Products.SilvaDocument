@@ -5,14 +5,14 @@ Version of this file: $Revision: 1.2 $
 -->
 <h1 tal:replace="structure here/manage_page_header">Header</h1>
 
-<h2 tal:define="form_title string:Add Silva Document"
+<h2 tal:define="form_title string:Add Silva CodeSource Charset Service"
     tal:replace="structure here/manage_form_title">Form Title</h2>
 
 <p class="form-help">
-Add Silva Document.
+Add Silva CodeSource Charset Service.
 </p>
 
-<form action="manage_addDocument" method="post">
+<form action="manage_addCodeSourceCharsetService" method="post">
 <table cellspacing="0" cellpadding="2" border="0">
   <tr>
     <td align="left" valign="top">
@@ -21,7 +21,7 @@ Add Silva Document.
     </div>
     </td>
     <td align="left" valign="top">
-    <input type="text" name="id" size="40" />
+    <input type="text" name="id" size="40" value="service_old_codesource_charset" />
     </td>
   </tr>
   <tr>

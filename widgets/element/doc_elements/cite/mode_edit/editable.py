@@ -7,6 +7,8 @@
 ##parameters=node_name
 ##title=
 ##
+request = context.REQUEST
+model = request.model
 node = context.REQUEST.node
 editorsupport = context.service_editorsupport
 editable = []
@@ -15,7 +17,8 @@ for child in node.childNodes:
         continue
     if child.nodeName != node_name:
         continue
-    editable.append(editorsupport.render_text_as_editable(child))
+    supp = editorsupport.getMixedContentSupport(model, child)
+    editable.append(supp.renderEditable())
 
 return '\r\n\r\n'.join(editable)
 

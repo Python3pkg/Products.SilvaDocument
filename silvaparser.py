@@ -1,25 +1,25 @@
-# Copyright (c) 2002 Infrae. All rights reserved.
+# Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.12 2004/02/06 16:19:53 guido Exp $
-from __future__ import nested_scopes
-
+# $Id: silvaparser.py,v 1.13 2004/07/21 11:46:42 jw Exp $
 # python
 import re
 import operator
-from xml.dom.minidom import parseString
+from xml.dom.minidom import DOMImplementation
 
 # sibling
 from Products.SilvaDocument.search import Search, HeuristicSearch
-from Products.SilvaDocument.interfaces import IParserState, IHeuristicsNode
+from Products.SilvaDocument.interfaces import \
+    ISilvaParserState, IHeuristicsNode, IParser, IInterpreter, \
+    ISilvaParserToken
 
 
-def _initialize_patterns(patterns):
+def initParserPatterns(patterns):
     compiled = []
     for pattern_str, token_id in patterns:
         compiled.append((re.compile(pattern_str), token_id))
     return tuple(compiled)
 
-URL_PATTERN = r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
         
 class InterpreterError(Exception):
     pass
@@ -27,6 +27,8 @@ class InterpreterError(Exception):
 
 class Token:
     """Silva markup tokens"""
+
+    __implements__ = ISilvaParserToken
     
     EMPHASIS_START = 10
     EMPHASIS_END = 11
@@ -56,6 +58,7 @@ class Token:
     PARENTHESIS_CLOSE = 94
     
     CHAR = 100
+    EAT = 200
 
     
     _start_end_map = {
@@ -68,33 +71,11 @@ class Token:
         INDEX_START: INDEX_END,
     }
     
-    _start_tokens = {
-        STRONG_START: 1,
-        EMPHASIS_START: 1,
-        UNDERLINE_START: 1,
-        SUPERSCRIPT_START: 1,
-        SUBSCRIPT_START: 1,
-        LINK_START: 1,
-        INDEX_START: 1,
-    }
-    
-    _end_tokens = {
-        STRONG_END: -1,
-        EMPHASIS_END: -1,
-        UNDERLINE_END: -1,
-        SUPERSCRIPT_END: -1,
-        SUBSCRIPT_END: -1,
-        LINK_END: -1,
-        INDEX_END: -1,
-    }
-
     _nesting = {
         PARENTHESIS_OPEN: 1,
-        PARENTHESIS_CLOSE: 1,
+        PARENTHESIS_CLOSE: -1,
     }
-    _nesting.update(_start_tokens)
-    _nesting.update(_end_tokens)
-
+       
     def __init__(self, kind, text):
         self.kind = kind
         self.text = text
@@ -115,10 +96,21 @@ class Token:
         return "<%r-%i>" % (self.text, self.kind)
 
 
+def initToken(t=Token):
+    t._start_tokens = s = {}
+    t._end_tokens = e = {}
+    n = t._nesting
+    for start, end in t._start_end_map.items():
+        s[start] = 1
+        e[end] = -1
+    n.update(s)
+    n.update(e)
+initToken()
+
 class ParserState:
     """State of parsing silva markup"""
     
-    __implements__ = IParserState, IHeuristicsNode
+    __implements__ = ISilvaParserState, IHeuristicsNode
     
     def __init__(self, text, consumed, tokens, parent=None):
         self.text = text
@@ -203,8 +195,10 @@ class Parser(HeuristicSearch):
         
         abstract
     """
-    
-    children_per_char = 10
+
+    __implements__ = IParser
+
+    children_per_char = 100
 
     def __init__(self, text):
         problem = ParserState(text, 0, [])
@@ -220,7 +214,7 @@ class Parser(HeuristicSearch):
             m = pattern.match(text)
             if m is None:
                 continue
-            t = Token(token_id, m.group(1))
+            t = self.getToken(token_id, m.group(1))
             tokens = node.tokens[:]
             tokens.append(t)
             p = ParserState(node.text, node.consumed + len(t.text), tokens,
@@ -240,7 +234,7 @@ class Parser(HeuristicSearch):
             return 0
         if node.openclose != 0:
             return 0
-        p = Interpreter(node.tokens)
+        p = self.getInterpreter(node)
         try:
             p.parse()
         except InterpreterError:
@@ -272,14 +266,17 @@ class Parser(HeuristicSearch):
             pattern_badness += 1 
         h = ((int(kind_sum/10))/10.0/tokens + tokens/consumed) * parenthesis + \
             pattern_badness
-        #if node.text == "click ((Journal & Books|simple?field_search=reference_type:(journal%20book))) to see":
-        #    print h, node.tokens
-        #print node.text, node.tokens, h
         return h
 
     def getResult(self):
         return self.results[0]
     
+    def getToken(self, token_id, token_text):
+        return Token(token_id, token_text)
+
+    def getInterpreter(self, tokens):
+        return Interpreter(tokens)
+        
     def _generate_fallback_node(self, text):
         token = Token(Token.CHAR, text)
         node = ParserState(text, len(text), tokens=[token])
@@ -291,7 +288,7 @@ class PParser(Parser):
     """Parser for silva markup P nodes
     """
 
-    patterns = _initialize_patterns([
+    patterns = initParserPatterns([
         (r'(\+\+)[^\s]', Token.EMPHASIS_START),
         (r'(\+\+)([^A-Za-z0-9]|$)', Token.EMPHASIS_END),
         
@@ -328,7 +325,7 @@ class PParser(Parser):
 
 class HeadingParser(Parser):
     
-    patterns = _initialize_patterns([
+    patterns = initParserPatterns([
         (r'(\+\+)[^\s]', Token.EMPHASIS_START),
         (r'(\+\+)([^A-Za-z0-9]|$)', Token.EMPHASIS_END),
         
@@ -345,17 +342,19 @@ class HeadingParser(Parser):
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
+        (r'([\r\n])', Token.EAT),
         ])
 
 
 class LinkParser(Parser):
 
-    patterns = _initialize_patterns([
+    patterns = initParserPatterns([
         (URL_PATTERN, Token.LINK_URL),
         (r'([ \t\f\v]+)', Token.WHITESPACE),
         (r'(\\)', Token.ESCAPE),
         (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
         (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
+        (r'([\r\n])', Token.EAT),
         ])
 
 
@@ -368,6 +367,8 @@ class Interpreter:
         raised.
 
     """
+
+    __implements__ = IInterpreter
 
     _inline_preceeding_map = {
         '(': ')',
@@ -382,14 +383,16 @@ class Interpreter:
         ':': None,
     }
 
-    def __init__(self, tokens):
-        self.tokens = tokens
+    def __init__(self, state):
+        self.tokens = state.tokens
         # using minidom, it's *much* faster than ParsedXML
-        self.dom = parseString('<p/>')
+        self.dom = DOMImplementation().createDocument('http://www.infrae.com/xml', 'p',
+            None)
         self.initialize_rulesets()
         # inline markup nodes: **, ++, __ :
         self._inline_nodes = []
-        self.ruleset = 'default'
+        self.ruleset('default')
+        self._finished = 0
        
     def parse(self):
         current_node = self.dom.firstChild
@@ -400,13 +403,15 @@ class Interpreter:
         if current_node != self.dom.firstChild:
             raise InterpreterError, "Not enough close tokens"
         self.validate()
+        self._finished = 1
        
     def toxml(self):
+        if not self._finished:
+            raise ValueError, "No result found."
         return self.dom.toxml()
 
     def handle_token(self, token, node):
-        ruleset = self.rules[self.ruleset]
-        token_handler = ruleset.get(token.kind, None)
+        token_handler = self.active_rules.get(token.kind, None)
         if token_handler is None:
             raise InterpreterError, "Invalid token %r in ruleset %s" % (
                 token, self.ruleset)
@@ -438,11 +443,12 @@ class Interpreter:
             Token.PARENTHESIS_OPEN: self.text,
             Token.PARENTHESIS_CLOSE: self.text,
             Token.CHAR: self.text,
+            Token.EAT: self.eat,
         }
 
         self.rules['link-text'] = {
-            Token.PARENTHESIS_OPEN: self.text,
-            Token.PARENTHESIS_CLOSE: self.text,
+            Token.PARENTHESIS_OPEN: self.link_text,
+            Token.PARENTHESIS_CLOSE: self.link_text,
             Token.STRONG_START: self.strong_start,
             Token.STRONG_END: self.strong_end,
             Token.EMPHASIS_START: self.emphasis_start,
@@ -454,8 +460,9 @@ class Interpreter:
             Token.SUBSCRIPT_START: self.subscript_start,
             Token.SUBSCRIPT_END: self.subscript_end,
             Token.WHITESPACE: self.whitespace,
-            Token.CHAR: self.text,
-            Token.LINK_URL: self.text,
+            Token.SOFTBREAK: self.softbreak,
+            Token.CHAR: self.link_text,
+            Token.LINK_URL: self.link_text,
             Token.LINK_SEP: self.link_sep_aftertext,
             Token.ESCAPE: self.escape,
         }
@@ -509,58 +516,15 @@ class Interpreter:
         }
         
     def validate(self):
-        self._validate_inline_nodes()
+        # no more post validation, it confuses the users and slows down a lot
+        pass
 
-    def _validate_inline_nodes(self):
-        # XXX maybe this can be done easier?
-        for node in self._inline_nodes:
-            corresponding_char = None
-            # test start node
-            prev = node.previousSibling
-            next = node.firstChild
-            if prev is None:
-                # starts the text block -> ok
-                pass
-            elif (prev.nodeType == prev.ELEMENT_NODE and 
-                    (prev in self._inline_nodes or prev.nodeName == 'br')):
-                # it is an inline node -> ok
-                # follows a soft break -> ok
-                pass
-            elif prev.nodeType == prev.TEXT_NODE:
-                last_char = prev.nodeValue[-1]
-                if self._inline_preceeding_map.has_key(last_char):
-                    # there is a valid char preceeding, remember 
-                    # corresponding_char, if it is not None the char following
-                    # must match corresponding_char
-                    corresponding_char = self._inline_preceeding_map[
-                        last_char]
-                else:
-                    raise InterpreterError, "Invalid char %s preceeding "\
-                        "inline markup start node" % last_char
-            else:
-                raise InterpreterError,\
-                    "Invalid token preceeding inline markup start node"
-            if next is None:
-                raise InterpreterError,\
-                    "No text between start end end markup node"
-            if next.nodeType == next.TEXT_NODE and next.nodeValue[0] == ' ':
-                raise InterpreterError,\
-                    "Inline markup start nodes must be followed by "\
-                    "non-whitespace"
-            # test end node
-            prev = node.lastChild
-            next = node.nextSibling
-            if prev.nodeType == prev.TEXT_NODE and prev.nodeValue[-1] == ' ':
-                raise InterpreterError, "Inline markup end nodes must be "\
-                    "preceeded by non-whitespace"
-            if next is not None and next.nodeType == next.TEXT_NODE:
-                first_char = next.nodeValue[0]
-                if corresponding_char and corresponding_char != first_char:
-                    raise InterpreterError, "wrong corresponding char"
-                if first_char not in """ '")]}>-/:.,;!?\\""":
-                    raise InterpreterError, \
-                        "Wrong char %r following end node </%s>" % (
-                            first_char, node.nodeName)
+    def ruleset(self, set_name):
+        set = self.rules.get(set_name, None)
+        if set is None:
+            raise InterpreterError, "No such ruleset %r" % set_name
+        self.active_rules = set
+        self.active_rules_name = set_name
 
     def _get_text_node(self, node):
         if node.nodeType == node.TEXT_NODE:
@@ -627,24 +591,31 @@ class Interpreter:
         return self._end_inline(token, node, 'underline')
 
     def link_start(self, token, node):
-        self.ruleset = 'link-text'
+        self.ruleset('link-text')
         return self._start_inline(token, node, 'link')
+    
+    def link_text(self, token, node):
+        if '|' in token.text:
+            raise InterpreterError, '"|" in link_text'
+        text_node = self._get_text_node(node)
+        text_node.appendData(token.text)
+        return node
 
     def link_sep_aftertext(self, token, node):
         if node.nodeName != 'link':
             raise InterpreterError, "LINK_SEP out of link"
-        self.ruleset = 'link-url'
+        self.ruleset('link-url')
         return node
    
     def link_sep_afterurl(self, token, node):
         if node.nodeName != 'link':
             raise InterpreterError, "LINK_SEP out of link"
         node.setAttribute('target', '')
-        self.ruleset = 'link-target'
+        self.ruleset('link-target')
         return node
    
     def link_url(self, token, node):
-        self.ruleset = 'link-afterurl'
+        self.ruleset('link-afterurl')
         node.setAttribute('url', token.text)
         return node
   
@@ -669,9 +640,11 @@ class Interpreter:
         return node
     
     def link_end(self, token, node):
+        if not node.getAttribute('url') > '':
+            raise InterpreterError, "URL too short"
         if node.hasAttribute('target') and node.getAttribute('target') == '':
             node.setAttribute('target', '_blank')
-        self.ruleset = 'default'
+        self.ruleset('default')
         return self._end_inline(token, node, 'link')
         
     def superscript_start(self, token, node):
@@ -691,7 +664,7 @@ class Interpreter:
         return self._end_inline(token, node, 'sub')
  
     def index_start(self, token, node):
-        self.ruleset = 'index'
+        self.ruleset('index')
         return node.appendChild(self.dom.createElement('index'))
 
     def index_text(self, token, node):
@@ -706,23 +679,32 @@ class Interpreter:
         return node
 
     def index_end(self, token, node):
-        self.ruleset = 'default'
+        name = ''
+        if node.hasAttribute('name'):
+            name = node.getAttribute('name')
+        if not name:
+            raise InterpreterError, 'Empty index element'
+        self.ruleset('default')
         return node.parentNode
 
     def escape(self, token, node):
-        self._pre_escape_ruleset = self.ruleset
-        self.ruleset = 'escape'
+        self._pre_escape_ruleset = self.active_rules_name
+        self.ruleset('escape')
         return node
     
     def escaped_text(self, token, node):
-        self.ruleset = self._pre_escape_ruleset
+        self.ruleset(self._pre_escape_ruleset)
         return self.text(token, node)
     
     def escaped_whitespace(self, token, node):
-        self.ruleset = self._pre_escape_ruleset
+        self.ruleset(self._pre_escape_ruleset)
         return self.whitespace(token, node)
     
     def escaped_softbreak(self, token, node):
-        self.ruleset = self._pre_escape_ruleset
+        self.ruleset(self._pre_escape_ruleset)
         return self.softbreak(token, node)
+
+    def eat(self, token, node):
+        return node
+
 

@@ -2,13 +2,16 @@
 module for conversion from current 
 
    RealObjects' 2.11 Pseudo-HTML 
+   
        to
+
    silva (0.9.1) 
 
-WARNING: this is basically depricated and not maintained nymore. 
+WARNING: 
 
 This module is NOT supposed to work for later silva-versions.
 Support is only there for 3.x (see sister directory)
+
 
 This transformation tries to stay close to
 how silva maps its xml to html. I am not sure, though,
@@ -21,10 +24,11 @@ follows the ideas used with XIST (but is simpler).
 Note that we can't use XIST itself as long as 
 silva is running on a Zope version that 
 doesn't allow python2.2
+
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.6 $'
+__version__='$Revision: 1.7 $'
 
 from Products.SilvaDocument.transform.base import Element, Text, Frag
 

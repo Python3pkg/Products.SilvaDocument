@@ -1,4 +1,4 @@
-# $Id: save_helper.py,v 1.4 2003/10/12 21:11:15 zagy Exp $
+# $Id: save_helper.py,v 1.5 2004/07/21 11:46:43 jw Exp $
 from Products.Silva.mangle import String
 
 request = context.REQUEST
@@ -16,7 +16,7 @@ if link_selector == 'hiresimg_url':
     node.setAttribute('link_to_hires', '1')
     image = context.content()
     if image:
-        link = '/'.join(image_path.split('/') + ['hires_image'] )
+        link = '%s?hires' % '/'.join(image_path.split('/'))
 else:
     node.setAttribute('link_to_hires', '0')
     

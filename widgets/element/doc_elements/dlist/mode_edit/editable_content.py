@@ -7,17 +7,20 @@
 ##parameters=
 ##title=
 ##
-node = context.REQUEST.node
+request = context.REQUEST
+model = request.model
+node = request.node
 editorsupport = context.service_editorsupport
+
 retval = ''
 for child in node.childNodes:
     if child.nodeType != node.ELEMENT_NODE:
         continue
+    supp = editorsupport.getMixedContentSupport(model, child)
+    retval += supp.renderEditable().strip()
     if child.nodeName == 'dt':
-        retval += editorsupport.render_text_as_editable(child).strip() + \
-            '\r\n'
+        retval += '\r\n'
     elif child.nodeName == 'dd':
-        retval += editorsupport.render_text_as_editable(child).strip() + \
-            '\r\n\r\n'
+        retval += '\r\n\r\n'
 
 return retval

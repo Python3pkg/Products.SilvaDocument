@@ -7,6 +7,9 @@
 ##parameters=node, info
 ##title=
 ##
+request = context.REQUEST
+model = request.model
+
 if context.is_field_simple(node):
     # find p first (FIXME: inefficient)
     for child in node.childNodes:
@@ -21,9 +24,12 @@ if context.is_field_simple(node):
         return '<td class="align-%s" width="%s">&nbsp;</td>' % (info['align'], 
             info['html_width'])
     else:
-        return '<td class="align-%s" width="%s">%s</td>' % (info['align'], 
-            info['html_width'], 
-            context.service_editorsupport.render_text_as_html(node))
+        editorsupport = model.service_editorsupport
+        supp = editorsupport.getMixedContentSupport(model, node)
+        view_type = (context.id == 'mode_view') and 'public' or 'edit'
+        return '<td class="align-%s" width="%s">%s</td>' % (
+            info['align'], info['html_width'], 
+            supp.renderHTML(view_type=view_type))
 else:
     context.service_editor.setViewer('service_sub_previewer')
     content = context.service_editor.renderView(node)

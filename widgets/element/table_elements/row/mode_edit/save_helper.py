@@ -11,6 +11,9 @@ request = context.REQUEST
 row = request.node
 editorsupport = context.service_editorsupport
 node = row.firstChild
+
+model = node.get_content()
+
 while node is not None:
     field = node
     node = node.nextSibling
@@ -25,5 +28,5 @@ while node is not None:
     if not p_node:
         raise ValueError, "The stored xml is invalid."
     data = request[p_node.getNodePath('widget')]
-    editorsupport.replace_text(p_node, data)
-
+    supp = editorsupport.getMixedContentSupport(model, p_node)
+    supp.parse(data)

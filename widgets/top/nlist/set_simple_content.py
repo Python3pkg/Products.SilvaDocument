@@ -8,13 +8,16 @@
 ##title=
 ##
 editorsupport = context.service_editorsupport
+model = node.get_content()
 # break data into seperate items
 items = data.strip().split("\r\n\r\n")
 # find containing child paragraph and replace data there
 for child in node.childNodes:
     if child.nodeType == node.ELEMENT_NODE:
         break
-editorsupport.replace_text(child, items[0])
+    
+supp = editorsupport.getMixedContentSupport(model, child)
+supp.parse(items[0])
 
 # if necessary, add new list items
 if len(items) > 1:
@@ -23,5 +26,8 @@ if len(items) > 1:
     for item in items[1:]:
         li = doc.createElement('li')
         p = li.appendChild(doc.createElement('p'))
-        editorsupport.replace_text(p, item)
+        #editorsupport.replace_text(p, item)
+        supp = editorsupport.getMixedContentSupport(model, p)
+        supp.parse(item)
         node.parentNode.insertBefore(li, next)
+        

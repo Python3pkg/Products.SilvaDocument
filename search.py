@@ -1,6 +1,6 @@
 # Copyright (C) 2003 gocept, http://www.gocept.com/ 
 # Christian Zagrodnick, cz@gocept.com
-# $Id: search.py,v 1.4 2003/12/12 16:08:57 zagy Exp $
+# $Id: search.py,v 1.5 2004/07/21 11:46:42 jw Exp $
 
 # python
 from bisect import insort_right

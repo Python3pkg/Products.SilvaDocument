@@ -4,12 +4,8 @@
 from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
 import EditorSupportNested
-# See if SilvaExternalSources is installed
-try:
-    from Products import SilvaExternalSources
-    _external_sources_available = 1
-except ImportError:
-    _external_sources_available = 0
+
+from Products.SilvaDocument import externalsource
 
 def configureMiscServices(root):
     # add editor support service
@@ -41,6 +37,11 @@ def install(root):
 
     root.service_containerpolicy.register('Silva Document',
         Document.SilvaDocumentPolicy, -1)
+
+    if hasattr(root, 'service_codesource_charset'):
+        root.manage_renameObject('service_codesource_charset', 'service_old_codesource_charset')
+    elif not hasattr(root, 'service_old_codesource_charset'):
+        root.manage_addProduct['SilvaDocument'].manage_addCodeSourceCharsetService('service_old_codesource_charset', 'Service Charset for Codesources')
         
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -49,6 +50,8 @@ def uninstall(root):
     root.manage_delObjects(['service_editorsupport'])
     # uninstall metadata mapping?
     root.service_containerpolicy.unregister('Silva Document')
+    if hasattr(root, 'service_old_codesource_charset'):
+        root.manage_delObjects(['service_old_codesource_charset'])
     
 def is_installed(root):
     return hasattr(root.service_views, 'SilvaDocument')
@@ -150,10 +153,10 @@ def registerDocEditor(root):
     wr.setDisplayName('cite', 'citation')
 
     wr.setAllowed('doc', [
-        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image',
+        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image', 
         'table', 'nlist', 'toc'])
 
-    if _external_sources_available:
+    if externalsource.AVAILABLE:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_normal'))
         wr.setDisplayName('source', 'external source')
@@ -172,7 +175,7 @@ def registerDocViewer(root):
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
      
-    if _external_sources_available:
+    if externalsource.AVAILABLE:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_view'))
 
@@ -192,7 +195,7 @@ def registerDocPreviewer(root):
     wr.addWidget('code', ('service_widgets', 'element', 'doc_elements',
                                'code', 'mode_preview'))
 
-    if _external_sources_available:
+    if externalsource.AVAILABLE:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_preview'))
 

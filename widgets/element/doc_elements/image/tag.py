@@ -8,6 +8,8 @@
 ##title=
 ##
 
+from Products.Silva.mangle import entities
+
 node = context.REQUEST.node
 image = context.content()
 
@@ -36,10 +38,10 @@ if alignment.startswith('image-'):
 params = {
     'class': alignment, 'title': link_title
     }    
-tag = tag_template % image.image.tag(**params)
+tag = tag_template % image.tag(**params)
 
 if link:
     tag = '<a class="image" href="%s" title="%s" target="%s">%s</a>' % (
-        link, link_title, target, tag)
+        entities(link), link_title, target, tag)
 
 return tag
