@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 # Zope
 
 from StringIO import StringIO
@@ -18,7 +18,7 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.helpers import add_and_edit, translateCdata, getNewId
+from Products.Silva.helpers import add_and_edit, translateCdata
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva import mangle
 
@@ -245,11 +245,8 @@ def manage_addDocumentVersion(self, id, title, REQUEST=None):
 def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
-    
-    used_ids = object.objectIds()
-    while id in used_ids:
-        id = str(mangle.Id(object, id).new())
-        
+   
+    id = str(mangle.Id(object, id).unique())
     object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
     
     newdoc = getattr(object, id)
