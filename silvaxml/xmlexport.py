@@ -43,9 +43,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             for key in node.attributes.keys():
                 attributes[key] = node.attributes[key].value
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
-        if node.nodeName == 'source':
-            self.sax_source(node, attributes['id'])
-        elif node.nodeName == 'toc':
+        if node.nodeName == 'toc':
             self.sax_toc(node, attributes['toc_depth'])
         elif node.hasChildNodes():
             for child in node.childNodes:
@@ -185,25 +183,6 @@ class DocumentVersionProducer(SilvaBaseProducer):
 
         return result
         
-    def sax_source(self, node, id):
-        from Products.SilvaExternalSources.ExternalSource import getSourceForId
-        source = getSourceForId(self.context, id)
-        parameters = {}
-        for child in node.childNodes:
-            if child.nodeName == 'parameter':
-                self.startElementNS(SilvaDocumentNS, 'parameter', {'key': child.attributes['key'].value})
-                for grandChild in child.childNodes:
-                    text = ''
-                    if grandChild.nodeType == Node.TEXT_NODE:
-                        if grandChild.nodeValue:
-                            self.handler.characters(grandChild.nodeValue)
-                            text = text + grandChild.nodeValue
-                parameters[str(child.attributes['key'].value)] = text
-                self.endElementNS(SilvaDocumentNS, 'parameter')
-        if self.getSettings().externalRendering():
-            html = source.to_html(self.context.REQUEST, **parameters)
-            self.render_html(html)
-
     def sax_toc(self, node, depth):
         public = self.context.version_status() == 'public'
         if public:
