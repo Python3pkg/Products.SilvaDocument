@@ -19,8 +19,6 @@
 
   <xsl:template match="silva:metadata" />
 
-  <xsl:template match="silva:title" />
-  
   <xsl:template match="doc:doc">
     <table>
       <tr>

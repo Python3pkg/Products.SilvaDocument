@@ -22,8 +22,6 @@
   </xsl:template>
 
   <xsl:template match="silva:metadata" />
-
-  <xsl:template match="silva:title" />
   
   <xsl:template match="doc:heading[@type='normal']">
     <h3 class="heading"><xsl:apply-templates mode="text-content" /></h3>
