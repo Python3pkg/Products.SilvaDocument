@@ -8,6 +8,5 @@
 ##title=
 ##
 node = context.REQUEST.node
-image_path = node.getAttribute('path')
-
+image_path = node.getAttribute('path').encode('ascii', 'ignore')
 return context.get_image(node.get_container(), image_path)

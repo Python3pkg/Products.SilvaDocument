@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.18 $
+# $Revision: 1.19 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -67,12 +67,10 @@ class EditorSupport(SimpleItem):
                 if not _url_match.match(path):
                     # it is not an URL, so treat it as a path
                     splitpath = [p.encode('ascii','ignore') for p in path.split('/')]                    
-                    try:
-                        obj = self.restrictedTraverse(splitpath)
+                    obj = self.restrictedTraverse(splitpath, None)
+                    if obj is not None:
                         path = obj.absolute_url()
-                    except (KeyError, AttributeError), err:
-                        pass
-                
+                                        
                 result.append('<a href="%s"' %  mangle.entities(path))
                 if child.getAttribute('target'):
                     result.append(' target="%s"' %
