@@ -545,7 +545,7 @@ msgstr "Vul (indien nodig) de parameters in."
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:93
 msgid "Source description:"
-msgstr "Bron beschrijving:"
+msgstr "Omschrijving bron:"
 
 #: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
 msgid "Source is a NoneType - is it not available anymore?"
@@ -561,7 +561,7 @@ msgstr "titel:"
 
 #: /widgets/element/doc_elements/source/render.pt:19
 msgid "description:"
-msgstr "beschrijving:"
+msgstr "omschrijving:"
 
 #: /widgets/element/doc_elements/source/render.pt:32
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:38
