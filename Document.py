@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 # Zope
 
 from StringIO import StringIO
@@ -20,6 +20,7 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.helpers import add_and_edit, translateCdata, getNewId
 from Products.Silva.Version import CatalogedVersion
+from Products.Silva import mangle
 
 from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
 from Products.Silva.Metadata import export_metadata
@@ -213,7 +214,7 @@ manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
 
 def manage_addDocument(self, id, title, REQUEST=None):
     """Add a Document."""
-    if not self.is_id_valid(id):
+    if not mangle.Id(self, id).isValid():
         return
     object = Document(id)
     self._setObject(id, object)
@@ -247,7 +248,7 @@ def xml_import_handler(object, node):
     
     used_ids = object.objectIds()
     while id in used_ids:
-        id = getNewId(id)
+        id = str(mangle.Id(object, id).new())
         
     object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
     
