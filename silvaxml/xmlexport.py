@@ -55,6 +55,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 elif child.nodeType == Node.ELEMENT_NODE:
                     if child.nodeName == 'table':
                         self.sax_table(child)
+                    elif child.nodeName == 'image':
+                        self.sax_img(child)
                     else:
                         self.sax_node(child)
         else:
@@ -235,6 +237,27 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if self.getSettings().externalRendering():
             self.render_html(html)
 
+    def sax_img(self, node):
+        """Unfortunately <image> is a special case, since height and width 
+        are not stored in the document but in the Image object itself, and
+        need to be retrieved here.
+        """
+        attributes = {}
+        if node.attributes:
+            for key in node.attributes.keys():
+                attributes[key] = node.attributes[key].value
+        image_object = self.context.get_silva_object().restrictedTraverse(
+            attributes['path'].split('/'))
+        if image_object is not None:
+            image = image_object.image
+            attributes['title'] = image_object.get_title()
+            width, height = image_object.getDimensions(image)
+            attributes['width'] = str(width)
+            attributes['height'] = str(height)
+        print attributes
+        self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
+        self.endElementNS(SilvaDocumentNS, node.nodeName)
+        
     def render_html(self, html):
         self.startElementNS(SilvaDocumentNS, 'rendered_html')
         saxify(html, self.handler)
