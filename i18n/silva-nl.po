@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument 1.1\n"
-"POT-Creation-Date: Mon Nov 22 16:14:16 2004\n"
+"POT-Creation-Date: Tue Nov 23 12:32:51 2004\n"
 "PO-Revision-Date: 2004-11-22 19:22:35+0100\n"
 "Last-Translator: Eric Casteleijn <eric@infrae.com>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -212,13 +212,13 @@ msgid ""
 "The citation may contain multiple paragraphs. Separate them with an empty "
 "line."
 msgstr ""
-"Een citaat kan bestaan uit meerdere alinea's. Alinea's worden "
-"gescheiden door een lege regel."
+"Een citaat kan bestaan uit meerdere alinea's. Alinea's worden gescheiden "
+"door een lege regel."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
-msgid "<span class=\"warning\">[Code element is broken]</span>"
-msgstr "<span class=\"warning\">[Code-element is gebroken]</span>"
+msgid "Code element is broken"
+msgstr "Code-element is gebroken"
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
 msgid "Code element: ${title_or_id} at ${path}"
@@ -226,13 +226,10 @@ msgstr "Code-element: ${title_or_id} in ${path}"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
 msgid ""
-"&nbsp;No code objects (Python Scripts, Page Templates, DTML Methods) are "
-"available.<br /> &nbsp;They should be located in a (non-Silva) folder in the "
-"ZMI named ${code_source}."
-msgstr ""
-"&nbsp;Er zijn geen code-objecten (Python Scripts, Page Templates, DTML "
-"Methods) beschikbaar.<br /> &nbsp;Die zouden in een (niet-Silva) map in de "
-"ZMI met de naam ${code_source} moeten staan."
+"They should be located in a (non-Silva) folder in the ZMI named "
+"${code_source}."
+msgstr "Die zouden in een (niet-Silva) map in de ZMI met de naam "
+"${code_source} moeten staan."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
@@ -256,6 +253,13 @@ msgstr "Tip:"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
 msgid "${tip} tab to the exit button or alt-e."
 msgstr "${tip} tab naar de knop 'exit' (afsluiten) of druk op alt-e."
+
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:9
+msgid ""
+"No code objects (Python Scripts, Page Templates, DTML Methods) are available."
+msgstr ""
+"Er zijn geen code-objecten (Python Scripts, Page Templates, DTML Methods) "
+"beschikbaar."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:29
@@ -431,12 +435,12 @@ msgid "align center"
 msgstr "centreren"
 
 #: /widgets/element/doc_elements/image/render.pt:10
-msgid "[image element is broken]"
-msgstr "[afbeeldingselement is gebroken]"
+msgid "image element is broken"
+msgstr "Afbeelding-element is gebroken"
 
 #: /widgets/element/doc_elements/image/tag.py:18
-msgid "<div class=\"error\">[image reference is broken]</div>"
-msgstr "<div class=\"error\">[verwijzing naar afbeelding is gebroken]</div>"
+msgid "image reference is broken"
+msgstr "verwijzing naar afbeelding is gebroken"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:44
 #: /widgets/top/nlist/render.pt:35
@@ -548,16 +552,16 @@ msgid "Source is a NoneType - is it not available anymore?"
 msgstr "Source is a NoneType - is it not available anymore?"
 
 #: /widgets/element/doc_elements/source/render.pt:14
-msgid "id:&nbsp;${id}"
-msgstr "id:&nbsp;${id}"
+msgid "id:"
+msgstr "id:"
 
-#: /widgets/element/doc_elements/source/render.pt:17
-msgid "title:&nbsp; ${title} <br />"
-msgstr "titel:&nbsp; ${title} <br />"
+#: /widgets/element/doc_elements/source/render.pt:16
+msgid "title:"
+msgstr "titel:"
 
-#: /widgets/element/doc_elements/source/render.pt:20
-msgid "description: ${description}"
-msgstr "beschrijving: ${description}"
+#: /widgets/element/doc_elements/source/render.pt:19
+msgid "description:"
+msgstr "beschrijving:"
 
 #: /widgets/element/doc_elements/source/render.pt:32
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:38
@@ -569,27 +573,19 @@ msgstr "Geen parameters om in te vullen voor deze bron."
 msgid "Source parameters"
 msgstr "Bron parameters"
 
+#: /widgets/element/doc_elements/source/rendered_source.py:15
+#: /widgets/element/doc_elements/source/rendered_source.py:20
 #: /widgets/element/doc_elements/source/render.pt:8
-msgid "[external source element is broken]"
-msgstr "[externe bron-element is gebroken]"
+msgid "external source element is broken"
+msgstr "externe bron-element is gebroken"
 
-#: /widgets/element/doc_elements/source/rendered_source.py:14
-msgid ""
-"<div class=\"warning\"><b>[external source element is broken]</b><br /> "
-"error message: ${error}\n"
-"</div>"
-msgstr ""
-"<div class=\"warning\"><b>[externe bron-element is gebroken]</b><br /> "
-"foutmelding: ${error}\n"
-"</div>"
+#: /widgets/element/doc_elements/source/rendered_source.py:16
+msgid "error message:"
+msgstr "foutmelding:"
 
-#: /widgets/element/doc_elements/source/rendered_source.py:19
-msgid ""
-"<div class=\"warning\"><b>[external source element is broken]</b><br />\n"
-"Unfortunatly however, there no error message available... </div>"
-msgstr ""
-"<div class=\"warning\"><b>[externe bron-element is gebroken]</b><br />\n"
-"Helaas is er geen nadere foutmelding beschikbaar... </div>"
+#: /widgets/element/doc_elements/source/rendered_source.py:21
+msgid "Unfortunately however, there no error message available..."
+msgstr "Helaas is er geen nadere foutmelding beschikbaar..."
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:15
 msgid "Table of contents depth:"
@@ -692,53 +688,64 @@ msgid "edit element"
 msgstr "element bewerken"
 
 #: /widgets/macro_notes.pt:10
-msgid ""
-"&lt;a href=\"http://www.x.yz\" target=\"target\"&gt;text&lt;/a&gt; &#8212; "
-"if &#8216;target&#8217; is empty a new window opens"
-msgstr ""
-"&lt;a href=\"http://www.x.yz\" target=\"doel\"&gt;tekst&lt;/a&gt; &#8212; "
-"als &#8216;doel&#8217; leeg is opent zich een nieuw venster"
+msgid "if ${target} is empty a new window opens"
+msgstr "als ${target} leeg wordt gelaten, wordt een nieuw venster geopend"
+
+#: /widgets/macro_notes.pt:10
+msgid "target"
+msgstr "doel"
 
 #: /widgets/macro_notes.pt:11
-msgid "&lt;index&gt;index item&lt;/index&gt;"
-msgstr "&lt;index&gt;index-item&lt;/index&gt;"
+msgid "index item"
+msgstr "index-item"
 
 #: /widgets/macro_notes.pt:12
-msgid "&lt;abbr title=\"full name\"&gt;abbreviation&lt;/abbr&gt;"
-msgstr "&lt;abbr title=\"volledige term\"&gt;afkorting&lt;/abbr&gt;"
+msgid "abbreviation"
+msgstr "afkorting"
+
+#: /widgets/macro_notes.pt:12 /widgets/macro_notes.pt:13
+msgid "full name"
+msgstr "volledige tekst"
 
 #: /widgets/macro_notes.pt:13
-msgid "&lt;acronym title=\"full name\"&gt;acronym&lt;/acronym&gt;"
-msgstr "&lt;acronym title=\"volledige term\"&gt;acroniem&lt;/acronym&gt;"
+msgid "acronym"
+msgstr "acroniem"
 
-#: /widgets/macro_notes.pt:14
-msgid "&amp;lt; &lt; &#8212; &amp;gt; &gt;"
-msgstr "&amp;lt; &lt; &#8212; &amp;gt; &gt;"
+#: /widgets/macro_notes.pt:6
+msgid "bold"
+msgstr "vetgedrukt"
 
 #: /widgets/macro_notes.pt:6
 msgid ""
-"Text can be formatted &#8211; in <i>italic</i>, <b>bold</b>, etc. &#8211; "
-"with &#8220;Silva markup&#8221;:"
+"Text can be formatted &#8211; in ${italic}, ${bold}, etc. &#8211; with "
+"${silva_markup}:"
 msgstr ""
-"Tekst kan &#8211; <i>schuingedrukt</i>, <b>vetgedrukt</b>, etc. &#8211; "
-"opgemaakt worden met &#8220;Silva opmaakcodes&#8221;:"
+"Tekst kan &#8211; ${italic}, ${bold}, etc. &#8211; worden opgemaakt met "
+"${silva_markup}:"
+
+#: /widgets/macro_notes.pt:6 /widgets/macro_notes.pt:8
+msgid "italic"
+msgstr "schuingedrukt"
 
 #: /widgets/macro_notes.pt:8
-msgid ""
-"&lt;b&gt;bold&lt;/b&gt; &lt;i&gt;italic&lt;/i&gt; &lt;u&gt;underlined&lt;/"
-"u&gt; &lt;sup&gt;superscript&lt;/sup&gt; &lt;sub&gt;subscript&lt;/sub&gt;"
-msgstr ""
-"&lt;b&gt;vetgedrukt&lt;/b&gt; &lt;i&gt;schuingedrukt&lt;/i&gt; &lt;u&gt;"
-"onderstreept&lt;/u&gt; &lt;sup&gt;superscript&lt;/sup&gt; &lt;sub&gt;"
-"subscript&lt;/sub&gt;"
+msgid "subscript"
+msgstr "subscript"
 
-#: /widgets/macro_notes.pt:9
-msgid "&lt;a href=\"http://www.x.yz\"&gt;text&lt;/a&gt;"
-msgstr "&lt;a href=\"http://www.x.yz\"&gt;tekst&lt;/a&gt;"
+#: /widgets/macro_notes.pt:8
+msgid "underlined"
+msgstr "onderstreept"
+
+#: /widgets/macro_notes.pt:8
+msgid "superscript"
+msgstr "superscript"
+
+#: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:10
+msgid "text"
+msgstr "tekst"
 
 #: /widgets/top/field/render.pt:17
-msgid "&nbsp;subeditor&nbsp;"
-msgstr "&nbsp;subeditor&nbsp;"
+msgid "subeditor"
+msgstr "subeditor"
 
 #: /widgets/top/nlist/render.pt:31
 msgid "Type:"
@@ -754,8 +761,8 @@ msgid "edit parent"
 msgstr "hoger niveau bewerken"
 
 #: /widgets/top/sub/render.pt:17
-msgid "&nbsp;Nested element editor&nbsp;"
-msgstr "&nbsp;Genest element-editor&nbsp;"
+msgid "Nested element editor"
+msgstr "Genest element-editor"
 
 #: /widgets/top/sub/render.pt:20 /widgets/top/field/render.pt:20
 msgid "Up to parent"

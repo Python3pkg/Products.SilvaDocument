@@ -14,7 +14,7 @@
           <a tal:attributes="href string:${url_start}/up" title="Up to parent: alt-u" accesskey="u" i18n:attributes="title"><img tal:attributes="src string:${silva_root}/globals/edit_parent.gif" width="16" height="16" border="0" alt="edit parent" i18n:attributes="alt" /></a>
         </td>
         <td>
-          <h3 i18n:translate="">&nbsp;Nested element editor&nbsp;</h3>
+          <h3>&nbsp;<tal:block i18n:translate="">Nested element editor</tal:block>&nbsp;</h3>
         </td>
         <td class="invisible" width="16">
           <a tal:attributes="href string:${url_start}/up" title="Up to parent" i18n:attributes="title"><img tal:attributes="src string:${silva_root}/globals/edit_parent.gif" width="16" height="16" border="0" alt="edit parent" i18n:attributes="alt" /></a>

@@ -5,19 +5,19 @@
     tal:define="source here/get_source | nothing;"
     >
     <tal:block tal:condition="not:source">
-      <div class="warning"><strong i18n:translate="">[external source element is broken]</strong>
+      <div class="warning"><strong>[<tal:block i18n:translate="">external source element is broken</tal:block>]</strong>
     </tal:block>
     <tal:block tal:condition="source">
     <div class="csvsource">
     <div>
         <h3 class="front5" tal:content="source/meta_type">external source</h3>
-        <span i18n:translate="">id:&nbsp;<tal:block content="source/id" i18n:name="id"/></span>
+        <tal:block i18n:translate="">id:</tal:block>&nbsp;<tal:block content="source/id" />
         <br />
-        <span tal:condition='source/get_title' i18n:translate="">title:&nbsp;
-          <tal:block content="source/get_title" i18n:name="title"/> <br />
+        <span tal:condition='source/get_title'><tal:block i18n:translate="">title:</tal:block>&nbsp;
+          <tal:block content="source/get_title" /> <br />
         </span>
-        <span tal:condition='source/description' i18n:translate="">description:
-         <tal:block tal:content="source/description" i18n:name="description"/>
+        <span tal:condition='source/description'><tal:block i18n:translate="">description:</tal:block>
+         <tal:block tal:content="source/description" />
         </span>
       </div>
       <h1></h1>    

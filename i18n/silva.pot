@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Mon Nov 22 19:14:16 2004\n"
+"POT-Creation-Date: Tue Nov 23 12:32:51 2004\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -219,7 +219,7 @@ msgstr ""
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
-msgid "<span class=\"warning\">[Code element is broken]</span>"
+msgid "Code element is broken"
 msgstr ""
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
@@ -227,7 +227,7 @@ msgid "Code element: ${title_or_id} at ${path}"
 msgstr ""
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
-msgid "&nbsp;No code objects (Python Scripts, Page Templates, DTML Methods) are available.<br /> &nbsp;They should be located in a (non-Silva) folder in the ZMI named ${code_source}."
+msgid "They should be located in a (non-Silva) folder in the ZMI named ${code_source}."
 msgstr ""
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
@@ -249,6 +249,10 @@ msgstr ""
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
 msgid "${tip} tab to the exit button or alt-e."
+msgstr ""
+
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:9
+msgid "No code objects (Python Scripts, Page Templates, DTML Methods) are available."
 msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
@@ -400,11 +404,11 @@ msgid "align center"
 msgstr ""
 
 #: /widgets/element/doc_elements/image/render.pt:10
-msgid "[image element is broken]"
+msgid "image element is broken"
 msgstr ""
 
 #: /widgets/element/doc_elements/image/tag.py:18
-msgid "<div class=\"error\">[image reference is broken]</div>"
+msgid "image reference is broken"
 msgstr ""
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:44
@@ -509,15 +513,15 @@ msgid "Source is a NoneType - is it not available anymore?"
 msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:14
-msgid "id:&nbsp;${id}"
+msgid "id:"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/render.pt:17
-msgid "title:&nbsp; ${title} <br />"
+#: /widgets/element/doc_elements/source/render.pt:16
+msgid "title:"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/render.pt:20
-msgid "description: ${description}"
+#: /widgets/element/doc_elements/source/render.pt:19
+msgid "description:"
 msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:32
@@ -530,20 +534,18 @@ msgstr ""
 msgid "Source parameters"
 msgstr ""
 
+#: /widgets/element/doc_elements/source/rendered_source.py:15
+#: /widgets/element/doc_elements/source/rendered_source.py:20
 #: /widgets/element/doc_elements/source/render.pt:8
-msgid "[external source element is broken]"
+msgid "external source element is broken"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/rendered_source.py:14
-msgid ""
-"<div class=\"warning\"><b>[external source element is broken]</b><br /> error message: ${error}\n"
-"</div>"
+#: /widgets/element/doc_elements/source/rendered_source.py:16
+msgid "error message:"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/rendered_source.py:19
-msgid ""
-"<div class=\"warning\"><b>[external source element is broken]</b><br />\n"
-"Unfortunatly however, there no error message available... </div>"
+#: /widgets/element/doc_elements/source/rendered_source.py:21
+msgid "Unfortunately however, there no error message available..."
 msgstr ""
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:15
@@ -653,39 +655,62 @@ msgid "edit element"
 msgstr ""
 
 #: /widgets/macro_notes.pt:10
-msgid "&lt;a href=\"http://www.x.yz\" target=\"target\"&gt;text&lt;/a&gt; &#8212; if &#8216;target&#8217; is empty a new window opens"
+msgid "if ${target} is empty a new window opens"
+msgstr ""
+
+#: /widgets/macro_notes.pt:10
+msgid "target"
 msgstr ""
 
 #: /widgets/macro_notes.pt:11
-msgid "&lt;index&gt;index item&lt;/index&gt;"
+msgid "index item"
 msgstr ""
 
 #: /widgets/macro_notes.pt:12
-msgid "&lt;abbr title=\"full name\"&gt;abbreviation&lt;/abbr&gt;"
+msgid "abbreviation"
+msgstr ""
+
+#: /widgets/macro_notes.pt:12
+#: /widgets/macro_notes.pt:13
+msgid "full name"
 msgstr ""
 
 #: /widgets/macro_notes.pt:13
-msgid "&lt;acronym title=\"full name\"&gt;acronym&lt;/acronym&gt;"
-msgstr ""
-
-#: /widgets/macro_notes.pt:14
-msgid "&amp;lt; &lt; &#8212; &amp;gt; &gt;"
+msgid "acronym"
 msgstr ""
 
 #: /widgets/macro_notes.pt:6
-msgid "Text can be formatted &#8211; in <i>italic</i>, <b>bold</b>, etc. &#8211; with &#8220;Silva markup&#8221;:"
+msgid "bold"
+msgstr ""
+
+#: /widgets/macro_notes.pt:6
+msgid "Text can be formatted &#8211; in ${italic}, ${bold}, etc. &#8211; with ${silva_markup}:"
+msgstr ""
+
+#: /widgets/macro_notes.pt:6
+#: /widgets/macro_notes.pt:8
+msgid "italic"
 msgstr ""
 
 #: /widgets/macro_notes.pt:8
-msgid "&lt;b&gt;bold&lt;/b&gt; &lt;i&gt;italic&lt;/i&gt; &lt;u&gt;underlined&lt;/u&gt; &lt;sup&gt;superscript&lt;/sup&gt; &lt;sub&gt;subscript&lt;/sub&gt;"
+msgid "subscript"
+msgstr ""
+
+#: /widgets/macro_notes.pt:8
+msgid "underlined"
+msgstr ""
+
+#: /widgets/macro_notes.pt:8
+msgid "superscript"
 msgstr ""
 
 #: /widgets/macro_notes.pt:9
-msgid "&lt;a href=\"http://www.x.yz\"&gt;text&lt;/a&gt;"
+#: /widgets/macro_notes.pt:10
+msgid "text"
 msgstr ""
 
 #: /widgets/top/field/render.pt:17
-msgid "&nbsp;subeditor&nbsp;"
+msgid "subeditor"
 msgstr ""
 
 #: /widgets/top/nlist/render.pt:31
@@ -705,7 +730,7 @@ msgid "edit parent"
 msgstr ""
 
 #: /widgets/top/sub/render.pt:17
-msgid "&nbsp;Nested element editor&nbsp;"
+msgid "Nested element editor"
 msgstr ""
 
 #: /widgets/top/sub/render.pt:20

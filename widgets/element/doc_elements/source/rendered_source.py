@@ -11,12 +11,14 @@ for key, value in uparameters.items():
 try:
     html = source.to_html(request, **parameters)
 except (Exception), err:
-    html = _("""<div class="warning"><b>[external source element is broken]</b><br /> error message: ${error}
-</div>""")
-    html.set_mapping({'error': err})
+    html = """<div class="warning"><b>[""" + 
+    unicode(_("external source element is broken")) +
+    "]</b><br /> " unicode(_("error message:")) + " " + err + "</div>"
 except:
     # Ugh, bare except to catch *all* cases...
-    html = _("""<div class="warning"><b>[external source element is broken]</b><br />
-Unfortunatly however, there no error message available... </div>""")
+    html = """<div class="warning"><b>[""" + 
+    unicode(_("external source element is broken")) + "]</b><br />" +
+    unicode(_("Unfortunately however, there no error message available...")) +
+    "</div>"
 
 return html
