@@ -100,7 +100,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if node.hasChildNodes:
             col = 0
             for child in node.childNodes:
-                if child.nodeType == Node.TEXT_NODE:
+                if child.nodeType == Node.ELEMENT_NODE:
                     self.sax_field(child, columns_info[col])
                     col += 1
         self.endElementNS(SilvaDocumentNS, 'row')
