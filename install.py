@@ -130,7 +130,7 @@ def registerDocEditor(root):
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_normal'))
 
     for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table',
-                     'nlist', 'dlist', 'code', 'externaldata',]:
+                     'nlist', 'dlist', 'code', 'externaldata', 'cite']:
         wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
@@ -147,9 +147,10 @@ def registerDocEditor(root):
     wr.setDisplayName('dlist', 'Definition list')
     wr.setDisplayName('code', 'Code Element')
     wr.setDisplayName('externaldata', 'External Data')
+    wr.setDisplayName('cite', 'Citation')
 
-    wr.setAllowed('doc', ['p', 'heading', 'list', 'dlist', 'pre', 'image', 
-                  'table', 'nlist', 'toc', 'code', 'externaldata'])
+    wr.setAllowed('doc', ['p', 'heading', 'list', 'dlist', 'pre', 'image',
+                  'table', 'nlist', 'toc', 'code', 'externaldata', 'cite'])
 
     if _external_sources_available:
         wr.addWidget('source', (
@@ -166,7 +167,7 @@ def registerDocViewer(root):
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
     for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist',
-                 'table', 'dlist', 'code', 'externaldata']:
+                 'table', 'dlist', 'code', 'externaldata', 'cite']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
      
@@ -181,7 +182,7 @@ def registerDocPreviewer(root):
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
     for name in ['p', 'list', 'heading', 'pre', 'image', 'nlist', 'table',
-                 'dlist', 'externaldata']:
+                 'dlist', 'externaldata', 'cite']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
 

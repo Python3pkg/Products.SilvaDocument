@@ -1,0 +1,17 @@
+<div class="citation">
+  <p 
+    tal:repeat="paragraph here/paragraphs"
+    tal:content="structure paragraph">
+      bla fasel
+  </p>
+  <p class="author" 
+    tal:condition="here/author"
+    tal:content="here/author">
+      author
+  </p>
+  <p class="source" 
+    tal:condition="here/source"
+    tal:content="here/source">
+      source
+  </p>
+</div>

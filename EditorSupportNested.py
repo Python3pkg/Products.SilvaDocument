@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.16 $
+# $Revision: 1.17 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -17,7 +17,8 @@ from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 
-from Products.SilvaDocument.silvaparser import PParser, HeadingParser
+from Products.SilvaDocument.silvaparser import \
+    PParser, HeadingParser, LinkParser
 
 
 class EditorSupport(SimpleItem):
@@ -154,6 +155,16 @@ class EditorSupport(SimpleItem):
         """
         return self.render_text_as_editable(node)
 
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+        'editable_to_dom')
+    def editable_to_dom(self, editable, parser=PParser):
+        """convert editable to dom"""
+        p = parser(editable)
+        p.run()
+        newdom = p.getResult().parsed.dom
+        return newdom
+
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'replace_text')
     def replace_text(self, node, st, parser=PParser):
@@ -164,10 +175,7 @@ class EditorSupport(SimpleItem):
         # since we don't use Formulator we get UTF8 from the forms, so encode
         # manually here
         st = mangle.String.inputConvert(st, preserve_whitespace=1)
-        p = parser(st)
-        p.run()
-        newdom = p.getResult().parsed.dom
-       
+        newdom = self.editable_to_dom(st, parser)
         node = node._node
         doc = node.ownerDocument
        
@@ -251,6 +259,10 @@ class EditorSupport(SimpleItem):
             '[[', ']]']:
             text = text.replace(escape, '\\'+escape)
         return text
+
+    def render_links(self, text):
+        dom = self.editable_to_dom(text, LinkParser)
+        return self.render_text_as_html(dom.firstChild)
 
 InitializeClass(EditorSupport)
 

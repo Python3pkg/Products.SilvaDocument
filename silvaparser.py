@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.3 2003/10/22 10:50:23 zagy Exp $
+# $Id: silvaparser.py,v 1.4 2003/10/28 11:58:38 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -291,6 +291,17 @@ class HeadingParser(Parser):
         (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
         ]
 
+
+class LinkParser(Parser):
+
+    patterns = [
+        (r'(((http|https|ftp|news)://([^:@]+(:[^@]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(/([A-Za-z0-9\-_\?!@#$%^&*()/=]+[^\.\),;])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))',
+            Token.LINK_URL),
+        (r'([ \t\f\v]+)', Token.WHITESPACE),
+        (r'(\\)', Token.ESCAPE),
+        (r'([A-Za-z0-9]+)', Token.CHAR), # catch for long text
+        (r'([^A-Za-z0-9 \t\f\v\r\n])', Token.CHAR),
+        ]
 
 
 class Interpreter:

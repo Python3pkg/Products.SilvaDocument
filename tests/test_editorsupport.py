@@ -1,6 +1,6 @@
 # Copyright (c) 2002, 2003 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.10 2003/10/22 10:50:23 zagy Exp $
+# $Id: test_editorsupport.py,v 1.11 2003/10/28 11:58:38 zagy Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -471,6 +471,22 @@ class EditableTest(unittest.TestCase):
                 '%s was converted to %s, instead of %s' % (xml_text,
                     editable, expected_editable))
 
+    def test_render_links(self):
+        es = EditorSupport('')
+        cases = [
+            ('foobar', 'foobar'),
+            ('foo http://www.x.yz', 'foo <a href="http://www.x.yz">http://www.x.yz</a>'),
+            ('foo http://www.x.yz, and', 'foo <a href="http://www.x.yz">http://www.x.yz</a>, and'),
+            ('foo http://www.x.yz/ bla foo', 'foo <a href="http://www.x.yz/">http://www.x.yz/</a> bla foo'),
+            ('foo http://www.x.yz, http://zxy.abc bla', 'foo <a href="http://www.x.yz">http://www.x.yz</a>, <a href="http://zxy.abc">http://zxy.abc</a> bla'),
+        ]
+        for editable, expected_html in cases:
+            html = es.render_links(editable)
+            self.assertEquals(expected_html, html,
+                '%s was converted to %s, instead of %s' % (editable,
+                    html, expected_html))
+            
+    
 
 def test_suite():
     suite = unittest.TestSuite()
