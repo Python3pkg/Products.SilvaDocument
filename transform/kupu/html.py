@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.3 $'
+__version__='$Revision: 1.4 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -122,7 +122,7 @@ def find_and_convert_toplevel(el, context, els=None):
     return foundels
 
 reg_ignorable = re.compile('^([ \t\n]|<br[^>]*>)*$')
-def get_textbuf(textbuf, context):
+def get_textbuf(textbuf, context, ptype):
     """given a list of elements this either returns a p element
         if the list contains non-ignorable elements or it will
         return an empty fragment if it doesn't
@@ -130,7 +130,7 @@ def get_textbuf(textbuf, context):
     frag = Frag(textbuf)
     converted = frag.convert(context).asBytes('UTF-8').strip()
     if not reg_ignorable.search(converted):
-        return silva.p(textbuf)
+        return silva.p(textbuf, silva_type=ptype)
     return Frag()
 
 def fix_structure(inputels, context, allowtables=0):
@@ -141,6 +141,7 @@ def fix_structure(inputels, context, allowtables=0):
     """
     fixedrest = []
     textbuf = []
+    ptype = 'normal'
     for el in inputels:
         # flatten p's by ignoring the element itself and walking through it as 
         # if it's contents are part of the current element's contents
@@ -154,15 +155,17 @@ def fix_structure(inputels, context, allowtables=0):
                     textbuf.append(child.convert(context))
                 else:
                     if textbuf:
-                        fixedrest.append(get_textbuf(textbuf, context))
+                        fixedrest.append(get_textbuf(textbuf, context, ptype))
                         textbuf = []
                     fixedrest.append(fix_toplevel(child, context))
                 fixedrest += foundtables
                 fixedrest += foundtoplevel
             if textbuf:
-                fixedrest.append(get_textbuf(textbuf, context))
+                fixedrest.append(get_textbuf(textbuf, context, ptype))
                 textbuf = []
         else:
+            if el.name() == 'p':
+                ptype = el.getattr('silva_type', 'normal')
             foundtables = []
             if allowtables:
                 foundtables = fix_tables(el, context)
@@ -171,13 +174,13 @@ def fix_structure(inputels, context, allowtables=0):
                 textbuf.append(el.convert(context))
             else:
                 if textbuf:
-                    fixedrest.append(get_textbuf(textbuf, context))
+                    fixedrest.append(get_textbuf(textbuf, context, ptype))
                     textbuf = []
                 fixedrest.append(fix_toplevel(el, context))
             fixedrest += foundtables
             fixedrest += foundtoplevel
     if textbuf:
-        fixedrest.append(get_textbuf(textbuf, context))
+        fixedrest.append(get_textbuf(textbuf, context, ptype))
         textbuf = []
     return fixedrest
 
@@ -364,7 +367,7 @@ class p(Element):
         for child in self.find():
             if child.name() != 'br':
                 return silva.p(self.content.convert(context),
-                                    type=self.getattr('_class', 'normal'))
+                                    silva_type=self.getattr('_class', 'normal'))
         return Frag(
         )
 
