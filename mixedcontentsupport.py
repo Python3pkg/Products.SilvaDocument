@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.8 $
+# $Revision: 1.9 $
 # Python
 from __future__ import nested_scopes
 import re
@@ -178,10 +178,9 @@ class ParagraphSupport(MixedContentSupport):
                 result.append(self._renderHtmlHelper(child, view_type))
                 result.append('</u>')
             elif child.nodeName == 'index':
-                index = mangle.entities(child.getAttribute('name'))
-                result.append(
-                    '<a class="index-element" name="%s">' % index)
-            
+                name = child.getAttribute('name')
+                name = mangle.generateAnchorName(name)
+                result.append('<a class="index-element" name="%s">' % name)
                 # in nested lists and tables we cannot rely on the
                 # correct view_type passed in, so check for edit_mode
                 # from the request
