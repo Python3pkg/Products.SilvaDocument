@@ -19,6 +19,9 @@ link = node.getAttribute('link')
 link_title = node.getAttribute('title')
 target = node.getAttribute('target')
 
+if not alignment:
+    alignment = 'default'
+
 if not link_title:
     link_title = image.get_title()
 
