@@ -52,7 +52,8 @@ def uninstall(root):
     root.manage_delObjects(['service_editorsupport'])
     # uninstall metadata mapping?
     root.service_containerpolicy.unregister('Silva Document')
-    root.manage_delObjects(['service_codesource_charset'])
+    if hasattr(root, 'service_codesource_charset'):
+        root.manage_delObjects(['service_codesource_charset'])
     
 def is_installed(root):
     return hasattr(root.service_views, 'SilvaDocument')
