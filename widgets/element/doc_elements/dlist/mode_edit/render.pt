@@ -25,7 +25,7 @@
   <option value="heading" i18n:translate="">heading</option>
   <option value="list" i18n:translate="">list</option>
   <option value="dlist" selected="selected" i18n:translate="">definition list</option>
-  <option value="nlist" tal:replace="nothing" i18n:translate="">complex list</option>
+  <option value="nlist" tal:replace="nothing">complex list</option>
 </select>
 &nbsp;
 <check tal:condition="python:node.hasAttribute('type')" tal:omit-tag="">

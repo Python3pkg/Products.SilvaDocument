@@ -25,7 +25,7 @@
   <option value="heading" i18n:translate="">heading</option>
   <option value="list" selected="selected" i18n:translate="">list</option>
   <option value="pre" i18n:translate="">preformatted</option>
-  <option value="nlist" tal:replace="nothing" i18n:translate="">complex list</option>
+  <option value="nlist" tal:replace="nothing">complex list</option>
   <option value="dlist" i18n:translate="">definition list</option>
 </select>
 &nbsp;

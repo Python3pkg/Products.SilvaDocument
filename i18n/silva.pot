@@ -1,0 +1,154 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: Mon Nov 22 16:07:40 2004\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Silva i18n team <walco@infrae.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/translation_files/extract.py\n"
+
+#: /Document.py:150
+msgid "No version to store to!"
+msgstr ""
+
+#: /ServiceCodeSourceCharset.py:43
+msgid "No charset entered"
+msgstr ""
+
+#: /ServiceCodeSourceCharset.py:45
+msgid "Charset set"
+msgstr ""
+
+#: /install.py:216
+#: /install.py:284
+msgid "Paragraph"
+msgstr ""
+
+#: /install.py:217
+#: /install.py:285
+msgid "Heading"
+msgstr ""
+
+#: /install.py:218
+#: /install.py:286
+msgid "List"
+msgstr ""
+
+#: /install.py:219
+#: /install.py:287
+msgid "Image"
+msgstr ""
+
+#: /install.py:220
+#: /install.py:245
+#: /install.py:288
+msgid "Complex list"
+msgstr ""
+
+#: /install.py:246
+msgid "List item"
+msgstr ""
+
+#: /install.py:247
+msgid "List title"
+msgstr ""
+
+#: /install.py:289
+msgid "Preformatted"
+msgstr ""
+
+#: /install.py:290
+msgid "Definition list"
+msgstr ""
+
+#: /install.py:340
+msgid "Table"
+msgstr ""
+
+#: /install.py:341
+msgid "row"
+msgstr ""
+
+#: /install.py:342
+msgid "row heading"
+msgstr ""
+
+#: /transform/Transformer.py:63
+msgid "Unknown Editor: ${editor}"
+msgstr ""
+
+#: /transform/base.py:107
+msgid "no ${path} element"
+msgstr ""
+
+#: /transform/base.py:113
+msgid "more than one ${path} element"
+msgstr ""
+
+#: /transform/base.py:143
+msgid "intermingling * is not allowed ${i}"
+msgstr ""
+
+#: /transform/base.py:72
+msgid "not implemented, override in inheriting class"
+msgstr ""
+
+#: /transform/base.py:96
+msgid "${name} attribute not found on tag ${self}"
+msgstr ""
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:17
+msgid "editor"
+msgstr ""
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:18
+msgid "preview"
+msgstr ""
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:19
+msgid "properties"
+msgstr ""
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:20
+msgid "access"
+msgstr ""
+
+#: /views/edit/VersionedContent/Document/get_tabs.py:21
+msgid "publish"
+msgstr ""
+
+#: /widgets/element/doc_elements/code/get_code_data.py:15
+#: /widgets/element/doc_elements/code/get_rendered_code.py:6
+msgid "<span class=\"warning\">[Code element is broken]</span>"
+msgstr ""
+
+#: /widgets/element/doc_elements/code/get_code_data.py:21
+msgid "Code element: ${title_or_id} at ${path}"
+msgstr ""
+
+#: /widgets/element/doc_elements/image/tag.py:18
+msgid "<div class=\"error\">[image reference is broken]</div>"
+msgstr ""
+
+#: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
+msgid "Source is a NoneType - is it not available anymore?"
+msgstr ""
+
+#: /widgets/element/doc_elements/source/rendered_source.py:14
+msgid ""
+"<div class=\"warning\"><b>[external source element is broken]</b><br /> error message: ${error}\n"
+"</div>"
+msgstr ""
+
+#: /widgets/element/doc_elements/source/rendered_source.py:19
+msgid ""
+"<div class=\"warning\"><b>[external source element is broken]</b><br />\n"
+"Unfortunatly however, there no error message available... </div>"
+msgstr ""
+
+#: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
+msgid "The stored xml is invalid."
+msgstr ""
+
