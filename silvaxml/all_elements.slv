@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<silva xmlns="http://www.infrae.com/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.infrae.com/xml silva-0.9.1.xsd"><silva_document id="all_elements"><title>All the Funny Tags</title><doc>
+        <heading type="normal">Heading</heading>
+        <heading type="sub">Subheading</heading>
+        <heading type="subsub">Sub sub heading</heading>
+        <heading type="paragraph">Paragraph heading</heading>
+        <heading type="subparagraph">Sub paragraph heading</heading>
+        <heading type="paragraph">Markup</heading>
+        <p type="normal">A paragraph. Which includes <strong>bold</strong>, <em>italic</em>, <underline>underlined</underline>, a <link url="#">hyperlink</link>, and an <index name="index item">index item</index>. But we have more <strong>bold</strong> and <em>italic</em>; even <strong><em>bold-italic</em></strong> or <strong><underline>bold-underlinded</underline></strong>. <strong><em><underline><super>bold-italic-underlined-superscript</super></underline></em></strong>.</p>
+        <p type="normal">a<sub>1</sub><super>2</super> = a<sub>2</sub><super>2</super> * a<sub>3</sub><super>2</super></p>
+        <heading type="paragraph">Soft breaks</heading>
+        <p type="normal">Ich weiA~Y" nicht, was mir hier gefA~?llt,<br/>In dieser engen, kleinen Welt<br/>Mit holdem Zauberband mich hA~?lt?<br/>VergeA~Y" ich doch, vergeA~Y" ich gern,<br/>Wie seltsam mich das Schicksal leitet;<br/>Und ach, ich fA~1/4hle, nah und fern<br/>Ist mir noch manches zubereitet.<br/>O wA~?re doch das rechte MaA~Y" getroffen!<br/>Was bleibt mir nun, als eingehA~1/4llt,<br/>Von holder Lebenskraft erfA~1/4llt,<br/>In stiller Gegenwart die Zukunft zu erhoffen!</p><heading type="normal">Ende der Nato-Krise nicht in Sicht</heading><p>Die Hoffnung auf ein schnelles Ende der Nato-Krise um MilitA~?rhilfen fA~1/4r die TA~1/4rkei ist zerstoben. Die Verhandlungen A~1/4ber einen Kompromissvorschlag von Nato-GeneralsekretA~?r George Robertson wurden nach ersten positiven Signalen unterbrochen und sollen erst am spA~?ten Abend fortgesetzt werden.</p><p>GroA~Y"bildansichtNato-Hauptquartier in BrA~1/4ssel: Allianz in der Krise<br/>BrA~1/4ssel - "Es liegt ein Vorschlag auf dem Tisch, der jetzt in den HauptstA~?dten beraten werden soll", sagte ein Diplomat der Nachrichtenagentur Reuters in BrA~1/4ssel. FA~1/4r den spA~?ten Abend sei eine erneute Sitzung der Nato-Botschafter geplant.</p><image alignment="float-right" link="/silva/allthefunnytags/gocept_move/hires_image" path=""/><p>Robertson hatte den Kompromissvorschlag nach intensiven diplomatischen BemA~1/4hungen den Nato-Mitgliedern prA~?sentiert. Den Angaben zufolge beschrA~?nkt sich der Vorschlag ausschlieA~Y"lich auf die Stationierung von Patriot-Abwehrraketen und Awacs-AufklA~?rungsflugzeugen in der TA~1/4rkei sowie die Lieferung von GerA~?t zum Schutz vor einem Angriff mit biologischen oder chemischen Waffen. Von einem Schutz von US-Einrichtungen war nicht mehr die Rede.</p><p>Die Hoffnungen auf eine schnelle Einigung erhielten allerdings schon kurz nach bekannt werden der Initiative einen DA~?mpfer: "Wir erwarten kein entscheidendes Treffen, nicht heute Vormittag", hieA~Y" es in Nato-Kreisen. Der Vorschlag werde "zunA~?chst einmal unverbindlich diskutiert".</p><p>Frankreich, Deutschland und Belgien blockieren seit einem Monat die Planungen zur MilitA~?rhilfe fA~1/4r die TA~1/4rkei im Falle eines Irak-Kriegs. Die TA~1/4rkei hatte daraufhin den Druck auf die Allianz erhA~?ht, indem sie sich am Montag auf Artikel 4 des Nato-Vertrags berief. Danach mA~1/4ssen die Partner zu Beratungen zusammenkommen, wenn sich ein Mitglied bedroht fA~1/4hlt.</p><p>Bis dahin lag die Anfrage bei der Nato fA~1/4r den Schutz der TA~1/4rkei nur in Form eines US-Hilfsgesuchs vor. Die TA~1/4rkei grenzt als einziges Nato-Mitglied an den Irak und fA~1/4rchtet im Kriegsfall einen Gegenangriff. Berlin, Paris und BrA~1/4ssel haben bislang argumentiert, beginne die Nato jetzt mit den Planungen zum Schutz der TA~1/4rkei, wA~1/4rde dies ein falsches Signal setzen: Ein Krieg wA~1/4rde dann unausweichlich erscheinen.</p>
+        <list type="disc">
+          <li>Item one</li>
+          <li>Item two</li>
+          <li>Item three</li>
+        </list>
+        <list type="square">
+          <li>A list with square bullets</li>
+          <li>Item two</li>
+        </list>
+        <list type="circle">
+          <li>A list with circle bullets</li>
+          <li>Item two</li>
+        </list>
+        <list type="1">
+          <li>A list with 1, 2, 3 bullets</li>
+          <li>Item two</li>
+        </list>
+        <list type="I">
+          <li>A list with I, II, III bullets</li>
+          <li>Item two</li>
+        </list>
+        <list type="i">
+          <li>A list with i, ii, iii bullets</li>
+          <li>Item two</li>
+        </list>
+        <list type="A">
+          <li>A list with A, B, C bullets</li>
+          <li>Item two</li>
+        </list>
+        <list type="a">
+          
+          
+        <li>A list with a, b, c bullets</li><li>Item two</li></list>
+        <list type="none">
+          <li>A list with no bullets</li>
+          <li>Because of Internet Explorer incompatability, this is not rendered as a list in HTML, but as a series of lines with &lt;br /> tags</li>
+          <li>A no bullet list in IE 5 has discs</li>
+        </list>
+        <nlist type="disc">
+          <li>
+            <p>A text item in a complex list</p>
+          </li>
+          <li>
+            <list type="square">
+              <li>This is a nested list with square bullets</li>
+              <li>Item two</li>
+            </list>
+            <nlist type="A">
+              <li>
+                <p>And this is a nested list wich A, B, C labeling</p>
+              </li>
+              <li>
+                <p>Item two</p>
+              </li>
+              <li>
+                <p>Item three</p>
+              </li>
+            </nlist>
+            <dlist type="normal">
+              <dt>Foo</dt>
+              <dd>Bar</dd>
+              <dt>Barf</dt>
+              <dd>Plong</dd>
+            </dlist>
+            <p type="normal">Followed by a nested paragraph. Authors can also nest headings, complex lists (to infinity), and images, but not tables or TOCs.</p>
+          </li>
+          <li>
+            <p>And a third item</p>
+            <pre>  &lt;xsd:complexType name="Document">
+    &lt;xsd:sequence>
+      &lt;xsd:element name="title" type="xsd:string" minOccurs="1" />
+      &lt;xsd:element name="doc" type="DocumentContent" minOccurs="1" />
+    &lt;/xsd:sequence>
+    &lt;xsd:attribute name="id" type="ID" minOccurs="1" />
+  &lt;/xsd:complexType>
+</pre>
+          </li>
+          <li>
+            <p>Another entry</p>
+          </li>
+        </nlist>
+        <table columns="3" type="plain" column_info="L:1 L:1 R:1">
+          <row>
+            <field>
+              <p>This is a 'plain' table.</p>
+            </field>
+            <field>
+              <p>There are three cells.</p>
+            </field>
+            <field>
+              <p>111</p>
+            </field>
+          </row>
+          <row>
+            <field>
+              <p>Plain is the default.</p>
+            </field>
+            <field>
+              <p>Plain is the fallback. Old browsers only show this style.</p>
+            </field>
+            <field>
+              <p>111</p>
+            </field>
+          </row>
+          <row>
+            <field>
+              <p>Plain.</p>
+            </field>
+            <field>
+              <list type="square">
+                <li>You can nest headings</li>
+                <li>Paragraphs</li>
+                <li>Lists</li>
+                <li>Complex lists</li>
+                <li>Images</li>
+              </list>
+            </field>
+            <field>
+              <p>111</p>
+            </field>
+          </row>
+        </table>
+        <table columns="3" type="listing" column_info="L:1 L:1 L:1">
+          <row>
+            <field>
+              <p>This is a 'listing' table.</p>
+            </field>
+            <field>
+              <p>With three cells.</p>
+            </field>
+            <field>
+              <p>Of text.</p>
+            </field>
+          </row>
+          <row>
+            <field>
+              <p>A second row.</p>
+            </field>
+            <field>
+              <p>Same.</p>
+            </field>
+            <field>
+              <p>Text.</p>
+            </field>
+          </row>
+        </table>
+        <table columns="3" type="grid" column_info="L:1 C:2 R:1">
+          <row_heading>A fine row heading</row_heading>
+          <row>
+            <field>
+              <p>A 'grid' table.</p>
+            </field>
+            <field>
+              <p>With a <strong>double</strong> wide <strong>centered</strong> center cell.</p>
+            </field>
+            <field>
+              <p><underline>Symmetrical</underline>.</p>
+            </field>
+          </row>
+          <row>
+            <field>
+              <p>A second row.</p>
+            </field>
+            <field>
+              <p>We don't use pixels because they are browser specific.</p>
+            </field>
+            <field>
+              <p>Print a PDF.</p>
+            </field>
+          </row>
+        </table>
+        <table columns="3" type="datagrid" column_info="R:10 R:5 R:5">
+          <row>
+            <field>
+              <p>data</p>
+            </field>
+            <field>
+              <p>grid</p>
+            </field>
+            <field>
+              <p>table</p>
+            </field>
+          </row>
+          <row>
+            <field>
+              <p>128</p>
+            </field>
+            <field>
+              <p>256</p>
+            </field>
+            <field>
+              <p>512</p>
+            </field>
+          </row>
+        </table>
+        <image link="/silva/allthefunnytags/screen_shot/hires_image" path="/silva/allthefunnytags/screen_shot" alignment="image-left"/>
+        <pre>Silva XML looks like this (if you Pretty Print it):
+
+&lt;silva_publication id="toyz">
+  &lt;title>
+    Toyz on Demand
+  &lt;/title>
+  &lt;silva_folder id="episode_1">
+    &lt;title>and so on....
+</pre>
+        <dlist type="compact">
+          <dt>One</dt>
+          <dd>Is a good starting point</dd>
+          <dt>Two</dt>
+          <dd>Is a good combination</dd>
+          <dt>Three</dt>
+          <dd>Is the first step to insanity</dd>
+        </dlist><heading type="normal">Let's play with unicode a bit</heading>        <toc toc_depth="-1"/>
+      </doc><metadata 
+    xmlns:silva="http://infrae.com/namespaces/metadata/silva"
+    xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra"
+      >
+      <silva:modificationtime><element type="none">None</element></silva:modificationtime>
+      <silva:creationtime><element type="none">None</element></silva:creationtime>
+      <silva:lastauthor><element type="string"></element></silva:lastauthor>
+      <silva:expirationtime><element type="none">None</element></silva:expirationtime>
+      <silva:shorttitle><element type="string"></element></silva:shorttitle>
+      <silva:publicationtime><element type="none">None</element></silva:publicationtime>
+      <silva:maintitle><element type="string"></element></silva:maintitle>
+      <silva-extra:subject><element type="string"></element></silva-extra:subject>
+      <silva-extra:comment><element type="string"></element></silva-extra:comment>
+</metadata>
+</silva_document></silva>

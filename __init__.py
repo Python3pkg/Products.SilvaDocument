@@ -1,9 +1,8 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: __init__.py,v 1.7 2004/07/21 11:46:41 jw Exp $
+# $Id: __init__.py,v 1.8 2004/07/22 15:40:16 eric Exp $
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
-from Products.Silva.ImporterRegistry import importer_registry
 import EditorSupportNested
 import ServiceCodeSourceCharset
 import install
@@ -14,6 +13,7 @@ from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 from Products.SilvaDocument import Document
 
 def initialize(context):
+    from Products.SilvaDocument.silvaxml import xmlexport, xmlimport
     extensionRegistry.register(
         'SilvaDocument', 'Silva Document', context, [Document],
         install, depends_on='Silva')
@@ -31,15 +31,15 @@ def initialize(context):
         icon = "www/editorservice.gif"
         )
     
-    importer_registry.register_tag('silva_document',
-                                   Document.xml_import_handler)
     registerDirectory('views', globals())
     registerDirectory('widgets', globals())
     
     registerTypeForMetadata(Document.DocumentVersion.meta_type)
 
     initialize_upgrade()
-
+    
+    xmlexport.initializeXMLExportRegistry()
+    xmlimport.initializeXMLImportRegistry()
 
 def initialize_upgrade():
     from Products.SilvaDocument import upgrade
