@@ -3,7 +3,6 @@
 
 from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
-from Products.SilvaDocument import AutoTOC
 import EditorSupportNested
 
 def configureMiscServices(root):
@@ -30,14 +29,10 @@ def install(root):
     mapping.editMappings('', [
         {'type': 'Silva Document Version',
         'chain': 'silva-content, silva-extra'},
-        {'type': 'Silva AutoTOC',
-        'chain': 'silva-content, silva-extra'}
         ])
 
     root.service_containerpolicy.register('Silva Document',
         Document.SilvaDocumentPolicy)
-    root.service_containerpolicy.register('Auto TOC',
-        AutoTOC.AutoTOCPolicy)
         
 def uninstall(root):
     unregisterViews(root.service_view_registry)
@@ -59,7 +54,6 @@ def registerViews(reg):
                  ['edit', 'VersionedContent', 'Document'])
     # public
     reg.register('public', 'Silva Document', ['public', 'Document'])
-    reg.register('public', 'Silva AutoTOC', ['public', 'Document'])
 
     # add
     reg.register('add', 'Silva Document', ['add', 'Document'])

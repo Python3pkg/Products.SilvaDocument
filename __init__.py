@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: __init__.py,v 1.2 2003/07/28 13:54:56 zagy Exp $
+# $Id: __init__.py,v 1.3 2003/07/29 09:17:23 zagy Exp $
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry
@@ -9,12 +9,11 @@ import install
 from Products.FileSystemSite.DirectoryView import registerDirectory
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 
-from Products.SilvaDocument import \
-    Document, AutoTOC
+from Products.SilvaDocument import Document
 
 def initialize(context):
     extensionRegistry.register(
-        'SilvaDocument', 'Silva Document', context, [Document, AutoTOC],
+        'SilvaDocument', 'Silva Document', context, [Document],
         install, depends_on='Silva')
     
     context.registerClass(
@@ -29,5 +28,4 @@ def initialize(context):
     registerDirectory('widgets', globals())
     
     registerTypeForMetadata(Document.DocumentVersion.meta_type)
-    registerTypeForMetadata(AutoTOC.AutoTOC.meta_type)
 
