@@ -207,12 +207,22 @@ class DocumentVersionProducer(SilvaBaseProducer):
         return result
         
     def sax_toc(self, node, depth):
+        # XXX hack to get the right context for the toc, in case we're
+        # actually rendering a ghost. This probably will change (for the
+        # better:) in Silva 1.2 or later.
+        toc_context = self.context
+        request = getattr(self.context, 'REQUEST', None)
+        if request is not None:
+            ghost_model = getattr(request, 'ghost_model', None)
+            if ghost_model is not None:
+                toc_context = ghost_model
+                
         public = self.context.version_status() == 'public'
         if public:
-            tree = self.context.get_public_tree(depth)
+            tree = toc_context.get_public_tree(depth)
             append_to_url = ''
         else:
-            tree = self.context.get_tree(depth)
+            tree = toc_context.get_tree(depth)
             append_to_url = 'edit/tab_preview'
         text = ''
         for obj in tree:
