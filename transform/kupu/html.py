@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14 $'
+__version__='$Revision: 1.15 $'
 
 try:
     from transform.base import Element, Text, Frag
@@ -367,10 +367,12 @@ class p(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
+        # return a p, but only if there's any content besides whitespace 
+        # and <br>s
         for child in self.find():
             if child.name() != 'br':
                 return silva.p(self.content.convert(context),
-                                    type=self.getattr('class', 'normal'))
+                                    type=self.getattr('silva_type', 'normal'))
         return Frag(
         )
 

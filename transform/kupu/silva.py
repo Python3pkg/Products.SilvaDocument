@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.11 $'
+__version__='$Revision: 1.12 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -99,7 +99,8 @@ class p(SilvaElement):
         ptype = self.getattr('type', 'normal')
         return html.p(
             self.content.convert(context),
-            class_=ptype
+            class_=ptype,
+            silva_type=ptype
             )
 
 class br(Element):
