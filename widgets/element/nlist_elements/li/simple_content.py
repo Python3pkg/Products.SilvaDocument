@@ -15,5 +15,5 @@ for child in node.childNodes:
     if child.nodeType == node.ELEMENT_NODE:
         break
     
-supp = editorsupport.getMixedContentSupport(model, node)
+supp = editorsupport.getMixedContentSupport(model, child)
 return supp.renderEditable()
