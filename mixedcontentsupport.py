@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.1.4.1 $
+# $Revision: 1.1.4.2 $
 # Python
 from __future__ import nested_scopes
 import re
@@ -162,7 +162,7 @@ class ParagraphSupport(MixedContentSupport):
             self._insertDOM(doc, node, child)
 
     security.declareProtected(
-        SilvaPermissions.ChangeSilvaContent, 'renderHTML')
+        SilvaPermissions.AccessContentsInformation, 'renderHTML')
     def renderHTML(self, view_type='public'):
         """ Render textual content as HTML.
         """
