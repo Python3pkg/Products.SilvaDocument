@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.4 $
+# $Revision: 1.5 $
 # Python
 from __future__ import nested_scopes
 import re
@@ -181,7 +181,12 @@ class ParagraphSupport(MixedContentSupport):
                 index = mangle.entities(child.getAttribute('name'))
                 result.append(
                     '<a class="index-element" name="%s">' % index)
-                if view_type == 'edit':
+            
+                # in nested lists and tables we cannot rely on the
+                # correct view_type passed in, so check for edit_mode
+                # from the request
+                edit_mode = node.REQUEST.get('edit_mode', 0)
+                if edit_mode:
                     result.append('[[%s]]' % index)
                 result.append('</a>')
             elif child.nodeName == 'br':
