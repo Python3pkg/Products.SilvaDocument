@@ -1,4 +1,4 @@
-from Products.Silva.helpers import escape_entities
+from Products.Silva import mangle
 
 node = context.REQUEST.node
 
@@ -22,7 +22,7 @@ except:
 # than it used to be
 # The Silva views expect unicode everywhere, so we create unicode strings
 # and decode the external data into unicode too.
-caption = escape_entities(datasource.get_title())
+caption = mangle.entities(datasource.get_title())
 data_encoding = datasource.get_data_encoding()
 def ustr(data, enc):
     if data is None:
