@@ -1,6 +1,6 @@
 # Copyright (c) 2002 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.21.4.8.6.4 $
+# $Revision: 1.21.4.8.6.5 $
 from __future__ import nested_scopes
 import re
 import operator
@@ -164,7 +164,8 @@ class EditorSupport(SimpleItem):
                 url_comparator = mangle.entities(self._link_absolute_url(
                     node, child.getAttribute('url')))
                 target = mangle.entities(child.getAttribute('target'))
-                linktext = self.render_text_as_editable(child)
+                linktext = self.render_text_as_editable(child).replace('|',
+                    '\\|')
                 if (not target and linktext == url_comparator):
                     result.append(url)
                 else:

@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: silvaparser.py,v 1.6.4.14.2.1.2.5 2004/05/25 09:57:19 zagy Exp $
+# $Id: silvaparser.py,v 1.6.4.14.2.1.2.6 2004/06/02 10:31:22 zagy Exp $
 from __future__ import nested_scopes
 
 # python
@@ -449,8 +449,8 @@ class Interpreter:
         }
 
         self.rules['link-text'] = {
-            Token.PARENTHESIS_OPEN: self.text,
-            Token.PARENTHESIS_CLOSE: self.text,
+            Token.PARENTHESIS_OPEN: self.link_text,
+            Token.PARENTHESIS_CLOSE: self.link_text,
             Token.STRONG_START: self.strong_start,
             Token.STRONG_END: self.strong_end,
             Token.EMPHASIS_START: self.emphasis_start,
@@ -463,8 +463,8 @@ class Interpreter:
             Token.SUBSCRIPT_END: self.subscript_end,
             Token.WHITESPACE: self.whitespace,
             Token.SOFTBREAK: self.softbreak,
-            Token.CHAR: self.text,
-            Token.LINK_URL: self.text,
+            Token.CHAR: self.link_text,
+            Token.LINK_URL: self.link_text,
             Token.LINK_SEP: self.link_sep_aftertext,
             Token.ESCAPE: self.escape,
         }
@@ -595,6 +595,13 @@ class Interpreter:
     def link_start(self, token, node):
         self.ruleset('link-text')
         return self._start_inline(token, node, 'link')
+    
+    def link_text(self, token, node):
+        if '|' in token.text:
+            raise InterpreterError, '"|" in link_text'
+        text_node = self._get_text_node(node)
+        text_node.appendData(token.text)
+        return node
 
     def link_sep_aftertext(self, token, node):
         if node.nodeName != 'link':
