@@ -1,5 +1,8 @@
 # This module contains code to integrate the SilvaExternalSources extension
 # with the SilvaDocument extension.
+
+from Products.SilvaDocument.externalsource import getSourceForId
+
 def getSourceParameters(context, node):
     """ Extract parameter values for the external source from 
     the Document's XML node.
