@@ -1,5 +1,8 @@
 from Products.Silva.mangle import String
 
+if not context.check_editable():
+    return context.redirect()
+
 node = context.REQUEST.node
 doc = node.ownerDocument
 columns = int(node.getAttribute('columns'))

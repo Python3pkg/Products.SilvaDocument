@@ -7,13 +7,13 @@
 ##parameters=what
 ##title=
 ##
+if not context.check_editable():
+    return context.redirect()
+
 node = context.REQUEST.node
 wr_name = context.REQUEST.wr_name
 if not context.is_allowed(wr_name, node, what):
     return
-
-if not node.get_content().sec_create_lock():
-    return context.redirect()
 
 # create new node
 doc = node.ownerDocument
@@ -25,8 +25,6 @@ context.insert_strategy(node, new)
 
 # find widget for new node
 widget = context.service_editor.getWidget(new)
-
-node.get_content().sec_update_last_author_info()
 
 # widget specific init
 widget.insert_init()

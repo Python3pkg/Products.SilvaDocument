@@ -7,12 +7,10 @@
 ##parameters=
 ##title=
 ##
-request = context.REQUEST
-node = request.node
-if not node.get_content().sec_create_lock():
+if not context.check_editable():
     return context.redirect()
 
-node.get_content().sec_update_last_author_info()
+request = context.REQUEST
 context.save_helper()
 context.invalidate_cache_helper()
 if not request.has_key('element_switched'):
