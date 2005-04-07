@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2004 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.18 2004/09/06 14:23:54 walco Exp $
+# $Id: test_editorsupport.py,v 1.18.4.1 2005/04/07 22:02:57 clemens Exp $
 
 import os, sys
 if __name__ == '__main__':
@@ -28,6 +28,8 @@ class EditableTest(unittest.TestCase):
                 '<a href="http://slashdot.org" target="foo">slashdot</a>'),
             ('<link url="http://slashdot.org" target="_blank">slashdot</link>',
                 '<a href="http://slashdot.org" target="_blank">slashdot</a>'),
+            ('<link url="http://www.isgone.com">http://www.isgone.com</link>',
+                '<a href="http://www.isgone.com">http://www.isgone.com</a>'),
         ]
         
         es = EditorSupport('')
