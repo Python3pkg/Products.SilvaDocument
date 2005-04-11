@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.14.2.6 $'
+__version__='$Revision: 1.14.2.7 $'
 
 from zExceptions import NotFound
 
@@ -725,9 +725,11 @@ class table(Element):
                     width = '1'
                     if hasattr(cell, 'attr'):
                         width = getattr(cell.attr, 'width', None)
-                        if width is not None:
+                        if width:
                             width = str(width)[:-1].strip() or '1'
                         else:
+                            width = '1'
+                        if not width or width == '0':
                             width = '1'
                     colinfo.append('%s:%s' % (align, width))
                 colinfo = ' '.join(colinfo)
