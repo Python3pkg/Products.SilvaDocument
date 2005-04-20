@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.30 $
+# $Revision: 1.31 $
 # Zope
 
 from StringIO import StringIO
@@ -249,7 +249,7 @@ class Document(CatalogedVersionedContent):
 
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
                                 'PUT')
-    def PUT(self, REQUEST):
+    def PUT(self, REQUEST, response=None):
         """PUT support"""
         try:
             html = REQUEST['BODYFILE'].read()
