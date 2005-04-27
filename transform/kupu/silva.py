@@ -11,12 +11,22 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.20 $'
+__version__='$Revision: 1.21 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
 except ImportError:
     from Products.SilvaDocument.transform.base import Element, Frag, Text, CharacterData
+    from Products.SilvaDocument.externalsource import getSourceForId
+else:
+    def getSourceForId(context, id):
+        class FakeObj:
+            def __init__(self, id):
+                self.title = id
+                self.meta_type = 'Silva Code Source'
+            def get_title(self):
+                return self.id
+        return FakeObj(id)
 
 import html
 import operator
@@ -452,7 +462,8 @@ class source(SilvaElement):
             for key, value in params.items():
                 divcontent.append(Text('Key: %s, value: %s\n' % (unicode(key, 'UTF-8'), unicode(value, 'UTF-8'))))
                 divcontent.append(html.br());
-            meta_type = getattr(context.model, str(id)).meta_type
+            object = getSourceForId(context.model, str(id))
+            meta_type = object.meta_type
             header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, id)))
             pre = Frag(divcontent, html.br())
             content = Frag(header, pre);
