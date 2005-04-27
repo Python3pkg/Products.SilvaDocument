@@ -11,13 +11,13 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.16.2.2 $'
+__version__='$Revision: 1.16.2.3 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
 except ImportError:
     from Products.SilvaDocument.transform.base import Element, Frag, Text, CharacterData
-    from Products.SilvaExternalSources.ExternalSource import getSourceForId
+    from Products.SilvaDocument.externalsource import getSourceForId
 else:
     def getSourceForId(context, id):
         class FakeObj:
