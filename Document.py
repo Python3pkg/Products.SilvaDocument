@@ -1,14 +1,21 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.31 $
+# $Revision: 1.32 $
 # Zope
 
 from StringIO import StringIO
+import re
+import sys
+import traceback
+import urlparse
 
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from Persistence import Persistent
+from zExceptions import InternalError
+
+from webdav.common import Conflict
 
 from Products.ParsedXML.ExtraDOM import writeStream
 from Products.ParsedXML.ParsedXML import createDOMDocument
@@ -26,12 +33,15 @@ from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper
 from Products.Silva.Metadata import export_metadata
 from Products.Silva.i18n import translate as _
 
+from Products.Silva.ContentObjectFactoryRegistry import contentObjectFactoryRegistry
+
 # For XML-Conversions for editors
 from transform.Transformer import EditorTransformer
 from transform.base import Context
 
 from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
 from Products.Silva.interfaces import IVersion
+from Products.Silva.Versioning import VersioningError
 from Products.Silva.i18n import translate as _
 
 from Products.SilvaDocument import externalsource
@@ -56,6 +66,10 @@ class Document(CatalogedVersionedContent):
     meta_type = "Silva Document"
 
     __implements__ = IVersionedContent
+
+    # some scary DAV stuff...
+    __dav_collection__ = False
+    isAnObjectManager = False
 
     # A hackish way, to get a Silva tab in between the standard ZMI tabs
     inherited_manage_options = CatalogedVersionedContent.manage_options
@@ -247,33 +261,78 @@ class Document(CatalogedVersionedContent):
             if version_object:
                 self.service_editor.clearCache(version_object.content)
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'PUT')
-    def PUT(self, REQUEST, response=None):
-        """PUT support"""
+    def transform_and_store(self, content_type, content):
+        ret = content
         try:
-            html = REQUEST['BODYFILE'].read()
-            self.editor_storage(html, 'kupu')
+            if content_type in ['text/html', 'application/xhtml+xml']:
+                html = content
+                self.editor_storage(html, 'kupu')
 
-            # invalidate Document cache
-            version = self.get_editable()
-            version.clearEditorCache()
+                # invalidate Document cache
+                version = self.get_editable()
+                version.clearEditorCache()
 
-            # XXX This can be removed, right?
-            transformed = self.editor_storage(editor='kupu', encoding="UTF-8")
-
-            return transformed
+                # XXX This can be removed, right?
+                ret = self.editor_storage(editor='kupu', encoding="UTF-8")
+            else:
+                # plain Silva document XML
+                self.get_editable().content.manage_edit(content)
         except:
             # a tad ugly, but for debug purposes it would be nice to see
             # what's actually gone wrong
-            import sys, traceback
             exc, e, tb = sys.exc_info()
+            # XXX should store to zLog instead
             print '%s: %s' % (exc, e)
             print '\n%s' % '\n'.join(traceback.format_tb(tb))
             print
             # reraise the exception so the enduser at least sees something's
             # gone wrong
             raise
+        return ret
+
+    # WebDAV API
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'PUT')
+    def PUT(self, REQUEST=None, RESPONSE=None):
+        """PUT support"""
+        # XXX we may want to make this more modular/pluggable at some point
+        # to allow more content-types (+ transformations)
+        if REQUEST is None:
+            REQUEST = self.REQUEST
+        if RESPONSE is None:
+            RESPONSE = REQUEST.RESPONSE
+        content = REQUEST['BODYFILE'].read()
+        content_type = self._get_content_type_from_request(REQUEST, content)
+        ret = self.transform_and_store(content_type, content)
+
+    def _get_content_type_from_request(self, request, content):
+        """tries to figure out the content type of a PUT body from a request
+
+            the request may not have a content-type header available, if so
+            we should use the contents itself to determine the content type
+        """
+        ct = request.get_header('content-type')
+        if ct is not None:
+            return ct
+        content = re.sub('<?.*?>', '', content).strip()
+        if content.startswith('<html') or content.startswith('<!DOCTYPE html'):
+            return 'text/html'
+        return 'application/x-silva-document-xml'
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'manage_FTPget')
+    def manage_FTPget(self):
+        """return the raw XML-contents of this document"""
+        editable = self.get_previewable()
+        if editable is None:
+            raise InternalError, 'no viewable version available'
+        f = StringIO()
+        editable.get_xml_content(f)
+        return f.getvalue()
+
+    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
+                                'manage_DAVget')
+    manage_DAVget = manage_FTPget
 
 InitializeClass(Document)
 
@@ -300,8 +359,11 @@ class DocumentVersion(CatalogedVersion):
     def to_xml(self, context):
         f = context.f
         f.write('<title>%s</title>' % translateCdata(self.get_title()))
-        self.content.documentElement.writeStream(f)
+        self.get_xml_content(f)
         export_metadata(self, context)
+
+    def get_xml_content(self, f):
+        self.content.documentElement.writeStream(f)
 
     def manage_afterClone(self, item):
         # if we're a copy, clear cache
@@ -404,4 +466,26 @@ class SilvaDocumentPolicy(Persistent):
         container.manage_addProduct['SilvaDocument'].manage_addDocument(
             'index', title)
         container.index.sec_update_last_author_info()
+
+def document_factory(self, id, title, body):
+    """Add a Document."""
+    if not mangle.Id(self, id).isValid():
+        return
+    obj = Document(id).__of__(self)
+    version = DocumentVersion('0', title).__of__(self)
+    obj._setObject('0', version)
+    obj.create_version('0', None, None)
+    version = obj.get_editable()
+    version.content.manage_edit(body)
+
+    return obj
+
+def _should_create_document(id, ct, body):
+    rightct = (ct in ['application/x-silva-document-xml'])
+    rightext = id.endswith('.slv')
+    return rightct or rightext
+
+contentObjectFactoryRegistry.registerFactory(
+    document_factory,
+    _should_create_document)
 
