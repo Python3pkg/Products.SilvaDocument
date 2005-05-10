@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: Tue Nov 30 18:19:51 2004\n"
+"POT-Creation-Date: Tue May 10 15:01:54 2005\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva i18n team <walco@infrae.com>\n"
@@ -9,11 +9,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
 
-#: /Document.py:152
+#: /Document.py:166
 msgid "No version to store to!"
 msgstr ""
 
-#: /Document.py:47
+#: /Document.py:57
 msgid ""
 "A Document is the basic unit of information in Silva. A document\n"
 "        can -  much like word processor documents - contain text,\n"
@@ -31,158 +31,136 @@ msgstr ""
 msgid "Charset set"
 msgstr ""
 
-#: /install.py:146
+#: /install.py:151
 #: /views/add/Document/form.form:50
-# Default: ""
 msgid "title"
 msgstr ""
 
-#: /install.py:147
+#: /install.py:152
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:26
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:24
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
-# Default: ""
 msgid "paragraph"
 msgstr ""
 
-#: /install.py:148
+#: /install.py:153
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
-# Default: ""
 msgid "heading"
 msgstr ""
 
-#: /install.py:149
+#: /install.py:154
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:28
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:26
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
-# Default: ""
 msgid "list"
 msgstr ""
 
-#: /install.py:150
+#: /install.py:155
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:29
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
-# Default: ""
 msgid "preformatted"
 msgstr ""
 
-#: /install.py:151
-# Default: ""
+#: /install.py:156
 msgid "table of contents"
 msgstr ""
 
-#: /install.py:152
-# Default: ""
+#: /install.py:157
 msgid "image"
 msgstr ""
 
-#: /install.py:153
-# Default: ""
+#: /install.py:158
 msgid "table"
 msgstr ""
 
-#: /install.py:154
-# Default: ""
+#: /install.py:159
 msgid "complex list"
 msgstr ""
 
-#: /install.py:155
+#: /install.py:160
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:31
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:28
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
-# Default: ""
 msgid "definition list"
 msgstr ""
 
-#: /install.py:156
-# Default: ""
+#: /install.py:161
 msgid "code element"
 msgstr ""
 
-#: /install.py:157
+#: /install.py:162
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
-# Default: ""
 msgid "citation"
 msgstr ""
 
-#: /install.py:166
+#: /install.py:171
 msgid "external source"
 msgstr ""
 
-#: /install.py:217
-#: /install.py:285
-# Default: ""
+#: /install.py:222
+#: /install.py:290
 msgid "Paragraph"
 msgstr ""
 
-#: /install.py:218
-#: /install.py:286
-# Default: ""
+#: /install.py:223
+#: /install.py:291
 msgid "Heading"
 msgstr ""
 
-#: /install.py:219
-#: /install.py:287
-# Default: ""
+#: /install.py:224
+#: /install.py:292
 msgid "List"
 msgstr ""
 
-#: /install.py:220
-#: /install.py:288
-# Default: ""
+#: /install.py:225
+#: /install.py:293
 msgid "Image"
 msgstr ""
 
-#: /install.py:221
-#: /install.py:246
-#: /install.py:289
-# Default: ""
+#: /install.py:226
+#: /install.py:251
+#: /install.py:294
 msgid "Complex list"
 msgstr ""
 
-#: /install.py:247
-# Default: ""
+#: /install.py:252
 msgid "List item"
 msgstr ""
 
-#: /install.py:248
-# Default: ""
+#: /install.py:253
 msgid "List title"
 msgstr ""
 
-#: /install.py:290
+#: /install.py:295
 msgid "Preformatted"
 msgstr ""
 
-#: /install.py:291
+#: /install.py:296
 msgid "Definition list"
 msgstr ""
 
-#: /install.py:341
-# Default: ""
+#: /install.py:346
 msgid "Table"
 msgstr ""
 
-#: /install.py:342
-# Default: ""
+#: /install.py:347
 msgid "row"
 msgstr ""
 
-#: /install.py:343
-# Default: ""
+#: /install.py:348
 msgid "row heading"
 msgstr ""
 
@@ -326,14 +304,6 @@ msgstr ""
 msgid "create a hyperlink: alt-g"
 msgstr ""
 
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:22
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:22
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
-msgid "element"
-msgstr ""
-
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:33
 msgid "normal"
@@ -355,6 +325,13 @@ msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "${tip} Tab to the exit button or alt-e."
+msgstr ""
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:22
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
+msgid "element"
 msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
@@ -642,18 +619,18 @@ msgstr ""
 msgid "The stored xml is invalid."
 msgstr ""
 
-#: /widgets/macro_helpers.pt:108
-#: /widgets/macro_helpers.pt:108
+#: /widgets/macro_helpers.pt:110
+#: /widgets/macro_helpers.pt:110
 msgid "delete element"
 msgstr ""
 
-#: /widgets/macro_helpers.pt:109
-#: /widgets/macro_helpers.pt:109
+#: /widgets/macro_helpers.pt:111
+#: /widgets/macro_helpers.pt:111
 msgid "move down"
 msgstr ""
 
-#: /widgets/macro_helpers.pt:110
-#: /widgets/macro_helpers.pt:110
+#: /widgets/macro_helpers.pt:112
+#: /widgets/macro_helpers.pt:112
 msgid "move up"
 msgstr ""
 
@@ -709,7 +686,7 @@ msgstr ""
 msgid "add element&nbsp;"
 msgstr ""
 
-#: /widgets/macro_helpers.pt:89
+#: /widgets/macro_helpers.pt:91
 msgid "insert"
 msgstr ""
 
