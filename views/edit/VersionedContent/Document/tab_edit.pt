@@ -29,6 +29,7 @@
     type="text/css"
     rel="stylesheet"
     tal:condition="python:editor == 'kupu'"
+    tal:attributes="href string:${model/absolute_url}/edit/kupustyles.css"
   />
 
 </metal:block>
