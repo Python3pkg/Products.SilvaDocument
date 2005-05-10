@@ -31,7 +31,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
         self.metadata()
-        node = self.context.content.documentElement
+        node = self.context.content.documentElement.getDOMObj()
         self.sax_node(node)
         self.endElement('content')
 
@@ -67,7 +67,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
     def sax_source(self, node, id): 	 
         try:
             from Products.SilvaExternalSources.ExternalSource import getSourceForId 	 
-        except:
+        except ImportError:
             return
         source = getSourceForId(self.context, id) 	 
         parameters = {} 	 
