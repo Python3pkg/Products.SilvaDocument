@@ -19,7 +19,7 @@
       repeat="obj code_objects">
       <option 
         tal:define="
-          title obj/title; 
+          title obj/get_title; 
           path obj/path;"
         tal:attributes="
           value path; 
