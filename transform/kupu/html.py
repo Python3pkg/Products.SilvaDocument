@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.27 $'
+__version__='$Revision: 1.28 $'
 
 from zExceptions import NotFound
 
@@ -462,9 +462,9 @@ class ul(Element):
         for el in self.find():
             if el.name() == 'li':
                 lis.append(el.convert(context, 1))
-            # remove non-li items
-            #else:
-            #    lis.append(silva.li(el.convert(context)))
+            # browsers allow adding lists as list items, Silva doesn't
+            elif el.name() in ['ul', 'ol']:
+                lis.append(silva.li(el.convert(context)))
 
         return silva.list(
             lis,
