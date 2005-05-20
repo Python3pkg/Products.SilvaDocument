@@ -14,4 +14,4 @@ children = [child for child in node.childNodes if child.nodeType == node.ELEMENT
 result = []
 for i in range(len(children)):
     result.append(render_field(children[i], columns_info[i]))
-return ''.join(result)
+return context.service_editor.safeJoin('', result)

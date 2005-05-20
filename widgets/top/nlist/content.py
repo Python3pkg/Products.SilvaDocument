@@ -17,4 +17,4 @@ texts = [editor.render(child) for child in node.childNodes if
          child.nodeType == node.ELEMENT_NODE and child.nodeName == 'li']
 
 # XXX encoding issues debugging here ?
-return ''.join(texts)
+return context.service_editor.safeJoin('', texts)

@@ -35,4 +35,4 @@ else:
 # handle the rest
 for child in childNodes[1:]:
     result.append(viewer.getWidget(child).render())
-return ''.join(result)
+return context.service_editor.safeJoin('', result)
