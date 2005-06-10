@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.29 $'
+__version__='$Revision: 1.30 $'
 
 from zExceptions import NotFound
 
@@ -794,7 +794,10 @@ class div(Element):
             content = []
             for key, value in self.attr.__dict__.items():
                 if key != 'source_id' and key != 'class':
-                    content.append(silva.parameter(unicode(str(value), 'UTF-8'), key=key))
+                    value = value.content
+                    if type(value) != unicode:
+                        value = unicode(value, 'UTF-8')
+                    content.append(silva.parameter(value, key=key))
             return silva.source(
                         Frag(content), 
                         id=self.attr.source_id,
