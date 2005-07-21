@@ -56,7 +56,7 @@
                 tal:attributes="class python: iterate and 'odd' or 'even'"
                 >
                 <td class="align-right">
-                  <span tal:replace="title">
+                  <span tal:replace="structure title">
                     title
                   </span><span class="warning" tal:condition="is_required">*</span>
                 </td>
