@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.33 $
+# $Revision: 1.34 $
 # Zope
 
 from StringIO import StringIO
@@ -56,10 +56,11 @@ addable_priority = -1
 class Document(CatalogedVersionedContent):
     __doc__ = _(
     """A Document is the basic unit of information in Silva. A document
-        can -  much like word processor documents - contain text,
+        can &#8211; much like word processor documents &#8211; contain text,
         lists, tables, headers, subheads, images, etc. Documents can have
-        two (accessible) versions, one online for the public, another in
-        process (editable or approved).
+        two accessible versions, one online for the public, another in
+        process (editable or approved/published). Older versions can be rolled 
+        forward and made editable.
     """)
     security = ClassSecurityInfo()
 

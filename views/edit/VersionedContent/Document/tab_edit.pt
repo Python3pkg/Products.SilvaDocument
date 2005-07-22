@@ -94,7 +94,7 @@
 <tal:block 
   define="active python: editor == 'kupu'"
   condition="python:hasattr(view, 'kupu')">
-  <a title="edit with the kupu WYSIWYG editor: alt-("
+  <a title="edit with the Kupu Editor: alt-("
     accesskey="("
     i18n:translate=""
     tal:content="python: here.kupu_display(active)"
