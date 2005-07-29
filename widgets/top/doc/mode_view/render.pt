@@ -1,2 +1,8 @@
-<h2 class="heading" tal:condition="not:request/other/suppress_title | nothing" tal:content="here/get_title_content">Title</h2>
+<h2 class="heading" 
+  tal:define="heading here/get_title_content"
+  tal:condition="not:request/other/suppress_title | nothing" 
+  tal:content="heading"
+  tal:omit-tag="not:heading">
+  Title
+</h2>
 <content tal:replace="structure python:container.service_editor.renderElementsView(request.node)" />
