@@ -1,1 +1,1 @@
-SilvaDocument 1.3b6
+SilvaDocument 1.3 (CVS/UNRELEASED)
