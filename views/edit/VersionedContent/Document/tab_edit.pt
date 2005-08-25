@@ -36,12 +36,6 @@
 </tal:condition>
 </metal:block>
 
-<metal:block fill-slot="script">
-<tal:block condition="python:editor == 'kupu' and hasattr(view, 'kupu')" >
-  <metal:macro use-macro="view/kupu_silva/kupumacros/macros/jsincludes" />
-</tal:block>
-</metal:block>
-
 <tal:block condition="nothing"> _______ refresh code for session timeout _______ </tal:block>
 <metal:block fill-slot="editor_refresher">
 <tal:condition condition="python: is_editable and editor != 'kupu' and refresh_time > 0">
@@ -125,7 +119,7 @@
 </tal:block>
 <span tal:replace="nothing"> ______ kupu ______ </span>
 <tal:block condition="python:editor == 'kupu' and hasattr(view, 'kupu')" >
-  <metal:macro use-macro="view/kupu_silva/kupumacros/macros/body" />
+  <metal:macro use-macro="view/kupu_silva/kupumacros/macros/fulleditor" />
 </tal:block>
 </metal:block>
 
