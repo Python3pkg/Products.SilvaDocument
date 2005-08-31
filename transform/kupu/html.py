@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.31 $'
+__version__='$Revision: 1.32 $'
 
 from zExceptions import NotFound
 
@@ -222,8 +222,6 @@ def fix_allowed_items_in_heading(items, context):
     fixedrest = []
     for item in items:
         if item.name() in ['b', 'strong', 'br'] + TOPLEVEL + CONTAINERS:
-            fixedrest += extract_texts(item, context)
-        elif item.name() == 'a' and not getattr(item.attr, 'href', None) is None:
             fixedrest += extract_texts(item, context)
         else:
             fixedrest.append(item.convert(context))
