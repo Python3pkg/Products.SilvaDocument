@@ -275,7 +275,8 @@ msgstr "Spezialelement: ${title_or_id}; Ort ${path}"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
 msgid "They should be located in a (non-Silva) folder in the ZMI named ${code_source}."
-msgstr "Die Spezialelemente werden vom Web-management in versteckten "
+msgstr "Die Spezialelemente können vom Web-management in nicht sichbaren "
+" Verzeichnissen mit Id ${code_source} vorinstalliert werden."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
@@ -334,27 +335,32 @@ msgstr "rechtsbündig"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:120
 msgid "Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or type in the full path."
-msgstr ""
+msgstr "Verwenden Sie &#8220;Bild einbinden...&#8221; (alt-g), um ein Bild auszusuchen, oder tippen Sie manuell den Pfad zum Bild ein."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:122
 msgid "Set a URL to make this image a link (alt-l). To link to other sites, prepend &#8216;http://&#8217; to the address."
-msgstr ""
+msgstr "Hier können Sie eine URL angeben, oder mittels (alt-l) einen Inhalt "
+"aussuchen, um das Bild zu verlinken.<br />Bei externen Links vergessen Sie "
+"bitte nicht das&#8216;http://&#8217; an Anfang des Links."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:125
 msgid "Set an optional target for the link. Turning on &#8220;new window&#8221; inserts &#8216;_blank&#8217; after saving."
-msgstr ""
+msgstr "Optional kann das Zielfenster für den Link angegeben werden. "
+"Um den Link in einem neuen Fenster zu öffnen, verwenden Sie bitte "
+"&#8216;_blank&#8217;."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:128
 msgid "It&#8217;s good practice to give the link of an image a title, which will appear as a tooltip."
-msgstr ""
+msgstr "Der &#8216;Tooltip&#8217; wird beim Überfahren mit dem Mauszeiger "
+"angezeigt."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:131
 msgid "A float alignment allows the next document element to wrap &#8211; if there&#8217;s room."
-msgstr ""
+msgstr "Bei einem umflossenen Bild werden die folgenden Textelemente das Bild umfliessen &#8211; sofern das Bild nicht zu breit für sie ist."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:14
 msgid "get image reference..."
-msgstr ""
+msgstr "Bild einbinden..."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:14
 msgid "access key: alt-g"
@@ -374,7 +380,7 @@ msgstr "Link zur hochauflösenden Version des Bildes"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:47
 msgid "target frame"
-msgstr ""
+msgstr "Zielfenster"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:60
 msgid "new window"
@@ -587,6 +593,10 @@ msgstr ""
 msgid "delete element"
 msgstr "Eintrag löschen"
 
+#: /widgets/macro_helpers.pt:110
+msgid "return confirm('Really delete?')"
+msgstr "return confirm('Eintrag wirklich löschen?')"
+
 #: /widgets/macro_helpers.pt:111
 msgid "move down"
 msgstr "Eintrag nach unten schieben"
@@ -655,6 +665,45 @@ msgstr "einfügen"
 #: /widgets/element/table_elements/nest_element.pt:4
 msgid "edit element"
 msgstr "Eintrag editieren"
+
+#: /widgets/macro_normal_view.pt:41
+# added manually: these are identical to the items registered with
+# the doc editor, but could not figure out to translate them otherwise
+msgid "edit title"
+msgstr "Titel editieren"
+
+msgid "edit paragraph"
+msgstr "Absatz editieren"
+
+msgid "edit heading"
+msgstr "Überschrift editieren"
+
+msgid "edit list"
+msgstr "Liste editieren"
+
+msgid "edit preformatted"
+msgstr "Vorformatierten Text editieren"
+
+msgid "edit table of contents"
+msgstr "Inhaltsverzeichnis editieren"
+
+msgid "edit image"
+msgstr "Bild editieren"
+
+msgid "edit table"
+msgstr "Tabelle editieren"
+
+msgid "edit complex list"
+msgstr "Zusammengesetze Liste editieren"
+
+msgid "edit definition list"
+msgstr "Definitionsliste editieren"
+
+msgid "edit code element"
+msgstr "Spezialelement editieren"
+
+msgid "edit external source"
+msgstr "Datenquelle editieren"
 
 #: /widgets/macro_notes.pt:10
 msgid "if ${target} is empty a new window opens"
@@ -802,6 +851,10 @@ msgid "delete column"
 msgstr "Spalte löschen"
 
 #: /widgets/top/table/render.pt:19
+msgid "return confirm('Really delete column?')"
+msgstr "return confirm('Spalte wirklich löschen?')"
+
+#: /widgets/top/table/render.pt:19
 msgid "accesskey: alt-d"
 msgstr "Kurzwahl: alt-d"
 
@@ -830,17 +883,17 @@ msgstr "Typ"
 
 #: /widgets/top/table/render.pt:50
 msgid "Plain table (bold heading, no borders)"
-msgstr "Einfache Tabelle (ohne Rahmen, Überschrift fett gesetzt)"
+msgstr "Einfache Tabelle ohne Rahmen"
 
 #: /widgets/top/table/render.pt:54
 msgid "List table (bold underlined heading, borderless rows)"
-msgstr ""
+msgstr "Rahmen um die Zeilen"
 
 #: /widgets/top/table/render.pt:58
 msgid "Grid table (bold bordered heading, bordered rows)"
-msgstr ""
+msgstr "Rahmen um jede Tabellenzelle"
 
 #: /widgets/top/table/render.pt:62
 msgid "Data grid table (bold borderless heading, bordered rows)"
-msgstr ""
+msgstr "wie oben, aber Überschrift ohne Rahmen"
 
