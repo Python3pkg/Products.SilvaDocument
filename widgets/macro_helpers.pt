@@ -35,13 +35,9 @@
       tal:attributes="name string:${rel_url_start}/save:method" id="default_submit" i18n:attributes="value;title" /> 
     <input class="button" type="submit" value="save + exit" title="access key: alt-e" accesskey="e"
       tal:attributes="name string:${rel_url_start}/save_and_exit:method" i18n:attributes="value;title" />
-    <tal:block
-      condition="python:1"><!-- uncomment this for a "save and insert next" button (layout is ugly ...) -->
-      <input 
-         class="button" type="submit" value="save + insert" title="access key: alt-i" accesskey="i"
+    <input class="button" type="submit" value="save + insert" title="access key: alt-i" accesskey="i"
          tal:condition="python:not disable_insert" 
          tal:attributes="name string:${rel_url_start}/save_and_insert:method" i18n:attributes="value;title" />
-    </tal:block>
     <script language="JavaScript">
       setAutoSave();
     </script>
