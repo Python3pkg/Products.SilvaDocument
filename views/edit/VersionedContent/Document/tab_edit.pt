@@ -87,7 +87,7 @@
 </metal:block>
 
 <metal:block fill-slot="editor_selection">
-<tal:block 
+<tal:block i18n:domain="silva_document"
   define="active python: editor == 'kupu'"
   condition="python:hasattr(view, 'kupu')">
   <a title="edit with the Kupu Editor: alt-("
