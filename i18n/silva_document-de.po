@@ -41,7 +41,7 @@ msgstr "Kein Zeichensatz / Encoding angegeben."
 
 #: /ServiceCodeSourceCharset.py:45
 msgid "Charset set"
-msgstr "Zeichensatz / Encoding"
+msgstr "Zeichensatz / Encoding geändert"
 
 #: /install.py:150
 #: /views/add/Document/form.form:50
