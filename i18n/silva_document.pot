@@ -624,6 +624,10 @@ msgstr ""
 msgid "delete element"
 msgstr ""
 
+#: /widgets/macro_helpers.pt:110
+msgid "return confirm('Really delete?')"
+msgstr ""
+
 #: /widgets/macro_helpers.pt:111
 #: /widgets/macro_helpers.pt:111
 msgid "move down"
@@ -794,6 +798,10 @@ msgstr ""
 
 #: /widgets/top/table/render.pt:19
 msgid "delete column"
+msgstr ""
+
+#: /widgets/top/table/render.pt:19
+msgid "return confirm('Really delete column?')"
 msgstr ""
 
 #: /widgets/top/table/render.pt:19
