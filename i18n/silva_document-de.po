@@ -267,7 +267,7 @@ msgstr "Ein Zitat kann aus mehreren Absätzen bestehen. Bitte trennen Sie Absät
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
 msgid "Code element is broken"
-msgstr "Spezialelement ist entfernt worden."
+msgstr "Dieses Spezialelement ist entfernt worden."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
 msgid "Code element: ${title_or_id} at ${path}"
@@ -275,8 +275,8 @@ msgstr "Spezialelement: ${title_or_id}; Ort ${path}"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
 msgid "They should be located in a (non-Silva) folder in the ZMI named ${code_source}."
-msgstr "Die Spezialelemente können vom Web-management in nicht sichbaren "
-" Verzeichnissen mit Id ${code_source} vorinstalliert werden."
+msgstr "Spezialelemente können nur vom Web-management in nicht sichbaren "
+" Verzeichnissen mit Id&nbsp;<code>${code_source}</code> vorinstalliert werden."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
@@ -490,7 +490,7 @@ msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:11
 msgid "source id"
-msgstr "Id des Spezialemements"
+msgstr "Id der Datenquelle"
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:12
 msgid "Select an External Source..."
