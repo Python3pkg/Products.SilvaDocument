@@ -238,19 +238,19 @@ msgstr "Publizieren"
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:13
 msgid " kupu editor..."
-msgstr "kupu Editor..."
+msgstr "Kupu Editor..."
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:13
 msgid "kupu editor"
-msgstr "kupu Editor"
+msgstr "Kupu Editor"
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:106
 msgid "edit with the forms editor: alt-)"
 msgstr "Editieren mittels herkömmlichen Web-Formularen: alt-)"
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:96
-msgid "edit with the kupu WYSIWYG editor: alt-("
-msgstr "Editieren mit kupu: alt-("
+msgid "edit with the Kupu Editor: alt-("
+msgstr "Editieren mit Kupu: alt-("
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:18
 msgid "author"
