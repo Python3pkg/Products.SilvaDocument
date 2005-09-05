@@ -50,6 +50,7 @@
 <table class="listing"
   style="margin-bottom:0;">
   <tr>
+    <td metal:use-macro="container/macro_helpers/macros/edit_bottom_start" />
     <td>
 <table border="0" width="100%" cellspacing="0">
 <tr class="controls" tal:condition="enable_save">
@@ -58,10 +59,10 @@
   <div metal:define-slot="element_controls">type switcher here</div>
 </td>
 <div metal:use-macro="container/macro_helpers/macros/edit_bottom_controls" tal:omit-tag="" />
-<div metal:use-macro="container/macro_helpers/macros/element_buttons" />
 </tr>
 </table>
     </td>
+    <td metal:use-macro="container/macro_helpers/macros/empty_buttons" />
   </tr>
 <tr class="halfline">
   <td class="invisible" colspan="4">
