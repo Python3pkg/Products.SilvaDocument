@@ -14,14 +14,15 @@ msgid "No version to store to!"
 msgstr ""
 
 #: /Document.py:57
+#: /Document.py:47
 msgid ""
 "A Document is the basic unit of information in Silva. A document\n"
-"        can -  much like word processor documents - contain text,\n"
+"        can &#8211; much like word processor documents &#8211; contain text,\n"
 "        lists, tables, headers, subheads, images, etc. Documents can have\n"
-"        two (accessible) versions, one online for the public, another in\n"
-"        process (editable or approved).\n"
+"        two accessible versions, one online for the public, another in\n"
+"        process (editable or approved/published). Older versions can be rolled \n"
+"        forward and made editable.\n"
 "    "
-msgstr ""
 
 #: /ServiceCodeSourceCharset.py:43
 msgid "No charset entered"

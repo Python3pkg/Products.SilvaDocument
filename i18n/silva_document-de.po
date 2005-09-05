@@ -20,10 +20,11 @@ msgstr "Keine Version, die gespeichert werden kann!"
 #: /Document.py:47
 msgid ""
 "A Document is the basic unit of information in Silva. A document\n"
-"        can -  much like word processor documents - contain text,\n"
+"        can &#8211; much like word processor documents &#8211; contain text,\n"
 "        lists, tables, headers, subheads, images, etc. Documents can have\n"
-"        two (accessible) versions, one online for the public, another in\n"
-"        process (editable or approved).\n"
+"        two accessible versions, one online for the public, another in\n"
+"        process (editable or approved/published). Older versions can be rolled \n"
+"        forward and made editable.\n"
 "    "
 msgstr ""
 "Ein Dokument ist die übliche Weise, in Silva Informationen zu speichern. "
@@ -271,7 +272,7 @@ msgstr "Dieses Spezialelement ist entfernt worden."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
 msgid "Code element: ${title_or_id} at ${path}"
-msgstr "Spezialelement: ${title_or_id}; Ort ${path}"
+msgstr "Spezialelement: ${title_or_id}; Ort: ${path}"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
 msgid "They should be located in a (non-Silva) folder in the ZMI named ${code_source}."
