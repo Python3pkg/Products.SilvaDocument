@@ -12,13 +12,13 @@ from Products.Silva.i18n import translate as _
 code = context.get_code_object()
 
 if not code:
-    return '<span class="warning">[' + unicode(_('Code element is broken')) + ']</span>'
+    return '<span class="warning">[' + unicode(_('Code element is broken',domain='silva_document')) + ']</span>'
 
 # this is also done in get_code(), but I need to get to path:
 node = context.REQUEST.node
 path = node.getAttribute('path')
 
-message = _('Code element: ${title_or_id} at ${path}')
+message = _('Code element: ${title_or_id} at ${path}',domain='silva_document')
 message.set_mapping({'title_or_id': code.title_or_id(), 'path': path})
 
 return  message

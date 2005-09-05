@@ -33,7 +33,7 @@
 <metal:block fill-slot="edit_notes">
 <ul class="tips">
   <li i18n:translate="">Select the code to be executed when document is displayed.</li>
-  <li i18n:translate=""><strong i18n:name="tip"><tal:block i18n:translate="">Tip:</tal:block></strong> tab to the exit button or alt-e.</li>
+  <li i18n:translate=""><strong i18n:name="tip"><tal:block i18n:translate="">Tip:</tal:block></strong> tab to the exit button or use alt-e.</li>
 </ul>
 </metal:block>
 
