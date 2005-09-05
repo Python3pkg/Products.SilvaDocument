@@ -245,7 +245,7 @@ msgid "edit with the forms editor: alt-)"
 msgstr "éditer avec l'éditeur de formes: alt-)"
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:96
-msgid "edit with the kupu WYSIWYG editor: alt-("
+msgid "edit with the Kupu Editor: alt-("
 msgstr "éditer avec l'éditeur kupu: alt-("
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:18
