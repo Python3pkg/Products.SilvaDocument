@@ -16,7 +16,7 @@
   </td>
   <td class="align-right">
     <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="add column" title="accesskey: alt-a" accesskey="a" i18n:attributes="value;title" />
-    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="delete column" title="accesskey: alt-d" accesskey="d"  i18n:attributes="value;title" />
+    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="delete column" title="accesskey: alt-d" accesskey="d" onclick="return confirm('Really delete column?')" i18n:attributes="value;title;onclick" />
   </td>
 </tr>
 </table>
