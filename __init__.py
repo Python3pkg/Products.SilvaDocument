@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: __init__.py,v 1.10 2005/01/19 14:28:50 faassen Exp $
+# $Id: __init__.py,v 1.11 2005/09/05 02:54:16 clemens Exp $
 
 from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry
@@ -44,6 +44,13 @@ def initialize(context):
     # new xml import/export
     xmlexport.initializeXMLExportRegistry()
     xmlimport.initializeXMLImportRegistry()
+
+
+# allow to access i18n from TTW code
+
+from AccessControl import allow_module
+allow_module('Products.SilvaDocument.i18n')
+
 
 def initialize_upgrade():
     from Products.SilvaDocument import upgrade
