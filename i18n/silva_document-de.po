@@ -211,11 +211,11 @@ msgstr "Keine Leer- oder Sonderzeichen ausser &#8216;_&#8217; oder &#8216;-&#821
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
-msgstr "Formularbasierter Editor"
+msgstr "Formulareditor"
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor..."
-msgstr "Formularbasierter Editor..."
+msgstr "Formulareditor..."
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
