@@ -304,7 +304,7 @@ msgstr "Fügen Sie hier einen Begriff auf einer Zeile für sich ein, "
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "${tip} Tab to the exit button or alt-e."
-msgstr "${tip}: Mit TAB bis &quot;Speichern und schliessen&quot; oder ALT-e "
+msgstr "${tip}: Mit TAB bis &quot;Speichern und schliessen&quot; oder alt-e "
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
 msgid "Normal heading"
@@ -342,7 +342,7 @@ msgstr "Verwenden Sie &#8220;Bild einbinden...&#8221; (alt-g), um ein Bild auszu
 msgid "Set a URL to make this image a link (alt-l). To link to other sites, prepend &#8216;http://&#8217; to the address."
 msgstr "Hier können Sie eine URL angeben, oder mittels (alt-l) einen Inhalt "
 "aussuchen, um das Bild zu verlinken.<br />Bei externen Links vergessen Sie "
-"bitte nicht das&#8216;http://&#8217; an Anfang des Links."
+"bitte nicht das &#8216;http://&#8217; am Anfang des Links."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:125
 msgid "Set an optional target for the link. Turning on &#8220;new window&#8221; inserts &#8216;_blank&#8217; after saving."
@@ -413,7 +413,7 @@ msgstr "zentriert"
 
 #: /widgets/element/doc_elements/image/render.pt:10
 msgid "image element is broken"
-msgstr "Das Bild ist leider nicht mehr verfügbar."
+msgstr "Das Bild ist leider nicht verfügbar."
 
 #: /widgets/element/doc_elements/image/tag.py:18
 msgid "image reference is broken"
@@ -421,7 +421,7 @@ msgstr "Das Bild wurde gelöscht oder umbenannt."
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:68
 msgid "Add list items separated by an empty line."
-msgstr "Listenelemente werden durch Leerzeilen vonainader getrennt."
+msgstr "Listenelemente werden durch Leerzeilen voneinander getrennt."
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:11
@@ -460,7 +460,7 @@ msgstr "Kommentar"
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:69
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
 msgid "${tip} tab to the exit button or use alt-e."
-msgstr "${tip} mit TAB zu &quot;Speichern und schliessen&quot; oder ALT-e."
+msgstr "${tip} mit TAB zu &quot;Speichern und schliessen&quot; oder alt-e."
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
@@ -563,7 +563,7 @@ msgstr "Leider gibt es dazu keine brauchbare Fehlermeldung."
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:15
 msgid "Table of contents depth:"
-msgstr "Verschachtungstiefe des Inhaltsverzeichnises:"
+msgstr "Verschachtelungstiefe des Inhaltsverzeichnisses:"
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:18
 msgid "1 level"
