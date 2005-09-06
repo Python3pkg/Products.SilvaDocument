@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.32 $'
+__version__='$Revision: 1.33 $'
 
 from zExceptions import NotFound
 
@@ -588,7 +588,10 @@ class a(Element):
                 # named anchor, probably pasted from some other page
                 return Frag(self.content.convert(context))
         elif hasattr(self.attr, 'href') and self.attr.href is not None:
-            url = self.getattr('href', 'http://www.infrae.com')
+            url = self.getattr('silva_href', None)
+            print 'url:', url
+            if url is None:
+                url = self.getattr('href', 'http://www.infrae.com')
             target = getattr(self.attr, 'target', '')
             #if target is None:
             #    target = ''
@@ -633,9 +636,12 @@ class img(Element):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         from urlparse import urlparse
-        src = 'unknown'
-        if (hasattr(self.attr, 'src')
-                and hasattr(self.attr.src, 'content')):
+        src = getattr(self.attr, 'silva_src', None)
+        if src == None:
+           src = getattr(self.attr, 'src', None)
+        if src == None:
+            src = 'unknown'
+        if src and hasattr(src, 'content'):
             src = self.attr.src.content
         src = urlparse(src)[2]
         if src.endswith('/image'):

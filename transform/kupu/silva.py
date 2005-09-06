@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.21 $'
+__version__='$Revision: 1.22 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -220,6 +220,7 @@ class link(SilvaElement):
             return html.a(
                 self.content.convert(context),
                 href=self.attr.url,
+                silva_href=self.attr.url,
                 target=getattr(self.attr,'target', None),
             )
         else:
@@ -270,11 +271,14 @@ class image(SilvaElement):
         if not src:
             src = ''
 
-        if ((not self.hasattr('link') or str(self.getattr('link')).strip() == '')
-                and (not self.hasattr('link_to_hires') or self.getattr('link_to_hires') == '0')):
+        if ((not self.hasattr('link') or 
+                str(self.getattr('link')).strip() == '')and (
+                    not self.hasattr('link_to_hires') or 
+                    self.getattr('link_to_hires') == '0')):
             return html.img(
                         self.content.convert(context),
-                        src = src,
+                        src=src,
+                        silva_src=src,
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
                         title = self.getattr('title', ''),
@@ -283,6 +287,7 @@ class image(SilvaElement):
             return html.img(
                         self.content.convert(context),
                         src='%s/image' % src,
+                        silva_src='%s/image' % src,
                         link_to_hires='1',
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
@@ -294,6 +299,7 @@ class image(SilvaElement):
             return html.img(
                         self.content.convert(context),
                         src = src,
+                        silva_src = src,
                         link_to_hires = '1',
                         target = self.getattr('target', '_self'),
                         alignment = self.getattr('alignment', 'default'),
