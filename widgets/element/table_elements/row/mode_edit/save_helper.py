@@ -7,7 +7,7 @@
 ##parameters=
 ##title=
 ##
-from Products.Silva.i18n import translate as _
+from Products.SilvaDocument.i18n import translate as _
 
 request = context.REQUEST
 row = request.node

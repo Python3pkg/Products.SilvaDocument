@@ -1,9 +1,9 @@
-from Products.Silva.i18n import translate as _
+from Products.SilvaDocument.i18n import translate as _
 
 code = context.get_code_object()
 
 if not code:
-    return '<span class="warning">[' + unicode(_('Code element is broken',domain='silva_document')) + ']</span>'
+    return '<span class="warning">[' + unicode(_('Code element is broken')) + ']</span>'
 
 ret = code()
 if not same_type(ret, u''):

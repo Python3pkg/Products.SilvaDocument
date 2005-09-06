@@ -4,7 +4,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 
 from Products.Silva.helpers import add_and_edit
-from Products.Silva.i18n import translate as _
+from Products.SilvaDocument.i18n import translate as _
 
 manage_permission = 'Manage CodeSource Charset Services'
 

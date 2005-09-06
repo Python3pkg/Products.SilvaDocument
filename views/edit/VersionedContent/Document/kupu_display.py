@@ -7,7 +7,7 @@
 ##parameters=active=None
 ##title=
 ##
-from Products.Silva.i18n import translate as _
+from Products.SilvaDocument.i18n import translate as _
 
-display = test(active, _('kupu editor',domain='silva_document'), _(' kupu editor...',domain='silva_document'))
+display = test(active, _('kupu editor'), _(' kupu editor...'))
 return display

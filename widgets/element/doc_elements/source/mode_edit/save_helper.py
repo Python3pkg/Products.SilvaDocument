@@ -1,6 +1,6 @@
 from Products.Formulator.Errors import FormValidationError, ValidationError
 from Products.SilvaExternalSources.ExternalSource import getSourceForId
-from Products.Silva.i18n import translate as _
+from Products.SilvaDocument.i18n import translate as _
 
 request = context.REQUEST
 node = request.node
