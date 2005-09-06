@@ -238,7 +238,7 @@ msgid "publish"
 msgstr "Publizieren"
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:13
-msgid " kupu editor..."
+msgid "kupu editor..."
 msgstr "Kupu Editor..."
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:13
