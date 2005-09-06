@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.33 $'
+__version__='$Revision: 1.34 $'
 
 from zExceptions import NotFound
 
@@ -589,7 +589,6 @@ class a(Element):
                 return Frag(self.content.convert(context))
         elif hasattr(self.attr, 'href') and self.attr.href is not None:
             url = self.getattr('silva_href', None)
-            print 'url:', url
             if url is None:
                 url = self.getattr('href', 'http://www.infrae.com')
             target = getattr(self.attr, 'target', '')
