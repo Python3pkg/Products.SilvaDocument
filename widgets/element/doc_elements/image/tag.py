@@ -9,7 +9,7 @@
 ##
 
 from Products.Silva.mangle import entities
-from Products.Silva.i18n import translate as _
+from Products.SilvaDocument.i18n import translate as _
 
 node = context.REQUEST.node
 image = context.content()
