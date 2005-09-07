@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.34 $'
+__version__='$Revision: 1.35 $'
 
 from zExceptions import NotFound
 
@@ -63,13 +63,21 @@ def fix_image_links(el, context):
     """
     if not hasattr(context, 'href'):
         context.href = None
-    oldhref = context.href
+    if hasattr(context, 'silva_href'):
+        oldhref = context.silva_href
+    else:
+        oldhref = context.href
     if el.name() == 'a':
         href = None
-        if hasattr(el.attr, 'href'):
+        if hasattr(el.attr, 'silva_href'):
+            context.href = el.attr.href
+        elif hasattr(el.attr, 'href'):
             context.href = el.attr.href
     elif el.name() == 'img':
-        img.link = context.href
+        if hasattr(context, 'silva_href'):
+            img.link = context.silva_href
+        else:
+            img.link = context.href
     elif el.name() == 'Text':
         return
     for child in el.find():
