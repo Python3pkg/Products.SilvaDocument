@@ -13,6 +13,10 @@ from Products.Silva.tests import SilvaTestCase
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.silvaxml import xmlimport 
 
+def testopen(path, rw):
+    directory = os.path.dirname(__file__)
+    return open(os.path.join(directory, path), rw)
+
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_document_import(self):
         importfolder = self.add_folder(
@@ -21,7 +25,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
         importer = xmlimport.theXMLImporter
-        source_file = open('data/test_document.xml', 'r')
+        source_file = testopen('data/test_document.xml', 'r')
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
         importer.importFromFile(

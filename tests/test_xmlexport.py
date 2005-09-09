@@ -17,6 +17,10 @@ from Products.Silva.Link import manage_addLink
 from Products.ParsedXML.ParsedXML import ParsedXML
 from DateTime import DateTime
 
+def testopen(path, rw):
+    directory = os.path.dirname(__file__)
+    return open(os.path.join(directory, path), rw)
+
 class SetTestCase(SilvaTestCase.SilvaTestCase):
     def test_xml_document_export(self):
         testfolder = self.add_folder(
@@ -62,7 +66,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'testfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Auto TOC')
-        source_file = open('data/test_csv.csv', 'r')
+        source_file = testopen('data/test_csv.csv', 'r')
         testfolder.manage_addProduct[
             'SilvaExternalSources'].manage_addCSVSource(
             'csv',
