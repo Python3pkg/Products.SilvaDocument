@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.22 $'
+__version__='$Revision: 1.23 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -229,6 +229,7 @@ class link(SilvaElement):
                 return html.img(
                         img.content.convert(context),
                         src=img.getattr('path'),
+                        silva_src=img.getattr('path'),
                         link=url,
                         target=img.getattr('target', '_self'),
                         alignment=img.getattr('alignment', 'default'),
@@ -238,6 +239,7 @@ class link(SilvaElement):
                     return html.img(
                             img.content.convert(context),
                             src=img.getattr('path'),
+                            silva_src=img.getattr('path'),
                             link_to_hires='1',
                             link='%s?hires' % img.getattr('path'),
                             target=img.getattr('target', '_self'),
@@ -247,6 +249,7 @@ class link(SilvaElement):
                     return html.img(
                             img.content.convert(context),
                             src=img.getattr('path'),
+                            silva_src=img.getattr('path'),
                             link_to_hires='0',
                             link=img.getattr('link', ''),
                             target=img.getattr('target', '_self'),
@@ -298,8 +301,8 @@ class image(SilvaElement):
         if link == '%s?hires' % src:
             return html.img(
                         self.content.convert(context),
-                        src = src,
-                        silva_src = src,
+                        src=src,
+                        silva_src=src,
                         link_to_hires = '1',
                         target = self.getattr('target', '_self'),
                         alignment = self.getattr('alignment', 'default'),
@@ -309,6 +312,7 @@ class image(SilvaElement):
             return html.img(
                         self.content.convert(context),
                         src=src,
+                        silva_src=src,
                         link_to_hires=self.attr.link_to_hires,
                         link=self.getattr('link', ''),
                         target=self.getattr('target', '_self'),

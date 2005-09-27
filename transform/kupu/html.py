@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.35 $'
+__version__='$Revision: 1.36 $'
 
 from zExceptions import NotFound
 
@@ -582,7 +582,8 @@ class a(Element):
                 self.attr.href == '#' or self.attr.href is None)):
             if self.getattr('class', None) == 'index':
                 # index item
-                text = ''.join([t.convert(context).asBytes('UTF-8') for t in extract_texts(self, context)])
+                text = ''.join([t.convert(context).asBytes('UTF-8') for 
+                                    t in extract_texts(self, context)])
                 textnode = Frag()
                 if text and (text[0] != '[' or text[-1] != ']'):
                     textnode = Text(text)
@@ -644,12 +645,12 @@ class img(Element):
             return Frag()
         from urlparse import urlparse
         src = getattr(self.attr, 'silva_src', None)
-        if src == None:
-           src = getattr(self.attr, 'src', None)
-        if src == None:
+        if src is None:
+            src = getattr(self.attr, 'src', None)
+        if src is None:
             src = 'unknown'
-        if src and hasattr(src, 'content'):
-            src = self.attr.src.content
+        elif hasattr(src, 'content'):
+            src = src.content
         src = urlparse(src)[2]
         if src.endswith('/image'):
             src = src[:-len('/image')]
