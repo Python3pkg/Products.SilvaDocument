@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.36 $'
+__version__='$Revision: 1.37 $'
 
 from zExceptions import NotFound
 
@@ -170,7 +170,7 @@ def fix_structure(inputels, context, allowtables=0):
         # if it's contents are part of the current element's contents
         if el.name() == 'p' and allowtables:
             ptype = str(el.getattr('class', 'normal'))
-            if ptype not in ['normal', 'lead']:
+            if ptype not in ['normal', 'lead', 'annotation']:
                 ptype = 'normal'
             for child in el.find():
                 foundtables = fix_tables_and_divs(child, context)
@@ -191,7 +191,7 @@ def fix_structure(inputels, context, allowtables=0):
         else:
             if el.name() == 'p':
                 ptype = str(el.getattr('class', 'normal'))
-                if ptype not in ['normal', 'lead']:
+                if ptype not in ['normal', 'lead', 'annotation']:
                     ptype = 'normal'
             foundtables = []
             if allowtables:
@@ -398,7 +398,7 @@ class p(Element):
         for child in self.find():
             if child.name() != 'br':
                 type = self.getattr('silva_type', 'normal')
-                if type not in ['normal', 'lead']:
+                if type not in ['normal', 'lead', 'annotation']:
                     type = 'normal'
                 return silva.p(self.content.convert(context),
                                     type=type)
