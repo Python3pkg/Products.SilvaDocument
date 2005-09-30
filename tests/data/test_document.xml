@@ -9,7 +9,7 @@
       <set id="silva-extra">
         <silva-extra:subject></silva-extra:subject>
         <silva-extra:expirationtime></silva-extra:expirationtime>
-        <silva-extra:keywords></silva-extra:keywords>
+        <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords></silva-extra:keywords>
         <silva-extra:publicationtime></silva-extra:publicationtime>
         <silva-extra:location>http://nohost/root/testfolder</silva-extra:location>
         <silva-extra:contactemail></silva-extra:contactemail>
@@ -40,7 +40,7 @@
             <set id="silva-extra">
               <silva-extra:subject></silva-extra:subject>
               <silva-extra:expirationtime></silva-extra:expirationtime>
-              <silva-extra:keywords></silva-extra:keywords>
+              <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords></silva-extra:keywords>
               <silva-extra:publicationtime></silva-extra:publicationtime>
               <silva-extra:location>http://nohost/root/testfolder/test_document</silva-extra:location>
               <silva-extra:contactemail></silva-extra:contactemail>
