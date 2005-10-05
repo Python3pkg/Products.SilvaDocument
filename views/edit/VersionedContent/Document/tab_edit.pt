@@ -37,9 +37,12 @@
 </metal:block>
 
 <metal:block fill-slot="script">
-<tal:block condition="python:editor == 'kupu' and hasattr(view, 'kupu')" >
-  <metal:macro use-macro="view/kupu_silva/kupumacros/macros/jsincludes" />
-</tal:block>
+  <script type="text/javascript" 
+            tal:attributes="src here/reference.js/absolute_url">
+  </script>
+  <tal:block condition="python:editor == 'kupu' and hasattr(view, 'kupu')" >
+    <metal:macro use-macro="view/kupu_silva/kupumacros/macros/jsincludes" />
+  </tal:block>
 </metal:block>
 
 <tal:block condition="nothing"> _______ refresh code for session timeout _______ </tal:block>

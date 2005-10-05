@@ -6,12 +6,25 @@
 <script type="text/javascript" 
     tal:attributes="src python:request.model.get_container().absolute_url()+'/edit/reference.js'">
 </script>
-<script type="text/javascript" tal:content="structure python:here.focus_editor('data')" />
+<script type="text/javascript" tal:content="structure python:here.focus_editor('data')"></script>
 <div align="right">
-  <input type="button" class="transport" name="" value="get link reference..." title="create a hyperlink: alt-g" accesskey="g"
+  <input type="button" 
+    class="transport" name="" 
+    value="get link reference..." title="create a hyperlink: alt-g" 
+    accesskey="g"
     tal:define="container node/get_container" 
-    tal:attributes="
-      onclick python: here.asset_reference_helper('hyperlink', container.absolute_url(), None, container.getPhysicalPath())" i18n:attributes="value;title" />
+    tal:attributes="lookup:contexturl container/absolute_url"
+    onclick="reference.getReference(
+                function(path, id, title) {
+                  var textarea = document.getElementById('data');
+                  var text = textarea.value;
+                  text += '&lt;a href=&quot;' + path + '&quot;&gt;' + 
+                            path + '&lt;/a&gt;';
+                  textarea.value = text;
+                  textarea.focus();
+                }, this.getAttribute('lookup:contexturl'), '', true);
+            "
+    i18n:attributes="value;title" />
 </div>
 <textarea class="fixIE6widget" id="data" name="data" cols="65" rows="12" tal:attributes="rows here/get_lines"
   tal:content="here/editable_content">Dummy</textarea><br />
