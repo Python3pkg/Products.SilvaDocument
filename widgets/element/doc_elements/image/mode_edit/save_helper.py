@@ -1,10 +1,12 @@
-# $Id: save_helper.py,v 1.5 2004/07/21 11:46:43 jw Exp $
+# $Id: save_helper.py,v 1.6 2005/10/05 16:21:22 guido Exp $
 from Products.Silva.mangle import String
+from Products.Silva.adapters.path import getPathAdapter
 
 request = context.REQUEST
 node = request.node
+pad = getPathAdapter(request)
 
-image_path = request['path']
+image_path = pad.urlToPath(request['path'])
 node.setAttribute('path', String.inputConvert(image_path))
 
 link_title = request['title']
@@ -21,6 +23,9 @@ else:
     node.setAttribute('link_to_hires', '0')
     
 if link:
+    if link.find(':') == -1:
+        # XXX can we assume any path containing a : is a URL??
+        link = pad.urlToPath(link)
     node.setAttribute('link', String.inputConvert(link))
 else:
     node.removeAttribute('link')

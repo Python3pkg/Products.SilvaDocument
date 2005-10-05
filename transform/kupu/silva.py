@@ -11,13 +11,14 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.23 $'
+__version__='$Revision: 1.24 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
 except ImportError:
     from Products.SilvaDocument.transform.base import Element, Frag, Text, CharacterData
     from Products.SilvaDocument.externalsource import getSourceForId
+    from Products.Silva.adapters import path as pathadapter
 else:
     def getSourceForId(context, id):
         class FakeObj:
@@ -30,6 +31,7 @@ else:
 
 import html
 import operator
+from urlparse import urlparse
 
 _attr_origin=u'silva_origin'
 _attr_prefix=u'silva_'
@@ -217,39 +219,53 @@ class link(SilvaElement):
         try:
             img = self.query_one('image')
         except ValueError:
+            path = self.attr.url
+            if not urlparse(str(path))[0]:
+                # path, not a full URL
+                pad = pathadapter.getPathAdapter(context.model.REQUEST)
+                path = pad.pathToUrlPath(str(path))
             return html.a(
                 self.content.convert(context),
-                href=self.attr.url,
-                silva_href=self.attr.url,
+                href=path,
+                silva_href=path,
                 target=getattr(self.attr,'target', None),
             )
         else:
+            path = img.getattr('path')
+            pad = pathadapter.getPathAdapter(context.model.REQUEST)
+            if path:
+                path = pad.pathToUrlPath(str(path))
             url = str(self.attr.url).strip()
             if url:
+                if not urlparse(str(url))[0]:
+                    # path, not a full URL
+                    url = pad.pathToUrlPath(str(url))
                 return html.img(
                         img.content.convert(context),
-                        src=img.getattr('path'),
-                        silva_src=img.getattr('path'),
+                        src=path,
+                        silva_src=path,
                         link=url,
                         target=img.getattr('target', '_self'),
                         alignment=img.getattr('alignment', 'default'),
                 )
             else:
-                if img.hasattr('link_to_hires') and img.getattr('link_to_hires') == '1':
+                if (img.hasattr('link_to_hires') and 
+                        img.getattr('link_to_hires') == '1'):
+                    
                     return html.img(
                             img.content.convert(context),
-                            src=img.getattr('path'),
-                            silva_src=img.getattr('path'),
+                            src=path,
+                            silva_src=path,
                             link_to_hires='1',
-                            link='%s?hires' % img.getattr('path'),
+                            link='%s?hires' % path,
                             target=img.getattr('target', '_self'),
                             alignment=img.getattr('alignment', 'default'),
                     )
                 else:
                     return html.img(
                             img.content.convert(context),
-                            src=img.getattr('path'),
-                            silva_src=img.getattr('path'),
+                            src=path,
+                            silva_src=path,
                             link_to_hires='0',
                             link=img.getattr('link', ''),
                             target=img.getattr('target', '_self'),
@@ -267,6 +283,8 @@ class index(SilvaElement):
 class image(SilvaElement):
     def convert(self, context):
         src = self.attr.path
+        pad = pathadapter.getPathAdapter(context.model.REQUEST)
+        src = pad.pathToUrlPath(str(src))
         try:
             src = src.content
         except AttributeError:

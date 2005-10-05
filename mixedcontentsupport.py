@@ -1,10 +1,11 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.10 $
+# $Revision: 1.11 $
 # Python
 from __future__ import nested_scopes
 import re
 from xml.sax.saxutils import escape, unescape, quoteattr
+from urlparse import urlparse
 # Zope
 import Acquisition
 from AccessControl import ClassSecurityInfo
@@ -14,6 +15,7 @@ from OFS.SimpleItem import SimpleItem
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.SilvaDocument import interfaces
+from Products.Silva.adapters.path import getPathAdapter
 
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
@@ -106,6 +108,11 @@ class ParagraphSupport(MixedContentSupport):
         while node.hasChildNodes():
             node.removeChild(node.firstChild)
         PARAGRAPH_SUBSET.filteredParse(inputstr, node)
+
+        # we have to convert absolute link href and image src paths relative
+        # to the current virtual host root so they become relative to the
+        # Zope root 
+        self._convertPaths(node)
 
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'renderHTML')
@@ -231,8 +238,10 @@ class ParagraphSupport(MixedContentSupport):
                 result.append('</abbr>')
             elif child.nodeName == 'link':
                 url = mangle.entities(child.getAttribute('url'))
-                url_comparator = mangle.entities(
-                    self._linkHelper(node, child.getAttribute('url')))
+                if not urlparse(url)[0]:
+                    # we have a path, convert
+                    pad = getPathAdapter(child.REQUEST)
+                    url = pad.pathToUrlPath(url)
                 if child.hasAttribute('target'):
                     target = child.getAttribute('target')
                     if target == '': target = '_blank'
@@ -305,6 +314,17 @@ class ParagraphSupport(MixedContentSupport):
             return obj.absolute_url()
         # In all other cases:
         return path
+
+    def _convertPaths(self, node):
+        """convert URL paths to absolute physical ones"""
+        links = node.getElementsByTagName('link')
+        for link in links:
+            url = link.getAttribute('url')
+            if not urlparse(url)[0]:
+                # we have a path
+                pad = getPathAdapter(node.REQUEST)
+                path = pad.urlToPath(url)
+                link.setAttribute('url', path)
 
 InitializeClass(ParagraphSupport)
 

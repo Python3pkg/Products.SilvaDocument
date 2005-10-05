@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.37 $'
+__version__='$Revision: 1.38 $'
 
 from zExceptions import NotFound
 
@@ -33,6 +33,8 @@ try:
     from transform.base import Element, Text, Frag
 except ImportError:
     from Products.SilvaDocument.transform.base import Element, Text, Frag
+    # XXX no dummy replacement for this, so it won't work in test situations
+    from Products.Silva.adapters import path as pathadapter
 
 try:
     import silva
@@ -600,6 +602,10 @@ class a(Element):
             url = self.getattr('silva_href', None)
             if url is None:
                 url = self.getattr('href', 'http://www.infrae.com')
+            if str(url).startswith('/'):
+                # convert to physical path before storing
+                pad = pathadapter.getPathAdapter(context.model.REQUEST)
+                url = pad.urlToPath(str(url))
             target = getattr(self.attr, 'target', '')
             #if target is None:
             #    target = ''
@@ -628,6 +634,10 @@ class a(Element):
                 if not hasattr(image, 'attr'):
                     # empty frag
                     return image
+                src = img.attr.src
+                if str(src).startswith('/'):
+                    pad = pathadapter.getPathAdapter(context.model.REQUEST)
+                    src = pad.urlToPath(str(src))
                 if url == '%s?hires' % img.attr.src:
                     image.attr.link_to_hires = '1'
                 else:
@@ -651,7 +661,9 @@ class img(Element):
             src = 'unknown'
         elif hasattr(src, 'content'):
             src = src.content
-        src = urlparse(src)[2]
+        src = urlparse(str(src))[2]
+        pad = pathadapter.getPathAdapter(context.model.REQUEST)
+        src = pad.urlToPath(str(src))
         if src.endswith('/image'):
             src = src[:-len('/image')]
         # turn path into relative if possible, traverse to the object to

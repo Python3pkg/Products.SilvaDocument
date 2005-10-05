@@ -5,7 +5,9 @@
   <script type="text/javascript" 
     tal:attributes="src python:request.model.get_container().absolute_url()+'/edit/reference.js'">
   </script>
-  <tal:block define="global alignment python:node.getAttribute('alignment')" />
+  <tal:block define="alignment python:node.getAttribute('alignment');
+                      getPathAdapter nocall:modules/Products/Silva/adapters/path/getPathAdapter;
+                      pad python:getPathAdapter(request);">
 
 <table cellpadding="3" cellspacing="0" border="0" width="100%">
   <tbody>
@@ -24,7 +26,7 @@
           i18n:attributes="value;title" />
       </td>
       <td class="invisible align-left" style="white-space:nowrap;" colspan="3"
-        tal:define="path python:node.getAttribute('path');">  
+        tal:define="path python:pad.pathToUrlPath(node.getAttribute('path'));">  
         <input type="text" name="path" value=""
           tal:attributes="value path; style python:path and 'width:96%' or 'width:100%'" /><a title="edit image" 
           tal:condition="path"
@@ -49,8 +51,13 @@
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">
         <input type="radio" name="link_selector" value="entered_url"
                 tal:attributes="checked python:node.getAttribute('link_to_hires') != '1'" />
-        <input id="data" style="width: 100%;" type="text" name="link" value=""
-            tal:attributes="value python:node.getAttribute('link');"  />
+        <tal:block define="link python: node.getAttribute('link');
+                            ispath python: link.find(':') == -1;
+                            link python: ispath and pad.pathToUrlPath(link) or link;
+                          ">
+          <input id="data" style="width: 100%;" type="text" name="link" value=""
+              tal:attributes="value link"  />
+        </tal:block>
         <br />
         <label>
           <input type="radio" name="link_selector" value="hiresimg_url" 
@@ -129,6 +136,7 @@
     </tr>
   </tbody>
 </table>
+</tal:block>
 </metal:block>
 
 <metal:block fill-slot="edit_notes">
