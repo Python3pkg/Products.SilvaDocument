@@ -11,7 +11,7 @@ doesn't allow python2.2.1
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.24 $'
+__version__='$Revision: 1.25 $'
 
 try:
     from transform.base import Element, Frag, Text, CharacterData
@@ -32,6 +32,8 @@ else:
 import html
 import operator
 from urlparse import urlparse
+
+from Products.Silva.i18n import translate as _
 
 _attr_origin=u'silva_origin'
 _attr_prefix=u'silva_'
@@ -491,15 +493,17 @@ class source(SilvaElement):
                 divcontent.append(Text('Key: %s, value: %s\n' % (unicode(key, 'UTF-8'), unicode(value, 'UTF-8'))))
                 divcontent.append(html.br());
             object = getSourceForId(context.model, str(id))
-            meta_type = object.meta_type
-            header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, id)))
+            if object is not None:
+                meta_type = object.meta_type
+                header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, id)))
+            else:
+                header = html.h4(Text('[%s]' % _('external source element is broken')))
             pre = Frag(divcontent, html.br())
             content = Frag(header, pre);
             return html.div(content,
                         source_id=id,
                         class_='externalsource',
-                        **params
-                    )
+                        **params)
 
 class parameter(SilvaElement):
     def convert(self):
