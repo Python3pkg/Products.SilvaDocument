@@ -25,7 +25,7 @@ doesn't allow python2.2
 """
 
 __author__='holger krekel <hpk@trillke.net>'
-__version__='$Revision: 1.38 $'
+__version__='$Revision: 1.39 $'
 
 from zExceptions import NotFound
 
@@ -734,27 +734,32 @@ class table(Element):
                 if cols > highest:
                     highest = cols
         # create the column info
-        colinfo = []
-        for row in rows:
-            cells = row.find('td')
-            if len(cells):
-                for cell in cells:
-                    align = 'left'
-                    if hasattr(cell, 'attr'):
-                        align = self.alignmapping.get(getattr(cell.attr, 'align')) or 'L'
-                    # nasty, this assumes the last char of the field is a %-sign
-                    width = '1'
-                    if hasattr(cell, 'attr'):
-                        width = getattr(cell.attr, 'width', None)
-                        if width:
-                            width = str(width)[:-1].strip() or '1'
-                        else:
-                            width = '1'
-                        if not width or width == '0':
-                            width = '1'
-                    colinfo.append('%s:%s' % (align, width))
-                colinfo = ' '.join(colinfo)
-                break
+        colinfo_attr_value = self.getattr('silva_column_info', None)
+        if colinfo_attr_value is not None:
+            colinfo = colinfo_attr_value
+        else:
+            colinfo = []
+            for row in rows:
+                cells = row.find('td')
+                if len(cells):
+                    for cell in cells:
+                        align = 'left'
+                        if hasattr(cell, 'attr'):
+                            align = self.alignmapping.get(
+                                        getattr(cell.attr, 'align')) or 'L'
+                        # nasty, this assumes the last char of the field is a %-sign
+                        width = '1'
+                        if hasattr(cell, 'attr'):
+                            width = getattr(cell.attr, 'width', None)
+                            if width:
+                                width = str(width)[:-1].strip() or '1'
+                            else:
+                                width = '1'
+                            if not width or width == '0':
+                                width = '1'
+                        colinfo.append('%s:%s' % (align, width))
+                    colinfo = ' '.join(colinfo)
+                    break
         rows = Frag(*[r.convert(context, 1) for r in self.find('tr')])
         return silva.table(
                 rows,
