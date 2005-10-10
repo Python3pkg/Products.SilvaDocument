@@ -22,7 +22,7 @@
 </table>
 <table border="0" width="100%" cellspacing="0">
 <tr class="inter-controls">
-  <td align="center" tal:repeat="info columns_info" tal:attributes="class string:align-${info/align}; width info/html_width">
+  <td align="center" tal:repeat="info columns_info" tal:attributes="class string:align-${info/align}; width python: info.get('html_width', '*')">
      <div tal:omit-tag="" tal:define="align_name string:column_align_${repeat/info/index};
                                       width_name string:column_width_${repeat/info/index};
                                       align info/align">
@@ -32,7 +32,7 @@
               tal:attributes="name align_name; checked python:test(align == 'center', 'checked', nothing)" value="center" />
      &nbsp;<span i18n:translate="">r</span><input type="radio" 
               tal:attributes="name align_name; checked python:test(align == 'right', 'checked', nothing)" value="right" /><br />
-     <span i18n:translate="">relative width</span>&nbsp;<input size="2" type="text" maxlength="2" tal:attributes="name width_name; value info/width" />
+     <span i18n:translate="">relative width</span>&nbsp;<input size="2" type="text" maxlength="2" tal:attributes="name width_name; value python:info.get('width', '*')" />
      </div>
   </td>
 </tr>

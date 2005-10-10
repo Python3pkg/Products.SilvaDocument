@@ -65,8 +65,12 @@ table.append("""<table class="silvatable %s" width="100%%" cellspacing="0" cellp
 # this is always empty in rendered html
 # table.append("""<caption>%s</caption>""" % (caption))
 for col in columns_info:
-    table.append("""<col width="%s" class="align-%s" />""" % (
-        col['html_width'], col['align']))
+    width = col.get('html_width')
+    if width:
+        table.append("""<col width="%s" class="align-%s" />""" % (
+            width, col['align']))
+    else:
+        table.append("""<col class="align-%s" />""" % (col['align']))
 table.append("""<tbody>""")
 table.append('\n'.join(table_data))
 table.append("""</tbody>""")

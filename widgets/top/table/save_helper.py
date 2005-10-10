@@ -24,9 +24,10 @@ for column in range(columns):
          if width < 1:
              width = 1
        except ValueError:
-         width = 1
+         width = '*'
     else:
-       width = 1
+       width = '*'
+       
     column_info.append('%s:%s' % (align, width))
 
 node.setAttribute('column_info', String.inputConvert(' '.join(column_info)))

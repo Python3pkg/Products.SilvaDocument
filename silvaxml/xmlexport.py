@@ -95,7 +95,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
         columns_info = self.get_columns_info(node)
         nr_of_columns = len(columns_info)
         for column in columns_info:
-            col_attributes = {'width': column['html_width'], 'class': 'align-' + column['align']}
+            col_attributes = {'class': 'align-' + column['align']}
+            width = column.get('html_width')
+            if width:
+                col_attributes['width'] = width
             self.startElementNS(SilvaDocumentNS, 'col' , col_attributes)
             self.endElementNS(SilvaDocumentNS, 'col')
         if node.hasChildNodes():
@@ -176,13 +179,19 @@ class DocumentVersionProducer(SilvaBaseProducer):
             try:
                 width = int(info[1])
             except IndexError:
-                width = 1
+                width = 0
             except ValueError:
-                width = 1
-            result.append({
-                'align': lookup.get(align, 'L'),
-                'width': width,
-            })
+                width = 0
+            if width:
+                info_dict = {
+                    'align': lookup.get(align, 'L'),
+                    'width': width,
+                    }
+            else:
+                info_dict = {
+                    'align': lookup.get(align, 'L'),
+                    }
+            result.append(info_dict)
 
         # too much info, ignore it
         if len(result) > columns:
@@ -191,19 +200,20 @@ class DocumentVersionProducer(SilvaBaseProducer):
         elif len(result) < columns:
             total = 0
             for info in result:
-                total += info['width']
+                total += info.get('width', 0)
             average = total / len(result)
-            for i in range(columns - len(result)):
-                result.append({'align': 'left', 'width': average })
+            if average > 0:
+                for i in range(columns - len(result)):
+                    result.append({'align': 'left', 'width': average })
 
         # calculate percentages
         total = 0
         for info in result:
-            total += info['width']
+            total += info.get('width', 0)
         for info in result:
-            percentage = int((float(info['width'])/total) * 100)
-            info['html_width'] = '%s%%' % percentage
-
+            if info.get('width'):
+                percentage = int((float(info['width'])/total) * 100)
+                info['html_width'] = '%s%%' % percentage
         return result
         
     def sax_toc(self, node, depth):

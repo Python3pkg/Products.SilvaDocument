@@ -31,13 +31,15 @@ for info in column_info.split():
     try:
         width = int(info[1])
     except IndexError:
-        width = 1
+        width = 0
     except ValueError:
-        width = 1
-    result.append({
+        width = 0
+    info_dict = {
         'align': lookup.get(align, 'L'),
-        'width': width,
-    })
+        }
+    if width:
+        info_dict['width'] = width
+    result.append(info_dict)
 
 # too much info, ignore it
 if len(result) > columns:
@@ -46,19 +48,21 @@ if len(result) > columns:
 elif len(result) < columns:
     total = 0
     for info in result:
-        total += info['width']
+        total += info.get('width', 0)
     average = total / len(result)
-    for i in range(columns - len(result)):
-        result.append({'align': 'left', 'width': average })
+    if average > 0:
+        for i in range(columns - len(result)):
+            result.append({'align': 'left', 'width': average })
 
 # calculate percentages
 total = 0
 for info in result:
-    total += info['width']
+    total += info.get('width', 0)
 for info in result:
-    percentage = int((float(info['width'])/total) * 100)
-    info['html_width'] = '%s%%' % percentage
+    if info.get('width'):
+        percentage = int((float(info['width'])/total) * 100)
+        info['html_width'] = '%s%%' % percentage
 
-# so rows can get it without going through this rigamole again..
+# so rows can get it without going through this rigmarole again..
 request.set('columns_info', result)
 return result
