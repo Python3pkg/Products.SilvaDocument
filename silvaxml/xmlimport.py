@@ -26,7 +26,7 @@ class DocumentHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'document'):
-            pass
+            self.result().indexVersions()
         
 class DocumentContentHandler(SilvaBaseHandler):
     def getOverrides(self):
