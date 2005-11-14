@@ -1,3 +1,5 @@
+from zope.interface import implements
+
 # zope imports
 import zLOG
 
@@ -9,7 +11,7 @@ from Products.SilvaDocument.Document import Document, DocumentVersion
 
 class SwitchClass:
     
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def __init__(self, new_class, args=(), kwargs={}):
         self.new_class = new_class
@@ -30,7 +32,7 @@ class SwitchClass:
 
 class UpgradeDocumentXML:
 
-    __implements__ = IUpgrader
+    implements(IUpgrader)
 
     def upgrade(self, obj):
         # <index name="foo">bar</index> to

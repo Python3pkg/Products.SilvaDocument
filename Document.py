@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.35 $
+# $Revision: 1.36 $
 # Zope
 
 from StringIO import StringIO
@@ -9,6 +9,7 @@ import sys
 import traceback
 import urlparse
 
+from zope.interface import implements
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
@@ -66,7 +67,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    __implements__ = IVersionedContent
+    implements(IVersionedContent)
 
     # some scary DAV stuff...
     __dav_collection__ = False
@@ -341,7 +342,7 @@ class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
     meta_type = "Silva Document Version"
-    __implements__ = IVersion
+    implements(IVersion)
 
     security = ClassSecurityInfo()
 
@@ -462,7 +463,7 @@ def xml_import_handler(object, node):
 
 class SilvaDocumentPolicy(Persistent):
 
-    __implements__ = IContainerPolicy
+    implements(IContainerPolicy)
 
     def createDefaultDocument(self, container, title):
         container.manage_addProduct['SilvaDocument'].manage_addDocument(

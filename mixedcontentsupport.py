@@ -1,11 +1,13 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.11 $
+# $Revision: 1.12 $
 # Python
 from __future__ import nested_scopes
 import re
 from xml.sax.saxutils import escape, unescape, quoteattr
 from urlparse import urlparse
+
+from zope.interface import implements
 # Zope
 import Acquisition
 from AccessControl import ClassSecurityInfo
@@ -64,7 +66,7 @@ class MixedContentSupport(Acquisition.Explicit):
     """ Abstract base class for mixed content support.
     """
     
-    __implements__ = interfaces.IMixedContentSupport, 
+    implements(interfaces.IMixedContentSupport)
 
     def __init__(self, node):
         self._node = node

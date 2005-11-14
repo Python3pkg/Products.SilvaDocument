@@ -1,8 +1,8 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: interfaces.py,v 1.6 2005/01/19 14:28:50 faassen Exp $
+# $Id: interfaces.py,v 1.7 2005/11/14 18:06:38 faassen Exp $
 
-from Interface import Interface, Attribute
+from zope.interface import Interface, Attribute
 
 class IMixedContentSupport(Interface):
     """ Support of editing and rendering mixed content XML (i.e.
