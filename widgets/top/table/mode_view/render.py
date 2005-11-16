@@ -19,6 +19,12 @@ caption = ""
 nr_of_columns = len(columns_info)
 type = node.getAttribute('type')
 
+def ustr(s):
+    if same_type(s, u''):
+        return s
+    s = unicode(str(s), 'UTF-8')
+    return s
+
 table_data = []
 row = 1
 for child in node.childNodes:
@@ -52,6 +58,10 @@ for child in node.childNodes:
                 col += 1
         css_class = row % 2 and "odd" or "even"
         row += 1
+        # XXX for some reason some elements are rendered as utf-8, and some as
+        # unicode, so we have to convert them all to the same encoding before
+        # we can join the list
+        row_data = [ustr(x) for x in row_data]
         table_data.append(
             """<tr class="%s">\n%s\n</tr>""" % (css_class, '\n'.join(row_data)))
     if child.nodeName == 'row_heading':
