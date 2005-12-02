@@ -688,8 +688,8 @@ msgstr "Vorformatierten Text editieren"
 msgid "edit table of contents"
 msgstr "Inhaltsverzeichnis editieren"
 
-msgid "edit image"
-msgstr "Bild editieren"
+#msgid "edit image"
+#msgstr "Bild editieren"
 
 msgid "edit table"
 msgstr "Tabelle editieren"

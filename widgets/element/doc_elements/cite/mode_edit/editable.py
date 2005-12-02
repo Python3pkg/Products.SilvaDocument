@@ -20,5 +20,5 @@ for child in node.childNodes:
     supp = editorsupport.getMixedContentSupport(model, child)
     editable.append(supp.renderEditable())
 
-return context.service_editor.safeJoin('\r\n\r\n', editable)
+return '\r\n\r\n'.join(editable)
 

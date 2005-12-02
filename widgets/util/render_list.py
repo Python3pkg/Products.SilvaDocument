@@ -29,7 +29,6 @@ classes_mapping = {'disc':'disc', 'square':'square', 'circle':'circle',
                    'A':'upper-alpha', 'a':'lower-alpha', 'none': 'nobullet'}
 mapped_class = classes_mapping.get(type, 'disc')
 
-content = context.service_editor.safeJoin('', 
-    ['<li>%s</li>\n' % text for text in texts])
+content = ''.join(['<li>%s</li>\n' % text for text in texts])
 return '<%s class="%s">\n%s</%s>' % (
     tag, mapped_class, content, tag)

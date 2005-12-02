@@ -76,4 +76,4 @@ table.append('\n'.join(table_data))
 table.append("""</tbody>""")
 table.append("""</table>""")
 
-return context.service_editor.safeJoin('\n', table) + '\n'
+return '\n'.join(table) + '\n'

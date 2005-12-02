@@ -18,4 +18,4 @@ if not child_nodes:
 
 cellwidth = '%s%%' % int(1.0/len(child_nodes) * 100)
 texts = [render_field(node=child, cellwidth=cellwidth) for child in child_nodes]
-return context.service_editor.safeJoin('', texts)
+return ''.join(texts)
