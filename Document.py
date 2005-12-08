@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.36 $
+# $Revision: 1.37 $
 # Zope
 
 from StringIO import StringIO
@@ -40,8 +40,8 @@ from Products.Silva.ContentObjectFactoryRegistry import contentObjectFactoryRegi
 from transform.Transformer import EditorTransformer
 from transform.base import Context
 
-from Products.Silva.interfaces import IVersionedContent, IContainerPolicy
-from Products.Silva.interfaces import IVersion
+from Products.Silva.interfaces import IContainerPolicy
+from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.Silva.Versioning import VersioningError
 from Products.SilvaDocument.i18n import translate as _
 
@@ -67,7 +67,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    implements(IVersionedContent)
+    implements(IDocument)
 
     # some scary DAV stuff...
     __dav_collection__ = False
@@ -342,7 +342,7 @@ class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
     meta_type = "Silva Document Version"
-    implements(IVersion)
+    implements(IDocumentVersion)
 
     security = ClassSecurityInfo()
 

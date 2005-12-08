@@ -1,0 +1,11 @@
+<configure 
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:five="http://namespaces.zope.org/five">
+
+  <adapter
+    for="Products.SilvaDocument.interfaces.IDocument"
+    provides="Products.Silva.adapters.interfaces.IIndexable"
+    factory=".indexable.DocumentIndexableAdapter"
+    />
+
+</configure>

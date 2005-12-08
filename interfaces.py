@@ -1,8 +1,9 @@
 # Copyright (c) 2002-2005 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: interfaces.py,v 1.7 2005/11/14 18:06:38 faassen Exp $
+# $Id: interfaces.py,v 1.8 2005/12/08 15:04:24 faassen Exp $
 
 from zope.interface import Interface, Attribute
+from Products.Silva.interfaces import IVersionedContent, IVersion
 
 class IMixedContentSupport(Interface):
     """ Support of editing and rendering mixed content XML (i.e.
@@ -32,3 +33,9 @@ class IMixedContentSupport(Interface):
         Complementary to parse().
         """
         pass
+
+class IDocument(IVersionedContent):
+    pass
+
+class IDocumentVersion(IVersion):
+    pass
