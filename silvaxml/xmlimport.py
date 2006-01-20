@@ -21,8 +21,8 @@ class DocumentHandler(SilvaBaseHandler):
             id = attrs[(None, 'id')].encode('utf-8')
             uid = generateUniqueId(id, self._parent)
             object = Document(uid)
-            self._parent._setObject(uid, object)
-            self._result = getattr(self._parent, uid)
+            self.parent()._setObject(uid, object)
+            self.setResult(getattr(self._parent, uid))
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'document'):
@@ -40,8 +40,8 @@ class DocumentContentHandler(SilvaBaseHandler):
             if not mangle.Id(self._parent, id).isValid():
                 return
             version = DocumentVersion(id, '')
-            self._parent._setObject(id, version)
-            self._result = getattr(self._parent, id)
+            self.parent()._setObject(id, version)
+            self.setResult(getattr(self._parent, id))
             updateVersionCount(self)
             
     def endElementNS(self, name, qname):
