@@ -23,7 +23,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'importfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         importer = xmlimport.theXMLImporter
         source_file = testopen('data/test_document.xml', 'r')
         test_settings = xmlimport.ImportSettings()

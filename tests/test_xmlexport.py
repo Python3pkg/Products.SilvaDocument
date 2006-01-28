@@ -27,7 +27,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         manage_addDocument(
             testfolder, 'test_document', 'This is (surprise!) a document')
         doc = testfolder.test_document
