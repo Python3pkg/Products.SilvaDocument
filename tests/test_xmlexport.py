@@ -65,7 +65,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             self.root,
             'testfolder',
             'This is <boo>a</boo> testfolder',
-            policy_name='Auto TOC')
+            policy_name='Silva AutoTOC')
         source_file = testopen('data/test_csv.csv', 'r')
         testfolder.manage_addProduct[
             'SilvaExternalSources'].manage_addCSVSource(
