@@ -19,7 +19,7 @@ class DocumentHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'document'):
             id = attrs[(None, 'id')].encode('utf-8')
-            uid = generateUniqueId(id, self._parent)
+            uid = self.generateOrReplaceId(id)
             object = Document(uid)
             self.parent()._setObject(uid, object)
             self.setResult(getattr(self._parent, uid))
