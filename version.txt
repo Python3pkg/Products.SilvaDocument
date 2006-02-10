@@ -1,1 +1,1 @@
-SilvaDocument 1.4.2-pre-2
+SilvaDocument 1.4.2
