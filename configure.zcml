@@ -7,5 +7,7 @@
   <i18n:registerTranslations directory="i18n" />
 
   <include package=".adapters" />
+  
+  <include package=".browser" />
 
 </configure>

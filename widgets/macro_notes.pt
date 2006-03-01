@@ -3,16 +3,22 @@
   i18n:domain="silva_document">
 
 <metal:block define-macro="markup_notes">
-  <li><tal:block i18n:translate="">Text can be formatted &#8211; in <i i18n:name="italic"><tal:block i18n:translate="">italic</tal:block></i>, <b i18n:name="bold"><tal:block i18n:translate="">bold</tal:block></b>, etc. &#8211; with <span i18n:name="silva_markup">&#8220;<tal:block i18n:translate="">Silva markup</tal:block>&#8221;</span>:</tal:block>
-    <ul class="tips-nested">
-      <li>&lt;b&gt;<tal:block i18n:translate="">bold</tal:block>&lt/b&gt; &lt;i&gt;<tal:block i18n:translate="">italic</tal:block>&lt;/i&gt; &lt;u&gt;<tal:block i18n:translate="">underlined</tal:block>&lt;/u&gt; &lt;sup&gt;<tal:block i18n:translate="">superscript</tal:block>&lt;/sup&gt; &lt;sub&gt;<tal:block i18n:translate="">subscript</tal:block>&lt;/sub&gt;</li>
-      <li>&lt;a href="http://www.x.yz"&gt;<tal:block i18n:translate="">text</tal:block>&lt;/a&gt;</li>
-      <li>&lt;a href="http://www.x.yz" target="<tal:block i18n:translate="">target</tal:block>"&gt;<tal:block i18n:translate="">text</tal:block>&lt;/a&gt; &#8212; <tal:block i18n:translate="">if <span i18n:name="target">&#8216;target&#8217;</span> is empty a new window opens</tal:block></li>
-      <li>&lt;index&gt;<tal:block i18n:translate="">index item</tal:block>&lt;/index&gt;</li>
-      <li>&lt;abbr title="<tal:block i18n:translate="">full name</tal:block>"&gt;<tal:block i18n:translate="">abbreviation</tal:block>&lt;/abbr&gt;</li>
-      <li>&lt;acronym title="<tal:block i18n:translate="">full name</tal:block>"&gt;<tal:block i18n:translate="">acronym</tal:block>&lt;/acronym&gt;</li>
-      <li>&amp;lt; &lt; &#8212; &amp;gt; &gt;</li>
-    </ul>
+  <li tal:define="notes request/model/@@markupnotes">
+    <span tal:content="python:repr(request.model)" />
+    <tal:block condition="not: notes">
+      <tal:block i18n:translate="">Text can be formatted &#8211; in <i i18n:name="italic"><tal:block i18n:translate="">italic</tal:block></i>, <b i18n:name="bold"><tal:block i18n:translate="">bold</tal:block></b>, etc. &#8211; with <span i18n:name="silva_markup">&#8220;<tal:block i18n:translate="">Silva markup</tal:block>&#8221;</span>:</tal:block>
+      <ul class="tips-nested">
+        <li>&lt;b&gt;<tal:block i18n:translate="">bold</tal:block>&lt;/b&gt; &lt;i&gt;<tal:block i18n:translate="">italic</tal:block>&lt;/i&gt; &lt;u&gt;<tal:block i18n:translate="">underlined</tal:block>&lt;/u&gt; &lt;sup&gt;<tal:block i18n:translate="">superscript</tal:block>&lt;/sup&gt; &lt;sub&gt;<tal:block i18n:translate="">subscript</tal:block>&lt;/sub&gt;</li>
+        <li>&lt;a href="http://www.x.yz"&gt;<tal:block i18n:translate="">text</tal:block>&lt;/a&gt;</li>
+        <li>&lt;a href="http://www.x.yz" target="<tal:block i18n:translate="">target</tal:block>"&gt;<tal:block i18n:translate="">text</tal:block>&lt;/a&gt; &#8212; <tal:block i18n:translate="">if <span i18n:name="target">&#8216;target&#8217;</span> is empty a new window opens</tal:block></li>
+        <li>&lt;index&gt;<tal:block i18n:translate="">index item</tal:block>&lt;/index&gt;</li>
+        <li>&lt;abbr title="<tal:block i18n:translate="">full name</tal:block>"&gt;<tal:block i18n:translate="">abbreviation</tal:block>&lt;/abbr&gt;</li>
+        <li>&lt;acronym title="<tal:block i18n:translate="">full name</tal:block>"&gt;<tal:block i18n:translate="">acronym</tal:block>&lt;/acronym&gt;</li>
+        <li>&amp;lt; &lt; &#8212; &amp;gt; &gt;</li>
+      </ul>
+    </tal:block>
+    <tal:block condition="notes" replace="structure notes">
+    </tal:block>
   </li>
 </metal:block>
 
