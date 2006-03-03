@@ -268,7 +268,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             attributes['path'].split('/'), None)
         if image_object is not None:
             image = image_object.image
-            attributes['title'] = image_object.get_title()
+            attributes['image_title'] = image_object.get_title()
             width, height = image_object.getDimensions(image)
             attributes['width'] = str(width)
             attributes['height'] = str(height)
