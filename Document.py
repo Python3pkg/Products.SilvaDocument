@@ -303,6 +303,9 @@ class Document(CatalogedVersionedContent):
             REQUEST = self.REQUEST
         if RESPONSE is None:
             RESPONSE = REQUEST.RESPONSE
+        editable = self.get_editable()
+        if editable is None:
+            raise InternalError, 'no editable version available'
         content = REQUEST['BODYFILE'].read()
         content_type = self._get_content_type_from_request(REQUEST, content)
         ret = self.transform_and_store(content_type, content)
