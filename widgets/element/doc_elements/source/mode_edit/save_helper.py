@@ -59,5 +59,8 @@ else:
         param = node.createElement('parameter')
         param.setAttribute('key', ustr(field.id))
         node.appendChild(param)
-        value = node.createTextNode(ustr(result[field.id]))
-        param.appendChild(value)
+        value = result[field.id]
+        if same_type(value, []):
+            param.setAttribute('type', 'list')
+        valuenode = node.createTextNode(value)
+        param.appendChild(valuenode)

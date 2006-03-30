@@ -31,6 +31,7 @@ else:
 
 import html
 import operator
+import types
 from urlparse import urlparse
 
 from Products.Silva.i18n import translate as _
@@ -486,12 +487,26 @@ class source(SilvaElement):
             # external source element
             id = self.attr.id
             params = {}
+            attrparams = {}
             for child in self.find():
                 if child.name() == 'parameter':
-                    params[child.attr.key.convert(context).asBytes('utf-8')] = child.content.convert(context).asBytes('utf-8')
+                    vtype = child.getattr('type', 'string')
+                    value = child.content.convert(context).asBytes('utf-8')
+                    key = child.attr.key.convert(context).asBytes('utf-8')
+                    attrkey = key
+                    if vtype == 'list':
+                        value = eval(value)
+                        attrkey = '%s__type__list' % key
+                    params[key] = value
+                    attrparams[attrkey] = value
             divcontent = []
             for key, value in params.items():
-                divcontent.append(Text('%s: %s\n' % (unicode(key, 'UTF-8'), unicode(value, 'UTF-8'))))
+                if type(value) == types.ListType:
+                    value = ', '.join([unicode(x, 'UTF-8') for x in value])
+                else:
+                    value = unicode(value, 'UTF-8')
+                divcontent.append(Text('%s: %s\n' % 
+                                    (unicode(key, 'UTF-8'), value)))
                 divcontent.append(html.br());
             object = getSourceForId(context.model, str(id))
             if object is not None:
@@ -504,7 +519,7 @@ class source(SilvaElement):
             return html.div(content,
                         source_id=id,
                         class_='externalsource',
-                        **params)
+                        **attrparams)
 
 class parameter(SilvaElement):
     def convert(self):

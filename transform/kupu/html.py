@@ -824,13 +824,16 @@ class div(Element):
             for key, value in self.attr.__dict__.items():
                 if key != 'source_id' and key != 'class':
                     value = value.content
+                    vtype = ''
+                    if '__type__' in key:
+                        key, vtype = key.split('__type__')
                     if type(value) != unicode:
                         value = unicode(value, 'UTF-8')
-                    content.append(silva.parameter(value, key=key))
+                    content.append(silva.parameter(value, key=key, type=vtype))
             return silva.source(
                         Frag(content), 
                         id=self.attr.source_id,
-                        class_=self.attr.class_
+                        class_=self.attr.class_,
                     )
         else:
             return Frag(fix_structure(self.content, context))
