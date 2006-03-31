@@ -16,6 +16,13 @@ def getSourceParameters(context, node):
         value = [child.nodeValue for child in child.childNodes 
                  if child.nodeType == child.TEXT_NODE]
         value = ' '.join(value)
+        type = child.getAttribute('type') or 'string'
+        # XXX currently we only treat type="list" in a different manner, 
+        # non-string values are ignored (not sure if they should be dealt with 
+        # too, actually)
+        if type == 'list':
+            # XXX evil eval, same in Formulator, though
+            value = eval(value)
         parameters[name] = value
     return parameters
 
