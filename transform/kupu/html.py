@@ -824,7 +824,7 @@ class div(Element):
             for key, value in self.attr.__dict__.items():
                 if key != 'source_id' and key != 'class':
                     value = value.content
-                    vtype = ''
+                    vtype = 'string' # default type
                     if '__type__' in key:
                         key, vtype = key.split('__type__')
                     if type(value) != unicode:
