@@ -40,8 +40,8 @@
   <script type="text/javascript" 
             tal:attributes="src here/reference.js/absolute_url">
   </script>
-  <tal:block condition="python:editor == 'kupu' and hasattr(view, 'kupu')" >
-    <metal:macro use-macro="view/kupu_silva/kupumacros/macros/jsincludes" />
+  <tal:block condition="python:editor == 'kupu' and hasattr(view, 'service_kupu')" >
+    <metal:macro use-macro="view/service_kupu_silva/kupumacros/macros/jsincludes" />
   </tal:block>
 </metal:block>
 
@@ -98,7 +98,7 @@
 <metal:block fill-slot="editor_selection">
 <tal:block i18n:domain="silva_document"
   define="active python: editor == 'kupu'"
-  condition="python:hasattr(view, 'kupu')">
+  condition="python:hasattr(view, 'service_kupu')">
   <a title="edit with the Kupu Editor: alt-("
     accesskey="("
     i18n:translate=""
@@ -123,12 +123,12 @@
 
 <metal:block fill-slot="editor_content">
 <span tal:replace="nothing"> ______ forms editor ______ </span>
-<tal:block condition="python:editor != 'kupu' or not hasattr(view, 'kupu')">
+<tal:block condition="python:editor != 'kupu' or not hasattr(view, 'service_kupu')">
   <tal:block tal:replace="structure view/edit">Content</tal:block>
 </tal:block>
 <span tal:replace="nothing"> ______ kupu ______ </span>
-<tal:block condition="python:editor == 'kupu' and hasattr(view, 'kupu')" >
-  <metal:macro use-macro="view/kupu_silva/kupumacros/macros/body" />
+<tal:block condition="python:editor == 'kupu' and hasattr(view, 'service_kupu')" >
+  <metal:macro use-macro="view/service_kupu_silva/kupumacros/macros/body" />
 </tal:block>
 </metal:block>
 
