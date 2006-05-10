@@ -120,7 +120,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     if child.nodeValue:
                         self.handler.characters(child.nodeValue)
                 elif child.nodeType == Node.ELEMENT_NODE:
-                    self.sax_node(child)
+                    if child.nodeName == 'image':
+                        self.sax_img(child)
+                    else:
+                        self.sax_node(child)
         self.endElementNS(SilvaDocumentNS, 'row_heading')
         
     def sax_row(self, node, row, columns_info):
@@ -151,9 +154,15 @@ class DocumentVersionProducer(SilvaBaseProducer):
                             if grandchild.nodeType == Node.TEXT_NODE:
                                 self.handler.characters(grandchild.nodeValue)
                             else:
-                                self.sax_node(grandchild)
+                                if grandchild.nodeName == 'image':
+                                    self.sax_img(grandchild)
+                                else:
+                                    self.sax_node(grandchild)
                     else:
-                        self.sax_node(child)
+                        if child.nodeName == 'image':
+                            self.sax_img(child)
+                        else:
+                            self.sax_node(child)
         self.endElementNS(SilvaDocumentNS, 'field')
         
     def get_columns_info(self, node):
