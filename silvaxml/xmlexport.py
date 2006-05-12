@@ -230,6 +230,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         # actually rendering a ghost. This probably will change (for the
         # better:) in Silva 1.2 or later.
         toc_context = self.context
+        depth = int(depth)
         request = getattr(self.context, 'REQUEST', None)
         if request is not None:
             ghost_model = getattr(request, 'ghost_model', None)
