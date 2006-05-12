@@ -231,6 +231,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         # better:) in Silva 1.2 or later.
         toc_context = self.context
         request = getattr(self.context, 'REQUEST', None)
+        depth = int(depth)
         if request is not None:
             ghost_model = getattr(request, 'ghost_model', None)
             if ghost_model is not None:
