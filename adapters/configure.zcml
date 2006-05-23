@@ -8,4 +8,10 @@
     factory=".indexable.DocumentIndexableAdapter"
     />
 
+  <adapter
+    for="Products.SilvaDocument.interfaces.IDocumentVersion"
+    provides="Products.Silva.adapters.interfaces.IIndexable"
+    factory=".indexable.DocumentVersionIndexableAdapter"
+  />
+  
 </configure>
