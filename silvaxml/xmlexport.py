@@ -48,22 +48,25 @@ class DocumentVersionProducer(SilvaBaseProducer):
         elif node.nodeName == 'toc' and self.getSettings().externalRendering():
             self.sax_toc(node, attributes['toc_depth'])
         elif node.hasChildNodes():
-            for child in node.childNodes:
-                if child.nodeType == Node.TEXT_NODE:
-                    if child.nodeValue:
-                        self.handler.characters(child.nodeValue)
-                elif child.nodeType == Node.ELEMENT_NODE:
-                    if child.nodeName == 'table':
-                        self.sax_table(child)
-                    elif child.nodeName == 'image':
-                        self.sax_img(child)
-                    else:
-                        self.sax_node(child)
+            self.sax_children(node)
         else:
             if node.nodeValue:
                 self.handler.characters(node.nodeValue)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
 
+    def sax_children(self, node):
+        for child in node.childNodes:
+            if child.nodeType == Node.TEXT_NODE:
+                if child.nodeValue:
+                    self.handler.characters(child.nodeValue)
+            elif child.nodeType == Node.ELEMENT_NODE:
+                if child.nodeName == 'table':
+                    self.sax_table(child)
+                elif child.nodeName == 'image':
+                    self.sax_img(child)
+                else:
+                    self.sax_node(child)
+        
     def sax_source(self, node, id): 	 
         try:
             from Products.SilvaExternalSources.ExternalSource import getSourceForId 	 
@@ -114,16 +117,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
     def sax_row_heading(self, node, nr_of_columns):
         child_attrs = {'colspan': str(nr_of_columns)}
         self.startElementNS(SilvaDocumentNS, 'row_heading', child_attrs)
-        if node.hasChildNodes:
-            for child in node.childNodes:
-                if child.nodeType == Node.TEXT_NODE:
-                    if child.nodeValue:
-                        self.handler.characters(child.nodeValue)
-                elif child.nodeType == Node.ELEMENT_NODE:
-                    if child.nodeName == 'image':
-                        self.sax_img(child)
-                    else:
-                        self.sax_node(child)
+        elif node.hasChildNodes():
+            self.sax_children(node)
         self.endElementNS(SilvaDocumentNS, 'row_heading')
         
     def sax_row(self, node, row, columns_info):
