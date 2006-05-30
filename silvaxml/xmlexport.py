@@ -117,7 +117,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
     def sax_row_heading(self, node, nr_of_columns):
         child_attrs = {'colspan': str(nr_of_columns)}
         self.startElementNS(SilvaDocumentNS, 'row_heading', child_attrs)
-        elif node.hasChildNodes():
+        if node.hasChildNodes():
             self.sax_children(node)
         self.endElementNS(SilvaDocumentNS, 'row_heading')
         
