@@ -66,13 +66,22 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'testfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Silva AutoTOC')
-        source_file = testopen('data/test_csv.csv', 'r')
         testfolder.manage_addProduct[
-            'SilvaExternalSources'].manage_addCSVSource(
-            'csv',
-            'A CSV Source',
-            source_file
+            'SilvaExternalSources'].manage_addCodeSource(
+            'testcodesource',
+            'A Code Source',
+            'script',
             )
+        # add a script to the code source that returns the string 'foo'
+        testfolder.testcodesource.manage_addProduct[
+            'PythonScripts'
+        ].manage_addPythonScript(
+            'script',
+        )
+        # edit its contents
+        s = testfolder.testcodesource.script
+        s.ZPythonScript_edit(s._params, 
+                                'return "<ul><li>foo</li><li>bar</li></ul>"')
         manage_addDocument(
             testfolder, 'test_document', 'This is (surprise!) a document')
         doc = testfolder.test_document
@@ -80,10 +89,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         doc_edit.content = ParsedXML(
             'test_document',
             """<?xml version="1.0" encoding="utf-8"?><doc>
-            <source id="csv">
-            <parameter key="csvtableclass">grid</parameter>
-            <parameter key="csvbatchsize">2</parameter>
-            </source>
+            <source id="testcodesource"></source>
             <cite>
             <author>Shakespeare</author>
             <source>Global Theatre</source>
@@ -93,17 +99,15 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             document.</p>
             </cite>
             </doc>""")
-        BatchStart = {'b_start':2}
-        Request = testfolder.csv.REQUEST
-        Request.form.update(BatchStart)
         xmlexport.initializeXMLExportRegistry()
         settings = xmlexport.ExportSettings()
         settings.setExternalRendering(True)
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(testfolder)
         xml1, xml2 = exporter.exportToString(exportRoot, settings).split('<doc:doc>')
-        xml_expected = '\n<doc:source id="csv"><doc:parameter key="csvtableclass">grid</doc:parameter><doc:parameter key="csvbatchsize">2</doc:parameter><doc:rendered_html><div lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">\n  \n  <div class="listingBar">\n\n      <span class="previous"> \n   <a href="http://nohost/noobject?b_start:int=0">\n          \xc2\xab\n          Previous\n          2 \n          items</a>\n      </span>\n\n\n      \n   \n\n      \n    \n      \n      \n        <a href="http://nohost/noobject?b_start:int=0">1</a>\n      \n\n      \n      \n      <span class="brackets">[</span><span class="currentpage">2</span><span class="brackets">]</span>\n      \n    \n      \n\n      \n    \n      \n      \n      \n      \n \n    </div>\n  <table class="silvatable grid">\n    \n    \n      <thead>\n        <tr>\n          <th>h1</th>\n          <th>h2</th>\n          <th>h3</th>\n          <th>h4</th>\n          <th>h5</th>\n          <th>h6</th>\n        </tr>\n      </thead>\n    <tbody>\n      \n        <tr class="even">\n          <td>r3-1</td>\n          <td>r3-2</td>\n          <td>r3-3</td>\n          <td>r3-4</td>\n          <td>r3-5</td>\n          <td>r3-6</td>\n        </tr>\n      \n \n        <tr class="odd">\n          <td>r4-1</td>\n          <td>r4-2</td>\n          <td>r4-3</td>\n          <td>r4-4</td>\n          <td>r4-5</td>\n       <td>r4-6</td>\n        </tr>\n      \n    </tbody>\n    \n  </table>\n</div>\n</doc:rendered_html></doc:source>\n<doc:cite>\n<doc:author>Shakespeare</doc:author>\n<doc:source>GlobalTheatre</doc:source>\n<doc:ptype="normal">Thisisthetextofthecitation.Onlythis\ntextappearsintheeditingarea,howevertheauthorand/or\nsourcewillbeshowninthepreviewandpublishedversionofthe\ndocument.</doc:p>\n</doc:cite>\n</doc:doc></content></document></content></folder></silva>'
-        self.assertEquals(xml_expected.replace(' ',''), xml2.replace(' ',''))
+        xml_expected = '\n<doc:sourceid="testcodesource"><doc:rendered_html><ul><li>foo</li><li>bar</li></ul></doc:rendered_html></doc:source>\n<doc:cite>\n<doc:author>Shakespeare</doc:author>\n<doc:source>GlobalTheatre</doc:source>\n<doc:ptype="normal">Thisisthetextofthecitation.Onlythis\ntextappearsintheeditingarea,howevertheauthorand/or\nsourcewillbeshowninthepreviewandpublishedversionofthe\ndocument.</doc:p>\n</doc:cite>\n</doc:doc></content></document></content></folder></silva>'
+        self.assertEquals(xml_expected.replace(' ','').replace('\n', ''), 
+                            xml2.replace(' ','').replace('\n', ''))
             
 if __name__ == '__main__':
     framework()
