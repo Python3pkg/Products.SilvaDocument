@@ -45,13 +45,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if node.attributes:
             attributes = get_dict(node.attributes)
         if node.nodeName == 'source' and node.parentNode.nodeName != 'cite': 	        
-            self.sax_source(node, attributes)
+            self.sax_source(node)
         elif node.nodeName == 'toc' and self.getSettings().externalRendering():
-            self.sax_toc(node, attributes)
+            self.sax_toc(node)
         elif node.nodeName == 'table':
-            self.sax_table(node, attributes)
+            self.sax_table(node)
         elif node.nodeName == 'image':
-            self.sax_img(node, attributes)
+            self.sax_img(node)
         else:
             if node.nodeName == 'link':
                 attributes['url'] = self.rewriteUrl(attributes['url'])
@@ -70,11 +70,14 @@ class DocumentVersionProducer(SilvaBaseProducer):
             elif child.nodeType == Node.ELEMENT_NODE:
                 self.sax_node(child)
         
-    def sax_source(self, node, attributes): 	 
+    def sax_source(self, node): 	 
         try:
             from Products.SilvaExternalSources.ExternalSource import getSourceForId 	 
         except ImportError:
             return
+        attributes = {}
+        if node.attributes:
+            attributes = get_dict(node.attributes)
         id = attributes['id']
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
         source = getSourceForId(self.context, id) 	 
@@ -95,7 +98,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
             self.render_html(html)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
              
-    def sax_table(self, node, attributes):
+    def sax_table(self, node):
+        attributes = {}
+        if node.attributes:
+            attributes = get_dict(node.attributes)
         self.startElementNS(SilvaDocumentNS, 'table', attributes)
         columns_info = self.get_columns_info(node)
         nr_of_columns = len(columns_info)
@@ -222,10 +228,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 info['html_width'] = '%s%%' % percentage
         return result
         
-    def sax_toc(self, node, attributes):
+    def sax_toc(self, node):
         # XXX hack to get the right context for the toc, in case we're
         # actually rendering a ghost. This probably will change (for the
         # better:) in Silva 1.2 or later.
+        attributes = {}
+        if node.attributes:
+            attributes = get_dict(node.attributes)
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
         depth = attributes['toc_depth']
         toc_context = self.context
@@ -265,11 +274,14 @@ class DocumentVersionProducer(SilvaBaseProducer):
         self.render_html(html)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
 
-    def sax_img(self, node, attributes):
+    def sax_img(self, node):
         """Unfortunately <image> is a special case, since height and width 
         are not stored in the document but in the Image object itself, and
         need to be retrieved here.
         """
+        attributes = {}
+        if node.attributes:
+            attributes = get_dict(node.attributes)
         image_object = self.context.get_silva_object().unrestrictedTraverse(
             attributes['path'].split('/'), None)
         attributes['path'] = self.rewriteUrl(attributes['path'])
