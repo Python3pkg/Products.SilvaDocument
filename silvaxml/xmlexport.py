@@ -1,8 +1,11 @@
+import re
 from Products.Silva.silvaxml.xmlexport import theXMLExporter, VersionedContentProducer, SilvaBaseProducer
 from sprout.saxext.html2sax import saxify
 from Products.ParsedXML.DOM.Core import Node
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+_url_match = re.compile(URL_PATTERN)
 
 def initializeXMLExportRegistry():
     """Here the actual content types are registered. Non-Silva-Core content
@@ -40,19 +43,24 @@ class DocumentVersionProducer(SilvaBaseProducer):
         """
         attributes = {}
         if node.attributes:
-            for key in node.attributes.keys():
-                attributes[key] = node.attributes[key].value
-        self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
+            attributes = get_dict(node.attributes)
         if node.nodeName == 'source' and node.parentNode.nodeName != 'cite': 	        
-            self.sax_source(node, attributes['id'])
+            self.sax_source(node, attributes)
         elif node.nodeName == 'toc' and self.getSettings().externalRendering():
-            self.sax_toc(node, attributes['toc_depth'])
-        elif node.hasChildNodes():
-            self.sax_children(node)
+            self.sax_toc(node, attributes)
+        elif node.nodeName == 'table':
+            self.sax_table(node, attributes)
+        elif node.nodeName == 'image':
+            self.sax_img(node, attributes)
         else:
-            if node.nodeValue:
+            if node.nodeName == 'link':
+                attributes['url'] = self.rewriteUrl(attributes['url'])
+            self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
+            if node.hasChildNodes():
+                self.sax_children(node)
+            elif node.nodeValue:
                 self.handler.characters(node.nodeValue)
-        self.endElementNS(SilvaDocumentNS, node.nodeName)
+            self.endElementNS(SilvaDocumentNS, node.nodeName)
 
     def sax_children(self, node):
         for child in node.childNodes:
@@ -60,18 +68,15 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 if child.nodeValue:
                     self.handler.characters(child.nodeValue)
             elif child.nodeType == Node.ELEMENT_NODE:
-                if child.nodeName == 'table':
-                    self.sax_table(child)
-                elif child.nodeName == 'image':
-                    self.sax_img(child)
-                else:
-                    self.sax_node(child)
+                self.sax_node(child)
         
-    def sax_source(self, node, id): 	 
+    def sax_source(self, node, attributes): 	 
         try:
             from Products.SilvaExternalSources.ExternalSource import getSourceForId 	 
         except ImportError:
             return
+        id = attributes['id']
+        self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
         source = getSourceForId(self.context, id) 	 
         parameters = {} 	 
         for child in node.childNodes: 	 
@@ -88,12 +93,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if self.getSettings().externalRendering(): 	 
             html = source.to_html(self.context.REQUEST, **parameters) 	 
             self.render_html(html)
+        self.endElementNS(SilvaDocumentNS, node.nodeName)
              
-    def sax_table(self, node):
-        attributes = {}
-        if node.attributes:
-            for key in node.attributes.keys():
-                attributes[key] = node.attributes[key].value
+    def sax_table(self, node, attributes):
         self.startElementNS(SilvaDocumentNS, 'table', attributes)
         columns_info = self.get_columns_info(node)
         nr_of_columns = len(columns_info)
@@ -220,10 +222,12 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 info['html_width'] = '%s%%' % percentage
         return result
         
-    def sax_toc(self, node, depth):
+    def sax_toc(self, node, attributes):
         # XXX hack to get the right context for the toc, in case we're
         # actually rendering a ghost. This probably will change (for the
         # better:) in Silva 1.2 or later.
+        self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
+        depth = attributes['toc_depth']
         toc_context = self.context
         depth = int(depth)
         request = getattr(self.context, 'REQUEST', None)
@@ -259,18 +263,17 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 )
         html = '<p class="toc">%s</p>' % text
         self.render_html(html)
+        self.endElementNS(SilvaDocumentNS, node.nodeName)
 
-    def sax_img(self, node):
+    def sax_img(self, node, attributes):
         """Unfortunately <image> is a special case, since height and width 
         are not stored in the document but in the Image object itself, and
         need to be retrieved here.
         """
-        attributes = {}
-        if node.attributes:
-            for key in node.attributes.keys():
-                attributes[key] = node.attributes[key].value
         image_object = self.context.get_silva_object().unrestrictedTraverse(
             attributes['path'].split('/'), None)
+        attributes['path'] = self.rewriteUrl(attributes['path'])
+        attributes['link'] = self.rewriteUrl(attributes['link'])
         if image_object is not None:
             image = image_object.image
             attributes['image_title'] = image_object.get_title()
@@ -290,3 +293,39 @@ class DocumentVersionProducer(SilvaBaseProducer):
         saxify(html, self.handler)
         self.endElementNS(SilvaDocumentNS, 'rendered_html')
        
+    def rewriteUrl(self, path):
+        # XXX: copied verbatim from widgetrenderer
+        # If path is empty (can it be?), just return it
+        if path == '':
+            return path
+        # If it is a url already, return it:
+        if _url_match.match(path):
+            return path
+        # Is it a query of anchor fragment? If so, return it
+        if path[0] in ['?', '#']:
+            return path
+        # It is not an URL, query or anchor, so treat it as a path.
+        # If it is a relative path, treat is as such:
+        if not path.startswith('/'):
+            container = self.context.get_container()
+            return container.absolute_url() + '/' + path
+        # If it is an absolute path, try to traverse it to
+        # a Zope/Silva object and get the URL for that.
+        splitpath = [p.encode('ascii','ignore') for p in path.split('/') ]
+        obj = self.context.restrictedTraverse(splitpath, None)
+        if obj is None:
+            # Was not found, maybe the link is broken, but maybe it's just 
+            # due to virtual hosting situations or whatever.
+            return path
+        if hasattr(obj.aq_base, 'absolute_url'):
+            # There are some cases where the object we find 
+            # does not have the absolute_url method.
+            return obj.absolute_url()
+        # In all other cases:
+        return path
+    
+def get_dict(attributes):
+    result = {}
+    for key in attributes.keys():
+        result[key] = attributes[key].value
+    return result
