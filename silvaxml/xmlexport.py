@@ -285,7 +285,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
         image_object = self.context.get_silva_object().unrestrictedTraverse(
             attributes['path'].split('/'), None)
         attributes['path'] = self.rewriteUrl(attributes['path'])
-        attributes['link'] = self.rewriteUrl(attributes['link'])
+        if attributes.has_key('link'):
+            attributes['link'] = self.rewriteUrl(attributes['link'])
         if image_object is not None:
             image = image_object.image
             attributes['image_title'] = image_object.get_title()
