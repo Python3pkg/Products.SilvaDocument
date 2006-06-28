@@ -54,7 +54,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             self.sax_img(node)
         else:
             if node.nodeName == 'link':
-                attributes['url'] = self.rewriteUrl(attributes['url'])
+                attributes['rewritten_url'] = self.rewriteUrl(attributes['url'])
             self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
             if node.hasChildNodes():
                 self.sax_children(node)
@@ -284,9 +284,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
             attributes = get_dict(node.attributes)
         image_object = self.context.get_silva_object().unrestrictedTraverse(
             attributes['path'].split('/'), None)
-        attributes['path'] = self.rewriteUrl(attributes['path'])
+        attributes['rewritten_path'] = self.rewriteUrl(attributes['path'])
         if attributes.has_key('link'):
-            attributes['link'] = self.rewriteUrl(attributes['link'])
+            attributes['rewritten_link'] = self.rewriteUrl(attributes['link'])
         if image_object is not None:
             image = image_object.image
             attributes['image_title'] = image_object.get_title()
