@@ -1,7 +1,9 @@
 import re
+from urlparse import urlparse
 from Products.Silva.silvaxml.xmlexport import theXMLExporter, VersionedContentProducer, SilvaBaseProducer
 from sprout.saxext.html2sax import saxify
 from Products.ParsedXML.DOM.Core import Node
+from Products.Silva.adapters.path import getPathAdapter
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
@@ -310,18 +312,18 @@ class DocumentVersionProducer(SilvaBaseProducer):
         # XXX: copied verbatim from widgetrenderer
         # If path is empty (can it be?), just return it
         if path == '':
-            return path
+            return self.convertPath(path)
         # If it is a url already, return it:
         if _url_match.match(path):
-            return path
+            return self.convertPath(path)
         # Is it a query of anchor fragment? If so, return it
         if path[0] in ['?', '#']:
-            return path
+            return self.convertPath(path)
         # It is not an URL, query or anchor, so treat it as a path.
         # If it is a relative path, treat is as such:
         if not path.startswith('/'):
             container = self.context.get_container()
-            return container.absolute_url() + '/' + path
+            return self.convertPath(container.absolute_url() + '/' + path)
         # If it is an absolute path, try to traverse it to
         # a Zope/Silva object and get the URL for that.
         splitpath = [p.encode('ascii','ignore') for p in path.split('/') ]
@@ -329,13 +331,21 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if obj is None:
             # Was not found, maybe the link is broken, but maybe it's just 
             # due to virtual hosting situations or whatever.
-            return path
+            return self.convertPath(path)
         if hasattr(obj.aq_base, 'absolute_url'):
             # There are some cases where the object we find 
             # does not have the absolute_url method.
-            return obj.absolute_url()
+            return self.convertPath(obj.absolute_url())
         # In all other cases:
-        return path
+        return self.convertPath(path)
+    
+    def convertPath(self, path):
+        """convert URL paths to absolute physical ones"""
+        if urlparse(path)[0]:
+            return path
+        # we have a path
+        pad = getPathAdapter(self.context.REQUEST)
+        return pad.urlToPath(path)
     
 def get_dict(attributes):
     result = {}
