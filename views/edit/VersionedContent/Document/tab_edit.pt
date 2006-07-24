@@ -132,5 +132,10 @@
 </tal:block>
 </metal:block>
 
+<tal:note replace="nothing"> if feedback is not desired percolate signal upwards</tal:note>
+<metal:fill fill-slot="editorcheck">
+  <tal:plug define="global nofeedback python:test(editor == 'kupu', 'kupulive', nothing)" />
+</metal:fill>
+
 </metal:block>
 </html>
