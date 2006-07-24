@@ -15,8 +15,7 @@
     refresh_time python:19 * 60;
     model request/model;
     is_editable model/get_unapproved_version;
-    "
-  >
+">
 
 <metal:block use-macro="here/macro_tab_edit/macros/editor">
 
@@ -37,12 +36,12 @@
 </metal:block>
 
 <metal:block fill-slot="script">
-  <script type="text/javascript" 
-            tal:attributes="src here/reference.js/absolute_url">
-  </script>
-  <tal:block condition="python:editor == 'kupu' and hasattr(view, 'service_kupu')" >
-    <metal:macro use-macro="view/service_kupu_silva/kupumacros/macros/jsincludes" />
-  </tal:block>
+<script type="text/javascript" 
+  tal:attributes="src here/reference.js/absolute_url">
+</script>
+<tal:block condition="python:editor == 'kupu' and hasattr(view, 'service_kupu')" >
+  <metal:macro use-macro="view/service_kupu_silva/kupumacros/macros/jsincludes" />
+</tal:block>
 </metal:block>
 
 <tal:block condition="nothing"> _______ refresh code for session timeout _______ </tal:block>
@@ -101,22 +100,22 @@
   condition="python:hasattr(view, 'service_kupu')">
   <a title="edit with the Kupu Editor: alt-("
     accesskey="("
-    i18n:translate=""
     tal:content="python: here.kupu_display(active)"
     tal:attributes="
       class python: test(active, 'selected', None);
       href python: '%s/edit?editor=kupu' % model.absolute_url()"
-    i18n:attributes="title">
+    i18n:attributes="title"
+    i18n:translate="">
     </a>
   <div class="air"> </div>
   <a title="edit with the forms editor: alt-)"
     accesskey=")"
-    i18n:translate=""
     tal:content="python: here.forms_editor_display(not active)"
     tal:attributes="
       class python: test(active, None, 'selected');
       href python: '%s/edit?editor=forms_editor' % model.absolute_url()"
-    i18n:attributes="title">
+    i18n:attributes="title"
+    i18n:translate="">
   </a>
 </tal:block>
 </metal:block>
