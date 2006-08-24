@@ -51,9 +51,6 @@ from xml.sax import make_parser
 from xml.sax.handler import ContentHandler
 from Products.SilvaMetadata.Exceptions import BindingError
 
-icon="www/silvadoc.gif"
-addable_priority = -1
-
 class Document(CatalogedVersionedContent):
     __doc__ = _(
     """A Document is the basic unit of information in Silva. A document
@@ -353,8 +350,8 @@ class DocumentVersion(CatalogedVersion):
         {'label':'Edit',       'action':'manage_main'},
         ) + CatalogedVersion.manage_options
 
-    def __init__(self, id, title):
-        DocumentVersion.inheritedAttribute('__init__')(self, id, title)
+    def __init__(self, id):
+        DocumentVersion.inheritedAttribute('__init__')(self, id)
         self.content = ParsedXML('content', '<doc></doc>')
 
     # display edit screen as main management screen
@@ -409,38 +406,6 @@ class DocumentVersion(CatalogedVersion):
 
 InitializeClass(DocumentVersion)
 
-manage_addDocumentForm = PageTemplateFile("www/documentAdd", globals(),
-                                          __name__='manage_addDocumentForm')
-
-def manage_addDocument(self, id, title, REQUEST=None):
-    """Add a Document."""
-    if not mangle.Id(self, id).isValid():
-        return
-    object = Document(id)
-    self._setObject(id, object)
-    object = getattr(self, id)
-    object.manage_addProduct['SilvaDocument'].manage_addDocumentVersion(
-        '0', title)
-    object.create_version('0', None, None)
-    add_and_edit(self, id, REQUEST)
-    return ''
-
-manage_addDocumentVersionForm = PageTemplateFile(
-    "www/documentVersionAdd",
-    globals(),
-    __name__='manage_addDocumentVersionForm')
-
-def manage_addDocumentVersion(self, id, title, REQUEST=None):
-    """Add a Document version to the Silva-instance."""
-    version = DocumentVersion(id, title)
-    self._setObject(id, version)
-
-    version = self._getOb(id)
-    version.set_title(title)
-
-    add_and_edit(self, id, REQUEST)
-    return ''
-
 def xml_import_handler(object, node):
     id = get_xml_id(node)
     title = get_xml_title(node)
@@ -477,7 +442,7 @@ def document_factory(self, id, title, body):
     if not mangle.Id(self, id).isValid():
         return
     obj = Document(id).__of__(self)
-    version = DocumentVersion('0', title).__of__(self)
+    version = DocumentVersion('0').__of__(self)
     obj._setObject('0', version)
     obj.create_version('0', None, None)
     version = obj.get_editable()

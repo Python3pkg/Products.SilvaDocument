@@ -57,7 +57,7 @@ def initialize():
     upgrade.registry.registerUpgrader(SwitchClass(Document),
         '0.9.3', Document.meta_type)
     upgrade.registry.registerUpgrader(SwitchClass(DocumentVersion,
-        args=('', )), '0.9.3', DocumentVersion.meta_type)
+        args=()), '0.9.3', DocumentVersion.meta_type)
     upgrade.registry.registerUpgrader(UpgradeDocumentXML(), '0.9.3',
         DocumentVersion.meta_type)
 

@@ -39,7 +39,7 @@ class DocumentContentHandler(SilvaBaseHandler):
             id = attrs[(None, 'version_id')].encode('utf-8')
             if not mangle.Id(self._parent, id).isValid():
                 return
-            version = DocumentVersion(id, '')
+            version = DocumentVersion(id)
             self.parent()._setObject(id, version)
             self.setResult(getattr(self._parent, id))
             updateVersionCount(self)

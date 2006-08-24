@@ -15,9 +15,6 @@ from Products.SilvaDocument import Document
 
 def initialize(context):
     from Products.SilvaDocument.silvaxml import xmlexport, xmlimport
-    extensionRegistry.register(
-        'SilvaDocument', 'Silva Document', context, [Document],
-        install, depends_on='Silva')
     
     context.registerClass(
         EditorSupportNested.EditorSupport,
@@ -34,10 +31,8 @@ def initialize(context):
     # old XML importer
     importer_registry.register_tag('silva_document', 	 
                                    Document.xml_import_handler)
-    registerDirectory('views', globals())
+
     registerDirectory('widgets', globals())
-    
-    registerTypeForMetadata(Document.DocumentVersion.meta_type)
 
     initialize_upgrade()
 

@@ -1,7 +1,10 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:silva="http://infrae.com/ns/silvaconf"
     >
+
+  <include package="Products.Silva" />
 
   <!-- i18n -->
   <i18n:registerTranslations directory="i18n" />
@@ -9,5 +12,19 @@
   <include package=".adapters" />
   
   <include package=".browser" />
+
+  <!-- register the extension and its content types --> 
+  <silva:extension
+    name="SilvaDocument" 
+    title="Silva Document"
+    />
+  
+  <silva:versionedcontent
+    content=".Document.Document"
+    version=".Document.DocumentVersion"
+    extension_name="SilvaDocument"
+    icon="www/silvadoc.gif"
+    priority="-6"
+    />  
 
 </configure>
