@@ -312,13 +312,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
         # XXX: copied verbatim from widgetrenderer
         # If path is empty (can it be?), just return it
         if path == '':
-            return self.convertPath(path)
+            return path
         # If it is a url already, return it:
         if _url_match.match(path):
-            return self.convertPath(path)
+            return path
         # Is it a query of anchor fragment? If so, return it
         if path[0] in ['?', '#']:
-            return self.convertPath(path)
+            return self.context.object().absolute_url() + path
         # It is not an URL, query or anchor, so treat it as a path.
         # If it is a relative path, treat is as such:
         if not path.startswith('/'):
