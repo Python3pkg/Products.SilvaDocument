@@ -39,7 +39,7 @@
 <script type="text/javascript" 
   tal:attributes="src here/reference.js/absolute_url">
 </script>
-<tal:block condition="python:editor == 'kupu' and hasattr(view, 'service_kupu')" >
+<tal:block condition="python:editor == 'kupu' and hasattr(view, 'service_kupu') and is_editable">
   <metal:macro use-macro="view/service_kupu_silva/kupumacros/macros/jsincludes" />
 </tal:block>
 </metal:block>
