@@ -7,7 +7,7 @@
 ##parameters=active=None
 ##title=
 ##
+from Products.SilvaDocument.i18n import translate as _
 
-def _(s): return s
 display = test(active, _('forms editor'), _('forms editor...'))
 return display
