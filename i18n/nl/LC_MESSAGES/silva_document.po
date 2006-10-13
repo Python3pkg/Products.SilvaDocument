@@ -1,82 +1,84 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: SilvaDocument 1.1\n"
-"POT-Creation-Date: Tue May 10 15:01:54 2005\n"
-"PO-Revision-Date: 2004-11-29 19:10+0100\n"
-"Last-Translator: Eric Casteleijn <eric@infrae.com>\n"
-"Language-Team: Silva i18n team <walco@infrae.com>\n"
+"Project-Id-Version: Silva 1.1\n"
+"POT-Creation-Date: Wed Oct 11 15:13:26 2006\n"
+"PO-Revision-Date: 2005-10-14 12:50+0000\n"
+"Last-Translator: thisfred <eric@infrae.com>\n"
+"Language-Team: Infrae i18n team <walco@infrae.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/translation_files/extract.py\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 "Language-code: nl\n"
 "Language-name: Nederlands\n"
+"X-Is-Fallback-For: nl-be\n"
 "Preferred-encodings: utf-8\n"
-"Domain: silva_document\n"
+"Domain: silva\n"
 
-#: /Document.py:166
+#: /Document.py:165
 msgid "No version to store to!"
-msgstr "Geen versie om naar op te slaan!"
+msgstr ""
 
-#: /Document.py:57
+#: /Document.py:55
 msgid ""
 "A Document is the basic unit of information in Silva. A document\n"
-"        can &#8211; much like word processor documents &#8211; contain text,\n"
+"        can &#8211; much like word processor documents &#8211; contain "
+"text,\n"
 "        lists, tables, headers, subheads, images, etc. Documents can have\n"
 "        two accessible versions, one online for the public, another in\n"
-"        process (editable or approved/published). Older versions can be rolled \n"
+"        process (editable or approved/published). Older versions can be "
+"rolled \n"
 "        forward and made editable.\n"
 "    "
-msgstr "Een document is het Silva equivalent van een tekstverwerkerdocument"
+msgstr ""
 
 #: /ServiceCodeSourceCharset.py:43
 msgid "No charset entered"
-msgstr "Geen charset opgegeven"
+msgstr ""
 
 #: /ServiceCodeSourceCharset.py:45
 msgid "Charset set"
-msgstr "Charset ingesteld"
+msgstr ""
 
 #: /install.py:151 /views/add/Document/form.form:50
 msgid "title"
 msgstr "titel"
 
-#: /install.py:152 /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
+#: /install.py:152 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:24
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:36
 msgid "paragraph"
-msgstr "alinea"
+msgstr ""
 
-#: /install.py:153 /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
+#: /install.py:153 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:37
 msgid "heading"
-msgstr "kop"
+msgstr ""
 
-#: /install.py:154 /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
+#: /install.py:154 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:38
 msgid "list"
-msgstr "lijst"
+msgstr ""
 
-#: /install.py:155 /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
+#: /install.py:155 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:29
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:39
 msgid "preformatted"
-msgstr "voorgeformatteerd"
+msgstr ""
 
 #: /install.py:156
 msgid "table of contents"
-msgstr "inhoudsopgave"
+msgstr ""
 
 #: /install.py:157
 msgid "image"
@@ -84,103 +86,110 @@ msgstr "afbeelding"
 
 #: /install.py:158
 msgid "table"
-msgstr "tabel"
+msgstr ""
 
 #: /install.py:159
 msgid "complex list"
-msgstr "complexe lijst"
+msgstr ""
 
-#: /install.py:160 /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
+#: /install.py:160 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:31
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:41
 msgid "definition list"
-msgstr "definitie-lijst"
+msgstr ""
 
 #: /install.py:161
 msgid "code element"
-msgstr "code-element"
+msgstr ""
 
 #: /install.py:162 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
-msgstr "citaat"
+msgstr ""
 
 #: /install.py:171
 msgid "external source"
-msgstr "externe bron"
+msgstr ""
 
 #: /install.py:222 /install.py:290
 msgid "Paragraph"
-msgstr "Alinea"
+msgstr ""
 
 #: /install.py:223 /install.py:291
 msgid "Heading"
-msgstr "Kop"
+msgstr ""
 
 #: /install.py:224 /install.py:292
 msgid "List"
-msgstr "Lijst"
+msgstr ""
 
 #: /install.py:225 /install.py:293
 msgid "Image"
-msgstr "Afbeelding"
+msgstr ""
 
 #: /install.py:226 /install.py:251 /install.py:294
 msgid "Complex list"
-msgstr "Complexe lijst"
+msgstr ""
 
 #: /install.py:252
 msgid "List item"
-msgstr "Lijst-item"
+msgstr ""
 
 #: /install.py:253
 msgid "List title"
-msgstr "Lijst-titel"
+msgstr ""
 
 #: /install.py:295
 msgid "Preformatted"
-msgstr "Voorgeformatteerd"
+msgstr ""
 
 #: /install.py:296
 msgid "Definition list"
-msgstr "Definitielijst"
+msgstr ""
 
 #: /install.py:346
 msgid "Table"
-msgstr "Tabel"
+msgstr ""
 
 #: /install.py:347
 msgid "row"
-msgstr "rij"
+msgstr ""
 
 #: /install.py:348
 msgid "row heading"
-msgstr "kop-rij"
+msgstr ""
 
 #: /transform/Transformer.py:63
 msgid "Unknown Editor: ${editor}"
-msgstr "Onbekende Editor: ${editor}"
+msgstr ""
 
 #: /transform/base.py:107
 msgid "no ${path} element"
-msgstr "geen ${path} element"
+msgstr ""
 
 #: /transform/base.py:113
 msgid "more than one ${path} element"
-msgstr "meer dan één ${path} element"
+msgstr ""
 
 #: /transform/base.py:143
 msgid "intermingling * is not allowed ${i}"
-msgstr "het doorelkaar gebruiken van * is niet toegestaan ${i}"
+msgstr ""
 
 #: /transform/base.py:72
 msgid "not implemented, override in inheriting class"
-msgstr "not implemented, override in inheriting class"
+msgstr ""
 
 #: /transform/base.py:96
 msgid "${name} attribute not found on tag ${self}"
-msgstr "${name}-attribuut niet gevonden op tag ${self}"
+msgstr ""
+
+#: /transform/kupu/silva.py:516
+#: /widgets/element/doc_elements/source/rendered_source.py:15
+#: /widgets/element/doc_elements/source/rendered_source.py:20
+#: /widgets/element/doc_elements/source/render.pt:8
+msgid "external source element is broken"
+msgstr ""
 
 #: /views/add/Document/form.form:28
 msgid "id"
@@ -191,24 +200,24 @@ msgid ""
 "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
 "or &#8216;.&#8217;"
 msgstr ""
-"Geen spaties of speciale karakters behalve &#8216;_&#8217; of &#8216;-&#8217; "
-"of &#8216;.&#8217;"
+"Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
+"&#8216;.&#8217;"
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
-msgstr "formuliereditor"
+msgstr ""
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor..."
-msgstr "formuliereditor..."
+msgstr ""
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
-msgstr "bewerken"
+msgstr ""
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:18
 msgid "preview"
-msgstr "preview"
+msgstr "voorbeeld"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:19
 msgid "properties"
@@ -222,21 +231,21 @@ msgstr "toegang"
 msgid "publish"
 msgstr "publiceren"
 
-#: /views/edit/VersionedContent/Document/kupu_display.py:13
+#: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor..."
-msgstr " kupu editor..."
+msgstr ""
 
-#: /views/edit/VersionedContent/Document/kupu_display.py:13
+#: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor"
-msgstr "kupu editor"
+msgstr ""
 
-#: /views/edit/VersionedContent/Document/tab_edit.pt:106
-msgid "edit with the forms editor: alt-)"
-msgstr "bewerken met de formuliereditor: alt-)"
-
-#: /views/edit/VersionedContent/Document/tab_edit.pt:96
+#: /views/edit/VersionedContent/Document/tab_edit.pt:101
 msgid "edit with the Kupu Editor: alt-("
-msgstr "bewerken met de kupu WYSIWYG editor: alt-("
+msgstr ""
+
+#: /views/edit/VersionedContent/Document/tab_edit.pt:111
+msgid "edit with the forms editor: alt-)"
+msgstr ""
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:18
 msgid "author"
@@ -244,310 +253,283 @@ msgstr "auteur"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:27
 msgid "source"
-msgstr "bron"
+msgstr ""
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:41
 msgid ""
 "The citation may contain multiple paragraphs. Separate them with an empty "
 "line."
 msgstr ""
-"Een citaat kan bestaan uit meerdere alinea's. Alinea's worden gescheiden "
-"door een lege regel."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
 msgid "Code element is broken"
-msgstr "Code-element is gebroken"
+msgstr ""
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
 msgid "Code element: ${title_or_id} at ${path}"
-msgstr "Code-element: ${title_or_id} in ${path}"
+msgstr ""
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
 msgid ""
 "They should be located in a (non-Silva) folder in the ZMI named "
 "${code_source}."
 msgstr ""
-"Die zouden in een (niet-Silva) map in de ZMI met de naam ${code_source} "
-"moeten staan."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
-msgstr "Beschikbare code-objecten:"
+msgstr ""
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:35
 msgid "Select the code to be executed when document is displayed."
 msgstr ""
-"Selecteer de code die moet worden uitgevoerd als het document wordt "
-"weergegeven."
-
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:69
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-msgid "Tip:"
-msgstr "Tip:"
-
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-msgid "${tip} tab to the exit button or alt-e."
-msgstr "${tip} tab naar de knop 'exit' (afsluiten) of druk op alt-e."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:9
 msgid ""
 "No code objects (Python Scripts, Page Templates, DTML Methods) are available."
 msgstr ""
-"Er zijn geen code-objecten (Python Scripts, Page Templates, DTML Methods) "
-"beschikbaar."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:29
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "get link reference..."
-msgstr "maak een linkverwijzing..."
+msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "create a hyperlink: alt-g"
-msgstr "maak een hyperlink: alt-g"
+msgstr ""
 
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:33
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:45
 msgid "normal"
-msgstr "normaal"
+msgstr ""
 
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:43
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:56
 msgid "compact"
-msgstr "compact"
+msgstr ""
 
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:51
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:64
 msgid ""
 "Add term on first line, definition on second line. Separate items with an "
 "empty line space."
 msgstr ""
-"Voeg de term toe op de eerste regel, de definitie op de tweede. Scheidt  "
-"items door een lege regel."
 
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:69
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+msgid "Tip:"
+msgstr ""
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
 msgid "${tip} tab to the exit button or use alt-e."
-msgstr "${tip} tab naar de knop 'exit' (afsluiten) of druk op alt-e."
+msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "${tip} Tab to the exit button or alt-e."
-msgstr "${tip} Tab naar de knop 'exit' (afsluiten) of druk op alt-e."
+msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:22
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
 msgid "element"
 msgstr "element"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:31
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
 #: /widgets/top/table/render.pt:47
 msgid "type"
 msgstr "type"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
 msgid "Normal heading"
-msgstr "Normale Kop"
+msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:28
 msgid "Sub heading"
-msgstr "Sub-kop"
+msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Sub sub heading"
-msgstr "Sub-sub-kop"
+msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
 msgid "Paragraph heading"
-msgstr "Alinea-kop"
+msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:31
 msgid "Sub paragraph heading"
-msgstr "Sub-alinea-kop"
+msgstr ""
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:106
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:105
+msgid "float left"
+msgstr ""
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:110
+msgid "align left"
+msgstr ""
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:117
+msgid "default"
+msgstr ""
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:122
+msgid "align center"
+msgstr ""
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:129
 msgid "float right"
-msgstr "rechts 'floaten'"
+msgstr ""
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:111
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:134
 msgid "align right"
-msgstr "rechts uitlijnen"
+msgstr ""
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:120
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:144
 msgid ""
 "Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or type "
 "in the full path."
 msgstr ""
-"Gebruik &#8220;maak verwijzing naar afbeelding...&#8221; (alt-g) om een "
-"afbeelding op te zoeken, of type het volledige pad in."
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:122
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:146
 msgid ""
 "Set a URL to make this image a link (alt-l). To link to other sites, prepend "
 "&#8216;http://&#8217; to the address."
 msgstr ""
-"Stel een URL in, om van deze afbeelding een link te maken (alt-l). Om naar "
-"andere sites te linken, moet &#8216;http://&#8217; voor het adres worden "
-"gezet."
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:125
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:149
 msgid ""
 "Set an optional target for the link. Turning on &#8220;new window&#8221; "
 "inserts &#8216;_blank&#8217; after saving."
 msgstr ""
-"Stel een (optioneel) 'doel' in voor de link. Door &#8220;nieuw "
-"venster&#8221; te kiezen wordt &#8216;_blank&#8217; ingevoegd na het opslaan."
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:128
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:152
 msgid ""
 "It&#8217;s good practice to give the link of an image a title, which will "
 "appear as a tooltip."
 msgstr ""
-"Het is goed om de link van een afbeelding een 'title' (titel) te geven, die "
-"als een 'tooltip' zal worden weergegeven."
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:131
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:155
 msgid ""
 "A float alignment allows the next document element to wrap &#8211; if "
 "there&#8217;s room."
 msgstr ""
-"Een 'float' uitlijning stelt het volgende document-element in staat om "
-"eromheen te lopen &#8211; als er ruimte is."
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:14
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:16
 msgid "get image reference..."
-msgstr "maak verwijzing naar afbeelding..."
+msgstr ""
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:14
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:16
 msgid "access key: alt-g"
 msgstr "sneltoets: alt-g"
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:21
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:31
 msgid "edit image"
-msgstr "afbeelding bewerken"
+msgstr ""
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 msgid "create a hyperlink: alt-l"
-msgstr "hyperlink maken: alt-l"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:42
-msgid "High resolution version of image"
-msgstr "Hoge resolutie versie van afbeelding"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:47
-msgid "target frame"
-msgstr "doelframe"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:60
-msgid "new window"
-msgstr "nieuw venster"
+msgstr ""
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:65
+msgid "High resolution version of image"
+msgstr ""
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:70
+msgid "target frame"
+msgstr ""
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:83
+msgid "new window"
+msgstr ""
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:88
 msgid "tooltip for link"
-msgstr "tooltip voor link"
+msgstr ""
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:74
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:97
 msgid "image alignment"
-msgstr "uitlijning afbeelding"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:82
-msgid "float left"
-msgstr "links 'floaten'"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:87
-msgid "align left"
-msgstr "links uitlijnen"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:94
-msgid "default"
-msgstr "standaard"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:99
-msgid "align center"
-msgstr "centreren"
+msgstr ""
 
 #: /widgets/element/doc_elements/image/render.pt:10
 msgid "image element is broken"
-msgstr "afbeelding-element is gebroken"
+msgstr ""
 
 #: /widgets/element/doc_elements/image/tag.py:18
 msgid "image reference is broken"
-msgstr "verwijzing naar afbeelding is gebroken"
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:44
-#: /widgets/top/nlist/render.pt:35
-msgid "disc bullets"
-msgstr "dichte ronde bullets"
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:46
-#: /widgets/top/nlist/render.pt:37
-msgid "square bullets"
-msgstr "vierkante bullets"
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:48
-#: /widgets/top/nlist/render.pt:39
-msgid "circle bullets"
-msgstr "open ronde bullets"
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/nlist/render.pt:41
-msgid "1, 2, 3,.."
-msgstr "1, 2, 3..."
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:52
-#: /widgets/top/nlist/render.pt:43
-msgid "I, II, III,.."
-msgstr "I, II, III,.."
+msgstr ""
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:54
-#: /widgets/top/nlist/render.pt:45
-msgid "i, ii, iii,.."
-msgstr "i, ii, iii,.."
+#: /widgets/top/nlist/render.pt:35
+msgid "disc bullets"
+msgstr ""
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:56
-#: /widgets/top/nlist/render.pt:47
-msgid "A, B, C,.."
-msgstr "A, B, C,.."
+#: /widgets/top/nlist/render.pt:37
+msgid "square bullets"
+msgstr ""
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:58
-#: /widgets/top/nlist/render.pt:49
-msgid "a, b, c,.."
-msgstr "a, b, c,.."
+#: /widgets/top/nlist/render.pt:39
+msgid "circle bullets"
+msgstr ""
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:60
-#: /widgets/top/nlist/render.pt:51
-msgid "no bullet"
-msgstr "geen bullets"
+#: /widgets/top/nlist/render.pt:41
+msgid "1, 2, 3,.."
+msgstr ""
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:62
+#: /widgets/top/nlist/render.pt:43
+msgid "I, II, III,.."
+msgstr ""
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:64
+#: /widgets/top/nlist/render.pt:45
+msgid "i, ii, iii,.."
+msgstr ""
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:66
+#: /widgets/top/nlist/render.pt:47
+msgid "A, B, C,.."
+msgstr ""
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:68
+#: /widgets/top/nlist/render.pt:49
+msgid "a, b, c,.."
+msgstr ""
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:70
+#: /widgets/top/nlist/render.pt:51
+msgid "no bullet"
+msgstr ""
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:78
 msgid "Add list items separated by an empty line."
 msgstr ""
 
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:46
 msgid "lead"
-msgstr "inleiding"
+msgstr ""
 
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:35
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:47
 msgid "annotation"
-msgstr "noot"
+msgstr ""
 
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:41
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:53
 msgid ""
 "Multiple paragraphs can be entered in one step by adding an empty line space."
 msgstr ""
-"Meerdere alinea's kunnen in één stap worden ingevoerd door een lege regel "
-"tussen te voegen."
 
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:24
 msgid "none"
@@ -558,21 +540,22 @@ msgid ""
 "Preformatted text will be shown exactly as entered, with all characters "
 "displayed literally. White space is preserved (unless the textarea is empty)."
 msgstr ""
-"Voorgeformatteerde tekst wordt exact weergegeven zoals ze is ingevoerd, met "
-"alle tekens letterlijk getoond. Spaties en regeleinden ('white space') "
-"worden bewaard (tenzij het invoervak leeg blijft)."
+
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+msgid "${tip} tab to the exit button or alt-e."
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:11
 msgid "source id"
-msgstr "bron id"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:12
 msgid "Select an External Source..."
-msgstr "Selecteer een Externe Bron..."
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:26
 msgid " update "
-msgstr " bijwerken "
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:26
 msgid "access key: alt-u"
@@ -580,108 +563,106 @@ msgstr "sneltoets: alt-u"
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:82
 msgid "Select a source from the pulldown list."
-msgstr "Selecteer een bron uit de uitklaplijst."
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:86
 msgid "Hit \"update\" to refresh the reference."
-msgstr "Klik op \"bijwerken\" om de verwijzing de verversen."
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:88
 msgid "Fill in the parameters (if necessary)."
-msgstr "Vul (indien nodig) de parameters in."
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:93
 msgid "Source description:"
-msgstr "Omschrijving bron:"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
 msgid "Source is a NoneType - is it not available anymore?"
-msgstr "Source is a NoneType - is it not available anymore?"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:14
 msgid "id:"
-msgstr "id:"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:16
 msgid "title:"
-msgstr "titel:"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:19
 msgid "description:"
-msgstr "omschrijving:"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:32
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:38
 msgid "No parameters to be filled for this source."
-msgstr "Geen parameters om in te vullen voor deze bron."
+msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:41
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:47
 msgid "Source parameters"
-msgstr "Bron parameters"
-
-#: /widgets/element/doc_elements/source/rendered_source.py:15
-#: /widgets/element/doc_elements/source/rendered_source.py:20
-#: /widgets/element/doc_elements/source/render.pt:8
-msgid "external source element is broken"
-msgstr "externe bron-element is gebroken"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/rendered_source.py:16
 msgid "error message:"
-msgstr "foutmelding:"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/rendered_source.py:21
 msgid "Unfortunately however, there no error message available..."
-msgstr "Helaas is er geen nadere foutmelding beschikbaar..."
+msgstr ""
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:15
 msgid "Table of contents depth:"
-msgstr "Diepte van inhoudsopgave:"
+msgstr ""
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:18
 msgid "1 level"
-msgstr "1 niveau"
+msgstr ""
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:29
 msgid "${n} levels"
-msgstr "${n} niveaus"
+msgstr ""
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:33
 msgid "unlimited"
-msgstr "onbeperkt"
+msgstr ""
 
 #: /widgets/element/table_elements/nest_element.pt:4
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:10
 msgid "nest element"
-msgstr "genest element"
+msgstr ""
 
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
 msgid "nest elements"
-msgstr "geneste elementen"
+msgstr ""
 
 #: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
 msgid "The stored xml is invalid."
-msgstr "De opgeslagen xml is ongeldig."
+msgstr ""
 
-#: /widgets/macro_helpers.pt:110
+#: /widgets/macro_helpers.pt:106
+msgid "return confirm('Really delete?')"
+msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
+
+#: /widgets/macro_helpers.pt:106
 msgid "delete element"
-msgstr "element verwijderen"
+msgstr ""
 
-#: /widgets/macro_helpers.pt:111
+#: /widgets/macro_helpers.pt:107
 msgid "move down"
 msgstr "naar beneden verplaatsen"
 
-#: /widgets/macro_helpers.pt:112
+#: /widgets/macro_helpers.pt:108
 msgid "move up"
 msgstr "naar boven verplaatsen"
 
 #: /widgets/macro_helpers.pt:17
 msgid "up to top of page"
-msgstr "bovenaan de pagina"
+msgstr ""
 
 #: /widgets/macro_helpers.pt:19
 msgid "Notes"
-msgstr "Notities"
+msgstr "Opmerkingen"
 
 #: /widgets/macro_helpers.pt:34
 msgid "save"
@@ -693,182 +674,4284 @@ msgstr "sneltoets: alt-s"
 
 #: /widgets/macro_helpers.pt:36
 msgid "save + exit"
-msgstr "opslaan + sluiten"
+msgstr ""
 
 #: /widgets/macro_helpers.pt:36
 msgid "access key: alt-e"
 msgstr "sneltoets: alt-e"
 
-#: /widgets/macro_helpers.pt:40
+#: /widgets/macro_helpers.pt:38
 msgid "save + insert"
-msgstr "opslaan + invoegen"
+msgstr ""
 
-#: /widgets/macro_helpers.pt:40
+#: /widgets/macro_helpers.pt:38
 msgid "access key: alt-i"
 msgstr "sneltoets: alt-i"
 
-#: /widgets/macro_helpers.pt:53 /widgets/macro_helpers.pt:54
-#: /widgets/macro_helpers.pt:55 /widgets/macro_helpers.pt:67
+#: /widgets/macro_helpers.pt:49 /widgets/macro_helpers.pt:50
+#: /widgets/macro_helpers.pt:51 /widgets/macro_helpers.pt:63
 msgid "insert element"
-msgstr "element invoegen"
+msgstr ""
 
-#: /widgets/macro_helpers.pt:70
+#: /widgets/macro_helpers.pt:66
 msgid "insert item"
-msgstr "item invoegen"
+msgstr ""
 
-#: /widgets/macro_helpers.pt:70
+#: /widgets/macro_helpers.pt:66
 msgid "insert line item"
-msgstr "regel-item invoegen"
+msgstr ""
 
-#: /widgets/macro_helpers.pt:83
+#: /widgets/macro_helpers.pt:79
 msgid "add element&nbsp;"
-msgstr "element toevoegen&nbsp;"
+msgstr ""
 
-#: /widgets/macro_helpers.pt:91
+#: /widgets/macro_helpers.pt:87
 msgid "insert"
-msgstr "invoegen"
+msgstr ""
 
 #: /widgets/macro_normal_view.pt:41
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 #: /widgets/element/table_elements/nest_element.pt:4
 msgid "edit element"
-msgstr "element bewerken"
-
-#: /widgets/macro_notes.pt:10
-msgid "if ${target} is empty a new window opens"
-msgstr "als ${target} leeg wordt gelaten, wordt een nieuw venster geopend"
-
-#: /widgets/macro_notes.pt:10
-msgid "target"
-msgstr "doel"
+msgstr ""
 
 #: /widgets/macro_notes.pt:11
-msgid "index item"
-msgstr "index-item"
+msgid "subscript"
+msgstr ""
 
-#: /widgets/macro_notes.pt:12
-msgid "abbreviation"
-msgstr "afkorting"
+#: /widgets/macro_notes.pt:11
+msgid "underlined"
+msgstr ""
+
+#: /widgets/macro_notes.pt:11
+msgid "superscript"
+msgstr ""
 
 #: /widgets/macro_notes.pt:12 /widgets/macro_notes.pt:13
-msgid "full name"
-msgstr "volledige tekst"
+msgid "text"
+msgstr ""
 
 #: /widgets/macro_notes.pt:13
+msgid "if ${target} is empty a new window opens"
+msgstr ""
+
+#: /widgets/macro_notes.pt:13
+msgid "target"
+msgstr ""
+
+#: /widgets/macro_notes.pt:14
+msgid "index item"
+msgstr ""
+
+#: /widgets/macro_notes.pt:15
+msgid "abbreviation"
+msgstr ""
+
+#: /widgets/macro_notes.pt:15 /widgets/macro_notes.pt:16
+msgid "full name"
+msgstr "volledige naam"
+
+#: /widgets/macro_notes.pt:16
 msgid "acronym"
-msgstr "acroniem"
+msgstr ""
 
-#: /widgets/macro_notes.pt:6
-msgid "bold"
-msgstr "vetgedrukt"
+#: /widgets/macro_notes.pt:9
+msgid "Silva markup"
+msgstr ""
 
-#: /widgets/macro_notes.pt:6
+#: /widgets/macro_notes.pt:9
 msgid ""
 "Text can be formatted &#8211; in ${italic}, ${bold}, etc. &#8211; with "
 "${silva_markup}:"
 msgstr ""
-"Tekst kan &#8211; ${italic}, ${bold}, etc. &#8211; worden opgemaakt met "
-"${silva_markup}:"
 
-#: /widgets/macro_notes.pt:6 /widgets/macro_notes.pt:8
+#: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:11
 msgid "italic"
-msgstr "schuingedrukt"
+msgstr ""
 
-#: /widgets/macro_notes.pt:8
-msgid "subscript"
-msgstr "subscript"
+#: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:11
+msgid "bold"
+msgstr ""
 
-#: /widgets/macro_notes.pt:8
-msgid "underlined"
-msgstr "onderstreept"
+#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
+#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+msgid "edit parent"
+msgstr ""
 
-#: /widgets/macro_notes.pt:8
-msgid "superscript"
-msgstr "superscript"
-
-#: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:10
-msgid "text"
-msgstr "tekst"
+#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
+msgid "Up to parent: alt-u"
+msgstr ""
 
 #: /widgets/top/field/render.pt:17
 msgid "subeditor"
-msgstr "subeditor"
+msgstr ""
+
+#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
+msgid "Up to parent"
+msgstr ""
 
 #: /widgets/top/nlist/render.pt:31
 msgid "Type:"
-msgstr "Type:"
-
-#: /widgets/top/sub/render.pt:14 /widgets/top/field/render.pt:14
-msgid "Up to parent: alt-u"
-msgstr "Eén niveau omhoog: alt-u"
-
-#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
-#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
-msgid "edit parent"
-msgstr "hoger niveau bewerken"
+msgstr ""
 
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
-msgstr "Genest element-editor"
-
-#: /widgets/top/sub/render.pt:20 /widgets/top/field/render.pt:20
-msgid "Up to parent"
-msgstr "Eén niveau omhoog"
+msgstr ""
 
 #: /widgets/top/table/render.pt:14
 msgid "column settings"
-msgstr "kolom instellingen"
+msgstr ""
 
 #: /widgets/top/table/render.pt:18
 msgid "accesskey: alt-a"
-msgstr "sneltoets: alt-a"
+msgstr ""
 
 #: /widgets/top/table/render.pt:18
 msgid "add column"
-msgstr "kolom toevoegen"
+msgstr ""
+
+#: /widgets/top/table/render.pt:19
+msgid "return confirm('Really delete column?')"
+msgstr ""
 
 #: /widgets/top/table/render.pt:19
 msgid "delete column"
-msgstr "kolom verwijderen"
+msgstr ""
 
 #: /widgets/top/table/render.pt:19
 msgid "accesskey: alt-d"
-msgstr "sneltoets: alt-d"
+msgstr ""
 
 #: /widgets/top/table/render.pt:29
 msgid "l"
-msgstr "l"
+msgstr ""
 
 #: /widgets/top/table/render.pt:31
 msgid "c"
-msgstr "c"
+msgstr ""
 
 #: /widgets/top/table/render.pt:33
 msgid "r"
-msgstr "r"
+msgstr ""
 
 #: /widgets/top/table/render.pt:35
 msgid "relative width"
-msgstr "relatieve breedte"
+msgstr ""
 
 #: /widgets/top/table/render.pt:50
 msgid "Plain table (bold heading, no borders)"
-msgstr "Gewone tabel (vetgedrukte kop, geen borders)"
+msgstr ""
 
 #: /widgets/top/table/render.pt:54
 msgid "List table (bold underlined heading, borderless rows)"
-msgstr "Lijsttabel (vetgedrukte, onderstreepte kop, borderloze rijen)"
+msgstr ""
 
 #: /widgets/top/table/render.pt:58
 msgid "Grid table (bold bordered heading, bordered rows)"
-msgstr "Rastertabel (vetgedrukte kop met borders, rijen met borders)"
+msgstr ""
 
 #: /widgets/top/table/render.pt:62
 msgid "Data grid table (bold borderless heading, bordered rows)"
-msgstr "Data-rastertabel (vetgedrukte borderloze kop, rijen met borders)"
+msgstr ""
 
-#~ msgid " forms editor..."
-#~ msgstr " formuliereditor..."
+#~ msgid ""
+#~ "This is a special document that automagically displays a\n"
+#~ "       table of contents. Usually it&#8217;s used as an &#8216;"
+#~ "index&#8217;\n"
+#~ "       document. In that case the parent folder shows a table of "
+#~ "contents\n"
+#~ "       when accessed (e.g. http://www.x.yz/silva/myFolder/)."
+#~ msgstr ""
+#~ "Dit object laat een inhoudsopgave zien. Het wordt normaal gesproken "
+#~ "gebruikt als &#8216;index&#8217; document. In dat geval laat de map  waar "
+#~ "het in zit een inhoudsopgave zien als die benaderd wordt. (bv. http://www."
+#~ "x.yz/silva/mijnMap/)."
 
-#~ msgid "edit with the formuliereditor: alt-)"
-#~ msgstr "bewerken met de formuliereditor: alt-)"
+#~ msgid "Not connected"
+#~ msgstr "Niet verbonden"
+
+#~ msgid "Validation error(s)"
+#~ msgstr "Validatie fout(en)"
+
+#~ msgid "Changed settings."
+#~ msgstr "Instellingen gewijzigd."
+
+#~ msgid "download"
+#~ msgstr "downloaden"
+
+#~ msgid ""
+#~ "Any digital file can be uploaded as Silva content. \n"
+#~ "       For instance large files such as pdf docs or mpegs can be placed "
+#~ "in a\n"
+#~ "       site. File objects have metadata as well. \n"
+#~ "       <!-- Abstract base class. Depends on a _file attribute and "
+#~ "various \n"
+#~ "       methods in the concrete subclasses. (sorry) -->\n"
+#~ "    "
+#~ msgstr ""
+#~ "Elk bestand kan worden gebruikt als Silva content, bijvoorbeeld "
+#~ "pdfdocumenten of mpeg films. File objecten hebben ook metadata.\n"
+#~ "    "
+
+#~ msgid "pasting &#xab;${id}&#xbb; is not allowed in this type of container"
+#~ msgstr "het plakken van «${id}» is niet toegestaan in dit type container"
+
+#~ msgid "pasted &#xab;${id}&#xbb;"
+#~ msgstr "&#xab;${id}&#xbb; geplakt"
+
+#~ msgid ""
+#~ "The presentation of the information within a\n"
+#~ "       publication is structured with folders. They determine the visual\n"
+#~ "       hierarchy that a Visitor sees. Folders on the top level\n"
+#~ "       define sections of a publication, subfolders define chapters, "
+#~ "etc.\n"
+#~ "       Note that unlike publications, folders are transparent, meaning "
+#~ "you\n"
+#~ "       can see through them in the sidebar tree navigation and the "
+#~ "Publish \n"
+#~ "       screen.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Folders kunnen gebruikt worden om een publicatie te structureren. Zij "
+#~ "bepalen de hiërarchie die een site-bezoeker ziet.\n"
+#~ "    "
+
+#~ msgid ""
+#~ "Ghosts are special documents that function as a\n"
+#~ "       placeholder for an item in another location (like an alias,\n"
+#~ "       symbolic link, shortcut). Unlike a hyperlink, which takes the\n"
+#~ "       Visitor to another location, a ghost object keeps the Visitor in "
+#~ "the\n"
+#~ "       current publication, and presents the content of the ghosted "
+#~ "item.\n"
+#~ "       The ghost inherits properties from its location (e.g. layout\n"
+#~ "       and stylesheets).\n"
+#~ "    "
+#~ msgstr ""
+#~ "Ghosts zijn speciale documenten die fungeren als verwijzing naar een "
+#~ "object in een andere locatie.\n"
+#~ "    "
+
+#~ msgid ""
+#~ "Ghost Folders are similar to Ghosts, but instead of being a \n"
+#~ "       placeholder for a document, they create placeholders and/or copies "
+#~ "of all \n"
+#~ "       the contents of the &#8216;original&#8217; folder. The advantage "
+#~ "of Ghost \n"
+#~ "       Folders is the contents stay in sync with the original, by manual "
+#~ "or \n"
+#~ "       automatic resyncing. Note that when a folder is\n"
+#~ "       ghosted, assets &#8211; such as Images and Files &#8211; are "
+#~ "copied\n"
+#~ "       (physically duplicated) while documents are ghosted."
+#~ msgstr ""
+#~ "Ghost folders zijn vergelijkbaar met Ghostobjecten, maar maken een kopie "
+#~ "van de inhoud waarnaar ze verwijzen."
+
+#~ msgid ""
+#~ "'${scale}' is not a valid scale identifier. Probably a percent symbol is "
+#~ "missing."
+#~ msgstr ""
+#~ "'${scale}' is geen geldige schaalwaarde. Waarschijnlijk ontbreekt er een "
+#~ "procentteken."
+
+#~ msgid ""
+#~ "'${scale} is not a valid scale identifier. At least one number is "
+#~ "required."
+#~ msgstr ""
+#~ "'${scale}' is geen geldige schaalwaarde. Tenminste één getalwaarde is "
+#~ "vereist."
+
+#~ msgid "'${crop} is not a valid crop identifier"
+#~ msgstr "'${crop}' is geen geldige afsnijd-waarde"
+
+#~ msgid "'${crop}' defines an impossible cropping"
+#~ msgstr "'${crop}' is een onmogelijke afsnijdwaarde"
+
+#~ msgid "square"
+#~ msgstr "vierkant"
+
+#~ msgid "landscape"
+#~ msgstr "landschap"
+
+#~ msgid "portrait"
+#~ msgstr "portret"
+
+#~ msgid ""
+#~ "Web graphics (gif, jpg, png) can be uploaded and inserted in \n"
+#~ "       documents, or used as viewable assets.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Verschillende grafische bestandsformaten (gif, jpg, png) kunnenworden "
+#~ "toegevoegd en gebruikt worden in documenten, of als zichtbare inhoud "
+#~ "dienen.\n"
+#~ "    "
+
+#~ msgid ""
+#~ "Indexes can be created that function like an index in the \n"
+#~ "       back of a book. References must first be marked by placing index \n"
+#~ "       codes in text (these codes will also export to print formats). \n"
+#~ "       Indexers cascade downwards, indexing all index items in the "
+#~ "current \n"
+#~ "       and underlying folders and publications (note that it only "
+#~ "indexes \n"
+#~ "       documents that are published).\n"
+#~ "    "
+#~ msgstr ""
+#~ "Indexers kunnen worden gebruikt als de index achterin een boek. "
+#~ "Referenties moeten wel gemarkeerd zijn in tekst om ze te kunnen opnemen.\n"
+#~ "    "
+
+#~ msgid ""
+#~ "A Silva Link makes it possible to include links to external\n"
+#~ "       sites &#8211; outside of Silva &#8211; in a Table of Contents. "
+#~ "The\n"
+#~ "       content of a Link is simply a hyperlink, beginning with\n"
+#~ "       &#8220;http://....&#8221;, or https, ftp, news, and mailto.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Het Link-object maakt het mogelijk links naar externe sites op tenemen.\n"
+#~ "    "
+
+#~ msgid ""
+#~ "Publications are special folders. They function as the \n"
+#~ "       major organizing blocks of a Silva site. They are comparable to \n"
+#~ "       binders, and can contain folders, documents, and assets. \n"
+#~ "       Publications are opaque. They instill a threshold of view, "
+#~ "showing\n"
+#~ "       only the contents of the current publication. This keeps the "
+#~ "overview\n"
+#~ "       screens manageable. Publications have configuration settings that\n"
+#~ "       determine which core and pluggable objects are available. For\n"
+#~ "       complex sites, sub-publications can be nested.\n"
+#~ "    "
+#~ msgstr ""
+#~ "Publicaties zijn speciale mappen, en dienen als de hoofdbouwstenen van "
+#~ "een Silva site.\n"
+#~ "    "
+
+#~ msgid "Sorry, this ${meta_type} is not viewable."
+#~ msgstr ""
+#~ "Sorry, dit object van het type ${meta_type} kan niet bekeken worden."
+
+#~ msgid "unapproved"
+#~ msgstr "(nog) niet goedgekeurd"
+
+#~ msgid "approved"
+#~ msgstr "goedgekeurd"
+
+#~ msgid "last_closed"
+#~ msgstr "laatst gesloten"
+
+#~ msgid "public"
+#~ msgstr "publiek"
+
+#~ msgid "pending"
+#~ msgstr "uitstaande"
+
+#~ msgid "draft"
+#~ msgstr "klad"
+
+#~ msgid "closed"
+#~ msgstr "gesloten"
+
+#~ msgid "Cannot approve version without publication datetime."
+#~ msgstr "Kan versie niet goedkeuren zonder publicatie-tijdstip."
+
+#~ msgid "No approved version to unapprove."
+#~ msgstr "Geen goedgekeurde versie om de goedkeuring van in te trekken."
+
+#~ msgid ""
+#~ "Should never happen: unapproved version ${unapproved} found while "
+#~ "approved version ${approved} exists at the same time."
+#~ msgstr ""
+#~ "Zou nooit mogen gebeuren: niet goedgekeurde versie ${unapproved} gevonden "
+#~ "terwijl goedgekeurde versie ${approved} ook bestaat."
+
+#~ msgid "No public version to close."
+#~ msgstr "Geen publieke versie om te sluiten."
+
+#~ msgid "No unapproved version available"
+#~ msgstr "Geen versie beschikbaar die nog niet is goedgekeurd"
+
+#~ msgid "There is no unapproved version to request approval for."
+#~ msgstr ""
+#~ "Er is geen versie die nog niet is goedgekeurd waar goedkeuring voor kan "
+#~ "worden aangevraagd."
+
+#~ msgid "The version is already requested for approval."
+#~ msgstr "Er is al goedkeuring aangevraagd voor deze versie."
+
+#~ msgid "The version is not requested for approval."
+#~ msgstr "Er is geen goedkeuring voor de versie aangevraagd."
+
+#~ msgid "No unapproved version."
+#~ msgstr "Geen versie die nog niet is goedgekeurd."
+
+#~ msgid "No approved version."
+#~ msgstr "Geen goedgekeurde versie."
+
+#~ msgid "Must specify publication datetime."
+#~ msgstr "Publicatie-tijdstip moet worden opegeven."
+
+#~ msgid "No public version."
+#~ msgstr "Geen publieke versie."
+
+#~ msgid "No next version."
+#~ msgstr "Geen volgende versie."
+
+#~ msgid "There is no version to add messages for."
+#~ msgstr "Er is geen versie om boodschappen voor toe te voegen."
+
+#~ msgid "There is an approved version already; unapprove it. (${id})"
+#~ msgstr "Er is al een goedgekeurde versie; trek de goedkeuring in. (${id})"
+
+#~ msgid "There already is an unapproved version (${id})."
+#~ msgstr "Er is al een versie die nog niet is goedgekeurd (${id})."
+
+#~ msgid "The public version has that id already (${id})."
+#~ msgstr "De publieke versie heeft dat id al (${id})."
+
+#~ msgid "A previous version has that id already (${id})."
+#~ msgstr "Een vorige versie heeft dat id al (${id})."
+
+#~ msgid "There is no unapproved version to approve."
+#~ msgstr "Er is geen nog niet goedgekeurde versie om goed te keuren."
+
+#~ msgid "There already is an approved version."
+#~ msgstr "Er is al een goedgekeurde versie."
+
+#~ msgid "Can not delete all versions"
+#~ msgstr "Kan niet alle versies verwijderen"
+
+#~ msgid "no such version ${version}"
+#~ msgstr "versie bestaat niet ${version}"
+
+#~ msgid "select"
+#~ msgstr "selecteren"
+
+#~ msgid "view"
+#~ msgstr "bekijken"
+
+#~ msgid "&#8211;"
+#~ msgstr "&#8211;"
+
+#~ msgid "cancel operation: alt-c"
+#~ msgstr "operatie annuleren: alt-c"
+
+#~ msgid "insert a reference to this asset: alt-p"
+#~ msgstr "een verwijzing naar dit asset invoegen: alt-p"
+
+#~ msgid "place reference..."
+#~ msgstr "verwijzing plaatsen..."
+
+#~ msgid "Minimum role to access has not changed"
+#~ msgstr "Minimale rol voor toegang is niet gewijzigd"
+
+#~ msgid "Minimum role to access is now set to ${role}"
+#~ msgstr "Minimale rol voor toegang is nu ingesteld op ${role}"
+
+#~ msgid "Minimum role to access is now acquired"
+#~ msgstr "Minimale rol voor toegang is nu overgeërfd"
+
+#~ msgid "Title of content."
+#~ msgstr "Titel van inhoud."
+
+#~ msgid "a.k.a. &#8216;navigation title&#8217;."
+#~ msgstr "ook wel &#8216;navigatie-titel&#8217;."
+
+#~ msgid "short title"
+#~ msgstr "korte titel"
+
+#~ msgid "Description of content in this area."
+#~ msgstr "Omschrijving van inhoud"
+
+#~ msgid "comment"
+#~ msgstr "opmerking"
+
+#~ msgid "Internal comments."
+#~ msgstr "Interne opmerkingen"
+
+#~ msgid "subject"
+#~ msgstr "onderwerp"
+
+#~ msgid "Subject of content in this area."
+#~ msgstr "Onderwerp van inhoud."
+
+#~ msgid "creation time"
+#~ msgstr "aanmaak-tijdstip"
+
+#~ msgid "Automatically set."
+#~ msgstr "Automatisch ingesteld."
+
+#~ msgid "User who last edited this content."
+#~ msgstr "Gebruiker die deze inhoud het laatst heeft bewerkt."
+
+#~ msgid "Resource location of this content."
+#~ msgstr "Bronlocatie van deze inhoud."
+
+#~ msgid "Name of contact person."
+#~ msgstr "Naam contactpersoon."
+
+#~ msgid "contact name"
+#~ msgstr "naam contact"
+
+#~ msgid "Email address of contact person."
+#~ msgstr "E-mailadres van contactpersoon."
+
+#~ msgid "contact email"
+#~ msgstr "e-mail contact"
+
+#~ msgid ""
+#~ "If this is enabled, this content (and anything it contains!) will not "
+#~ "show up in tables of content."
+#~ msgstr ""
+#~ "Indien verbergen is ingeschakeld, wordt deze inhoud (en alles wat erin "
+#~ "zit!) niet getoond in inhoudsopgaves."
+
+#~ msgid "hide from tables of content"
+#~ msgstr "verbergen voor inhoudsopgaves"
+
+#~ msgid "keywords"
+#~ msgstr "steekwoorden"
+
+#~ msgid "Keywords relating to content."
+#~ msgstr "Steekwoorden gerelateerd aan inhoud."
+
+#~ msgid "Default Document Policy"
+#~ msgstr "Standaard Documentbeleid"
+
+#~ msgid ""
+#~ "${listing_body}<br /> p &nbsp; Select list for position number<br /> m "
+#~ "&nbsp; move"
+#~ msgstr ""
+#~ "${listing_body}<br /> p &nbsp; Lijst selecteren voor positie nummer<br /> "
+#~ "m &nbsp; verplaatsen"
+
+#~ msgid "Listing body"
+#~ msgstr "Lijst body"
+
+#~ msgid ""
+#~ "${listing_footer}<br /> a &nbsp; select all<br /> r &nbsp; rename<br /> d "
+#~ "&nbsp; delete<br /> x &nbsp; cut<br /> c &nbsp; copy<br /> v &nbsp; "
+#~ "paste<br /> g &nbsp; paste as ghost"
+#~ msgstr ""
+#~ "${listing_footer}<br /> a &nbsp; alles selecteren<br /> r &nbsp; "
+#~ "hernoemen<br /> d &nbsp; verwijderen<br /> x &nbsp; knippen<br /> c "
+#~ "&nbsp; kopieren<br /> v &nbsp; plakken<br /> g &nbsp; als ghost plakken"
+
+#~ msgid "Listing footer"
+#~ msgstr "Onderkant van de lijst"
+
+#~ msgid "Preview screen"
+#~ msgstr "Voorbeeldscherm"
+
+#~ msgid "; &nbsp; See public preview<br />"
+#~ msgstr "; &nbsp; Publiek voorbeeld bekijken<br />"
+
+#~ msgid "Publish screen (folder)"
+#~ msgstr "Publicatiescherm (map)"
+
+#~ msgid "${listing_header}<br /> i &nbsp; import<br /> e &nbsp; Export"
+#~ msgstr ""
+#~ "${listing_header}<br /> i &nbsp; importeren<br /> e &nbsp; exporteren"
+
+#~ msgid ""
+#~ "${listing_footer}<br /> a &nbsp; select all<br /> n &nbsp; create new "
+#~ "vesions<br /> j &nbsp; reject (request for approval)<br /> v &nbsp; "
+#~ "revoke (request for approval)<br /> c &nbsp; close (public version)<br /> "
+#~ "l &nbsp; approve for later<br /> u &nbsp; update settings<br /> p &nbsp; "
+#~ "publish now<br />"
+#~ msgstr ""
+#~ "${listing_footer}<br /> a &nbsp; alles selecteren<br /> n &nbsp; nieuwe "
+#~ "versies aanmaken<br /> j &nbsp; weigeren (verzoek om goedkeuring)<br /> v "
+#~ "&nbsp; intrekken (verzoek om goedkeuring)<br /> c &nbsp; sluiten "
+#~ "(publieke versie)<br /> l &nbsp; goedkeuren voor later<br /> u &nbsp; "
+#~ "instellingen bijwerken<br /> p &nbsp; nu publiceren<br />"
+
+#~ msgid "Add screen"
+#~ msgstr "Scherm toevoegen"
+
+#~ msgid "c &nbsp; cancel<br /> a &nbsp; add<br /> e &nbsp; add and edit/enter"
+#~ msgstr ""
+#~ "c &nbsp; annuleren<br /> a &nbsp; toevoegen<br /> e &nbsp; toevoegen en "
+#~ "bewerken/ingaan"
+
+#~ msgid "Editor screen"
+#~ msgstr "Editorscherm"
+
+#~ msgid ""
+#~ "( &nbsp; forms editor<br /> ) &nbsp; Kupu editor<br /> ; &nbsp; public "
+#~ "preview<br /> p &nbsp; publish now<br />"
+#~ msgstr ""
+#~ "( &nbsp; formulier-editor<br /> ) &nbsp; Kupu-editor<br /> ; &nbsp; "
+#~ "publiek voorbeeld<br /> p &nbsp; nu publiceren<br />"
+
+#~ msgid ""
+#~ "${kupu_editor}<br /> b &nbsp; bold<br /> i &nbsp; italic<br /> u &nbsp; "
+#~ "underline<br /> - &nbsp; subscript<br /> + &nbsp; superscript<br /> # "
+#~ "&nbsp; numbered list<br /> * &nbsp; bulleted list<br /> = &nbsp; "
+#~ "definition list<br /> z &nbsp; undo<br /> y &nbsp; redo<br /> h &nbsp; "
+#~ "html source<br />"
+#~ msgstr ""
+#~ "${kupu_editor}<br /> b &nbsp; vetgedrukt<br /> i &nbsp; schuingedrukt<br /"
+#~ "> u &nbsp; onderstreept<br /> - &nbsp; subscript<br /> + &nbsp; "
+#~ "superscript<br /> # &nbsp; genummerde lijst<br /> * &nbsp; niet "
+#~ "genummerde lijst<br /> = &nbsp; definitielijst<br /> z &nbsp; ongedaan "
+#~ "maken<br /> y &nbsp; opnieuw<br /> h &nbsp; html-bron<br />"
+
+#~ msgid "Kupu editor"
+#~ msgstr "Kupu-editor"
+
+#~ msgid ""
+#~ "${forms_editor}<br /> s &nbsp; save<br /> e &nbsp; save and exit<br /> i "
+#~ "&nbsp; save and insert<br /> tab Use your tab key to edit without using "
+#~ "the mouse. Shift-tab goes backwards."
+#~ msgstr ""
+#~ "${forms_editor}<br /> s &nbsp; opslaan<br /> e &nbsp; opslaan en "
+#~ "sluiten<br /> i &nbsp; opslaan en invoegen<br /> tab Gebruik de tab-toets "
+#~ "om te bewerken zonder de muis te gebruiken. Shift-tab gaat terug."
+
+#~ msgid "Forms editor"
+#~ msgstr "Formulier-editor"
+
+#~ msgid "Other screens"
+#~ msgstr "Andere schermen"
+
+#~ msgid "return"
+#~ msgstr "terug"
+
+#~ msgid "access key: alt-r"
+#~ msgstr "sneltoets: alt-r"
+
+#~ msgid ""
+#~ "The Properties, Access, and Publish screens as well as their subscreens "
+#~ "(such as Lookup, Import, and Export) have access keys for most buttons. "
+#~ "Usually the first letter of the button is the access key. You can always "
+#~ "hover over the button to see the tooltip."
+#~ msgstr ""
+#~ "De schermen 'Eigenschappen', 'Toegang', en 'Publiceren' en hun sub-"
+#~ "schermen (zoals 'Opzoeken', 'Importeren', en 'Exporteren') hebben "
+#~ "sneltoetsen voor de meeste knoppen. Plaats de muis boven de knop om de "
+#~ "tooltip te zien."
+
+#~ msgid ""
+#~ "If there are two buttons with the same name, the access key for the "
+#~ "second is usually the first letter of the second word (e.g. for &#8220;"
+#~ "get image reference&#8221; and &#8220;get link reference&#8221;, the "
+#~ "access keys are &#8216;g&#8217; and &#8216;l&#8217;). Sometimes there are "
+#~ "multiples of the same button, in which case only the first has an access "
+#~ "key."
+#~ msgstr ""
+#~ "Het is niet altijd mogelijk om een sneltoets te kiezen die ook in de "
+#~ "tekst van de knop voorkomt."
+
+#~ msgid ""
+#~ "Some access keys can conflict with browser menus. However the key works "
+#~ "if the focus is in the page (a form element is active or just click in "
+#~ "the page)."
+#~ msgstr ""
+#~ "Sommige sneltoetsen kunnen hetzelfde zijn als die in de browser-menu's. "
+#~ "De toetsen werken als een element op de pagina focus heeft. (Er is "
+#~ "bijvoorbeeld een formulier-element actief. Klik anders ergens op de "
+#~ "pagina.)"
+
+#~ msgid ""
+#~ "Mozilla and Internet Explorer handle access keys for hyperlinks "
+#~ "differently. Mozilla initiates the action (same as clicking the link), "
+#~ "whereas Explorer just highlights the link, and then you have to hit "
+#~ "return to activate it. Both browsers treat form buttons the same, "
+#~ "initiating the action immediately."
+#~ msgstr ""
+#~ "Mozilla en Internet Explorer reageren anders op sneltoetsen voor "
+#~ "hyperlinks. Mozilla voert de actie uit (hetzelfde als op de link "
+#~ "klikken), terwijl Explorer de link laat oplichten, en volgt de link pas "
+#~ "als op enter wordt gedrukt. Formulierknoppen werken in beide browsers "
+#~ "hetzelfde, en voeren de actie direct uit."
+
+#, fuzzy
+#~ msgid ""
+#~ "Don&#8217;t forget that most browsers use alt-left arrow to go back, and "
+#~ "alt-right arrow to go forward. On the Mac, command-left arrow and command-"
+#~ "right arrow do this."
+#~ msgstr ""
+#~ "De meeste browsers gebruiken alt-linker pijltje om terug te gaan, en alt-"
+#~ "rechter pijltje om verder te gaan. Op Apple systemen doen command-linker "
+#~ "pijltje en command-rechter pijltje hetzelfde."
+
+#~ msgid ""
+#~ "If you wish to create additional docs, the hyperlink of the Silva help "
+#~ "link can be changed by altering the the 'help_url' property in the Silva "
+#~ "root. See the properties tab in the Zope Management Interface."
+#~ msgstr ""
+#~ "Om verdere documentatie aan te maken, kan de hyperlink van de Silva help- "
+#~ "link worden gewijzigd door de 'help_url' eigenschap in de Silva root aan "
+#~ "te passen. Zie de tab 'Eigenschappen' in de Zope Management Interface."
+
+#~ msgid "Tip: one click editing"
+#~ msgstr "Tip: één-klik bewerken"
+
+#~ msgid ""
+#~ "When viewing a public Silva page, switching to the SMI is is easiest if "
+#~ "there's a bookmark on your toolbar. Add a bookmark with the following "
+#~ "javascript:"
+#~ msgstr ""
+#~ "Bij het bekijken van een publieke Silva pagina, is het switchen naar de "
+#~ "SMI het gemakkelijkst met een bookmark in de toolbar van de browser. Voeg "
+#~ "een bookmark toe met het volgende javascript:"
+
+#~ msgid "Silva edit"
+#~ msgstr "Silva bewerken"
+
+#~ msgid "Or, save this link &#8211; ${silva_edit} &#8211; as a bookmark."
+#~ msgstr ""
+#~ "Of, sla deze link &#8211; ${silva_edit} &#8211; op als een bookmark."
+
+#~ msgid ""
+#~ "Managers can do the same and create a <a href=\"javascript:window."
+#~ "location.pathname=(window.location.pathname +'/manage_main').replace(/\\/"
+#~ "\\//,'/')\" name=\"manage\">manage...</a> bookmark."
+#~ msgstr ""
+#~ "Beheerders kunnen hetzelfde doen en een <a href=\"javascript:window."
+#~ "location.pathname=(window.location.pathname +'/manage_main').replace(/\\/"
+#~ "\\//,'/')\" name=\"manage\">beheren...</a> bookmark aanmaken."
+
+#~ msgid ""
+#~ "Thanks to <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
+#~ "rich</a> for this trick."
+#~ msgstr ""
+#~ "Dank aan <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;"
+#~ "rich</a> voor deze tip."
+
+#~ msgid "Tip for Mozilla/Netscape users"
+#~ msgstr "Tip voor Mozilla/Netscape gebruikers"
+
+#~ msgid ""
+#~ "${tip_for_mozilla_users}<br /> Using the &#8220;Find As You Type&#8221; "
+#~ "feature will make keyboard navigation to hyperlinks &#8211; such as item "
+#~ "names &#8211; remarkably easy. See:<br /> ${typeaheadfind_link}"
+#~ msgstr ""
+#~ "${tip_for_mozilla_users}<br /> Met &#8220;Find As You Type&#8221; wordt "
+#~ "toetsenbord-navigatie door hyperlinks &#8211; zoals item-namen &#8211; "
+#~ "zeer gemakkelijk. Zie:<br /> ${typeaheadfind_link}"
+
+#~ msgid "Silva documentation"
+#~ msgstr "Silva documentatie"
+
+#~ msgid ""
+#~ "The most up to date documentation can be found at:<br /> "
+#~ "${silva_documentation_link}"
+#~ msgstr ""
+#~ "De meest up-to-date documentatie kan gevonden worden op:<br /> "
+#~ "${silva_documentation_link}"
+
+#~ msgid ""
+#~ "The technical documentation is included in the Silva product in &#8216;"
+#~ "plain&#8217; structured text, gracefully degraded for text mode (no "
+#~ "links, unicode entities, etc.)."
+#~ msgstr ""
+#~ "De technische documentatie wordt meegeleverd met het Silva product in "
+#~ "&#8216;platte&#8217; 'structured text', leesbaar gemaakt voor tekstmodus "
+#~ "(geen links, unicode entities, etc.)."
+
+#~ msgid "Contact"
+#~ msgstr "Contact opnemen"
+
+#~ msgid "Feedback"
+#~ msgstr "Feedback"
+
+#~ msgid "<br /> ${contact}<br /> ${feedback} is welcome."
+#~ msgstr "<br /> ${contact}<br /> ${feedback} is welkom."
+
+#~ msgid "Silva info: alt-i"
+#~ msgstr "Silva info: alt-i"
+
+#~ msgid "Silva access keys"
+#~ msgstr "Silva sneltoetsen"
+
+#~ msgid ""
+#~ "The access key on your machine may be &#8216;alt&#8217;. On a Mac "
+#~ "it&#8217;s &#8216;ctrl&#8217;."
+#~ msgstr ""
+#~ "De sneltoets op uw machine kan &#8216;alt&#8217; zijn. Op een apple is "
+#~ "het &#8216;ctrl&#8217;."
+
+#~ msgid ""
+#~ "Hover over the link or button and a tooltip will popup with the access "
+#~ "key."
+#~ msgstr ""
+#~ "Plaats de muiscursor boven de link of knop en er zal een tooltip worden "
+#~ "getoond met de sneltoets."
+
+#~ msgid "Save time, energy, and wrists by keying to your destination."
+#~ msgstr ""
+#~ "Bespaar tijd, energie en uw polsen door met het toetsenbord naar uw "
+#~ "bestemming te navigeren."
+
+#~ msgid "see below"
+#~ msgstr "zie hieronder"
+
+#~ msgid ""
+#~ "The most useful access keys are for screen navigation, <a title=\"x\" "
+#~ "href=\"#nav\">x</a>."
+#~ msgstr ""
+#~ "De nuttigste sneltoetsen zijn die voor schermnavigatie, <a title=\"x\" "
+#~ "href=\"#nav\">x</a>."
+
+#~ msgid "Global keys that are always available"
+#~ msgstr "Globale toetsen die altijd werken"
+
+#~ msgid "The following access keys are available in every Silva screen."
+#~ msgstr "De volgende sneltoetsen zijn in elk Silva-scherm beschikbaar."
+
+#~ msgid ""
+#~ "${general}<br /> t &nbsp; Jump to top of page<br /> b &nbsp; Jump to "
+#~ "bottom of page<br /> / &nbsp; Jump to top of Silva (Silva icon)<br /> ? "
+#~ "&nbsp; Access keys and shortcuts"
+#~ msgstr ""
+#~ "${general}<br /> t &nbsp; Naar de bovenkant van de pagina springen<br /> "
+#~ "b &nbsp; Naar de onderkant van de pagina springen<br /> / &nbsp; Naar het "
+#~ "hoogste Silva niveau springen (Silva ikoon)<br /> ? &nbsp; Sneltoetsen en "
+#~ "'shortcuts'"
+
+#~ msgid "General"
+#~ msgstr "Algemeen"
+
+#~ msgid "Changing screens with the tabs"
+#~ msgstr "Van scherm wisselen met de tabs"
+
+#~ msgid ""
+#~ "${changing_screens_with_tabs}<br /> The tabs have numbered access keys, "
+#~ "starting from one going up to five. You can navigate horizontally accross "
+#~ "an item&#8217;s screens by using alt-1, alt-2, and so forth."
+#~ msgstr ""
+#~ "${changing_screens_with_tabs}<br /> De tabs hebben genummerde "
+#~ "sneltoetsen, van 1 tot en met 5. Horizontaal binnen de schermen van een "
+#~ "item navigeren is mogelijk door alt-1, alt-2, etc. te gebruiken."
+
+#~ msgid ""
+#~ "Each tab has a toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9\" "
+#~ "alt=\"tree\" />, the tall tree on the left side. It takes you to the top "
+#~ "of the current publication, within the same tab, or &#8216;vein&#8217;. "
+#~ "The access key is the shift character of the corresponding number (on the "
+#~ "English keyboard, sorry if you have an international one). Thus alt-!, "
+#~ "alt-@, alt-#, alt-$, and alt-% (note that the characters resemble the "
+#~ "number)."
+#~ msgstr ""
+#~ "Elke tab heeft een toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9"
+#~ "\" alt=\"tree\" />, het hoge boompje links. Die link leidt naar de top "
+#~ "van de huidige publicatie, in dezelfde tab, of &#8216;ader&#8217;. De "
+#~ "sneltoets is het shift-teken van het corresponderende cijfer (op een "
+#~ "engels toetsenbord). Dus alt-!, alt-@, alt-#, alt-$, en alt-% (merk op "
+#~ "dat de tekens op de nummers lijken.)"
+
+#~ msgid ""
+#~ "On the right of each tab is an uplink <img src=\"up_level.gif\" height=\"9"
+#~ "\" width=\"9\" alt=\"bush\" />, a small tree that takes you up one level "
+#~ "in the same vein. The access keys for the uplinks are the remaining "
+#~ "numbers (add five to the access key for the tab). If you are in a screen "
+#~ "with five tabs, the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If "
+#~ "there are less than five tabs, you still add five to get the uplink key."
+#~ msgstr ""
+#~ "Rechts van elke tab staat een uplink <img src=\"up_level.gif\" height=\"9"
+#~ "\" width=\"9\" alt=\"bush\" />, een kort boompje dat één niveau omhoog "
+#~ "leidt binnen dezelfde ader. De sneltoetsen voor de uplinks zijn de "
+#~ "overgebleven cijfers (tel vijf op bij de sneltoets voor het tabje). In "
+#~ "een scherm met vijf tabs zijn de uplinks alt-6, alt-7, alt-8, alt-9, en "
+#~ "alt-0. Indien er minder dan vijf tabs zijn, moet er nog steeds vijf "
+#~ "opgeteld worden voor de uplink-sneltoets."
+
+#~ msgid "${footer_page_info_row}<br /> : &nbsp; See public page<br />"
+#~ msgstr "${footer_page_info_row}<br /> : &nbsp; Zie publieke pagina<br />"
+
+#~ msgid "Footer page info row"
+#~ msgstr "Footer pagina-info rij"
+
+#~ msgid ""
+#~ "${footer_user_row}<br /> ~ &nbsp; User settings<br /> &nbsp;, &nbsp; "
+#~ "Request access<br /> q &nbsp; Logout"
+#~ msgstr ""
+#~ "${footer_user_row}<br /> ~ &nbsp; Gebruikersinstellingen<br /> &nbsp;, "
+#~ "&nbsp; Toegang aanvragen<br /> q &nbsp; Uitloggen"
+
+#~ msgid "Footer user row"
+#~ msgstr "Footer gebruikersrij"
+
+#~ msgid "Silva help"
+#~ msgstr "Silva hulp"
+
+#~ msgid "Contents screen (folder)"
+#~ msgstr "Inhoudsscherm (map)"
+
+#~ msgid ""
+#~ "${listing_header}<br /> n &nbsp; new<br /> s &nbsp; select list for a new "
+#~ "object<br /> i &nbsp; import<br /> e &nbsp; export"
+#~ msgstr ""
+#~ "${listing_header}<br /> n &nbsp; nieuw<br /> s &nbsp; lijst selecteren "
+#~ "voor een nieuw object<br /> i &nbsp; importeren<br /> e &nbsp; exporteren"
+
+#~ msgid "Listing header"
+#~ msgstr "Lijst-kop"
+
+#~ msgid "Silva Reference"
+#~ msgstr "Silva Referentie"
+
+#~ msgid ""
+#~ "The people at ${eth_zuerich} for their feedback, contributions, and "
+#~ "innovation."
+#~ msgstr "De mensen van ${eth_zuerich} voor feedback, bijdragen en innovatie."
+
+#~ msgid ""
+#~ "Jan Smith at ${ozzope} for advice, hosting the documentation wiki, and "
+#~ "her tutorials."
+#~ msgstr ""
+#~ "Jan Smith van ${ozzope} voor advies, het hosten van de documentatie-wiki, "
+#~ "en haar tutorials."
+
+#~ msgid ""
+#~ "Many thanks go to Hans Verster at the ${eur} for his vision and support."
+#~ msgstr ""
+#~ "Veel dank gaat uit naar Hans Verster van de ${eur} voor zijn visie en "
+#~ "steun."
+
+#~ msgid "Silva site"
+#~ msgstr "Silva site"
+
+#~ msgid "access key: alt-b"
+#~ msgstr "sneltoets: alt-b"
+
+#~ msgid "back"
+#~ msgstr "terug"
+
+#~ msgid "Silva info: alt-s"
+#~ msgstr "Silva info: alt-s"
+
+#~ msgid "${Silva} &#8211; independent content management"
+#~ msgstr "${Silva} &#8211; onafhankelijk content management"
+
+#~ msgid "Credits"
+#~ msgstr "Colofon"
+
+#~ msgid "Silva is developed by ${infrae} and many others. <br />"
+#~ msgstr "Silva wordt ontwikkeld door ${infrae} en vele anderen. <br />"
+
+#~ msgid "Infrae Silva crew"
+#~ msgstr "Infrae Silva crew"
+
+#~ msgid "External developers"
+#~ msgstr "Externe ontwikkelaars"
+
+#~ msgid "Thanks to...."
+#~ msgstr "Met dank aan...."
+
+#~ msgid "save: alt-s"
+#~ msgstr "opslaan: alt-s"
+
+#~ msgid "typographical characters"
+#~ msgstr "typografische tekens"
+
+#~ msgid "Silva info on the Infrae site: alt-i"
+#~ msgstr "Informatie over Silva op de Infrae site: alt-i"
+
+#~ msgid "Request processed"
+#~ msgstr "Verzoek verwerkt"
+
+#~ msgid "Return to where you came from..."
+#~ msgstr "Terug naar waar je vandaan kwam..."
+
+#~ msgid "up to top contents of publication"
+#~ msgstr "naar bovenste niveau 'inhoud' van publicatie"
+
+#~ msgid "up to top of publication"
+#~ msgstr "naar bovenste niveau van publicatie"
+
+#~ msgid "zope roles"
+#~ msgstr "zope rollen"
+
+#~ msgid "silva roles"
+#~ msgstr "silva rollen"
+
+#~ msgid "public silva roles"
+#~ msgstr "publieke silva rollen"
+
+#~ msgid "Anonymous"
+#~ msgstr "Anoniem"
+
+#~ msgid "Authenticated"
+#~ msgstr "Ingelogd"
+
+#~ msgid "Manager"
+#~ msgstr "Beheerder"
+
+#~ msgid "Viewer"
+#~ msgstr "Kijker"
+
+#~ msgid "Viewer +"
+#~ msgstr "Kijker +"
+
+#~ msgid "Viewer ++"
+#~ msgstr "Kijker ++"
+
+#~ msgid "Reader"
+#~ msgstr "Lezer"
+
+#~ msgid "Author"
+#~ msgstr "Auteur"
+
+#~ msgid "Editor"
+#~ msgstr "Redacteur"
+
+#~ msgid "ChiefEditor"
+#~ msgstr "Hoofdredacteur"
+
+#~ msgid "Added ${meta_type} ${id}."
+#~ msgstr "${meta_type} ${id} toegevoegd."
+
+#~ msgid "<b>Tip:</b> You don't have to fill in the id and title."
+#~ msgstr "<b>Tip:</b> Id en titel hoeven niet te worden ingevuld."
+
+#~ msgid "Choose an item to be created within the folder."
+#~ msgstr "Kies een item om in de folder aan te maken."
+
+#~ msgid "first item"
+#~ msgstr "eerste item"
+
+#~ msgid "find the content this ghost should refer to: alt-r"
+#~ msgstr "zoek het object waar deze 'ghost' naar moet wijzen: alt-r"
+
+#~ msgid "Location of originating document."
+#~ msgstr "Locatie van oorspronkelijk document."
+
+#~ msgid "create ${meta_type}"
+#~ msgstr "${meta_type} aanmaken"
+
+#~ msgid "find the folder this ghost should refer to: alt-r"
+#~ msgstr "zoek de folder waar deze ghost naar moet wijzen: alt-r"
+
+#~ msgid ""
+#~ "Location of originating folder. Depending on how much content there is, "
+#~ "<span class=\"warning\">creation may take a while</span>."
+#~ msgstr ""
+#~ "Locatie van de originele folder. Afhankelijk van de hoeveelheid inhoud, "
+#~ "<span class=\"warning\">kan dit enige tijd duren</span>."
+
+#~ msgid "url"
+#~ msgstr "url"
+
+#~ msgid "Location of originating folder."
+#~ msgstr "Locatie van oorspronkelijke folder."
+
+#~ msgid ""
+#~ "There's already a Group with the name ${id} in this Silva\n"
+#~ "        site.<br />In contrast to other Silva objects, Group IDs must be\n"
+#~ "        unique within a Silva instance."
+#~ msgstr ""
+#~ "Er is al een Group met de naam ${id} in deze Silva\n"
+#~ "        site.<br />In tegenstelling tot andere Silva objecten moet een\n"
+#~ "        Group ID uniek zijn binnen een Silva site."
+
+#~ msgid "Empty or invalid file."
+#~ msgstr "Leeg of incorrect bestand."
+
+#~ msgid "Link url."
+#~ msgstr "Link url."
+
+#~ msgid ""
+#~ "For absolute links the url will be checked, and 'http://' will be "
+#~ "prepended if necessary. Relative links can contain anything, so it is the "
+#~ "author's responsibility to create valid urls."
+#~ msgstr ""
+#~ "Voor absolute links wordt de url gecontroleerd, en 'http://' ervoor "
+#~ "gevoegd indien nodig. Relatieve links kunnen alles bevatten, en het is de "
+#~ "verantwoordelijkheid van de auteur om geldige urls te maken."
+
+#~ msgid "link type"
+#~ msgstr "type link"
+
+#~ msgid "What type of object should be added after creating the folder."
+#~ msgstr ""
+#~ "Welke type object moet er worden toegevoegd na het aanmaken van de folder."
+
+#~ msgid "First item"
+#~ msgstr "Eerste item"
+
+#~ msgid "aspect"
+#~ msgstr "aspect"
+
+#~ msgid ""
+#~ "The title will be publicly visible, and is used for the link in indexes."
+#~ msgstr ""
+#~ "De titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de "
+#~ "link in indexen."
+
+#~ msgid ""
+#~ "Sorry, strange characters are in the id. It should only\n"
+#~ "        contain letters, digits and &#8216;_&#8217; or &#8216;-&#8217; "
+#~ "or \n"
+#~ "        &#8216;.&#8217;<br />Spaces are not allowed in Internet "
+#~ "addresses, \n"
+#~ "        and the id should start with a letter or digit."
+#~ msgstr ""
+#~ "Sorry, er zitten vreemde karakters in de id. Het mag alleen\n"
+#~ "        letters, cijfers en &#8216;_&#8217; of &#8216;-&#8217; of \n"
+#~ "        &#8216;.&#8217; bevatten.<br />Spaties zijn niet toegestaan in \n"
+#~ "        Internet adressen, en de id moet beginnen met een letter of een "
+#~ "cijfer."
+
+#~ msgid ""
+#~ "Sorry, ids starting with ${prefix} are reserved for\n"
+#~ "        internal use.<br />Please use another id."
+#~ msgstr ""
+#~ "Ids die beginnen met ${prefix} zijn gereserveerd voor intern gebruik.\n"
+#~ "        <br />Gebruik a.u.b. een ander id."
+
+#~ msgid ""
+#~ "Sorry, the id ${id} is reserved for internal use.<br />\n"
+#~ "        Please use another id."
+#~ msgstr ""
+#~ "Het id is gereserveerd voor intern gebruik.\n"
+#~ "        <br />Gebruik a.u.b. een ander id."
+
+#~ msgid ""
+#~ "There is already an object with the id ${id} in this \n"
+#~ "        folder.<br />Please use a different one."
+#~ msgstr ""
+#~ "Er is al een object genaamd ${id} in deze folder.<br />\n"
+#~ "        Gebruik a.u.b. een ander id."
+
+#~ msgid ""
+#~ "There is already an asset with the id ${id} in this \n"
+#~ "        folder.<br />Please use another id."
+#~ msgstr ""
+#~ "Er is al een asset genaamd ${id} in deze folder.<br />\n"
+#~ "        Gebruik a.u.b. een ander id."
+
+#~ msgid ""
+#~ "Sorry, the id ${id} ends with invalid characters.<br />\n"
+#~ "        Please use another id."
+#~ msgstr ""
+#~ "Het id ${id} eindigt op niet toegestane karakters.<br />\n"
+#~ "        Gebruik a.u.b. een ander id."
+
+#~ msgid ""
+#~ "(Internal Error): An invalid status ${status_code} occured \n"
+#~ "    while checking the id ${id}.<br />Please contact the person "
+#~ "responsible \n"
+#~ "    for this Silva installation or file a bug report."
+#~ msgstr ""
+#~ "(Internal Error): An invalid status ${status_code} occured \n"
+#~ "    while checking the id ${id}.<br />Please contact the person "
+#~ "responsible \n"
+#~ "    for this Silva installation or file a bug report."
+
+#~ msgid "file info"
+#~ msgstr "bestands-info"
+
+#~ msgid "file size"
+#~ msgstr "bestands-grootte"
+
+#~ msgid "file system path"
+#~ msgstr "bestandssysteempad"
+
+#~ msgid "file mime type"
+#~ msgstr "'mime type' van bestand"
+
+#~ msgid "Optional, but useful."
+#~ msgstr "Optioneel, maar nuttig."
+
+#~ msgid "${old_title} to ${new_title}"
+#~ msgstr "${old_title} naar ${new_title}"
+
+#~ msgid "Properties changed: ${changed}"
+#~ msgstr "Eigenschappen veranderd: ${changed}"
+
+#~ msgid "File uploaded."
+#~ msgstr "Bestand ge-upload."
+
+#~ msgid "No group(s) selected, so nothing to use to add users."
+#~ msgstr ""
+#~ "Geen groep(en) geselecteerd. Er is niets wat gebruikt kan worden om "
+#~ "gebruikers toe te voegen."
+
+#~ msgid "User(s) ${added} added to group."
+#~ msgstr "Gebruiker(s) ${added} aan groep toegevoegd."
+
+#~ msgid "No other users added (were they already in this group?)"
+#~ msgstr "Geen andere gebruikers toegevoegd (zaten ze al in deze groep?)"
+
+#~ msgid "No users selected, so none added."
+#~ msgstr "Geen gebruikers geselecteerd, dus ook niet toegevoegd."
+
+#~ msgid "remove selected user(s) from this group: alt-r"
+#~ msgstr "geselecteerde gebruiker(s) uit deze groep verwijderen: alt-r"
+
+#~ msgid "remove users"
+#~ msgstr "gebruikers verwijderen"
+
+#~ msgid "add selected users to this group"
+#~ msgstr "geselecteerde gebruikers aan deze groep toevoegen"
+
+#~ msgid "copy users from group(s)"
+#~ msgstr "gebruikers van groep(en) kopiëren"
+
+#~ msgid "transfer members from selected groups"
+#~ msgstr "leden van geselecteerde groepen verplaatsen"
+
+#~ msgid "group members"
+#~ msgstr "groepsleden"
+
+#~ msgid "Username"
+#~ msgstr "Gebruikersnaam"
+
+#~ msgid "This group does not have any members."
+#~ msgstr "Deze groep heeft geen leden."
+
+#~ msgid "No users selected, so none removed."
+#~ msgstr "Geen gebruikers geselecteerd, dus niets verwijderd."
+
+#~ msgid "User(s) ${removed} removed from group."
+#~ msgstr "Gebruiker(s) ${removed} verwijderd uit groep."
+
+#~ msgid "No ip range was provided, so nothing was added."
+#~ msgstr "Geen 'ip-range' meegegeven, dus niets toegevoegd."
+
+#~ msgid "Range ${iprange} added to the IP Group"
+#~ msgstr "Range ${iprange} aan de IP-Groep toegevoegd"
+
+#~ msgid "No group selected, so nothing copied."
+#~ msgstr "Geen groep geselecteerd, dus niets gekopieerd."
+
+#~ msgid "Range(s) ${copied} added."
+#~ msgstr "Range(s) ${copied} toegevoegd."
+
+#~ msgid "Nothing copied."
+#~ msgstr "Niets gekopieerd."
+
+#~ msgid "remove range(s) from this ip group: alt-r"
+#~ msgstr "range(s) uit deze ip groep verwijderen: alt-r"
+
+#~ msgid "remove ranges"
+#~ msgstr "ranges verwijderen"
+
+#~ msgid "add an IP address"
+#~ msgstr "een IP-adres toevoegen"
+
+#~ msgid "ip range<span class=\"warning\">*</span>"
+#~ msgstr "ip-range<span class=\"warning\">*</span>"
+
+#, fuzzy
+#~ msgid ""
+#~ "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP-"
+#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+#~ msgstr ""
+#~ "<strong>Kan zijn:</strong><br /> IP&nbsp;(zoals: 10.1.1.1), <br /> IP-"
+#~ "IP&nbsp;(zoals:&nbsp;10.1.1.1-10.1.1.255) of<br /> IP/Netmask&nbsp;(zoals:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+
+#~ msgid "add an ip or an ip range"
+#~ msgstr "een ip of een ip-range toevoegen"
+
+#~ msgid "add ip range"
+#~ msgstr "ip-range toevoegen"
+
+#~ msgid "copy ips to ip group"
+#~ msgstr "ip's naar ip groep kopiëren"
+
+#~ msgid "transfer ip(s) to this ip group"
+#~ msgstr "ip(s) naar deze ip-groep verplaatsen"
+
+#~ msgid "IPs and IP ranges"
+#~ msgstr "IP's en IP-ranges"
+
+#~ msgid "This IP Group does not contain any IPs."
+#~ msgstr "Deze IP-Groep bevat geen IP's."
+
+#~ msgid "No ip ranges were selected, so nothing was removed."
+#~ msgstr "Geen ip-ranges geselecteerd, dus niets verwijderd."
+
+#~ msgid "Range(s) ${removed} removed from the group."
+#~ msgstr "Range(s) ${removed} uit de groep verwijderd."
+
+#~ msgid "No group(s) selected, so nothing to use to add groups."
+#~ msgstr "Geen groep(en) geselecteerd, dus niets om groepen toe te voegen."
+
+#~ msgid "Group(s) ${added} added to group."
+#~ msgstr "Groep(en) ${added} aan groep toegevoegd."
+
+#~ msgid "No other groups added (were they already in this virtual group?)"
+#~ msgstr ""
+#~ "Geen andere groepen toegevoegd (zaten ze al in deze 'virtual group'?)"
+
+#~ msgid "No groups selected, so none added."
+#~ msgstr "Geen groepen geselecteerd, dus geen toegevoegd."
+
+#~ msgid "remove selected group(s) from this virtual group: alt-r"
+#~ msgstr "geselecteerde groep(en) verwijderen uit deze 'virtual group': alt-r"
+
+#~ msgid "remove group"
+#~ msgstr "groep verwijderen"
+
+#~ msgid "\"Things to do when virtual groups is not in its original location\""
+#~ msgstr ""
+#~ "\"Dingen die u kunt doen als 'virtual groups' niet op zijn originele "
+#~ "locatie staat\""
+
+#~ msgid "add group(s) to this virtual group."
+#~ msgstr "groep(en) aan deze 'virtual group' toevoegen."
+
+#~ msgid "add to group"
+#~ msgstr "aan groep toevoegen"
+
+#~ msgid "transfer groups defined in other virtual groups"
+#~ msgstr "gedefinieerde groepen naar andere 'virtual groups' verplaatsen"
+
+#~ msgid "copy from virtual group(s)"
+#~ msgstr "uit 'virtual group(s)' kopiëren"
+
+#~ msgid "Virtual Group &#8216;members&#8217;"
+#~ msgstr "&#8216;leden&#8217; 'Virtual Group'"
+
+#~ msgid "Group name"
+#~ msgstr "Groepsnaam"
+
+#~ msgid "This Virtual Group does not have any &#8216;member groups&#8217;."
+#~ msgstr "Deze 'Virtual Group' heeft geen &#8216;lidgroepen&#8217;."
+
+#~ msgid "No groups selected, so none removed."
+#~ msgstr "Geen groepen geselecteerd, dus geen verwijderd."
+
+#~ msgid "Group(s) ${removed} removed from group."
+#~ msgstr "Groep(en) ${removed} uit groep verwijderd."
+
+#~ msgid "edit"
+#~ msgstr "bewerken"
+
+#~ msgid "groups"
+#~ msgstr "groepen"
+
+#~ msgid "scaled"
+#~ msgstr "geschaald"
+
+#~ msgid "format and scaling"
+#~ msgstr "formaat en schalen"
+
+#~ msgid "set crop coordinates..."
+#~ msgstr "afsnijdcoördinaten instellen..."
+
+#~ msgid ""
+#~ "specify the center of the area to crop by clicking in the image: alt-o"
+#~ msgstr ""
+#~ "geef het midden van het af te snijden gebied aan door in de afbeelding te "
+#~ "klikken: alt-o"
+
+#~ msgid "change"
+#~ msgstr "veranderen"
+
+#~ msgid "access key: alt-c"
+#~ msgstr "sneltoets: alt-c"
+
+#~ msgid "image info"
+#~ msgstr "afbeeldingsinfo"
+
+#~ msgid "format"
+#~ msgstr "formaat"
+
+#~ msgid "dimensions"
+#~ msgstr "afmetingen"
+
+#~ msgid "<br /> scaled to ${WxH} pixels"
+#~ msgstr "<br /> geschaald naar ${WxH} pixels"
+
+#~ msgid "original"
+#~ msgstr "origineel"
+
+#~ msgid "view the original image: alt-v"
+#~ msgstr "originele afbeelding bekijken: alt-v"
+
+#~ msgid "view unscaled image"
+#~ msgstr "ongeschaalde afbeelding bekijken"
+
+#~ msgid "orientation"
+#~ msgstr "oriëntatie"
+
+#~ msgid ""
+#~ "Note: Silva can provide image scaling and conversion with the help of PIL"
+#~ msgstr ""
+#~ "N.B.: Silva kan afbeeldingen schalen en converteren met behulp van PIL"
+
+#~ msgid "PIL doesn't seem to be installed."
+#~ msgstr "PIL lijkt niet geïnstalleerd te zijn."
+
+#~ msgid "instructions"
+#~ msgstr "instructies"
+
+#~ msgid ""
+#~ "Drag the window below to the image region which should be cropped. You "
+#~ "can resize the window with the handle on the lower right corner. If "
+#~ "you're done, you can click the submit button below or double click in the "
+#~ "window to set your coordinates and close the cropping tool."
+#~ msgstr ""
+#~ "Sleep onderstaand venster naar de het gebied van de afbeelding dat "
+#~ "uitgesneden dient te worden. Het venster kan vergroot of verkleind worden "
+#~ "door de rechter onderhoek te verplaatsen. Klik op de onderstaande knop "
+#~ "'verzenden', of dubbelklik in het venster om de coördinaten in te stellen "
+#~ "en de afsnijd-tool te sluiten."
+
+#~ msgid "predefined sizes"
+#~ msgstr "voorgedefinieerde maten"
+
+#~ msgid "50x50 pixel"
+#~ msgstr "50x50 pixels"
+
+#~ msgid "50x50 pixels"
+#~ msgstr "50x50 pixels"
+
+#~ msgid "75x75 pixels"
+#~ msgstr "75x75 pixels"
+
+#~ msgid "75x75 pixel"
+#~ msgstr "75x75 pixels"
+
+#~ msgid "100x100 pixels"
+#~ msgstr "100x100 pixels"
+
+#~ msgid "100x100 pixel"
+#~ msgstr "100x100 pixels"
+
+#~ msgid "250x250 pixels"
+#~ msgstr "250x250 pixels"
+
+#~ msgid "250x250 pixel"
+#~ msgstr "250x250 pixels"
+
+#~ msgid "alt-u"
+#~ msgstr "alt-u"
+
+#~ msgid "use coordinates..."
+#~ msgstr "coördinaten gebruiken..."
+
+#~ msgid "drag window"
+#~ msgstr "venster slepen"
+
+#~ msgid "web format"
+#~ msgstr "webformaat"
+
+#~ msgid "Image format for web."
+#~ msgstr "Afbeeldingsformaat voor het web."
+
+#~ msgid "scaling"
+#~ msgstr "schaal"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t  Image scaling for web: use width x height in pixels, or one axis "
+#~ "length, or a percentage (100x200, 100x*, *x200, 40%)."
+#~ msgstr ""
+#~ "\n"
+#~ "\t  Afbeelding schalen voor het web: gebruik breedte x hoogte in pixels "
+#~ "(100x200), of de maat van één as (100x*), of een percentage (40%)."
+
+#~ msgid "cropping"
+#~ msgstr "afsnijden"
+
+#~ msgid ""
+#~ "\n"
+#~ "              Image cropping for web: use the &#8216;set crop "
+#~ "coordinates&#8217; button, or enter X1xY1-X2xY2 to define the cropping "
+#~ "box.\n"
+#~ "          "
+#~ msgstr ""
+#~ "\n"
+#~ "              Afbeelding afsnijden/uitsnijden voor het web: gebruik de "
+#~ "knop &amp;#8216;afsnijdcoördinaten instellen&amp;#8217;, of voer X1xY1-"
+#~ "X2xY2 in om de afsnijdmaten te definiëren.\n"
+#~ "          "
+
+#~ msgid "Scaling and/or format changed"
+#~ msgstr "Schaal en/of formaat veranderd"
+
+#~ msgid "Properties changed"
+#~ msgstr "Eigenschappen veranderd"
+
+#~ msgid "The file is empty or invalid."
+#~ msgstr "Het bestand is leeg of ongeldig."
+
+#~ msgid "Problem: ${errors}"
+#~ msgstr "Probleem: ${errors}"
+
+#~ msgid "Image updated."
+#~ msgstr "Afbeelding bijgewerkt."
+
+#~ msgid "upload"
+#~ msgstr "uploaden"
+
+#~ msgid "upload file"
+#~ msgstr "bestand uploaden"
+
+#~ msgid "characterization"
+#~ msgstr "karakteristiek"
+
+#~ msgid "status of &#xab;${title}&#xbb;"
+#~ msgstr "status van &#xab;${title}&#xbb;"
+
+#~ msgid "A automatically has a published state."
+#~ msgstr "A heeft automatisch de status 'gepubliceerd'."
+
+#~ msgid ""
+#~ "This screen doesn&#8217;t have settings, because it&#8217;s not possible "
+#~ "to subscribe to a . Only documents that contain textual content, or "
+#~ "folders that contain them, can be subscribed to."
+#~ msgstr ""
+#~ "Dit scherm heeft geen instellingen, omdat het niet mogelijk is om u te "
+#~ "abonneren op een . U kunt zich alleen abonneren op documenten die "
+#~ "tekstuele inhoud bevatten, en mappen met zulke documenten."
+
+#~ msgid "file"
+#~ msgstr "bestand"
+
+#~ msgid "Locate a file."
+#~ msgstr "Zoek een bestand op"
+
+#~ msgid "This is just a placeholder so this directory won't get pruned."
+#~ msgstr "This is just a placeholder so this directory won't get pruned."
+
+#~ msgid "Ghost Folder has been replaced by a folder"
+#~ msgstr "'Ghost Folder' is vervangen door een folder"
+
+#~ msgid "Ghost Folder has been replaced by a publication"
+#~ msgstr "'Ghost Folder' is vervangen door een publicatie"
+
+#~ msgid "contents"
+#~ msgstr "inhoud"
+
+#~ msgid ""
+#~ "Ghost Folder changed but not synchronized, because thenew target is "
+#~ "invalid."
+#~ msgstr ""
+#~ "'Ghost Folder' is veranderd maar niet gesynchroniseerd, omdat het nieuwe "
+#~ "doel niet geldig is."
+
+#~ msgid "Ghost Folder changed."
+#~ msgstr "'Ghost Folder' veranderd."
+
+#~ msgid "Ghost Folder was not synchronized, because the targetis invalid."
+#~ msgstr ""
+#~ "'Ghost Folder' is niet gesynchroniseerd, omdat het doel niet geldig is."
+
+#~ msgid "Ghost Folder synchronized"
+#~ msgstr "'Ghost Folder' gesynchroniseerd"
+
+#~ msgid "Path to original (begins with &#8216;/&#8217;)."
+#~ msgstr "Pad naar origineel (begint met &#8216;/&#8217;)."
+
+#~ msgid "link"
+#~ msgstr "link"
+
+#~ msgid "Link to contents screen of original."
+#~ msgstr "Link naar scherm 'inhoud' van origineel."
+
+#~ msgid "problem"
+#~ msgstr "probleem"
+
+#~ msgid "save reference"
+#~ msgstr "verwijzing opslaan"
+
+#~ msgid "ghost folder contents"
+#~ msgstr "'ghost folder' inhoud"
+
+#~ msgid "re-synchronize with content from the source folder: alt-e"
+#~ msgstr "hersynchroniseren met de inhoud van de bronfolder: alt-e"
+
+#~ msgid "resync ghost folder"
+#~ msgstr "'ghost folder' hersynchroniseren"
+
+#~ msgid "metadata"
+#~ msgstr "metadata"
+
+#~ msgid "ghost folder of &#xab;${title}&#xbb;"
+#~ msgstr "'ghost folder' van &#xab;${title}&#xbb;"
+
+#~ msgid "attributes"
+#~ msgstr "attributen"
+
+#~ msgid "Locate item to refer to: alt-r"
+#~ msgstr "Item om naar te verwijzen opzoeken: alt-r"
+
+#~ msgid "reference..."
+#~ msgstr "verwijzing..."
+
+#~ msgid "miscellaneous settings: alt-e"
+#~ msgstr "diverse instellingen: alt-e"
+
+#~ msgid "s<u>e</u>ttings..."
+#~ msgstr "inst<u>e</u>llingen..."
+
+#~ msgid "s<u>u</u>bscriptions..."
+#~ msgstr "<u>u</u> abonneren..."
+
+#~ msgid "metadata ${for_public_version_of}"
+#~ msgstr "metadata ${for_public_version_of}"
+
+#~ msgid "save addables settings"
+#~ msgstr "toevoeg-instellingen opslaan"
+
+#~ msgid "save addable settings for this publication: alt-a"
+#~ msgstr "toevoeg-instellingen voor deze publicatie opslaan: alt-a"
+
+#~ msgid "addable settings for &#xab;${title}&#xbb;"
+#~ msgstr "toevoeg-instellingen voor &#xab;${title}&#xbb;"
+
+#~ msgid "acquire"
+#~ msgstr "overerven"
+
+#~ msgid ""
+#~ "If checked, inherit the addables from above. Uncheck this to change the "
+#~ "allowed addables below."
+#~ msgstr ""
+#~ "Indien aangevinkt, worden de toevoeg-instellingen overgeërfd van boven. "
+#~ "Niet aanvinken als toevoeg-instellingen hieronder gewijzigd moeten kunnen "
+#~ "worden."
+
+#~ msgid "addables"
+#~ msgstr "toevoegbare items"
+
+#~ msgid ""
+#~ "If 'acquire' is not checked, these settings will determine the items "
+#~ "allowed in this publication. Otherwise the addables are acquired from the "
+#~ "publication above."
+#~ msgstr ""
+#~ "Als overerven niet is aangevinkt, bepalen deze instellingen wat voor "
+#~ "items in deze publicatie mogen worden toegevoegd. Anders worden de "
+#~ "toevoeg- instellingen overgeërfd van de bovenliggende publicatie."
+
+#~ msgid "Addable settings have not changed and remain acquired."
+#~ msgstr "Toevoeg-instellingen zijn niet veranderd en blijven overgeërfd."
+
+#~ msgid "Addable settings changed for: ${changed_metadata}"
+#~ msgstr "Toevoeg-instellingen veranderd voor: ${changed_metadata}"
+
+#~ msgid "${estimated_time} &nbsp;seconds"
+#~ msgstr "${estimated_time} &nbsp;seconden"
+
+#~ msgid "There are no jobs in the queue."
+#~ msgstr "Er staan geen taken in de wachtrij."
+
+#~ msgid "list of processed items ${format}"
+#~ msgstr "lijst van verwerkte items ${format}"
+
+#~ msgid "current job"
+#~ msgstr "huidige taak"
+
+#~ msgid "There are no processed jobs."
+#~ msgstr "Er zijn geen verwerkte taken."
+
+#~ msgid "owner"
+#~ msgstr "eigenaar"
+
+#~ msgid "there's no undo: alt-x"
+#~ msgstr "kan niet ongedaan worden gemaakt: alt-x"
+
+#~ msgid "remove"
+#~ msgstr "verwijderen"
+
+#~ msgid "description"
+#~ msgstr "omschrijving"
+
+#~ msgid "import to the current location and remove from the list: alt-m"
+#~ msgstr ""
+#~ "importeren naar de huidige locatie en uit de lijst verwijderen: alt-m"
+
+#~ msgid "import and remove"
+#~ msgstr "importeren en verwijderen"
+
+#~ msgid "import to the current location: alt-p"
+#~ msgstr "naar de huidige locatie importeren: alt-p"
+
+#~ msgid "import"
+#~ msgstr "importeren"
+
+#~ msgid "reload to update the queue lists: alt-r"
+#~ msgstr "herladen om de wachtrij te verversen: alt-r"
+
+#~ msgid "<u>r</u>efresh queue lists"
+#~ msgstr "wachtrij ve<u>r</u>versen"
+
+#~ msgid "queue of items to process"
+#~ msgstr "wachtrij met te verwerken items"
+
+#~ msgid "job id"
+#~ msgstr "taak-id"
+
+#~ msgid "job owner"
+#~ msgstr "taak-eigenaar"
+
+#~ msgid "estimated time"
+#~ msgstr "geschatte tijd"
+
+#~ msgid "status"
+#~ msgstr "status"
+
+#~ msgid "No items were selected, so no content will be exported"
+#~ msgstr ""
+#~ "Geen items geselecteerd, dus er kan geen inhoud geëxporteerd worden."
+
+#~ msgid "Currently, fullmedia export only supports one item at a time."
+#~ msgstr ""
+#~ "Op dit moment kan 'fullmedia export' maar één item tegelijk verwerken."
+
+#~ msgid "Select one or more jobs to delete"
+#~ msgstr "Selecteer één of meer taken om te verwijderen"
+
+#~ msgid "Job deleted"
+#~ msgstr "Taak verwijderd"
+
+#~ msgid "unknown format"
+#~ msgstr "onbekend formaat"
+
+#~ msgid "Silva XML"
+#~ msgstr "Silva XML"
+
+#~ msgid "Word document"
+#~ msgstr "Word-document"
+
+#~ msgid "Select a file for upload."
+#~ msgstr "Selecteer een bestand om te uploaden."
+
+#~ msgid "Something bad with the zipfile;"
+#~ msgstr "Er is iets mis met het zipbestand;"
+
+#~ msgid "added ${succeeded}"
+#~ msgstr "${succeeded} toegevoegd"
+
+#~ msgid "<span class=\"warning\">could not add: ${failed}</span>"
+#~ msgstr "<span class=\"warning\">kon: ${failed} niet toevoegen</span>"
+
+#~ msgid "Finished importing: ${msg}"
+#~ msgstr "Importeren voltooid: ${msg}"
+
+#~ msgid "version already approved"
+#~ msgstr "versie reeds goedgekeurd"
+
+#~ msgid "<span class=\"error\">could not approve: ${ids}</span>"
+#~ msgstr "<span class=\"error\">kon niet goedkeuren: ${ids}</span>"
+
+#~ msgid "Group: a group defined by a list of users"
+#~ msgstr "Groep: een groep gedefinieerd als een lijst met gebruikers"
+
+#~ msgid "Virtual Group: a group defined by a list of normal groups"
+#~ msgstr ""
+#~ "'Virtual Group': een groep gedefinieerd als een lijst van gewone groepen"
+
+#~ msgid "IP Group: a group based on ip addresses"
+#~ msgstr "'IP Group': een groep gebaseerd op ip-adressen"
+
+#~ msgid "save + edit"
+#~ msgstr "opslaan + bewerken"
+
+#~ msgid "groups located in this folder"
+#~ msgstr "groepen in deze folder"
+
+#~ msgid "name"
+#~ msgstr "naam"
+
+#~ msgid "modified"
+#~ msgstr "aangepast"
+
+#~ msgid "modifier"
+#~ msgstr "modifier"
+
+#~ msgid "edit this group"
+#~ msgstr "deze groep bewerken"
+
+#~ msgid "No groups have been defined in this location."
+#~ msgstr "Er zijn geen groepen gedefinieerd op deze locatie."
+
+#~ msgid "delete selected groups: alt-d"
+#~ msgstr "geselecteerde groepen verwijderen: alt-d"
+
+#~ msgid "delete"
+#~ msgstr "verwijderen"
+
+#~ msgid "groups in &#xab;${title}&#xbb;"
+#~ msgstr "groepen in &#xab;${title}&#xbb;"
+
+#~ msgid "x"
+#~ msgstr "x"
+
+#~ msgid "create a group"
+#~ msgstr "een groep aanmaken"
+
+#~ msgid "Nothing was selected, so nothing was deleted."
+#~ msgstr "Niets geselecteerd, dus niets verwijderd."
+
+#~ msgid ""
+#~ "Deleted ${deleted_ids}, <span class=\"error\">but could not delete "
+#~ "${not_deleted_ids}.</span>"
+#~ msgstr ""
+#~ "${deleted_ids} verwijderd, <span class=\"error\">maar kon "
+#~ "${not_deleted_ids} niet verwijderen.</span>"
+
+#~ msgid "Deleted ${deleted_ids}."
+#~ msgstr "${deleted_ids} verwijderd."
+
+#~ msgid "Could not delete ${not_deleted_ids}."
+#~ msgstr "Kon ${not_deleted_ids} niet verwijderen."
+
+#~ msgid "import xml data or a zip file: alt-i"
+#~ msgstr "xml-gegevens of een zipbestand importeren: alt-i"
+
+#~ msgid "import..."
+#~ msgstr "importeren..."
+
+#~ msgid "modify"
+#~ msgstr "bewerken"
+
+#~ msgid "shift"
+#~ msgstr "herordenen"
+
+#~ msgid "There is no content here."
+#~ msgstr "Er bevindt zich hier geen inhoud."
+
+#~ msgid "n/a"
+#~ msgstr "n.v.t."
+
+#~ msgid "content approved, or published..."
+#~ msgstr "inhoud goedgekeurd, of gepubliceerd..."
+
+#~ msgid "content approved or published"
+#~ msgstr "inhoud goedgekeurd of gepubliceerd"
+
+#~ msgid "content-editor"
+#~ msgstr "inhoud editor"
+
+#~ msgid "unknown"
+#~ msgstr "onbekend"
+
+#~ msgid "publishing actions"
+#~ msgstr "publicatie-acties"
+
+#~ msgid "close published items: alt-l"
+#~ msgstr "gepubliceerde items sluiten: alt-l"
+
+#~ msgid "close"
+#~ msgstr "sluiten"
+
+#~ msgid "publish new versions: alt-p"
+#~ msgstr "nieuwe versies publiceren: alt-p"
+
+#~ msgid "move selected items to"
+#~ msgstr "geselecteerde items verplaatsen naar"
+
+#~ msgid "position"
+#~ msgstr "positie"
+
+#~ msgid "end"
+#~ msgstr "einde"
+
+#~ msgid "access key: alt-o"
+#~ msgstr "sneltoets: alt-o"
+
+#~ msgid "move selected items into position: alt-m"
+#~ msgstr "geselecteerde items naar positie verplaatsen: alt-m"
+
+#~ msgid "move"
+#~ msgstr "verplaatsen"
+
+#~ msgid "rename..."
+#~ msgstr "hernoemen..."
+
+#~ msgid "rename and retitle items: alt-r"
+#~ msgstr "naam en titel van items veranderen: alt-r"
+
+#~ msgid "cut"
+#~ msgstr "knippen"
+
+#~ msgid "cut items: alt-x"
+#~ msgstr "items knippen: alt-x"
+
+#~ msgid "copy"
+#~ msgstr "kopiëren"
+
+#~ msgid "copy items: alt-c"
+#~ msgstr "items kopiëren: alt-c"
+
+#~ msgid "paste items: alt-v"
+#~ msgstr "items plakken: alt-v"
+
+#~ msgid "paste"
+#~ msgstr "plakken"
+
+#~ msgid "paste (items on clipboard) as ghost objects: alt-g"
+#~ msgstr "items als ghost objecten op clipboard plakken: alt-g"
+
+#~ msgid "paste ghost"
+#~ msgstr "ghost plakken"
+
+#~ msgid "there's no undo: alt-d"
+#~ msgstr "items verwijderen (er is geen undo): alt-d"
+
+#~ msgid "new..."
+#~ msgstr "nieuw..."
+
+#~ msgid "add a new item - alt-n"
+#~ msgstr "een nieuw item toevoegen - alt-n"
+
+#~ msgid "select a new item: alt-s"
+#~ msgstr "een nieuw item selecteren: alt-s"
+
+#~ msgid "select:"
+#~ msgstr "selecteren:"
+
+#~ msgid "Nothing was selected, so nothing was closed."
+#~ msgstr "Er is niets geselecteerd, dus niets gesloten."
+
+#~ msgid "is not published"
+#~ msgstr "is niet gepubliceerd"
+
+#~ msgid "Closed: ${ids}"
+#~ msgstr "Gesloten: ${ids}"
+
+#~ msgid "<span class=\"error\">could not close: ${ids}</span>"
+#~ msgstr "<span class=\"error\">kon niet sluiten: ${ids}</span>"
+
+#~ msgid "Nothing was selected, so nothing was copied."
+#~ msgstr "Er is niets geselecteerd, en dus niets gekopieerd."
+
+#~ msgid "Placed ${ids} on the clipboard for copying."
+#~ msgstr "${ids} op het clipboard geplaatst om te kopiëren."
+
+#~ msgid "Nothing was selected, so nothing was cut."
+#~ msgstr "Er is niets geselecteerd, en dus niets geknipt."
+
+#~ msgid ""
+#~ "Placed ${cut_ids} on clipboard for cutting, <span class=\"error\">but "
+#~ "could not cut ${not_cut_ids}.</span>"
+#~ msgstr ""
+#~ "${cut_ids} op het clipboard geplaatst om te knippen, <span class=\"error"
+#~ "\">maar kon ${not_cut_ids} niet knippen.</span>"
+
+#~ msgid "Placed ${cut_ids} on clipboard for cutting."
+#~ msgstr "${cut_ids} op het clipboard geplaatst om te knippen."
+
+#~ msgid "Could not place ${not_cut_ids} on clipboard for cutting."
+#~ msgstr "Kon ${not_cut_ids} niet op het clipboard plaatsen om te knippen."
+
+#~ msgid ""
+#~ "Deleted ${deleted_ids}, <span class=\"error\">but could not delete "
+#~ "${not_deleted_ids}. Probably there is a published version that must be "
+#~ "closed, or an approved version that needs to be revoked. Change the "
+#~ "status in the Publish screen (alt-5).</span>"
+#~ msgstr ""
+#~ "${deleted_ids} verwijderd, <span class=\"error\">maar kon "
+#~ "${not_deleted_ids} niet verwijderen. Waarschijnlijk is er een "
+#~ "gepubliceerde versie die gesloten moet worden, of een goedgekeurde versie "
+#~ "die ingetrokken moet worden. Verander de status in het scherm "
+#~ "'publiceren' (alt-5).</span>"
+
+#~ msgid ""
+#~ "Could not delete ${not_deleted_ids}. Possibly there is a published "
+#~ "version, which must be closed before it can be deleted. Or, the document "
+#~ "is approved (the link will be green), and approval needs to be revoked. "
+#~ "Change the status in the Publish screen (alt-5)."
+#~ msgstr ""
+#~ "Kon ${not_deleted_ids} niet verwijderen. Mogelijk is er een gepubliceerde "
+#~ "versie die gesloten moet worden, voor die kan worden verwijderd. Of het "
+#~ "document is goedgekeurd (de link is groen), en de goedkeuring moet "
+#~ "ingetrokken worden. Verander de status in het scherm 'publiceren' (alt-5)."
+#~ "</span>"
+
+#~ msgid "file to upload"
+#~ msgstr "bestand om te uploaden"
+
+#~ msgid "browse for a file on your disk"
+#~ msgstr "een bestand op schijf opzoeken"
+
+#~ msgid "Locate an XML file to import (must be valid Silva XML)."
+#~ msgstr ""
+#~ "Een XML-bestand opzoeken om te importeren (moet geldige Silva XML zijn)."
+
+#~ msgid "import and extract zip archive"
+#~ msgstr "importeren en uitpakken zipbestand"
+
+#~ msgid ""
+#~ "Locate a zip file containing Assets or a zip file created by a Silva full "
+#~ "media export."
+#~ msgstr ""
+#~ "Een zipbestand met 'Assets' of een zipbestand gegenereerd door een Silva "
+#~ "volledige media export opzoeken om te importeren."
+
+#~ msgid "title for assets"
+#~ msgstr "titel voor assets"
+
+#~ msgid "Optional title for all assets"
+#~ msgstr "Optionele titel voor alle assets"
+
+#~ msgid ""
+#~ "Set a title for all Assets created from the contents of a zip file with "
+#~ "Assets."
+#~ msgstr ""
+#~ "Een optionele titel ingeven voor alle Assets gegenereerd uit de inhoud "
+#~ "van een zipbestand met Assets."
+
+#~ msgid "subdirectories"
+#~ msgstr "subdirectories"
+
+#~ msgid ""
+#~ "Recreate the subdirectory structure of a zip file with Assets by adding "
+#~ "Silva Folders."
+#~ msgstr ""
+#~ "De subdirectorystructuur van een zipbestand met Assets recreëren door "
+#~ "Silva Folders toe te voegen."
+
+#~ msgid "import zip"
+#~ msgstr "zipbestand importeren"
+
+#~ msgid "access key: alt-z"
+#~ msgstr "sneltoets: alt-z"
+
+#~ msgid "docma icon"
+#~ msgstr "docma icoon"
+
+#~ msgid "docma facilities"
+#~ msgstr "docma faciliteiten"
+
+#~ msgid "upload a document in word format (.doc) for conversion"
+#~ msgstr "document in word-formaat (.doc) uploaden voor conversie"
+
+#~ msgid ""
+#~ "Locate a Word file to upload. It'll be converted and appear in the list "
+#~ "of processed items below. It can be imported anywhere in Silva."
+#~ msgstr ""
+#~ "Zoek een Word-bestand om te uploaden. Het zal worden geconverteerd en in "
+#~ "de lijst met verwerkte items terecht komen die hier onder staat. Het kan "
+#~ "overal in Silva worden geïmporteerd."
+
+#~ msgid "email address"
+#~ msgstr "e-mail adres"
+
+#~ msgid "An e-mail will be sent to you when the item is processed."
+#~ msgstr "Er wordt een email gestuurd wanneer het item is verwerkt."
+
+#~ msgid ""
+#~ "This description will be shown in the queue and the list of processed "
+#~ "items."
+#~ msgstr ""
+#~ "Deze omschrijving wordt in de wachtrij en de lijst van verwerkte items "
+#~ "getoond."
+
+#~ msgid "upload a word document from your local drive: alt-u"
+#~ msgstr "een word-document uploaden van uw lokale schijf: alt-u"
+
+#~ msgid "import in &#xab;${title}&#xbb;"
+#~ msgstr "in &#xab;${title}&#xbb; importeren"
+
+#~ msgid "export"
+#~ msgstr "exporteren"
+
+#~ msgid "over to the export screen: alt-e"
+#~ msgstr "naar het export scherm: alt-e"
+
+#~ msgid "import silva xml"
+#~ msgstr "silva xml importeren"
+
+#~ msgid "Select a file for upload"
+#~ msgstr "Selecteer een bestand om te uploaden."
+
+#~ msgid "You must enter your e-mail address"
+#~ msgstr "Je moet een e-mail adres opgeven."
+
+#~ msgid "Your job is ${status}. The id of your job is ${id}."
+#~ msgstr "De taak is ${status}. Het id van de taak is ${id}."
+
+#~ msgid "Select one or more items to download"
+#~ msgstr "Selecteer één of meer items om te downloaden"
+
+#~ msgid "Select one or more jobs to import"
+#~ msgstr "Selecteer één of meer taken om te importeren"
+
+#~ msgid "Could not import ${newid}"
+#~ msgstr "Kon ${newid} niet importeren"
+
+#~ msgid "Finished importing"
+#~ msgstr "Klaar met importeren"
+
+#~ msgid "Data is not valid Silva XML"
+#~ msgstr "Data is geen geldige Silva XML"
+
+#~ msgid "Finished importing."
+#~ msgstr "Klaar met importeren."
+
+#~ msgid "Moved ${id} down."
+#~ msgstr "${id} naar beneden verplaatst."
+
+#~ msgid "Could not move ${id} down."
+#~ msgstr "Kon ${id} niet naar beneden verplaatsen."
+
+#~ msgid "Nothing was selected, so nothing was moved."
+#~ msgstr "Niets geselecteerd, dus niets verplaatst."
+
+#~ msgid "First choose a position number."
+#~ msgstr "Kies eerst een positie."
+
+#~ msgid "Object(s) ${ids} moved"
+#~ msgstr "Object(en) ${ids} verplaatst"
+
+#~ msgid ", <span class=\"error\">but could not move ${ids}</span>"
+#~ msgstr ", <span class=\"error\">maar kon ${ids} niet verplaatsen</span>"
+
+#~ msgid "Could not move ${ids}."
+#~ msgstr "Kon ${ids} niet verplaatsen."
+
+#~ msgid "Moved ${id} up."
+#~ msgstr "${id} naar boven verplaatst."
+
+#~ msgid "Could not move ${id} up."
+#~ msgstr "Kon ${id} niet naar boven verplaatsen."
+
+#~ msgid "Sorry, you're not authorized to add anything in this location."
+#~ msgstr "Je bent niet geauthoriseerd om op deze plaats iets toe te voegen."
+
+#~ msgid "create an object"
+#~ msgstr "een object aanmaken"
+
+#~ msgid ""
+#~ "Click a name to create an item. Note that this screen only lists "
+#~ "descriptions of objects that are available at this location. For "
+#~ "additional information about an item see the ${silva_documentation}. <br /"
+#~ ">"
+#~ msgstr ""
+#~ "Klik op een naam om een item aan te maken. Merk op dat dit scherm alleen "
+#~ "omschrijvingen van objecten laat zien die op deze locatie beschikbaar "
+#~ "zijn. Voor verdere informatie over een item, zie de "
+#~ "${silva_documentation}. <br />"
+
+#~ msgid "Create a ${addable_name}"
+#~ msgstr "Maak een ${addable_name} aan"
+
+#~ msgid "Nothing was selected, so nothing was approved."
+#~ msgstr "Er is niets geselecteerd, en dus niets goedgekeurd."
+
+#~ msgid "No content available to paste."
+#~ msgstr "Geen inhoud beschikbaar om te plakken."
+
+#~ msgid "rename"
+#~ msgstr "hernoemen"
+
+#~ msgid "rename objects in &#xab;${title}&#xbb;"
+#~ msgstr "objecten in &#xab;${title}&#xbb; hernoemen"
+
+#~ msgid "attribute"
+#~ msgstr "attribuut"
+
+#~ msgid "old"
+#~ msgstr "oud"
+
+#~ msgid "new"
+#~ msgstr "nieuw"
+
+#~ msgid "no title"
+#~ msgstr "geen titel"
+
+#~ msgid "Nothing was selected, so nothing can be renamed."
+#~ msgstr "Er is niets geselecteerd, dus er kan niets hernoemd worden."
+
+#~ msgid "&#xab;${item}&#xbb; could not be renamed to ${new} (invalid id)"
+#~ msgstr ""
+#~ "&#xab;${item}&#xbb; kon niet hernoemd worden naar ${new} (niet toegestane "
+#~ "id)"
+
+#~ msgid "&#xab;${item}&#xbb; renamed successfully"
+#~ msgstr "&#xab;${item}&#xbb; is hernoemd"
+
+#~ msgid ""
+#~ "&#xab;${item}&#xbb; could not be renamed to &#xab;${new}&#xbb; (${status})"
+#~ msgstr ""
+#~ "&#xab;${item}&#xbb; kon niet hernoemd worden naar &#xab;${new}&#xbb; "
+#~ "(${status})"
+
+#~ msgid "&#xab;${item}&#xbb; could not be renamed"
+#~ msgstr "&#xab;${item}&#xbb; kon niet hernoemd worden"
+
+#~ msgid "Can only change Publications into Folders"
+#~ msgstr "Alleen Publicaties kunnen in Folders worden veranderd"
+
+#~ msgid "Changed into folder"
+#~ msgstr "Veranderd in folder"
+
+#~ msgid "Can only change Folders into Publications"
+#~ msgstr "Alleen Folders kunnen in Publicaties worden veranderd"
+
+#~ msgid "Changed into publication"
+#~ msgstr "Veranderd in publicatie"
+
+#~ msgid "modify / preview"
+#~ msgstr "bewerken / voorbeeld"
+
+#~ msgid "revision"
+#~ msgstr "revisie"
+
+#~ msgid "publication due"
+#~ msgstr "publiek op"
+
+#~ msgid "expiration due"
+#~ msgstr "verloopt op"
+
+#~ msgid "published"
+#~ msgstr "gepubliceerd"
+
+#~ msgid "public version"
+#~ msgstr "publieke versie"
+
+#~ msgid "There are no publishable items here."
+#~ msgstr "Er zijn hier geen items die gepubliceerd kunnen worden."
+
+#~ msgid "day / month / year &nbsp;(23:59)"
+#~ msgstr "dag / maand / jaar &nbsp;(23:59)"
+
+#~ msgid "access key: alt-m"
+#~ msgstr "sneltoets: alt-m"
+
+#~ msgid "publish time"
+#~ msgstr "publicatie-tijd"
+
+#~ msgid "&nbsp;&nbsp;expiration time"
+#~ msgstr "&nbsp;&nbsp;verlooptijdstip"
+
+#~ msgid "access key: alt-x"
+#~ msgstr "sneltoets: alt-x"
+
+#~ msgid "clear&nbsp;expiration"
+#~ msgstr "verlooptijdstip&nbsp;wissen"
+
+#~ msgid "reject pending request for approval: alt-j"
+#~ msgstr "uitstaande aanvraag voor goedkeuring afwijzen: alt-j"
+
+#~ msgid "reject"
+#~ msgstr "afwijzen"
+
+#~ msgid "revoke"
+#~ msgstr "intrekken"
+
+#~ msgid "withdraw approval of approved versions: alt-v"
+#~ msgstr "goedkeuring van goedgekeurde versies intrekken: alt-v"
+
+#~ msgid "close published items: alt-c"
+#~ msgstr "gepubliceerde items sluiten: alt-c"
+
+#~ msgid "create new versions of published docs: alt-n"
+#~ msgstr "nieuwe versies van gepubliceerde documenten aanmaken: alt-n"
+
+#~ msgid "change publish and expiration times: alt-u"
+#~ msgstr "publicatie- en verlooptijdstip veranderen: alt-u"
+
+#~ msgid "update timing"
+#~ msgstr "tijdstippen instellen"
+
+#~ msgid "change publish and expiration times: alt-s"
+#~ msgstr "publicatie- en en verlooptijden instellen: alt-s"
+
+#~ msgid "request approval for new versions: alt-r"
+#~ msgstr "goedkeuring van nieuwe versies aanvragen: alt-r"
+
+#~ msgid "request approval"
+#~ msgstr "goedkeuring aanvragen"
+
+#~ msgid "request approval now"
+#~ msgstr "nu goedkeuring vragen"
+
+#~ msgid "export to xml or convert for export: alt-e"
+#~ msgstr "naar xml exporteren of converteren voor export: alt-e"
+
+#~ msgid "export..."
+#~ msgstr "exporteren..."
+
+#~ msgid "not a versionable object"
+#~ msgstr "object heeft geen versies"
+
+#~ msgid "version already public"
+#~ msgstr "versie reeds publiek"
+
+#~ msgid "no publication time was set"
+#~ msgstr "geen publicatie-tijdstip ingesteld"
+
+#~ msgid "Approval on: ${ids}"
+#~ msgstr "Goedkeuring op: ${ids}"
+
+#~ msgid "Changed settings on: ${ids}"
+#~ msgstr "Instellingen veranderd op: ${ids}"
+
+#~ msgid "<span class=\"error\">could not change settings on: ${ids}</span>"
+#~ msgstr ""
+#~ "<span class=\"error\">kon instellingen niet veranderen op: ${ids}</span>"
+
+#~ msgid "Nothing was selected, so no settings were changed."
+#~ msgstr "Niets geselecteerd, en dus geen instellingen veranderd."
+
+#~ msgid "No publication nor expiration time nor any of the flags were set."
+#~ msgstr ""
+#~ "Geen publicatie- of verloop-tijdstip noch één van de 'flags' ingesteld."
+
+#~ msgid "no next or public version available"
+#~ msgstr "Geen volgende of publieke versie beschikbaar"
+
+#~ msgid "cannot change publication time of already public versions."
+#~ msgstr ""
+#~ "Kan het publicatie-tijdstip van reeds publieke versies niet aanpassen."
+
+#~ msgid "no unapproved version"
+#~ msgstr "geen versie die wacht op goedkeuring"
+
+#~ msgid "include sub publications?"
+#~ msgstr "subpublicaties meenemen?"
+
+#~ msgid "export zip"
+#~ msgstr "zipbestand exporteren"
+
+#~ msgid "over to the import screen: alt-i"
+#~ msgstr "naar het scherm 'importeren': alt-i"
+
+#~ msgid "export to Silva xml (.xml) ${or_pdf}"
+#~ msgstr "naar Silva xml exporteren (.xml) ${or_pdf}"
+
+#~ msgid "export newest versions?"
+#~ msgstr "nieuwste versies exporteren?"
+
+#~ msgid "If not checked the published version is exported."
+#~ msgstr "Indien niet aangevinkt wordt de gepubliceerde versie geëxporteerd."
+
+#~ msgid "export pdf"
+#~ msgstr "pdf exporteren"
+
+#~ msgid "access key: alt-p"
+#~ msgstr "sneltoets: alt-p"
+
+#~ msgid "export xml"
+#~ msgstr "xml exporteren"
+
+#~ msgid "export to Docma (.doc)"
+#~ msgstr "naar Docma exporteren (.doc)"
+
+#~ msgid "export closed content?"
+#~ msgstr "gesloten inhoud exporteren?"
+
+#~ msgid "Check to include closed content in the export."
+#~ msgstr "Aanvinken om gesloten inhoud in de export mee te nemen."
+
+#~ msgid "choose a template"
+#~ msgstr "kies een 'template'"
+
+#~ msgid "export to Docma"
+#~ msgstr "naar Docma exporteren"
+
+#~ msgid "export the selection to word: alt-d"
+#~ msgstr "de selectie naar word exporteren: alt-d"
+
+#~ msgid "items to export:"
+#~ msgstr "te exporteren items:"
+
+#~ msgid "export from &#xab;${title}&#xbb;"
+#~ msgstr "exporteren uit &#xab;${title}&#xbb;"
+
+#~ msgid "full media export (.zip)"
+#~ msgstr "volledige media exporteren (.zip)"
+
+#~ msgid "options"
+#~ msgstr "opties"
+
+#~ msgid "modify ${meta_type}"
+#~ msgstr "bewerk ${meta_type}"
+
+#~ msgid "${id} of ${parent_id}"
+#~ msgstr "${id} van ${parent_id}"
+
+#~ msgid "preview ${id}"
+#~ msgstr "bekijk voorbeeld ${id}"
+
+#~ msgid "Nothing was selected, so no new version was created."
+#~ msgstr "Er is niets geselecteerd, en dus geen nieuwe versie aangemaakt."
+
+#~ msgid "already has a next version"
+#~ msgstr "heeft reeds een volgende versie"
+
+#~ msgid "Created a new version for: ${ids}"
+#~ msgstr "Nieuwe versie aangemaakt voor: ${ids}"
+
+#~ msgid "could not create a new version for: ${ids}"
+#~ msgstr "kon geen nieuwe versie aanmaken voor: ${ids}"
+
+#~ msgid "Nothing was selected, so no approval was rejected."
+#~ msgstr "Er is niets geselecteerd, en dus geen verzoek afgewezen."
+
+#~ msgid "no approval requested"
+#~ msgstr "geen goedkeuring aangevraagd"
+
+#~ msgid "Rejected request for approval for: ${ids}"
+#~ msgstr "Aanvraag voor goedkeuring afgewezen voor: ${ids}"
+
+#~ msgid "Not rejected: ${ids}"
+#~ msgstr "Niet afgewezen: ${ids}"
+
+#~ msgid "Nothing was selected, so no approval was requested."
+#~ msgstr "Er is niets geselecteerd, en dus geen goedkeuring aangevraagd."
+
+#~ msgid "approval already requested"
+#~ msgstr "reeds goedkeuring aangevraagd"
+
+#~ msgid "no publication time set"
+#~ msgstr "geen publicatie-tijdstip ingesteld"
+
+#~ msgid "Request approval for: ${ids}"
+#~ msgstr "Goedkeuring aanvragen voor: ${ids}"
+
+#~ msgid "<span class=\"error\">No request for approval on: ${ids}</span>"
+#~ msgstr ""
+#~ "<span class=\"error\">Geen verzoek tot goedkeuring voor: ${ids}</span>"
+
+#~ msgid "Nothing was selected, so no approval was revoked."
+#~ msgstr "Er is niets geselecteerd, en dus geen goedkeuring ingetrokken."
+
+#~ msgid "it's not approved, or it's already published"
+#~ msgstr "niet goedgekeurd, of reeds gepubliceerd"
+
+#~ msgid "Revoked approval of: ${ids}"
+#~ msgstr "Goedkeuring ingetrokken van: ${ids}"
+
+#~ msgid "Could not revoke approval of: ${ids}"
+#~ msgstr "Kon goedkeuring niet intrekken voor: ${ids}"
+
+#~ msgid "No items were selected, so nothing is exported"
+#~ msgstr "Er zijn geen items geselecteerd, en dus is er niets geëxporteerd"
+
+#~ msgid "No description"
+#~ msgstr "Geen omschrijving"
+
+#~ msgid "You have not entered your e-mail address"
+#~ msgstr "Geen e-mailadres opgegeven"
+
+#~ msgid "Your job is ${status}. The id of your job is ${job_id}."
+#~ msgstr "De taak is ${status}. Het id van de taak is ${job_id}."
+
+#~ msgid "Nothing was selected, so no approval was withdrawn."
+#~ msgstr "Er is niets geselecteerd, en dus geen goedkeuring ingetrokken."
+
+#~ msgid "Withdrawn request for approval for: ${list}"
+#~ msgstr "Aanvraag voor goedkeuring ingetrokken voor: ${list}"
+
+#~ msgid "Not withdrawn: ${list}"
+#~ msgstr "Niet ingetrokken: ${list}"
+
+#~ msgid "Not yet :)"
+#~ msgstr "Nog niet"
+
+#~ msgid "automatic table of contents &#xab;${title_or_id}&#xbb;"
+#~ msgstr "Automatische inhoudstabel &#xab;${title_or_id}&#xbb;"
+
+#~ msgid ""
+#~ "An automatic table of contents is generated from the items in its "
+#~ "location."
+#~ msgstr ""
+#~ "Een automatische inhoudstabel wordt gegenereerd aan de hand van de items "
+#~ "op zijn locatie."
+
+#~ msgid "preview screen"
+#~ msgstr "voorbeeld scherm"
+
+#~ msgid ""
+#~ "An index is not editable. To view the index go to the ${preview_screen}."
+#~ msgstr ""
+#~ "Een index is niet te wijzigen. Om de index te bekijken, ga naar "
+#~ "${preview_screen}"
+
+#~ msgid ""
+#~ "Note that <span class=\"warning\">the index only displays links to "
+#~ "published content</span>, so the list may be empty if nothing is "
+#~ "published."
+#~ msgstr ""
+#~ "Let op: <span class=\"warning\">de index toont alleen links naar "
+#~ "gepubliceerde inhoud</span>, dus de lijst kan leeg zijn als er niets is "
+#~ "gepubliceerd."
+
+#~ msgid ""
+#~ "If new content has been added, click &#8220;update index&#8221; (in large "
+#~ "publications this may take a while)."
+#~ msgstr ""
+#~ "Als nieuwe inhoud is toegevoegd, klik &#8220;index bijwerken&#8221; (in "
+#~ "grote publicaties kan dit enige tijd duren)."
+
+#~ msgid "update index"
+#~ msgstr "index bijwerken"
+
+#~ msgid "Index updated"
+#~ msgstr "Index bijgewerkt"
+
+#~ msgid "settings"
+#~ msgstr "instellingen"
+
+#~ msgid "Both a name and e-mail address are required to approve someone."
+#~ msgstr ""
+#~ "Zowel een naam als een e-mailadres zijn vereist om iemand goed te keuren."
+
+#~ msgid "Sorry, content is missing:"
+#~ msgstr "Ontbrekende inhoud:"
+
+#~ msgid "Member is approved"
+#~ msgstr "Lid goedgekeurd"
+
+#~ msgid "preferred editor"
+#~ msgstr "voorkeurs-editor"
+
+#~ msgid ""
+#~ "Choose 'forms editor' for the forms-based editor, or 'kupu' for the Kupu "
+#~ "WYSIWYG editor (requires Internet Explorer 5.5+, Netscape 7+ or Mozilla "
+#~ "1.3.1+)"
+#~ msgstr ""
+#~ "Kies 'forms editor' voor de formulier-gebaseerde editor, of 'kupu' voor "
+#~ "de Kupu WYSIWYG editor (vereist Internet Explorer 5.5+, Netscape 7+ of "
+#~ "Mozilla 1.3.1+)"
+
+#~ msgid "Full name updated"
+#~ msgstr "Naam bijgewerkt"
+
+#~ msgid "Email updated"
+#~ msgstr "E-mail bijgewerkt"
+
+#~ msgid "Editor updated"
+#~ msgstr "Editor bijgewerkt"
+
+#~ msgid "Language updated"
+#~ msgstr "Taalinstellingen aangepast"
+
+#~ msgid "Nothing changed."
+#~ msgstr "Niets veranderd."
+
+#~ msgid "close window: alt-c"
+#~ msgstr "venster sluiten: alt-c"
+
+#~ msgid "save member data: alt-s"
+#~ msgstr "gegevens lid opslaan: alt-s"
+
+#~ msgid ""
+#~ "Dear ${user_id}<br /> You are not allowed to edit membership data of "
+#~ "member ${member_id}"
+#~ msgstr ""
+#~ "Beste ${user_id}<br /> Je hebt geen toestemming om lidmaatschapsgegevens "
+#~ "van het lid ${member_id} te bewerken"
+
+#~ msgid "Add read only view here?"
+#~ msgstr "Alleen-lezen weergave hier toevoegen?"
+
+#~ msgid "member data of"
+#~ msgstr "gegevens van lid"
+
+#~ msgid "characteristic"
+#~ msgstr "karakteristiek"
+
+#~ msgid "preferred language"
+#~ msgstr "gewenste taal"
+
+#~ msgid "Link to editor screen of original."
+#~ msgstr "Link naar 'bewerken' scherm van origineel."
+
+#~ msgid "ghost of &#xab;${name}&#xbb;"
+#~ msgstr "'ghost' van &#xab;${name}&#xbb;"
+
+#~ msgid "ghost of &#xab;${title}&#xbb; (${version_name} version)"
+#~ msgstr "'ghost' van &#xab;${title}&#xbb; (${version_name} versie)"
+
+#~ msgid "reference"
+#~ msgstr "referentie"
+
+#~ msgid "path to original (begins with &#8216;/&#8217;)."
+#~ msgstr "pad naar het origineel (begint met &#8216;/&#8217;)."
+
+#~ msgid "Ghost changed."
+#~ msgstr "'Ghost' veranderd."
+
+#~ msgid "x <span> x </span>"
+#~ msgstr "x <span> x </span>"
+
+#~ msgid "of public version of &#xab;${title}&#xbb;"
+#~ msgstr "van publieke versie van &#xab;${title}&#xbb;"
+
+#~ msgid "link url"
+#~ msgstr "link url"
+
+#~ msgid "change link"
+#~ msgstr "verander link"
+
+#~ msgid "Link changed"
+#~ msgstr "Link veranderd"
+
+#~ msgid "work on a new version while the previous one stays online: alt-n"
+#~ msgstr "aan een nieuwe versie werken terwijl de vorige online blijft: alt-n"
+
+#~ msgid ""
+#~ "${note} there is already a published or closed version of this content. "
+#~ "Changes can only be made in a new version."
+#~ msgstr ""
+#~ "${note} er is reeds een gepubliceerde of gesloten versie van deze inhoud. "
+#~ "Veranderingen kunnen alleen in een nieuwe versie worden gemaakt."
+
+#~ msgid "'first un-approve' this item in order to edit: alt-r"
+#~ msgstr ""
+#~ "trek eerst de goedkeuring in voor dit item om het te kunnen bewerken: alt-"
+#~ "r"
+
+#~ msgid ""
+#~ "${note} this version has an request for approval pending. In order to "
+#~ "make changes you need to first withdraw the pending request."
+#~ msgstr ""
+#~ "${note} er staat een aanvraag voor goedkeuring uit voor deze versie. Om "
+#~ "veranderingen aan te kunnen brengen moet de uitstaande aanvraag eerst "
+#~ "worden ingetrokken."
+
+#~ msgid "withdraw request"
+#~ msgstr "aanvraag intrekken"
+
+#~ msgid "withdraw a request for approval in order to edit: alt-w"
+#~ msgstr ""
+#~ "een aanvraag voor goedkeuring intrekken om te kunnen bewerken: alt-w"
+
+#~ msgid ""
+#~ "${note} This object is already being edited by another user, and is "
+#~ "temporarily locked."
+#~ msgstr ""
+#~ "${note} Dit object wordt al door een andere gebruiker bewerkt, en is "
+#~ "tijdelijk geblokkeerd."
+
+#~ msgid "Note:"
+#~ msgstr "N.B.:"
+
+#~ msgid "Somebody else just edited this item, unlock it: alt-u"
+#~ msgstr ""
+#~ "Iemand anders heeft dit item zojuist bewerkt. Blokkade opheffen: alt-u"
+
+#~ msgid "break lock"
+#~ msgstr "Blokkade verbreken"
+
+#~ msgid "Revoked approval."
+#~ msgstr "Goedkeuring ingetrokken."
+
+#~ msgid "Lock broken"
+#~ msgstr "Blokkade verbroken"
+
+#~ msgid "New version created."
+#~ msgstr "Nieuwe versie aangemaakt."
+
+#~ msgid "Version approved."
+#~ msgstr "Versie goedgekeurd."
+
+#~ msgid ""
+#~ "This content is already public. You can close the current public version."
+#~ msgstr ""
+#~ "Deze inhoud is al publiek. De huidige publieke versie kan worden gesloten."
+
+#~ msgid "This content is already public."
+#~ msgstr "Deze inhoud is al publiek."
+
+#~ msgid "This content is already approved. You can revoke the approval."
+#~ msgstr ""
+#~ "Deze inhoud is al goedgekeurd. De goedkeuring kan worden ingetrokken."
+
+#~ msgid "No request for approval is pending for this content."
+#~ msgstr "Er staat geen aanvraag voor goedkeuring uit voor deze inhoud."
+
+#~ msgid "Rejected request for approval"
+#~ msgstr "Aanvraag voor goedkeuring geweigerd"
+
+#~ msgid "Withdrew request for approval"
+#~ msgstr "Aanvraag voor goedkeuring ingetrokken"
+
+#~ msgid "Publication settings can be changed."
+#~ msgstr "Publicatie-instellingen kunnen worden veranderd."
+
+#~ msgid "Content is approved, not published"
+#~ msgstr "Inhoud is goedgekeurd, niet gepubliceerd"
+
+#~ msgid "Content is published"
+#~ msgstr "Inhoud is gepubliceerd"
+
+#~ msgid ""
+#~ "This content is published (online for the public).<br /> If you wish you "
+#~ "can make an editable copy by going to the ${editor}."
+#~ msgstr ""
+#~ "Deze inhoud is gepubliceerd (online voor publiek).<br /> Indien gewenst, "
+#~ "kan er een bewerkbare kopie van worden gemaakt door naar '${editor}' te "
+#~ "gaan."
+
+#~ msgid "Published version exists"
+#~ msgstr "Er bestaat een gepubliceerde versie"
+
+#~ msgid ""
+#~ "Note: an older version of this content is online.<br /> Publishing this "
+#~ "version will replace the public version."
+#~ msgstr ""
+#~ "N.B.: een oudere versie van deze inhoud staat online.<br /> Het "
+#~ "publiceren van deze versie zal de publieke versie vervangen."
+
+#~ msgid "Content is closed"
+#~ msgstr "Inhoud is gesloten"
+
+#~ msgid ""
+#~ "This content was once published but is now closed.<br /> If you wish you "
+#~ "can make an editable copy in the ${editor}."
+#~ msgstr ""
+#~ "Deze inhoud was ooit gepubliceerd maar is nu gesloten.<br /> Indien "
+#~ "gewenst, kan er een bewerkbare kopie gemaakt worden in '${editor}'."
+
+#~ msgid "manage versions of &#xab;${export_id}&#xbb;"
+#~ msgstr "versies beheren van &#xab;${export_id}&#xbb;"
+
+#~ msgid "modification time"
+#~ msgstr "modificatie-tijdstip"
+
+#~ msgid "publication time"
+#~ msgstr "publicatie-tijdstip"
+
+#~ msgid "expiration time"
+#~ msgstr "verlooptijd"
+
+#~ msgid "last author"
+#~ msgstr "laatste auteur"
+
+#~ msgid "creator"
+#~ msgstr "aangemaakt"
+
+#~ msgid "version status"
+#~ msgstr "versie-status"
+
+#~ msgid "compare..."
+#~ msgstr "vergelijken..."
+
+#~ msgid "view the selected versions next to each other: alt-="
+#~ msgstr "de geselecteerde versies naast elkaar bekijken: alt-="
+
+#~ msgid "create a new editable version of the selected old one: alt-f"
+#~ msgstr ""
+#~ "nieuwe bewerkbare versie van geselecteerde oude versie aanmaken: alt-f"
+
+#~ msgid "copy for editing"
+#~ msgstr "kopiëren om te bewerken"
+
+#~ msgid "There is no approved version."
+#~ msgstr "Er is geen goedgekeurde versie."
+
+#~ msgid "Changed publication settings."
+#~ msgstr "Publicatie-instellingen gewijzigd."
+
+#~ msgid "There is no public version to close"
+#~ msgstr "Er is geen publieke versie om te sluiten"
+
+#~ msgid "Closed public version."
+#~ msgstr "Publieke versie gesloten."
+
+#~ msgid "No versions selected"
+#~ msgstr "Geen versies geselecteerd"
+
+#~ msgid "Can't delete all versions"
+#~ msgstr "Niet alle versies kunnen verwijderd worden"
+
+#~ msgid "could not delete ${id}: ${error}"
+#~ msgstr "kon ${id} niet verwijderen: ${error}"
+
+#~ msgid "deleted ${id}"
+#~ msgstr "${id} verwijderd"
+
+#~ msgid "message"
+#~ msgstr "boodschap"
+
+#~ msgid "Empty indicates no expiration."
+#~ msgstr "Leeg betekent: verloopt niet."
+
+#~ msgid "view «${version_title}»"
+#~ msgstr "bekijk «${version_title}»"
+
+#~ msgid "request approval ${for_new_version}"
+#~ msgstr "goedkeuring aanvragen ${for_new_version}"
+
+#~ msgid "for new version"
+#~ msgstr "voor nieuwe versie"
+
+#~ msgid "message to editor"
+#~ msgstr "boodschap aan redacteur"
+
+#~ msgid "notes"
+#~ msgstr "notities"
+
+#~ msgid ""
+#~ "This message will remain visible in the status screen for other authors "
+#~ "and editors."
+#~ msgstr ""
+#~ "Deze boodschap zal zichtbaar blijven in het scherm 'status' voor andere "
+#~ "auteurs en redacteuren."
+
+#~ msgid "change settings"
+#~ msgstr "instellingen veranderen"
+
+#~ msgid "current timings"
+#~ msgstr "huidige tijdstippen"
+
+#~ msgid "publish new version"
+#~ msgstr "nieuwe versie publiceren"
+
+#~ msgid "publish closed version"
+#~ msgstr "gesloten versie publiceren"
+
+#~ msgid "withdraw"
+#~ msgstr "intrekken"
+
+#~ msgid "request"
+#~ msgstr "aanvraag"
+
+#~ msgid "add message on"
+#~ msgstr "boodschap toevoegen over"
+
+#~ msgid "rejection"
+#~ msgstr "afwijzing"
+
+#~ msgid "withdrawal"
+#~ msgstr "intrekking"
+
+#~ msgid "Publication time of public version"
+#~ msgstr "Publicatietijdstip van publieke versie"
+
+#~ msgid "The message may be viewed by local users."
+#~ msgstr "De boodschap mag door lokale gebruikers bekeken worden."
+
+#~ msgid "reject approval request"
+#~ msgstr "aanvraag voor goedkeuring afwijzen"
+
+#~ msgid "access key: alt-j"
+#~ msgstr "sneltoets: alt-j"
+
+#~ msgid "withdraw approval request"
+#~ msgstr "verzoek om goedkeuring intrekken"
+
+#~ msgid "Publication and expiration time of public version"
+#~ msgstr "publicatie- en verlooptijdstip van publieke versie"
+
+#~ msgid "If further editing is required, first revoke the approval."
+#~ msgstr ""
+#~ "Als verder bewerken nodig is, moet eerst de goedkeuring worden "
+#~ "ingetrokken."
+
+#~ msgid "access key: alt-v"
+#~ msgstr "sneltoets: alt-v"
+
+#~ msgid "revert to previous version"
+#~ msgstr "terugvallen op vorige versie"
+
+#~ msgid ""
+#~ "The current editable version can be replaced with the previous "
+#~ "(published) version. This can not be undone afterwards and will discard "
+#~ "all changes made to the current version."
+#~ msgstr ""
+#~ "De huidige bewerkbare versie kan vervangen worden door de vorige "
+#~ "(gepubliceerde) versie. Dit kan daarna niet meer worden ongedaan gemaakt "
+#~ "en gooit alle wijzigingen die in de huidige versie zijn gemaakt weg."
+
+#~ msgid "return confirm('Really revert ?')"
+#~ msgstr "return confirm('Terug naar vorige versie?')"
+
+#~ msgid "revert to previous"
+#~ msgstr "terugvallen op vorige"
+
+#~ msgid "manual close"
+#~ msgstr "handmatig sluiten"
+
+#~ msgid ""
+#~ "If necessary, the published version of this content can be manually "
+#~ "closed (taken offline). It will also be removed from the public index."
+#~ msgstr ""
+#~ "Indien nodig, kan de gepubliceerde versie van deze inhoud handmatig "
+#~ "gesloten (offline gezet) worden. Deze zal ook verwijderd worden uit de "
+#~ "publieke index."
+
+#~ msgid "close published version"
+#~ msgstr "gepubliceerde versie sluiten"
+
+#~ msgid "messages"
+#~ msgstr "boodschappen"
+
+#~ msgid "${author_id} sent a message on ${some_date} ${with_comments}"
+#~ msgstr ""
+#~ "${author_id} verstuurde op ${some_date} een boodschap ${with_comments}"
+
+#~ msgid "There is no unapproved version."
+#~ msgstr "Er is geen niet goedgekeurde versie."
+
+#~ msgid "Approval has already been requested."
+#~ msgstr "Er is al goedkeuring aangevraagd."
+
+#~ msgid "Approval requested."
+#~ msgstr "Goedkeuring aangevraagd."
+
+#~ msgid "No version selected to copy."
+#~ msgstr "Geen versie geselecteerd om te kopiëren."
+
+#~ msgid "Can only set 1 version as editable."
+#~ msgstr "Er kan maar één versie als bewerkbaar ingesteld worden."
+
+#~ msgid "Reverted to previous version."
+#~ msgstr "Teruggevallen op vorige versie."
+
+#~ msgid "This content is not approved."
+#~ msgstr "Deze inhoud is niet goedgekeurd."
+
+#~ msgid "Older version (${version_id})"
+#~ msgstr "Oudere versie (${version_id})"
+
+#~ msgid "Newer version (${version_id})"
+#~ msgstr "Nieuwere versie (${version_id})"
+
+#~ msgid "You didn't select any versions."
+#~ msgstr "Je hebt geen versies geselecteerd."
+
+#~ msgid "Please select exactly two versions."
+#~ msgstr "Selecteer 2 versies."
+
+#~ msgid "No role selected."
+#~ msgstr "Geen rol geselecteerd."
+
+#~ msgid "No groups selected."
+#~ msgstr "Geen groepen geselecteerd."
+
+#~ msgid "Role(s) assigned for ${list}"
+#~ msgstr "Rol(len) toegekend voor ${list}"
+
+#~ msgid "No user(s) selected."
+#~ msgstr "Geen gebruiker(s) geselecteerd."
+
+#~ msgid "No roles to revoke selected."
+#~ msgstr "Geen rollen om in te trekken geselecteerd."
+
+#~ msgid "Role(s) revoked for ${list}"
+#~ msgstr "Rol(len) ingetrokken voor ${list}"
+
+#~ msgid "Role(s) revoked"
+#~ msgstr "Rol(len) ingetrokken"
+
+#~ msgid "map cleared"
+#~ msgstr "'map' leeggemaakt"
+
+#~ msgid "You have to enter a path here."
+#~ msgstr "Hier moet een pad worden ingevoerd."
+
+#~ msgid ""
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to does not exist."
+#~ msgstr ""
+#~ "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst "
+#~ "bestaat niet exist."
+
+#~ msgid ""
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is a container."
+#~ msgstr ""
+#~ "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is "
+#~ "een container."
+
+#~ msgid ""
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is itself a "
+#~ "ghost."
+#~ msgstr ""
+#~ "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is "
+#~ "zelf een 'ghost'."
+
+#~ msgid ""
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a "
+#~ "content object."
+#~ msgstr ""
+#~ "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is "
+#~ "geen inhoudsobject."
+
+#~ msgid ""
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is a content "
+#~ "object."
+#~ msgstr ""
+#~ "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is "
+#~ "een inhoudsobject."
+
+#~ msgid ""
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is not a "
+#~ "container."
+#~ msgstr ""
+#~ "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is "
+#~ "geen container."
+
+#~ msgid ""
+#~ "The object &#xab;${haunted_url}&#xbb; the ghost points to is either the "
+#~ "ghost itself or an ancestor of the ghost."
+#~ msgstr ""
+#~ "Het object &#xab;${haunted_url}&#xbb; waar de 'ghost' naar verwijst is "
+#~ "ofwel de 'ghost' zelf of een 'ancestor' van de 'ghost'."
+
+#~ msgid "The ghost is in an undefined state."
+#~ msgstr "De 'ghost' is in een onbepaalde staat."
+
+#~ msgid "Users selected."
+#~ msgstr "Gebruikers geselecteerd."
+
+#~ msgid "No users selected."
+#~ msgstr "Geen gebruikers geselecteerd."
+
+#~ msgid "Users removed from selection."
+#~ msgstr "Gebruikers uit selectie verwijderd."
+
+#~ msgid "No users removed."
+#~ msgstr "Geen gebruikers verwijderd."
+
+#~ msgid "No search string supplied."
+#~ msgstr "Geen zoektekst ingegegeven."
+
+#~ msgid ""
+#~ "Search string '${string}' is too short. Please try a longer search string."
+#~ msgstr "Zoektekst '${string}' is te kort. Probeer a.u.b. een langere tekst."
+
+#~ msgid "No users found for search string '${string}'."
+#~ msgstr "Geen gebruikers gevonden voor zoektekst '${string}'."
+
+#~ msgid "Searched for '${string}'."
+#~ msgstr "Gezocht naar '${string}'."
+
+#~ msgid "search"
+#~ msgstr "zoeken"
+
+#~ msgid "add checked users to clipboard: alt-a"
+#~ msgstr "Aangevinkte gebruikers aan 'clipboard' toevoegen: alt-a"
+
+#~ msgid "add to clipboard"
+#~ msgstr "aan 'clipboard' toevoegen"
+
+#~ msgid "search results"
+#~ msgstr "zoekresultaten"
+
+#~ msgid "user"
+#~ msgstr "gebruiker"
+
+#~ msgid "email"
+#~ msgstr "e-mail"
+
+#~ msgid "No search results."
+#~ msgstr "Geen zoekresultaten."
+
+#~ msgid "return to the access screen with this clipboard: alt-u"
+#~ msgstr "Naar het scherm 'toegang' terugkeren met dit 'clipboard': alt-u"
+
+#~ msgid "<u>u</u>se clipboard..."
+#~ msgstr "'clipboard' gebr<u>u</u>iken..."
+
+#~ msgid "remove user"
+#~ msgstr "gebruiker verwijderen"
+
+#~ msgid "remove users from the clipboard: alt-r"
+#~ msgstr "gebruikers van het 'clipboard' verwijderen: alt-r"
+
+#~ msgid "return to previous screen: alt-k"
+#~ msgstr "naar vorig scherm terugkeren: alt-k"
+
+#~ msgid "bac<u>k</u>..."
+#~ msgstr "terug..."
+
+#~ msgid "user lookup at &#xab;${title_or_id}&#xbb;"
+#~ msgstr "gebruiker opzoeken bij &#xab;${title_or_id}&#xbb;"
+
+#~ msgid "user search"
+#~ msgstr "gebruiker zoeken"
+
+#~ msgid "name (or part of name)"
+#~ msgstr "naam (of deel van naam)"
+
+#~ msgid "&#134;"
+#~ msgstr "&#134;"
+
+#~ msgid "date format: day / month / year &nbsp;23:59"
+#~ msgstr "datumformaat: dag / maand / jaar &nbsp;23:59"
+
+#~ msgid "&#134; acquireable"
+#~ msgstr "&#134; overerfbaar"
+
+#~ msgid "of &#xab;${title}&#xbb;"
+#~ msgstr "van &#xab;${title}&#xbb;"
+
+#~ msgid "metadata set"
+#~ msgstr "metadata-set"
+
+#~ msgid "content"
+#~ msgstr "inhoud"
+
+#~ msgid "acquired content"
+#~ msgstr "overgeërfde inhoud"
+
+#~ msgid "note"
+#~ msgstr "notitie"
+
+#~ msgid "select_groups"
+#~ msgstr "selecteer groepen:"
+
+#~ msgid "no_groups_available"
+#~ msgstr "Geen groupen aanwezig"
+
+#~ msgid "existing ${type} groups"
+#~ msgstr "bestaande ${type} groepen"
+
+#~ msgid "groups administration: alt-g"
+#~ msgstr "groups administratie: alt-g"
+
+#~ msgid "<u>g</u>roups admin..."
+#~ msgstr "<u>g</u>roepen administratie"
+
+#~ msgid "ctrl-click to multi-select"
+#~ msgstr "ctrl-klik voor 'multi-selecteren'"
+
+#~ msgid "select all: alt-a"
+#~ msgstr "alles selecteren: alt-a"
+
+#~ msgid "user clipboard"
+#~ msgstr "gebruikers-'clipboard'"
+
+#~ msgid "lookup users..."
+#~ msgstr "gebruikers opzoeken..."
+
+#~ msgid "lookup users: alt-l"
+#~ msgstr "gebruikers opzoeken: alt-l"
+
+#~ msgid "select users:"
+#~ msgstr "gebruikers selecteren:"
+
+#~ msgid "No users on clipboard"
+#~ msgstr "Geen gebruikers op 'clipboard'"
+
+#~ msgid "siblings"
+#~ msgstr "siblings"
+
+#~ msgid "slide to the publish screen"
+#~ msgstr "naar het scherm 'publiceren'"
+
+#~ msgid "slide to the contents screen"
+#~ msgstr "naar het scherm 'inhoud'"
+
+#~ msgid "index:"
+#~ msgstr "index:"
+
+#~ msgid "up one level: alt-]"
+#~ msgstr "één niveau omhoog: alt-]"
+
+#~ msgid "up to containing publication: alt-["
+#~ msgstr "omhoog naar omvattende publicatie: alt-["
+
+#~ msgid "reload screen"
+#~ msgstr "scherm herladen"
+
+#~ msgid "first 'un-approve' this item in order to edit: alt-r"
+#~ msgstr ""
+#~ "de goedkeuring voor dit item moet eerst worden ingetrokken om het te "
+#~ "kunnen bewerken: alt-r"
+
+#~ msgid "revoke approval"
+#~ msgstr "goedkeuring intrekken"
+
+#~ msgid "create a new version of this content: alt-n"
+#~ msgstr "een nieuwe versie van deze inhoud aanmaken: alt-n"
+
+#~ msgid "new version"
+#~ msgstr "nieuwe versie"
+
+#~ msgid "properties ${for_title}"
+#~ msgstr "eigenschappen ${for_title}"
+
+#~ msgid "session timeout"
+#~ msgstr "sessie verlopen"
+
+#~ msgid ""
+#~ "In about 5 minutes, the working session is going to expire for the "
+#~ "document you are currently editing. This means that any unsaved work will "
+#~ "be lost. Press &#8216;save&#8217; (alt-s) to save any changes, or &#8216;"
+#~ "cancel&#8217; (alt-c) to do nothing, or save manually."
+#~ msgstr ""
+#~ "Over ongeveer vijf minuten verloopt de werk-sessie voor het document dat "
+#~ "op dit moment wordt bewerkt. Dat betekent dat al het werk dat niet is "
+#~ "opgeslagen, verloren gaat. Klik op &#8216;opslaan&#8217; (alt-s) om "
+#~ "wijzigingen op te slaan, op &#8216;annuleren&#8217; (alt-c) om niets te "
+#~ "doen, of sla handmatig op."
+
+#~ msgid "cancel the automatic save action: alt-c"
+#~ msgstr "opslag-actie annuleren: alt-c"
+
+#~ msgid "cancel"
+#~ msgstr "afbreken"
+
+#~ msgid " save "
+#~ msgstr " opslaan "
+
+#~ msgid "save the document you were working on: alt-s"
+#~ msgstr "het document waar aan gewerkt werd opslaan: alt-s"
+
+#~ msgid ""
+#~ "The data that was submitted did not validate properly (you might want to "
+#~ "use the browser back button to adjust the form values)."
+#~ msgstr ""
+#~ "De verstuurde gegevens waren niet geldig (gebruik de 'terug'-knop vande "
+#~ "browser om de formulier waarden aan te passen.)"
+
+#~ msgid "Metadata saved."
+#~ msgstr "Metadata opgeslagen."
+
+#~ msgid "This is the ${meta_type} \"${id}\""
+#~ msgstr "Dit is ${meta_type} \"${id}\""
+
+#~ msgid "in"
+#~ msgstr "in"
+
+#~ msgid "No users with local roles are defined here."
+#~ msgstr "Er zijn hier geen gebruikers met lokale rollen gedefinieerd."
+
+#~ msgid "select a role to assign"
+#~ msgstr "selecteer een rol om toe te kennen"
+
+#~ msgid "select role:"
+#~ msgstr "selecteer rol:"
+
+#~ msgid "assign role"
+#~ msgstr "rol toekennen"
+
+#~ msgid "assign a local role to selected user(s)"
+#~ msgstr "een rol toekennen aan geselecteerde gebruiker(s)"
+
+#~ msgid "revoke selected role(s) from selected user(s)"
+#~ msgstr "geselecteerde rol(len) van geselecteerde gebruiker(s) intrekken"
+
+#~ msgid "revoke role"
+#~ msgstr "rol intrekken"
+
+#~ msgid "pending requests for roles"
+#~ msgstr "uitstaande aanvragen om rollen"
+
+#~ msgid "requested role"
+#~ msgstr "aangevraagde rol"
+
+#~ msgid "is approved"
+#~ msgstr "is goedgekeurd"
+
+#~ msgid "No roles have been requested."
+#~ msgstr "Er zijn geen rollen aangevraagd."
+
+#~ msgid "access key: alt-d"
+#~ msgstr "sneltoets: alt-d"
+
+#~ msgid "deny role"
+#~ msgstr "rol weigeren"
+
+#~ msgid "grant role"
+#~ msgstr "rol toekennen"
+
+#~ msgid "access key: alt-a"
+#~ msgstr "sneltoets: alt-a"
+
+#~ msgid "Grant and approve"
+#~ msgstr "Toekennen en goedkeuren"
+
+#~ msgid "assign"
+#~ msgstr "toekennen"
+
+#~ msgid "A Groups Service is not installed"
+#~ msgstr "Er is geen &#8216;Groups Service&#8217; geïnstalleerd"
+
+#~ msgid ""
+#~ "You are seeing this message because the Silva Groups extension is "
+#~ "installed on the file system, but a Groups Service hasn't been added to "
+#~ "this Silva instance. To install one, go to the ${silva_root_in_the_ZMI}, "
+#~ "choose &#8220;Groups Service&#8221; from the add list and give it the id "
+#~ "${service_groups}. No further configuration is necessary."
+#~ msgstr ""
+#~ "Je ziet deze melding omdat de &#8216;Silva Groups&#8217; extensie is "
+#~ "geïnstalleerd op het filesysteem, maar er geen &#8216;Groups "
+#~ "Service&#8217; aan deze Silva instantie is toegevoegd. Ga, om er één te "
+#~ "installeren, naar de ${silva_root_in_the_ZMI}, kies &#8220;Groups "
+#~ "Service&#8221; uit de &#8216;add&#8217; lijst en geef die het id "
+#~ "${service_groups}. Verdere configuratie is niet nodig."
+
+#~ msgid "group roles"
+#~ msgstr "groepsrollen"
+
+#~ msgid "grant or revoke local roles for groups"
+#~ msgstr "locale rollen voor groepen toekennen of intrekken"
+
+#~ msgid "groupname"
+#~ msgstr "groepsnaam"
+
+#~ msgid "&lt;broken&gt; <!-- XXX replace this by something nice -->"
+#~ msgstr "&lt;gebroken&gt; <!-- XXX vervangen door iets beters -->"
+
+#~ msgid "No groups with (local) roles."
+#~ msgstr "Geen groepen met (locale) rollen."
+
+#~ msgid "assign role to group"
+#~ msgstr "rol aan groep toekennen"
+
+#~ msgid "revoke selected role(s) from selected group(s)"
+#~ msgstr "geselecteerde rol(len) van geselecteerde groep(en) intrekken"
+
+#~ msgid "revoke role from group"
+#~ msgstr "rol van groep intrekken"
+
+#~ msgid "assign selected role to selected group(s)"
+#~ msgstr "geselecteerde rol aan geselecteerde groep(en) toekennen"
+
+#~ msgid "public view access restrictions for"
+#~ msgstr "Publieke toegangsbeperkingen voor"
+
+#~ msgid "access restriction by role"
+#~ msgstr "toegangsbeperking per rol"
+
+#~ msgid "current restriction"
+#~ msgstr "huidige beperking"
+
+#~ msgid "Open to the public"
+#~ msgstr "Open voor het publiek"
+
+#~ msgid "(acquired)."
+#~ msgstr "(overgeërfd)."
+
+#~ msgid ""
+#~ "Setting an access restriction here affects objects on this and lower "
+#~ "levels."
+#~ msgstr ""
+#~ "Hier een toegangsbeperking instellen heeft invloed op objecten op dit en "
+#~ "lagergelegen niveaus."
+
+#~ msgid "user roles for"
+#~ msgstr "gebruikersrollen voor"
+
+#~ msgid "acquire restriction"
+#~ msgstr "beperking overerven"
+
+#~ msgid ""
+#~ "cancel the access restriction at this level, making it inherit from above"
+#~ msgstr "geen toegangsbeperking op dit niveau, gebruik beperking van boven"
+
+#~ msgid "set restriction"
+#~ msgstr "beperking instellen"
+
+#~ msgid "restrict access to users with a specific role"
+#~ msgstr "toegang beperken tot gebruikers met een specifieke rol"
+
+#~ msgid "grant or revoke local roles for users"
+#~ msgstr "lokale rollen voor gebruikers toekennen of intrekken"
+
+#~ msgid "public view access restrictions for &#xab;${title}&#xbb;"
+#~ msgstr "toegangsbeperkingen publieke weegave voor &#xab;${title}&#xbb;"
+
+#~ msgid "An access restriction here affects objects on this and lower levels."
+#~ msgstr ""
+#~ "Een toegangsbeperking op deze plaats heeft invloed op objecten op dit en "
+#~ "lagergelegen niveaus."
+
+#~ msgid "username"
+#~ msgstr "gebruikersnaam"
+
+#~ msgid "roles defined above"
+#~ msgstr "hierboven gedefinieerde rollen"
+
+#~ msgid "roles defined here"
+#~ msgstr "hier gedefinieerde rollen"
+
+#~ msgid "No requests selected"
+#~ msgstr "Geen aanvragen geselecteerd"
+
+#~ msgid "&#xab;${user_id}&#xbb; allowed the ${role} role"
+#~ msgstr "&#xab;${user_id}&#xbb; heeft de ${role}-rol toegestaan"
+
+#~ msgid "&#xab;${user_id}&#xbb; approved and allowed the ${role} role"
+#~ msgstr ""
+#~ "&#xab;${user_id}&#xbb; heeft de ${role}-rol goedgekeurd en toegestaan"
+
+#~ msgid "email addresses for"
+#~ msgstr "e-mailadressen voor"
+
+#~ msgid "listing of all authorized users below this level"
+#~ msgstr "lijst van alle geauthoriseerde gebruikers beneden dit niveau"
+
+#~ msgid ""
+#~ "Addresses are formatted for copying and pasting in the &#8216;To:&#8217; "
+#~ "field of an email message."
+#~ msgstr ""
+#~ "Addressen zijn geformatteerd om gekopieerd en in het &#8216;To:&#8217;-"
+#~ "veld van een e-mailbericht geplakt te kunnen worden."
+
+#~ msgid "&#xab;${user_id}&#xbb; has been denied the ${role} role"
+#~ msgstr "&#xab;${user_id}&#xbb; is de ${role}-rol geweigerd"
+
+#~ msgid ""
+#~ "The addables settings can only be changed on Silva Publications. A "
+#~ "doesn&#8217;t have that capability."
+#~ msgstr ""
+#~ "De toevoeg-instellingen kunnen alleen veranderd worden voor Silva "
+#~ "Publicaties. Een heeft die moeglijkheid niet."
+
+#~ msgid "for closed version of &#xab;${title}&#xbb;"
+#~ msgstr "voor gesloten versie van &#xab;${title}&#xbb;"
+
+#~ msgid "${for_approved_version_of_title}"
+#~ msgstr "${for_approved_version_of_title}"
+
+#~ msgid "for public version of &#xab;${title}&#xbb;"
+#~ msgstr "voor publieke versie van &#xab;${title}&#xbb;"
+
+#~ msgid "This is a closed version. You see it, but the public won't!"
+#~ msgstr ""
+#~ "Dit is een gesloten versie. Die is hier zichtbaar, maar niet voor het "
+#~ "publiek!"
+
+#~ msgid "see the content in the public layout: alt-;"
+#~ msgstr "de inhoud in de publieke vormgeving bekijken: alt-;"
+
+#~ msgid "public&nbsp;preview..."
+#~ msgstr "publiek&nbsp;voorbeeld..."
+
+#~ msgid "publish&nbsp;now"
+#~ msgstr "nu&nbsp;publiceren"
+
+#~ msgid "convert to publication"
+#~ msgstr "omzetten naar publicatie"
+
+#~ msgid "change container type to a publication: alt-p"
+#~ msgstr "verander het container type naar een publicatie: alt-p"
+
+#~ msgid "content renderer"
+#~ msgstr "inhouds-&#8216;renderer&#8217;"
+
+#~ msgid "renderer"
+#~ msgstr "renderer"
+
+#~ msgid "Select a renderer to render this content."
+#~ msgstr "Selecteer een renderer om deze inhoud weer te geven."
+
+#~ msgid "change renderer"
+#~ msgstr "renderer wijzigen"
+
+#~ msgid "change renderer: alt-c"
+#~ msgstr "renderer wijzigen: alt-c"
+
+#~ msgid "layout settings for &#xab;${title}&#xbb;"
+#~ msgstr "toevoeg-instellingen voor &#xab;${title}&#xbb;"
+
+#~ msgid "layout settings"
+#~ msgstr "vormgevingsinstellingen"
+
+#~ msgid "for approved version of &#xab;${title}&#xbb;"
+#~ msgstr "voor de goedgekeurde versie van &#xab;${title}&#xbb;"
+
+#~ msgid "for published version of &#xab;${title}&#xbb;"
+#~ msgstr "voor publieke versie van &#xab;${title}&#xbb;"
+
+#~ msgid "settings for &#xab;${title}&#xbb;"
+#~ msgstr "instellingen voor &#xab;${title}&#xbb;"
+
+#~ msgid "container type"
+#~ msgstr "type container"
+
+#~ msgid ""
+#~ "This Ghost Folder can be converted to a normal Publication or Folder. All "
+#~ "ghosted content will be duplicated and can then be edited."
+#~ msgstr ""
+#~ "Deze Ghost-map kan naar een normale publicatie of map geconverteerd "
+#~ "worden. Alle ghost-inhoud wordt dan gedupliceerd en kan daarna bewerkt "
+#~ "worden."
+
+#~ msgid ""
+#~ "This Silva Folder can be converted to a Publication (may take awhile if "
+#~ "it&#8217;s large)."
+#~ msgstr ""
+#~ "Deze map kan veranderen in een Publicatie (het kan even duren als het "
+#~ "groot is)."
+
+#~ msgid ""
+#~ "This Silva Publication can be converted to a Silva Folder (may take "
+#~ "awhile if it&#8217;s large)."
+#~ msgstr ""
+#~ "Deze Silva Publicatie kan geconverteerd worden naar een Silva map (kan "
+#~ "even duren voor een grote publicatie)."
+
+#~ msgid "change container type to a folder: alt-f"
+#~ msgstr "container type veranderen in een map: alt-f"
+
+#~ msgid "convert to folder"
+#~ msgstr "omzetten naar map"
+
+#~ msgid "There's no editable version to set the renderer on."
+#~ msgstr "Er is geen bewerkbare versie om een renderer voor in te stellen."
+
+#~ msgid "Renderer setting saved."
+#~ msgstr "Renderer-instellingen opgeslagen."
+
+#~ msgid "If this document should expire, set the time."
+#~ msgstr "Stel een tijsdtip in, indien dit document moet verlopen."
+
+#~ msgid "clear expiration"
+#~ msgstr "verloop-tijdstip wissen"
+
+#~ msgid "save subscription settings"
+#~ msgstr "email-notificatie instellingen opslaan"
+
+#~ msgid "This object is not subscribable content."
+#~ msgstr ""
+#~ "Van dit type inhoud kunnen geen email-notificaties verstuurd worden."
+
+#~ msgid "subscriptions icon"
+#~ msgstr "abonneer-icoon"
+
+#~ msgid "Subscriptions info"
+#~ msgstr "Email-notificaties info"
+
+#~ msgid "Subscribability"
+#~ msgstr "Email-notificaties"
+
+#~ msgid "This object is currently not subscribable."
+#~ msgstr "Van dit object kunnen geen email-notificaties vertuurd worden."
+
+#~ msgid "This object is currently subscribable."
+#~ msgstr "Van dit object kunnen email-notificaties vertuurd worden."
+
+#~ msgid "Other subscriptions"
+#~ msgstr "Andere abonnementen"
+
+#~ msgid ""
+#~ "${numberofsubscriptions} subscription(s) for this object defined above."
+#~ msgstr ""
+#~ "${numberofsubscriptions} abonnementen op dit object gedefinieerd op een "
+#~ "hoger niveau."
+
+#~ msgid "No other subscriptions for this object."
+#~ msgstr "Geen andere abonnementen op dit object."
+
+#~ msgid "manage subscriptions for &#xab;${title}&#xbb;"
+#~ msgstr "abonemmenten beheren voor &#xab;${title}&#xbb;"
+
+#~ msgid ""
+#~ "\n"
+#~ "              Set the subscribability for this content (Yes or No), or "
+#~ "set it\n"
+#~ "              to acquire the subscribability from above (the default).\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "              Intstellen of email-notificaties van deze content worden "
+#~ "verstuurd (Ja of Nee), of stel in\n"
+#~ "              dat de email-notificatie van een hoger niveau wordt "
+#~ "overgeërfd.\n"
+#~ "            "
+
+#~ msgid "subscribable"
+#~ msgstr "email-notificaties"
+
+#~ msgid ""
+#~ "\n"
+#~ "              List of email addresses (one per line) currently subscribed "
+#~ "to this content.\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "              Lijst van email-adressen (één per regel) die email- "
+#~ "notificaties ontvangen van deze inhoud.\n"
+#~ "            "
+
+#~ msgid "subscribed email addresses"
+#~ msgstr "email-adressen van abonnees"
+
+#~ msgid "up a level: alt-${key}"
+#~ msgstr "een niveau omhoog: alt-${key}"
+
+#~ msgid "up to top of publication: alt-${key}"
+#~ msgstr "omhoog naar top van publicatie: alt-${key}"
+
+#~ msgid "access key: alt-${key}"
+#~ msgstr "sneltoets: alt-${key}"
+
+#~ msgid "To <strong>actually</strong> logout, wait 5 seconds or hit this"
+#~ msgstr ""
+#~ "Wacht 5 seconden of klik hier, om <strong>echt</strong> uit te loggen."
+
+#~ msgid "logout link"
+#~ msgstr "uitlog-link"
+
+#~ msgid "accesskey: alt-l"
+#~ msgstr "sneltoets: alt-l"
+
+#~ msgid "When the login dialog appears, choose <strong>\"Cancel\"</strong>"
+#~ msgstr "Kies <strong>\"Cancel\"</strong>, als de login dialoog verschijnt"
+
+#~ msgid "logout"
+#~ msgstr "uitloggen"
+
+#~ msgid "&laquo; Previous ${n} items"
+#~ msgstr "&laquo; Vorige ${n} items"
+
+#~ msgid "Next ${n} items &raquo;"
+#~ msgstr "Volgende ${n} items &raquo;"
+
+#~ msgid "jump to zope root: alt-z"
+#~ msgstr "naar zope root: alt-z"
+
+#~ msgid "zroot..."
+#~ msgstr "zroot..."
+
+#~ msgid "sroot..."
+#~ msgstr "sroot..."
+
+#~ msgid "jump to silva root in zodb: alt-'"
+#~ msgstr "naar silva root: alt-'"
+
+#~ msgid "sservices..."
+#~ msgstr "sservices..."
+
+#~ msgid "jump to silva services: alt-`"
+#~ msgstr "naar silva services: alt-`"
+
+#~ msgid "jump to top: alt-t"
+#~ msgstr "naar bovenste niveau: alt-t"
+
+#~ msgid "contact:"
+#~ msgstr "contact:"
+
+#~ msgid "no name"
+#~ msgstr "geen naam"
+
+#~ msgid "Leave Silva and view the public page: alt-:"
+#~ msgstr "Silva verlaten en publieke pagina bekijken: alt-:"
+
+#~ msgid "view public version"
+#~ msgstr "publieke versie bekijken"
+
+#~ msgid "Change your settings: alt-~"
+#~ msgstr "Je instellingen veranderen: alt-~"
+
+#~ msgid "user settings"
+#~ msgstr "gebruikersinstellingen"
+
+#~ msgid "Logout of Silva: alt-q"
+#~ msgstr "Uit Silva uitloggen: alt-q"
+
+#~ msgid "logout ${role} ${userid}"
+#~ msgstr "${role} ${userid} uitloggen"
+
+#~ msgid "Request an additional role in this location: alt-,"
+#~ msgstr "Een extra rol aanvragen voor deze locatie: alt-,"
+
+#~ msgid "request access"
+#~ msgstr "toegang aanvragen"
+
+#~ msgid "Up to Silva top"
+#~ msgstr "Naar Silva top"
+
+#~ msgid "Up one level"
+#~ msgstr "Eén niveau omhoog"
+
+#~ msgid "Help with access keys"
+#~ msgstr "Hulp bij sneltoetsen"
+
+#~ msgid "Silva copyright info"
+#~ msgstr "Silva copyright info"
+
+#~ msgid "various settings: alt-e"
+#~ msgstr "verschillende instellingen veranderen: alt-e"
+
+#~ msgid "manage subscriptions: alt-u"
+#~ msgstr "emailnotificaties beheren: alt-u"
+
+#~ msgid "change the addables allowed in this publication: alt-d"
+#~ msgstr "toevoeg-instellingen voor deze publicatie veranderen: alt-d"
+
+#~ msgid "publish now"
+#~ msgstr "nu publiceren"
+
+#~ msgid "publish this document: alt-p"
+#~ msgstr "dit document publiceren: alt-p"
+
+#~ msgid "&#xab;${title}&#xbb;"
+#~ msgstr "&#xab;${title}&#xbb;"
+
+#~ msgid "Silva info: alt-|"
+#~ msgstr "Silva info: alt-|"
+
+#~ msgid "Silva top: alt-/"
+#~ msgstr "Silva top: alt-/"
+
+#~ msgid "&middot; manage..."
+#~ msgstr "&middot; beheren..."
+
+#~ msgid "Zope manage_main: alt-."
+#~ msgstr "Zope 'manage_main': alt-."
+
+#~ msgid "Silva access keys: alt-?"
+#~ msgstr "Silva sneltoetsen: alt-?"
+
+#~ msgid "This ghost is broken. (${haunted_url})"
+#~ msgstr "Deze 'ghost' is gebroken. (${haunted_url})"
+
+#~ msgid ""
+#~ "This 'ghost' document is broken. Please inform the site administrator."
+#~ msgstr ""
+#~ "Dit 'ghost'-document is gebroken. Geef dit a.u.b. door aan de site-"
+#~ "beheerder."
+
+#~ msgid "Path does not lead to a content object"
+#~ msgstr "Pad leidt niet naar een content object"
+
+#~ msgid "content is not subscribable"
+#~ msgstr "Van deze inhoud worden geen email-notificaties verstuurd."
+
+#~ msgid "emailaddress not valid"
+#~ msgstr "geen geldig email-adres"
+
+#~ msgid ""
+#~ "Confirmation request for cancellation has been emailed to ${emailaddress}"
+#~ msgstr "Een bevestigingsverzoek is verstuurd naar ${emailaddress}"
+
+#~ msgid ""
+#~ "Something went wrong in unsubscribing from this page. It might be that "
+#~ "the link you followed expired."
+#~ msgstr ""
+#~ "Er is iets misgegaan bij het deactiveren van de emailnotificaties. "
+#~ "mogelijk is de link waarop u geklikt heeft verlopen."
+
+#~ msgid "You have been successfully unsubscribed."
+#~ msgstr "Het deactiveren van email-notificaties is gelukt."
+
+#~ msgid "Subscription failed"
+#~ msgstr "Activering van email-notificaties mislukt"
+
+#~ msgid ""
+#~ "You have been successfully subscribed. This means you will receive email "
+#~ "notifications whenever a new version of these pages becomes available."
+#~ msgstr ""
+#~ "Activering van email-notificaties gelukt. Dat betekent dat u email- "
+#~ "notificaties ontvangt telkens wanneer er een nieuwe versie van deze "
+#~ "pagina's beschikbaar komt."
+
+#~ msgid "membership"
+#~ msgstr "lidmaatschap"
+
+#~ msgid "Request roles at this location"
+#~ msgstr "Vraag rollen aan op deze locatie"
+
+#~ msgid "Please fill in the following fields. <br /><br />"
+#~ msgstr "Vul A.U.B. de volgende velden in. <br /><br />"
+
+#~ msgid "e-mail address"
+#~ msgstr "e-mail adres"
+
+#~ msgid "Choose role(s) to request"
+#~ msgstr "Kies (een) rol(len) om aan te vragen"
+
+#~ msgid " Send request "
+#~ msgstr " Verstuur aanvraag "
+
+#~ msgid "Send request for role: alt-s"
+#~ msgstr "Verstuur een aanvraag voor een rol: alt-s"
+
+#~ msgid "This site does not allow requests for roles"
+#~ msgstr "Deze site staat rol aanvragen niet toe"
+
+#~ msgid "You must enter your full name and your e-mail address"
+#~ msgstr "Vul uw volledige naam en e-mailadres in"
+
+#~ msgid "Error: ${error}"
+#~ msgstr "Fout: ${error}"
+
+#~ msgid ""
+#~ "Roles requested. You will receive an e-mail from the Chief Editor or "
+#~ "Manager as soon as your request is processed."
+#~ msgstr ""
+#~ "Rollen aangevraagd. Je ontvangt een email van de Hoofderedacteur of "
+#~ "Beheerder zodra de aanvraag verwerkt is."
+
+#~ msgid "No roles were selected."
+#~ msgstr "Er zijn geen rollen geselecteerd."
+
+#~ msgid "Search"
+#~ msgstr "Zoeken"
+
+#~ msgid "Search in ${meta_type} &#xAB;${title_or_id}&#xbb;"
+#~ msgstr "Zoek in ${meta_type} &#xAB;${title_or_id}&#xbb;"
+
+#~ msgid "Search interface"
+#~ msgstr "Zoek interface"
+
+#~ msgid "Element"
+#~ msgstr "Element"
+
+#~ msgid "Content"
+#~ msgstr "Inhoud"
+
+#~ msgid "Note"
+#~ msgstr "Notitie"
+
+#~ msgid "Find"
+#~ msgstr "Zoek"
+
+#~ msgid "access key: alt-f"
+#~ msgstr "sneltoets: alt-f"
+
+#~ msgid "content type"
+#~ msgstr "inhoudstype"
+
+#~ msgid ""
+#~ "\n"
+#~ "              Select (multiple using ctrl-key) object type(s) to search "
+#~ "in. \n"
+#~ "              If none is selected, all types are searched.\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "              Selecteer één of meer (met de ctrl-toets) objecttypen om in "
+#~ "te zoeken. Als er niets is geselecteerd, wordt in alle typen gezocht.\n"
+#~ "            "
+
+#~ msgid ""
+#~ "\n"
+#~ "              Use an asterix ('*') for wildcard.\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "              Gebruik de 'asterisk' ('*') als joker.\n"
+#~ "            "
+
+#~ msgid ""
+#~ "\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "            "
+
+#~ msgid "subtree only"
+#~ msgstr "aleen sub-boom"
+
+#~ msgid ""
+#~ "\n"
+#~ "              Check to restrict search to this content's subtree.\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "              Aanvinken om zoekopdracht te beperken to de sub-boom van "
+#~ "deze inhoud.\n"
+#~ "            "
+
+#~ msgid "Search results"
+#~ msgstr "Zoekresultaten"
+
+#~ msgid "&lt;&lt; Previous"
+#~ msgstr "&lt;&lt; Vorige"
+
+#~ msgid "Showing results ${batch_start} to ${batch_end}."
+#~ msgstr "Resultaten van ${batch_start} tot ${batch_end}."
+
+#~ msgid "Next &gt;&gt;"
+#~ msgstr "Volgende &gt;&gt;"
+
+#~ msgid ""
+#~ "Confirmation request for subscription has been emailed to ${emailaddress}"
+#~ msgstr "Een verzoek om bevestiging is verstuurd naar ${emailaddress}"
+
+#~ msgid "Subscribe to &#xab;${title_or_id}&#xbb;"
+#~ msgstr "Email-notificaties activeren voor &#xab;${title_or_id}&#xbb;"
+
+#~ msgid ""
+#~ "Fill in your email address if you want to receive email notifications "
+#~ "whenever a new version of this page or its subdocuments becomes available."
+#~ msgstr ""
+#~ "Vul uw email-adres in als u email-notificaties wilt ontvangen telkens "
+#~ "wanneer er een nieuwe versie van deze pagina of de onderliggende inhoud "
+#~ "beschikbaar komt."
+
+#~ msgid "subscribe"
+#~ msgstr "email-notificaties activeren"
+
+#~ msgid "Unsubscribe from &#xab;${title_or_id}&#xbb;"
+#~ msgstr "Email-notificaties deactiveren voor &#xab;${title_or_id}&#xbb;"
+
+#~ msgid ""
+#~ "Fill in your email address if you want to unsubscribe from email "
+#~ "notifications for this page and its subdocuments."
+#~ msgstr ""
+#~ "Vul uw emailadres in als u de email-notificaties wilt deactiveren voor "
+#~ "deze pagina en alle onderliggende inhoud."
+
+#~ msgid "unsubscribe"
+#~ msgstr "email-notificaties deactiveren"
+
+#~ msgid "Return to &#xab;${title_or_id}&#xbb;"
+#~ msgstr "Terug naar &#xab;${title_or_id}&#xbb;"
+
+#~ msgid "Sorry, there are problems with these form fields:"
+#~ msgstr "Er zijn problemen met de volgende formuliervelden:"
+
+#~ msgid "Cannot approve version; not allowed."
+#~ msgstr "Kan versie niet goedkeuren; geen toestemming."
+
+#~ msgid ""
+#~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
+#~ "2005 Infrae. All rights reserved."
+#~ msgstr ""
+#~ "<br /> <br /> ${silva_icon} ${silva_version}<br /> &#xa9; Copyright 2001-"
+#~ "2005 Infrae. Alle rechten voorbehouden."
+
+#~ msgid "create ${TOC_or_meta_type}"
+#~ msgstr "${TOC_or_meta_type} aanmaken"
+
+#~ msgid "Layout copied"
+#~ msgstr "Vormgeving gekopieerd"
+
+#~ msgid "layout"
+#~ msgstr "vormgeving"
+
+#~ msgid "Choose among the installed layout templates."
+#~ msgstr "Kies één van de geïnstalleerde vormgevingstemplates."
+
+#~ msgid "Layout saved."
+#~ msgstr "Vormgeving opgeslagen."
+
+#~ msgid "Layout has been removed."
+#~ msgstr "Vormgeving is verwijderd."
+
+#~ msgid "content object or one of its containers is deactivated"
+#~ msgstr "object of een van zijn containers is gedeactiveerd"
+
+#~ msgid "Nothing was selected, so nothing is activated."
+#~ msgstr "Er is niets geselecteerd, en dus niets geactiveerd."
+
+#~ msgid ""
+#~ "Content ${activated} activated, <span class=\"error\">but could not "
+#~ "activate ${not_activated}.</span>"
+#~ msgstr ""
+#~ "Inhoud ${activated} geactiveerd, <span class=\"error\">maar kon "
+#~ "${not_activated} niet activeren.</span>"
+
+#~ msgid "Content ${activated} activated."
+#~ msgstr "Inhoud ${activated} geactiveerd."
+
+#~ msgid "Could not activate ${not_activated}."
+#~ msgstr "Kon ${not_activated} niet activeren."
+
+#~ msgid "Nothing was selected, so nothing is deactivated."
+#~ msgstr "Er is niets geselecteerd, en dus niets gedeactiveerd."
+
+#~ msgid ""
+#~ "Content ${deactivated} deactivated, <span class=\"error\">but could not "
+#~ "deactivate ${not_deactivated}.</span>"
+#~ msgstr ""
+#~ "Inhoud ${deactivated} gedeactiveerd, <span class=\"error\">maar kon "
+#~ "${not_deactivated} niet deactiveren.</span>"
+
+#~ msgid "Content ${deactivated} deactivated."
+#~ msgstr "Inhoud ${deactivated} gedeactiveerd."
+
+#~ msgid "Could not deactivate ${not_deactivated}."
+#~ msgstr "Kon ${not_deactivated} niet deactiveren."
+
+#~ msgid "day / month / year"
+#~ msgstr "dag / maand / jaar"
+
+#~ msgid "approve new versions for publication at a later date: alt-l"
+#~ msgstr "nieuwe versies goedkeuren voor publicatie in de toekomst: alt-l"
+
+#~ msgid "approve for later"
+#~ msgstr "goedkeuren voor later"
+
+#~ msgid "withdraw pending request for approval: alt-w"
+#~ msgstr "uitstaand aanvraag voor goedkeuring intrekken: alt-w"
+
+#~ msgid "revoke approval of approved versions: alt-v"
+#~ msgstr "goedkeuring van goedgekeurde versies intrekken: alt-v"
+
+#~ msgid "set timing"
+#~ msgstr "timing instellen"
+
+#~ msgid "request immediate approval for new versions: alt-q"
+#~ msgstr "direct goedkeuring vragen voor nieuwe versies: alt-q"
+
+#~ msgid ""
+#~ "${note} this version is approved but not yet public. In order to make "
+#~ "changes you need to first revoke the approval."
+#~ msgstr ""
+#~ "${note} deze versie is goedgekeurd maar nog niet publiek. Om "
+#~ "veranderingen aan te brengen moet eerst de goedkeuring worden ingetrokken."
+
+#~ msgid "content publish ti<u>m</u>e"
+#~ msgstr "publicatie-<u>m</u>oment inhoud"
+
+#~ msgid "access key: alt-i (some platforms)"
+#~ msgstr "sneltoets: alt-i (sommige platforms)"
+
+#~ msgid "expiratio<u>n</u> time"
+#~ msgstr "verlooptijdst<u>i</u>p"
+
+#~ msgid "If this content should expire, set the time."
+#~ msgstr "Stel een tijdstip in als deze inhoud moet verlopen."
+
+#~ msgid "access key: alt-m (some platforms)"
+#~ msgstr "sneltoets: alt-p (sommige platforms)"
+
+#~ msgid "access_key_publish_datetime"
+#~ msgstr "p"
+
+#~ msgid "publish ti<u>m</u>e:"
+#~ msgstr "<u>p</u>ublicatie tijdstip:"
+
+#~ msgid "access key: alt-n (some platforms)"
+#~ msgstr "sneltoets: alt-n (sommige platformen)"
+
+#~ msgid "access key: alt-l"
+#~ msgstr "sneltoets: alt-l"
+
+#~ msgid ""
+#~ "A previous request for approval has been rejected / withdrawn by "
+#~ "${requester} on ${some_date}. The last message regarding this issue is:"
+#~ msgstr ""
+#~ "Een vorige aanvraag om goedkeuring is geweigerd / ingetrokken door "
+#~ "${requester} op ${some_date}. De laatste boodschap hierover is:"
+
+#~ msgid "select <u>a</u>ll"
+#~ msgstr "<u>a</u>lles selecteren"
+
+#~ msgid "return confirm('Really remove?')"
+#~ msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
+
+#~ msgid "info_accesskey"
+#~ msgstr "i"
+
+#~ msgid "view_original_image_accesskey"
+#~ msgstr "v"
+
+#~ msgid "if (!confirm('Are you sure?')) return false"
+#~ msgstr "if (!confirm('Weet u het zeker?')) return false"
+
+#~ msgid "settings_accesskey"
+#~ msgstr "e"
+
+#~ msgid "addables_accesskey"
+#~ msgstr "d"
+
+#~ msgid ""
+#~ "Don&#8217;t forget that most browsers use alt-left arrow to go back, and "
+#~ "alt-right arrow to go forward. On the Mac, command-left arrow and "
+#~ "command- right arrow do this."
+#~ msgstr ""
+#~ "De meeste browsers gebruiken alt-linker pijltje om terug te gaan, en alt- "
+#~ "rechter pijltje om verder te gaan. Op Apple systemen doen command-linker "
+#~ "pijltje en command-rechter pijltje hetzelfde."
+
+#~ msgid ""
+#~ "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP- "
+#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+#~ msgstr ""
+#~ "<strong>Kan zijn:</strong><br /> IP&nbsp;(zoals: 10.1.1.1), <br /> IP- "
+#~ "IP&nbsp;(zoals:&nbsp;10.1.1.1-10.1.1.255) of<br /> IP/Netmask&nbsp;(zoals:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+
+#~ msgid "view this asset"
+#~ msgstr "dit asset bekijken"
+
+#~ msgid "No ${asset} in this folder."
+#~ msgstr "Geen ${asset} in deze folder."
+
+#~ msgid "add a new item: alt-n"
+#~ msgstr "nieuw item toevoegen: alt-n"
+
+#~ msgid "content is approved or published"
+#~ msgstr "inhoud is goedgekeurd of gepubliceerd"
+
+#~ msgid "insert the reference: alt-p"
+#~ msgstr "de verwijzing invoegen: alt-p"
+
+#~ msgid ""
+#~ "${listing_footer}<br /> a &nbsp; Select all<br /> r &nbsp; Rename<br /> d "
+#~ "&nbsp; Delete<br /> x &nbsp; Cut<br /> c &nbsp; Copy<br /> v &nbsp; "
+#~ "Paste<br /> g &nbsp; Paste as ghost"
+#~ msgstr ""
+#~ "${listing_footer}<br /> a &nbsp; Selecteer alles<br /> r &nbsp; "
+#~ "Hernoem<br /> d &nbsp; Verwijder<br /> x &nbsp; Knip<br /> c &nbsp; "
+#~ "Kopieër<br /> v &nbsp; Plak<br /> g &nbsp; Plak als Ghost"
+
+#~ msgid "${listing_header}<br /> e &nbsp; Export"
+#~ msgstr "${listing_header}<br /> e &nbsp; Exporteren"
+
+#~ msgid ""
+#~ "${listing_footer}<br /> a &nbsp; Select all<br /> n &nbsp; Create new "
+#~ "vesions<br /> j &nbsp; Reject request for approval<br /> v &nbsp; Revoke "
+#~ "request for approval<br /> c &nbsp; Close public<br /> s &nbsp; Change "
+#~ "settings<br /> o &nbsp; Approve<br />"
+#~ msgstr ""
+#~ "${listing_footer}<br /> a &nbsp; Alles selecteren<br /> n &nbsp; Nieuwe "
+#~ "versies aanmaken<br /> j &nbsp; Verzoek om goedkeuring afwijzen<br /> v "
+#~ "&nbsp; Verzoeken om goedkeuring intrekken<br /> c &nbsp; Publieke versie "
+#~ "sluiten<br /> s &nbsp; Instellingen wijzigen<br /> o &nbsp; "
+#~ "Goedkeuren<br />"
+
+#~ msgid "c &nbsp; Cancel<br /> a &nbsp; Add<br /> e &nbsp; Add and edit/enter"
+#~ msgstr ""
+#~ "c &nbsp; Ongedaan maken<br /> a &nbsp; Add<br /> e &nbsp; Toevoegen en "
+#~ "bewerken/openen"
+
+#~ msgid "Silva forms editor"
+#~ msgstr "Silva formulier-editor"
+
+#~ msgid ""
+#~ "s &nbsp; Save<br /> e &nbsp; Save and exit<br /> i &nbsp; Save and "
+#~ "insert<br /> tab Use your tab key to edit without using the mouse. Shift-"
+#~ "tab goes backwards."
+#~ msgstr ""
+#~ "s &nbsp; Opslaan<br /> e &nbsp; Opslaan en sluiten<br /> i &nbsp; Opslaan "
+#~ "en invoegen<br /> tab Gebruik de tab-toets om te bewerken zonder de muis. "
+#~ "Shift-tab om achteruit te gaan."
+
+#~ msgid ""
+#~ "Or, save this link &#8211; ${silva_edit} &#8211; as a bookmark. Thanks to "
+#~ "<a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;rich</a> "
+#~ "for this trick. <br /><br />"
+#~ msgstr ""
+#~ "Of sla deze link op als een bookmark: &#8211; ${silva_edit} &#8211;. Met "
+#~ "aan <a href=\"http://www.ethz.ch/\" name=\"eth_zuerich\">ETH Z&uuml;rich</"
+#~ "a>."
+
+#~ msgid ""
+#~ "<span name=\"changing_screens_with_tabs\"><span class=\"subhead\"><a name="
+#~ "\"nav\">x</a></span></span><br /> The tabs have numbered access keys, "
+#~ "starting from one going up to five. You can navigate horizontally accross "
+#~ "an item&#8217;s screens by using alt-1, alt-2, and so forth."
+#~ msgstr ""
+#~ "<span name=\"changing_screens_with_tabs\"><span class=\"subhead\"><a name="
+#~ "\"nav\">x</a></span></span><br /> De tabs hebben genummerde sneltoetsen, "
+#~ "van één tot vijf. U kunt horizontaal door de schermen van een item "
+#~ "navigeren door alt-1, alt-2, etc. te gebruiken."
+
+#~ msgid ""
+#~ "Each tab has a toplink <img src=\"up_tree.gif\" height=\"9\" width=\"9\" /"
+#~ ">, the tall tree on the left side. It takes you to the top of the current "
+#~ "publication, within the same tab, or &#8216;vein&#8217;. The access key "
+#~ "is the shift character of the corresponding number (on the English "
+#~ "keyboard, sorry if you have an international one). Thus alt-!, alt-@, alt-"
+#~ "#, alt-$, and alt-% (note that the characters resemble the number)."
+#~ msgstr ""
+#~ "Elke tab heeft een 'toplink' <img src=\"up_tree.gif\" height=\"9\" width="
+#~ "\"9\" />, het lange boompje links. Die linkt naar de hoogste niveau in de "
+#~ "huidige publicatie binnen dezelfde tab, of &#8216;ader&#8217;. De "
+#~ "sneltoets is het shift-karakter van het corresponderende cijfer (op een "
+#~ "Engels toetsenbord.) Dus alt-!, alt-@, alt-#, alt-$, and alt-%."
+
+#~ msgid ""
+#~ "On the right of each tab is an uplink <img src=\"up_level.gif\" height=\"9"
+#~ "\" width=\"9\" />, a small tree that takes you up one level in the same "
+#~ "vein. The access keys for the uplinks are the remaining numbers (add five "
+#~ "to the access key for the tab). If you are in a screen with five tabs, "
+#~ "the uplinks are alt-6, alt-7, alt-8, alt-9, and alt-0. If there are less "
+#~ "than five tabs, you still add five to get the uplink key."
+#~ msgstr ""
+#~ "Rechts in iedere tab zit een 'uplink' <img src=\"up_level.gif\" height=\"9"
+#~ "\" width=\"9\" />, een kort boompje dat één niveau omhoog leidt in "
+#~ "dezelfde ader. De sneltoetsen voor de uplinks zijn de overige cijfers "
+#~ "(tel vijf op bij de sneltoets voor de tab). In een scherm met vijf tabs "
+#~ "zijn de uplinks alt-6, alt-7, alt-8, alt-9, en alt-0. Als er minder dan "
+#~ "vijf tabs zijn, moet er nog steeds vijf opgeteld worden om de uplink "
+#~ "sneltoets te krijgen."
+
+#~ msgid ""
+#~ "${listing_header}<br /> n &nbsp; New<br /> s &nbsp; Select list for a new "
+#~ "object<br /> i &nbsp; Import"
+#~ msgstr ""
+#~ "${listing_header}<br /> n &nbsp; Nieuw<br /> s &nbsp; Selecteer lijst "
+#~ "voor een nieuw object<br /> i &nbsp; Importeren"
+
+#~ msgid ""
+#~ "${listing_body}<br /> p &nbsp; Select list for position number<br /> m "
+#~ "&nbsp; Move"
+#~ msgstr ""
+#~ "${listing_body}<br /> p &nbsp; Selecteer lijst voor positie getal<br /> m "
+#~ "&nbsp; Verplaatsen"
+
+#~ msgid "Silva - Reference"
+#~ msgstr "Silva - Naslag"
+
+#~ msgid ""
+#~ "<br /> <br /> ${silva_version}<br /> ${silva_icon} &#xa9; Copyright 2001-"
+#~ "2004 Infrae. All rights reserved."
+#~ msgstr ""
+#~ "<br /> <br /> ${silva_version}<br /> ${silva_icon} &#xa9; Copyright 2001-"
+#~ "2005 Infrae. All rechten voorbehouden."
+
+#~ msgid "${Silva} &#8211; medium independent content management"
+#~ msgstr "${Silva} &#8211; medium-onafhankelijke content management"
+
+#~ msgid "container"
+#~ msgstr "container"
+
+#~ msgid "properties ${for_public_version_of}"
+#~ msgstr "eigenschappen ${for_public_version_of}"
+
+#~ msgid "or_pdf"
+#~ msgstr "of pdf"
+
+#~ msgid "export only last version?"
+#~ msgstr "alleen laatste versie exporteren?"
+
+#~ msgid "Check to export only the last version."
+#~ msgstr "Aanvinken om alleen de laatste versie te exporteren."
+
+#~ msgid "open&nbsp;to&nbsp;public&nbsp;now"
+#~ msgstr "nu&nbsp;publiceren"
+
+#~ msgid "publish the unapproved version: alt-o"
+#~ msgstr "de nog niet goedgekeurde versie publiceren: alt-o"
+
+#~ msgid "day / month / year &nbsp;23:59"
+#~ msgstr "dag / maand / jaar &nbsp;23:59"
+
+#~ msgid "p<u>u</u>blish right now?"
+#~ msgstr "nu direct p<u>u</u>bliceren?"
+
+#~ msgid "clear ex<u>p</u>iration?"
+#~ msgstr "verloo<u>p</u>-tijdstip wissen?"
+
+#~ msgid "change timings"
+#~ msgstr "tijdstippen wijzigen"
+
+#~ msgid " Reject approval request "
+#~ msgstr " Goedkeuringsaanvraag afwijzen "
+
+#~ msgid " Withdraw approval request "
+#~ msgstr " Goedkeuringsaanvraag intrekken "
+
+#~ msgid "Silva Root in the ZMI"
+#~ msgstr "Silva Root in de ZMI"
+
+#~ msgid "The addables setting can only done on Silva Publications."
+#~ msgstr ""
+#~ "De toevoeg-instellingen kunnen alleen ingesteld worden op Silva "
+#~ "Publicaties."
+
+#~ msgid "settings..."
+#~ msgstr "instellingen..."
+
+#~ msgid "miscellaneous settings: alt-6"
+#~ msgstr "diverse instellingen: alt-6"
+
+#~ msgid "subscriptions..."
+#~ msgstr "emailnotificaties..."
+
+#~ msgid "subscriptions"
+#~ msgstr "emailnotificaties"
+
+#~ msgid "addables..."
+#~ msgstr "toevoeg-instellingen..."
+
+#~ msgid "properties ${for_approved_version_of_title}"
+#~ msgstr "eigenschappen ${for_approved_version_of_title}"
+
+#~ msgid "change the addables allowed in this publication: alt-7"
+#~ msgstr "de toevoeg-instellingen voor deze publicatie wijzigen: alt-7"
+
+#~ msgid "Manage subscriptions for &#xab;${title}&#xbb;"
+#~ msgstr "Abonnementen beheren voor &#xab;${title}&#xbb;"
+
+#~ msgid "Index"
+#~ msgstr "Index"

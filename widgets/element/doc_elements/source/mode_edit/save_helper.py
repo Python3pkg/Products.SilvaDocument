@@ -59,7 +59,7 @@ else:
         param = node.createElement('parameter')
         param.setAttribute('key', ustr(field.id))
         node.appendChild(param)
-        value = result[field.id]
+        value = ustr(result[field.id])
         vtype = 'string'
         if same_type(value, []):
             vtype = 'list'
