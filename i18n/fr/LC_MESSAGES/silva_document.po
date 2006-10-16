@@ -1,35 +1,40 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silva_document-fr\n"
-"POT-Creation-Date: \n"
+"POT-Creation-Date: Mon Oct 16 17:31:19 2006\n"
 "PO-Revision-Date: 2005-05-12 23:08+0100\n"
 "Last-Translator: Joaquin POMBAR <joaquin.pombar@wanadoo.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language-code: fr\n"
 "Language-name: French\n"
 "Preferred-encodings: utf-8\n"
 "Domain: silva_document\n"
 
-#: /Document.py:152
+#: /Document.py:168
 msgid "No version to store to!"
 msgstr "No version to store to!"
 
-#: /Document.py:47
+#: /Document.py:58
 msgid ""
 "A Document is the basic unit of information in Silva. A document\n"
-"        can &#8211; much like word processor documents &#8211; contain text,\n"
+"        can &#8211; much like word processor documents &#8211; contain "
+"text,\n"
 "        lists, tables, headers, subheads, images, etc. Documents can have\n"
 "        two accessible versions, one online for the public, another in\n"
-"        process (editable or approved/published). Older versions can be rolled \n"
+"        process (editable or approved/published). Older versions can be "
+"rolled \n"
 "        forward and made editable.\n"
 "    "
 msgstr ""
 "Un document est l'unité de base d'information. Un document peut\n"
-"          contenir texte, listes, tables, entêtes, sous-entêtes, images,etc.\n"
-"          Ils peuvent exister deux versions des documents, une en ligne pour le           public, et une autre en cours de préparation ou d'édition (à publier ou à           approuver).\n"
+"          contenir texte, listes, tables, entêtes, sous-entêtes, images,"
+"etc.\n"
+"          Ils peuvent exister deux versions des documents, une en ligne pour "
+"le           public, et une autre en cours de préparation ou d'édition (à "
+"publier ou à           approuver).\n"
 "    "
 
 #: /ServiceCodeSourceCharset.py:43
@@ -40,136 +45,123 @@ msgstr "Vous n'avez pas choisi un jeu de caractères"
 msgid "Charset set"
 msgstr "Choisir jeu de caractères"
 
-#: /install.py:150
-#: /views/add/Document/form.form:50
+#: /install.py:151 /views/add/Document/form.form:50
 msgid "title"
 msgstr "titre"
 
-#: /install.py:151
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:24
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:25
+#: /install.py:152 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:36
 msgid "paragraph"
 msgstr "paragraphe"
 
-#: /install.py:152
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:27
+#: /install.py:153 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:37
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:37
 msgid "heading"
 msgstr "Entête"
 
-#: /install.py:153
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:26
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:28
+#: /install.py:154 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:38
 msgid "list"
 msgstr "liste"
 
-#: /install.py:154
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:29
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:26
+#: /install.py:155 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:39
 msgid "preformatted"
 msgstr "préformatté"
 
-#: /install.py:155
+#: /install.py:156
 msgid "table of contents"
 msgstr "Tableau de contenus"
 
-#: /install.py:156
+#: /install.py:157
 msgid "image"
 msgstr "image"
 
-#: /install.py:157
+#: /install.py:158
 msgid "table"
 msgstr "tableau"
 
-#: /install.py:158
+#: /install.py:159
 msgid "complex list"
 msgstr "liste complexe"
 
-#: /install.py:159
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:28
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:31
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:29
+#: /install.py:160 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:41
 msgid "definition list"
 msgstr "liste de définitions"
 
-#: /install.py:160
+#: /install.py:161
 msgid "code element"
 msgstr "élément de code"
 
-#: /install.py:161
-#: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+#: /install.py:162 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
 msgstr "citation"
 
-#: /install.py:170
+#: /install.py:171
 msgid "external source"
 msgstr "source externe"
 
-#: /install.py:221
-#: /install.py:289
+#: /install.py:222 /install.py:290
 msgid "Paragraph"
 msgstr "Paragraphe"
 
-#: /install.py:222
-#: /install.py:290
+#: /install.py:223 /install.py:291
 msgid "Heading"
 msgstr "Entête"
 
-#: /install.py:223
-#: /install.py:291
+#: /install.py:224 /install.py:292
 msgid "List"
 msgstr "Liste"
 
-#: /install.py:224
-#: /install.py:292
+#: /install.py:225 /install.py:293
 msgid "Image"
 msgstr "Image"
 
-#: /install.py:225
-#: /install.py:250
-#: /install.py:293
+#: /install.py:226 /install.py:251 /install.py:294
 msgid "Complex list"
 msgstr "Liste complexe"
 
-#: /install.py:251
+#: /install.py:252
 msgid "List item"
 msgstr "Liste items"
 
-#: /install.py:252
+#: /install.py:253
 msgid "List title"
 msgstr "Liste titre"
 
-#: /install.py:294
+#: /install.py:295
 msgid "Preformatted"
 msgstr "Préformatté"
 
-#: /install.py:295
+#: /install.py:296
 msgid "Definition list"
 msgstr "Liste des définitions"
 
-#: /install.py:345
+#: /install.py:346
 msgid "Table"
 msgstr "Table"
 
-#: /install.py:346
+#: /install.py:347
 msgid "row"
 msgstr "colonne"
 
-#: /install.py:347
+#: /install.py:348
 msgid "row heading"
 msgstr "entête de colonne"
 
@@ -197,13 +189,24 @@ msgstr "non implémenté, outrepasser les classes héritées"
 msgid "${name} attribute not found on tag ${self}"
 msgstr "attribut ${name} absent dans tag ${self}"
 
+#: /transform/kupu/silva.py:516
+#: /widgets/element/doc_elements/source/rendered_source.py:15
+#: /widgets/element/doc_elements/source/rendered_source.py:20
+#: /widgets/element/doc_elements/source/render.pt:8
+msgid "external source element is broken"
+msgstr "L'élément de source externe est indisponible"
+
 #: /views/add/Document/form.form:28
 msgid "id"
 msgstr "id"
 
 #: /views/add/Document/form.form:30
-msgid "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;"
-msgstr "Aucun espace ou cacractère spécial autre que &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;"
+msgid ""
+"No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
+"or &#8216;.&#8217;"
+msgstr ""
+"Aucun espace ou cacractère spécial autre que &#8216;_&#8217; or &#8216;-"
+"&#8217; or &#8216;.&#8217;"
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
@@ -233,21 +236,21 @@ msgstr "accès"
 msgid "publish"
 msgstr "Publication"
 
-#: /views/edit/VersionedContent/Document/kupu_display.py:13
+#: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor..."
 msgstr "éditeur kupu..."
 
-#: /views/edit/VersionedContent/Document/kupu_display.py:13
+#: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor"
 msgstr "éditeur kupu"
 
-#: /views/edit/VersionedContent/Document/tab_edit.pt:106
-msgid "edit with the forms editor: alt-)"
-msgstr "éditer avec l'éditeur de formes: alt-)"
-
-#: /views/edit/VersionedContent/Document/tab_edit.pt:96
+#: /views/edit/VersionedContent/Document/tab_edit.pt:102
 msgid "edit with the Kupu Editor: alt-("
 msgstr "éditer avec l'éditeur kupu: alt-("
+
+#: /views/edit/VersionedContent/Document/tab_edit.pt:112
+msgid "edit with the forms editor: alt-)"
+msgstr "éditer avec l'éditeur de formes: alt-)"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:18
 msgid "author"
@@ -258,8 +261,12 @@ msgid "source"
 msgstr "source"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:41
-msgid "The citation may contain multiple paragraphs. Separate them with an empty line."
-msgstr "La citation peut contenir plusieurs paragraphes. Séparez-les avec une ligne vide"
+msgid ""
+"The citation may contain multiple paragraphs. Separate them with an empty "
+"line."
+msgstr ""
+"La citation peut contenir plusieurs paragraphes. Séparez-les avec une ligne "
+"vide"
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
@@ -271,8 +278,12 @@ msgid "Code element: ${title_or_id} at ${path}"
 msgstr "Element de code: ${title_or_id} à ${path}"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
-msgid "They should be located in a (non-Silva) folder in the ZMI named ${code_source}."
-msgstr "Ils peuvent se retrouver dans un dossier  (non-Silva) de la  ZMI nommé ${code_source}."
+msgid ""
+"They should be located in a (non-Silva) folder in the ZMI named "
+"${code_source}."
+msgstr ""
+"Ils peuvent se retrouver dans un dossier  (non-Silva) de la  ZMI nommé "
+"${code_source}."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
@@ -283,20 +294,74 @@ msgid "Select the code to be executed when document is displayed."
 msgstr "Choisir le programme à exécuter quand le document est affiché"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:9
-msgid "No code objects (Python Scripts, Page Templates, DTML Methods) are available."
-msgstr "Aucun objet  (Python Scripts, Page Templates, DTML Methods)  disponible"
+msgid ""
+"No code objects (Python Scripts, Page Templates, DTML Methods) are available."
+msgstr ""
+"Aucun objet  (Python Scripts, Page Templates, DTML Methods)  disponible"
 
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:43
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
+msgid "get link reference..."
+msgstr "établir une référence au lien ..."
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
+msgid "create a hyperlink: alt-g"
+msgstr "créer un hyperlien: alt-g"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:45
+msgid "normal"
+msgstr "create a hyperlink: alt-g"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:56
 msgid "compact"
 msgstr "compact"
 
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:51
-msgid "Add term on first line, definition on second line. Separate items with an empty line space."
-msgstr "Ajouter le terme dans la première ligne, la définition dans la deuxième. Séparer les items avec un espace vide d'une ligne "
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:64
+msgid ""
+"Add term on first line, definition on second line. Separate items with an "
+"empty line space."
+msgstr ""
+"Ajouter le terme dans la première ligne, la définition dans la deuxième. "
+"Séparer les items avec un espace vide d'une ligne "
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+msgid "Tip:"
+msgstr "Conseil:"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+msgid "${tip} tab to the exit button or use alt-e."
+msgstr "${tip} tab to the exit button or use alt-e."
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "${tip} Tab to the exit button or alt-e."
 msgstr "touche ${tip} pour la sortie alt-e."
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
+msgid "element"
+msgstr "élément"
+
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
+#: /widgets/top/table/render.pt:47
+msgid "type"
+msgstr "type"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
 msgid "Normal heading"
@@ -318,85 +383,105 @@ msgstr "Entête de paragraphe"
 msgid "Sub paragraph heading"
 msgstr "Sous-entête de paragraphe"
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:106
-msgid "float right"
-msgstr "flottant à droite"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:111
-msgid "align right"
-msgstr "aligné à droite"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:120
-msgid "Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or type in the full path."
-msgstr "Utliser  &#8220;référence image...&#8221; (alt-g) pour trouver une image, ou taper son chemin complet."
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:122
-msgid "Set a URL to make this image a link (alt-l). To link to other sites, prepend &#8216;http://&#8217; to the address."
-msgstr "Set a URL to make this image a link (alt-l). To link to other sites, prepend &#8216;http://&#8217; to the address."
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:125
-msgid "Set an optional target for the link. Turning on &#8220;new window&#8221; inserts &#8216;_blank&#8217; after saving."
-msgstr "Placez une cible optionnelle pour le lien. Turning on &#8220;new window&#8221; crée &#8216;_blank&#8217; après sauvegarde."
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:128
-msgid "It&#8217;s good practice to give the link of an image a title, which will appear as a tooltip."
-msgstr "Il est conseillé de donner un titre au lien de l'image, lequel apparaîtra au passage du curseur souris sur l'image"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:131
-msgid "A float alignment allows the next document element to wrap &#8211; if there&#8217;s room."
-msgstr "Un alignment flottant permet à l'élément document suivant de coller au format #8211; if there&#8217; défini"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:14
-msgid "get image reference..."
-msgstr "Placez une référence d'image..."
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:14
-msgid "access key: alt-g"
-msgstr "touche d'accès: alt-g"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:21
-msgid "edit image"
-msgstr "editer image"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:29
-msgid "create a hyperlink: alt-l"
-msgstr "créer un hyperlien"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:42
-msgid "High resolution version of image"
-msgstr "Version d'image haute résolution"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:47
-msgid "target frame"
-msgstr "cadre cible"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:60
-msgid "new window"
-msgstr "nouvelle fenêtre"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:65
-msgid "tooltip for link"
-msgstr "astuce pour lien"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:74
-msgid "image alignment"
-msgstr "alignement image"
-
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:82
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:105
 msgid "float left"
 msgstr "flottement à gauche"
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:87
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:110
 msgid "align left"
 msgstr "alignement à gauche"
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:94
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:117
 msgid "default"
 msgstr "par défaut"
 
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:99
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:122
 msgid "align center"
 msgstr "alignement centré"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:129
+msgid "float right"
+msgstr "flottant à droite"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:134
+msgid "align right"
+msgstr "aligné à droite"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:144
+msgid ""
+"Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or type "
+"in the full path."
+msgstr ""
+"Utliser  &#8220;référence image...&#8221; (alt-g) pour trouver une image, ou "
+"taper son chemin complet."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:146
+msgid ""
+"Set a URL to make this image a link (alt-l). To link to other sites, prepend "
+"&#8216;http://&#8217; to the address."
+msgstr ""
+"Set a URL to make this image a link (alt-l). To link to other sites, prepend "
+"&#8216;http://&#8217; to the address."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:149
+msgid ""
+"Set an optional target for the link. Turning on &#8220;new window&#8221; "
+"inserts &#8216;_blank&#8217; after saving."
+msgstr ""
+"Placez une cible optionnelle pour le lien. Turning on &#8220;new "
+"window&#8221; crée &#8216;_blank&#8217; après sauvegarde."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:152
+msgid ""
+"It&#8217;s good practice to give the link of an image a title, which will "
+"appear as a tooltip."
+msgstr ""
+"Il est conseillé de donner un titre au lien de l'image, lequel apparaîtra au "
+"passage du curseur souris sur l'image"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:155
+msgid ""
+"A float alignment allows the next document element to wrap &#8211; if "
+"there&#8217;s room."
+msgstr ""
+"Un alignment flottant permet à l'élément document suivant de coller au "
+"format #8211; if there&#8217; défini"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:16
+msgid "get image reference..."
+msgstr "Placez une référence d'image..."
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:16
+msgid "access key: alt-g"
+msgstr "touche d'accès: alt-g"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:31
+msgid "edit image"
+msgstr "editer image"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
+msgid "create a hyperlink: alt-l"
+msgstr "créer un hyperlien"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:65
+msgid "High resolution version of image"
+msgstr "Version d'image haute résolution"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:70
+msgid "target frame"
+msgstr "cadre cible"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:83
+msgid "new window"
+msgstr "nouvelle fenêtre"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:88
+msgid "tooltip for link"
+msgstr "astuce pour lien"
+
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:97
+msgid "image alignment"
+msgstr "alignement image"
 
 #: /widgets/element/doc_elements/image/render.pt:10
 msgid "image element is broken"
@@ -406,72 +491,84 @@ msgstr "l'élément image est indisponible"
 msgid "image reference is broken"
 msgstr "la référence de l'image est indisponible"
 
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:54
+#: /widgets/top/nlist/render.pt:35
+msgid "disc bullets"
+msgstr "puces rondes"
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:56
+#: /widgets/top/nlist/render.pt:37
+msgid "square bullets"
+msgstr "puces carrées"
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:58
+#: /widgets/top/nlist/render.pt:39
+msgid "circle bullets"
+msgstr "puces cercle"
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:60
+#: /widgets/top/nlist/render.pt:41
+msgid "1, 2, 3,.."
+msgstr "1, 2, 3,.."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:62
+#: /widgets/top/nlist/render.pt:43
+msgid "I, II, III,.."
+msgstr "I, II, III,.."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:64
+#: /widgets/top/nlist/render.pt:45
+msgid "i, ii, iii,.."
+msgstr "i, ii, iii,.."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:66
+#: /widgets/top/nlist/render.pt:47
+msgid "A, B, C,.."
+msgstr "A, B, C,.."
+
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:68
+#: /widgets/top/nlist/render.pt:49
+msgid "a, b, c,.."
+msgstr "a, b, c,.."
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:70
+#: /widgets/top/nlist/render.pt:51
+msgid "no bullet"
+msgstr "aucune puce"
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:78
 msgid "Add list items separated by an empty line."
 msgstr "Ajouter liste d'éléments séparés par une ligne vide"
 
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-msgid "create a hyperlink: alt-g"
-msgstr "créer un hyperlien: alt-g"
-
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:29
-msgid "get link reference..."
-msgstr "établir une référence au lien ..."
-
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:22
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
-msgid "element"
-msgstr "élément"
-
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:33
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
-msgid "normal"
-msgstr "create a hyperlink: alt-g"
-
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:46
 msgid "lead"
 msgstr "lead"
 
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:35
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:47
 msgid "annotation"
 msgstr "notes"
 
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:69
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
-msgid "${tip} tab to the exit button or use alt-e."
-msgstr "${tip} tab to the exit button or use alt-e."
-
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:69
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:52
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-msgid "Tip:"
-msgstr "Conseil:"
-
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:41
-msgid "Multiple paragraphs can be entered in one step by adding an empty line space."
-msgstr "Paragraphes multiples peuvent être rajoutés d'un seul coup, en ajoutant un espace ligne vide"
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:53
+msgid ""
+"Multiple paragraphs can be entered in one step by adding an empty line space."
+msgstr ""
+"Paragraphes multiples peuvent être rajoutés d'un seul coup, en ajoutant un "
+"espace ligne vide"
 
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:24
 msgid "none"
 msgstr "aucun"
 
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:29
-msgid "Preformatted text will be shown exactly as entered, with all characters displayed literally. White space is preserved (unless the textarea is empty)."
-msgstr "Les textes préformattés seront montrés exactement comme ils ont étés renseignés, avec tous les caractères montrés littéralement. Les espaces en blanc seront préservés (sauf si la zone de texte est vide)."
+msgid ""
+"Preformatted text will be shown exactly as entered, with all characters "
+"displayed literally. White space is preserved (unless the textarea is empty)."
+msgstr ""
+"Les textes préformattés seront montrés exactement comme ils ont étés "
+"renseignés, avec tous les caractères montrés littéralement. Les espaces en "
+"blanc seront préservés (sauf si la zone de texte est vide)."
 
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 msgid "${tip} tab to the exit button or alt-e."
 msgstr "touche ${tip} pour la sortie alt-e."
 
@@ -533,12 +630,6 @@ msgstr "Aucun paramètre à remplir pour cette source"
 msgid "Source parameters"
 msgstr "Paramètres de la source"
 
-#: /widgets/element/doc_elements/source/rendered_source.py:15
-#: /widgets/element/doc_elements/source/rendered_source.py:20
-#: /widgets/element/doc_elements/source/render.pt:8
-msgid "external source element is broken"
-msgstr "L'élément de source externe est indisponible"
-
 #: /widgets/element/doc_elements/source/rendered_source.py:16
 msgid "error message:"
 msgstr "message d'errreur:"
@@ -576,15 +667,19 @@ msgstr "éléments imbriqués"
 msgid "The stored xml is invalid."
 msgstr "The stored xml is invalid."
 
-#: /widgets/macro_helpers.pt:110
+#: /widgets/macro_helpers.pt:106
+msgid "return confirm('Really delete?')"
+msgstr ""
+
+#: /widgets/macro_helpers.pt:106
 msgid "delete element"
 msgstr "efface élément"
 
-#: /widgets/macro_helpers.pt:111
+#: /widgets/macro_helpers.pt:107
 msgid "move down"
 msgstr "déplacer vers le bas"
 
-#: /widgets/macro_helpers.pt:112
+#: /widgets/macro_helpers.pt:108
 msgid "move up"
 msgstr "déplacer vers le haut"
 
@@ -612,39 +707,37 @@ msgstr "sauvegarder et quitter"
 msgid "access key: alt-e"
 msgstr "touche d'accès: alt-e"
 
-#: /widgets/macro_helpers.pt:40
+#: /widgets/macro_helpers.pt:38
 msgid "save + insert"
 msgstr "sauvegarder et insérer"
 
-#: /widgets/macro_helpers.pt:40
+#: /widgets/macro_helpers.pt:38
 msgid "access key: alt-i"
 msgstr "touche d'accès: alt-i"
 
-#: /widgets/macro_helpers.pt:53
-#: /widgets/macro_helpers.pt:54
-#: /widgets/macro_helpers.pt:55
-#: /widgets/macro_helpers.pt:67
+#: /widgets/macro_helpers.pt:49 /widgets/macro_helpers.pt:50
+#: /widgets/macro_helpers.pt:51 /widgets/macro_helpers.pt:63
 msgid "insert element"
 msgstr "insérez élément"
 
-#: /widgets/macro_helpers.pt:70
+#: /widgets/macro_helpers.pt:66
 msgid "insert item"
 msgstr "insérez item"
 
-#: /widgets/macro_helpers.pt:70
+#: /widgets/macro_helpers.pt:66
 msgid "insert line item"
 msgstr "insérez ligne item"
 
-#: /widgets/macro_helpers.pt:83
+#: /widgets/macro_helpers.pt:79
 msgid "add element&nbsp;"
 msgstr "ajouter élément&nbsp;"
 
-#: /widgets/macro_helpers.pt:91
+#: /widgets/macro_helpers.pt:87
 msgid "insert"
 msgstr "insérez"
 
 #: /widgets/macro_normal_view.pt:41
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 #: /widgets/element/table_elements/nest_element.pt:4
 msgid "edit element"
 msgstr "éditer élément"
@@ -665,8 +758,7 @@ msgstr "item index"
 msgid "abbreviation"
 msgstr "abbreviation"
 
-#: /widgets/macro_notes.pt:12
-#: /widgets/macro_notes.pt:13
+#: /widgets/macro_notes.pt:12 /widgets/macro_notes.pt:13
 msgid "full name"
 msgstr "nom complet"
 
@@ -675,17 +767,24 @@ msgid "acronym"
 msgstr "acronyme"
 
 #: /widgets/macro_notes.pt:6
-msgid "bold"
-msgstr "Gras"
+msgid "Silva markup"
+msgstr ""
 
 #: /widgets/macro_notes.pt:6
-msgid "Text can be formatted &#8211; in ${italic}, ${bold}, etc. &#8211; with ${silva_markup}:"
-msgstr "Le text peut être formatté &#8211; in ${italic}, ${bold}, etc. &#8211; avec ${silva_markup}:"
+msgid ""
+"Text can be formatted &#8211; in ${italic}, ${bold}, etc. &#8211; with "
+"${silva_markup}:"
+msgstr ""
+"Le text peut être formatté &#8211; in ${italic}, ${bold}, etc. &#8211; avec "
+"${silva_markup}:"
 
-#: /widgets/macro_notes.pt:6
-#: /widgets/macro_notes.pt:8
+#: /widgets/macro_notes.pt:6 /widgets/macro_notes.pt:8
 msgid "italic"
 msgstr "Italique"
+
+#: /widgets/macro_notes.pt:6 /widgets/macro_notes.pt:8
+msgid "bold"
+msgstr "Gras"
 
 #: /widgets/macro_notes.pt:8
 msgid "subscript"
@@ -699,84 +798,34 @@ msgstr "Souligné"
 msgid "superscript"
 msgstr "superscript"
 
-#: /widgets/macro_notes.pt:9
-#: /widgets/macro_notes.pt:10
+#: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:10
 msgid "text"
 msgstr "texte"
+
+#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
+#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+msgid "edit parent"
+msgstr "éditer parent"
+
+#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
+msgid "Up to parent: alt-u"
+msgstr "Vers parent: alt-u"
 
 #: /widgets/top/field/render.pt:17
 msgid "subeditor"
 msgstr "sous-éditeur"
 
+#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
+msgid "Up to parent"
+msgstr "Vers parent"
+
 #: /widgets/top/nlist/render.pt:31
 msgid "Type:"
 msgstr "Type :"
 
-#: /widgets/top/nlist/render.pt:35
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:44
-msgid "disc bullets"
-msgstr "puces rondes"
-
-#: /widgets/top/nlist/render.pt:37
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:46
-msgid "square bullets"
-msgstr "puces carrées"
-
-#: /widgets/top/nlist/render.pt:39
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:48
-msgid "circle bullets"
-msgstr "puces cercle"
-
-#: /widgets/top/nlist/render.pt:41
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-msgid "1, 2, 3,.."
-msgstr "1, 2, 3,.."
-
-#: /widgets/top/nlist/render.pt:43
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:52
-msgid "I, II, III,.."
-msgstr "I, II, III,.."
-
-#: /widgets/top/nlist/render.pt:45
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:54
-msgid "i, ii, iii,.."
-msgstr "i, ii, iii,.."
-
-#: /widgets/top/nlist/render.pt:47
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:56
-msgid "A, B, C,.."
-msgstr "A, B, C,.."
-
-#: /widgets/top/nlist/render.pt:49
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:58
-msgid "a, b, c,.."
-msgstr "a, b, c,.."
-
-#: /widgets/top/nlist/render.pt:51
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:60
-msgid "no bullet"
-msgstr "aucune puce"
-
-#: /widgets/top/sub/render.pt:14
-#: /widgets/top/field/render.pt:14
-msgid "Up to parent: alt-u"
-msgstr "Vers parent: alt-u"
-
-#: /widgets/top/sub/render.pt:14
-#: /widgets/top/sub/render.pt:20
-#: /widgets/top/field/render.pt:14
-#: /widgets/top/field/render.pt:20
-msgid "edit parent"
-msgstr "éditer parent"
-
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
 msgstr "Editeur d'éléments imbriqués"
-
-#: /widgets/top/sub/render.pt:20
-#: /widgets/top/field/render.pt:20
-msgid "Up to parent"
-msgstr "Vers parent"
 
 #: /widgets/top/table/render.pt:14
 msgid "column settings"
@@ -789,6 +838,10 @@ msgstr "raccourci: alt-a"
 #: /widgets/top/table/render.pt:18
 msgid "add column"
 msgstr "ajouter colonne"
+
+#: /widgets/top/table/render.pt:19
+msgid "return confirm('Really delete column?')"
+msgstr ""
 
 #: /widgets/top/table/render.pt:19
 msgid "delete column"
@@ -814,13 +867,6 @@ msgstr "r"
 msgid "relative width"
 msgstr "largeur relative"
 
-#: /widgets/top/table/render.pt:47
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:31
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
-msgid "type"
-msgstr "type"
-
 #: /widgets/top/table/render.pt:50
 msgid "Plain table (bold heading, no borders)"
 msgstr "Tableau plein (entête gras, sans bords)"
@@ -835,5 +881,5 @@ msgstr "Tableau grille (entête encadré gras, avec quadrillage)"
 
 #: /widgets/top/table/render.pt:62
 msgid "Data grid table (bold borderless heading, bordered rows)"
-msgstr "Tableau grille de données (entête gras, sans bordure, quadrillage externe)"
-
+msgstr ""
+"Tableau grille de données (entête gras, sans bordure, quadrillage externe)"
