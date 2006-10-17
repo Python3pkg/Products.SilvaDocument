@@ -69,7 +69,6 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         testfolder.manage_addProduct[
             'SilvaExternalSources'].manage_addCodeSource(
             'testcodesource',
-            'A Code Source',
             'script',
             )
         # add a script to the code source that returns the string 'foo'
