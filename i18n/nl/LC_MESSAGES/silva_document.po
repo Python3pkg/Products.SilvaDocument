@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Wed Oct 11 15:13:26 2006\n"
+"POT-Creation-Date: Tue Oct 17 12:55:55 2006\n"
 "PO-Revision-Date: 2005-10-14 12:50+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -641,10 +641,6 @@ msgid "The stored xml is invalid."
 msgstr ""
 
 #: /widgets/macro_helpers.pt:106
-msgid "return confirm('Really delete?')"
-msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
-
-#: /widgets/macro_helpers.pt:106
 msgid "delete element"
 msgstr ""
 
@@ -811,10 +807,6 @@ msgid "add column"
 msgstr ""
 
 #: /widgets/top/table/render.pt:19
-msgid "return confirm('Really delete column?')"
-msgstr ""
-
-#: /widgets/top/table/render.pt:19
 msgid "delete column"
 msgstr ""
 
@@ -853,6 +845,9 @@ msgstr ""
 #: /widgets/top/table/render.pt:62
 msgid "Data grid table (bold borderless heading, bordered rows)"
 msgstr ""
+
+#~ msgid "return confirm('Really delete?')"
+#~ msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
 
 #~ msgid ""
 #~ "This is a special document that automagically displays a\n"

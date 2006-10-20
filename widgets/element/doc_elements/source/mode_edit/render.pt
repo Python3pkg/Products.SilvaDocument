@@ -13,13 +13,16 @@
       <option 
         tal:repeat="av_source here/available_sources"
         tal:attributes="
-          value av_source/id;
-          title av_source/description;
-          selected python: (source_id == av_source.id) and 'selected' or nothing;
+          value python: av_source[0];
+          title python: av_source[1].get_title();
+          selected python: (source_id == av_source[0]) and 'selected' or nothing;
           ">
-          <span tal:replace="structure av_source/id" />
-          <tal:block tal:condition="av_source/get_title" 
-          tal:replace="structure string:&#34;${av_source/get_title}&#34;" />
+        <tal:block 
+          define="sid python: av_source[0];stitle python: av_source[1].get_title();">
+          <tal:block tal:condition="stitle" 
+          tal:replace="structure string:&#34;${stitle}&#34;" />
+          (<span tal:replace="sid" />)
+        </tal:block>
         </option>
       </select>
       &nbsp;
