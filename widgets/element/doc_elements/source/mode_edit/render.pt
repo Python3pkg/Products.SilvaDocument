@@ -19,8 +19,7 @@
           ">
         <tal:block 
           define="sid python: av_source[0];stitle python: av_source[1].get_title();">
-          <tal:block tal:condition="stitle" 
-          tal:replace="structure string:&#34;${stitle}&#34;" />
+          <tal:block tal:condition="stitle" tal:replace="stitle" />
           (<span tal:replace="sid" />)
         </tal:block>
         </option>
