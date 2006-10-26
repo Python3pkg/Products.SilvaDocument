@@ -1,1 +1,1 @@
-return context.service_editorsupport.availableSources(context)
+return context.service_editorsupport.availableSources(context.REQUEST.model)
