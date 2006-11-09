@@ -4,6 +4,7 @@ from Products.Silva.silvaxml.xmlexport import theXMLExporter, VersionedContentPr
 from sprout.saxext.html2sax import saxify
 from Products.ParsedXML.DOM.Core import Node
 from Products.Silva.adapters.path import getPathAdapter
+from Products.Silva.interfaces import IImage
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
@@ -287,14 +288,18 @@ class DocumentVersionProducer(SilvaBaseProducer):
         image_object = self.context.get_silva_object().unrestrictedTraverse(
             attributes['path'].split('/'), None)
         attributes['rewritten_path'] = self.rewriteUrl(attributes['path'])
-        if attributes.has_key('link'):
+        if attributes.has_key('link_to_hires'):
+            if attributes['link_to_hires'] == '1':
+                attributes['rewritten_link'] = attributes['rewritten_path'] + '?hires'
+        elif attributes.has_key('link'):
             attributes['rewritten_link'] = self.rewriteUrl(attributes['link'])
         if image_object is not None:
-            image = image_object.image
-            attributes['image_title'] = image_object.get_title()
-            width, height = image_object.getDimensions(image)
-            attributes['width'] = str(width)
-            attributes['height'] = str(height)
+            if IImage.providedBy(image_object):
+                image = image_object.image
+                attributes['image_title'] = image_object.get_title()
+                width, height = image_object.getDimensions(image)
+                attributes['width'] = str(width)
+                attributes['height'] = str(height)
         if attributes.has_key('alignment'):
             if not(attributes['alignment']):
                 attributes['alignment'] = 'default'
