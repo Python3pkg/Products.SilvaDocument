@@ -288,11 +288,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
         image_object = self.context.get_silva_object().unrestrictedTraverse(
             attributes['path'].split('/'), None)
         attributes['rewritten_path'] = self.rewriteUrl(attributes['path'])
-        if attributes.has_key('link_to_hires'):
-            if attributes['link_to_hires'] == '1':
-                attributes[
-                    'rewritten_link'] = attributes[
-                    'rewritten_path'] + '?hires'
+        if attributes.get('link_to_hires', '0') == '1':
+            attributes[
+                'rewritten_link'] = attributes[
+                'rewritten_path'] + '?hires'
         elif attributes.has_key('link'):
             if attributes['link']:
                 attributes['rewritten_link'] = self.rewriteUrl(
