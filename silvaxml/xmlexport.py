@@ -290,9 +290,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
         attributes['rewritten_path'] = self.rewriteUrl(attributes['path'])
         if attributes.has_key('link_to_hires'):
             if attributes['link_to_hires'] == '1':
-                attributes['rewritten_link'] = attributes['rewritten_path'] + '?hires'
+                attributes[
+                    'rewritten_link'] = attributes[
+                    'rewritten_path'] + '?hires'
         elif attributes.has_key('link'):
-            attributes['rewritten_link'] = self.rewriteUrl(attributes['link'])
+            if attributes['link']:
+                attributes['rewritten_link'] = self.rewriteUrl(
+                    attributes['link'])
         if image_object is not None:
             if IImage.providedBy(image_object):
                 image = image_object.image
