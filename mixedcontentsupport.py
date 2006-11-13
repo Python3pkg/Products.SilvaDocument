@@ -188,14 +188,16 @@ class ParagraphSupport(MixedContentSupport):
                 result.append('</u>')
             elif child.nodeName == 'index':
                 name = child.getAttribute('name')
+                title = child.getAttribute('title')
                 anchorid = mangle.generateAnchorName(name)
-                result.append('<a class="index-element" name="%s">' % anchorid)
+                result.append(
+                    '<a class="index-element" name="%s">' % anchorid)
                 # In nested lists and tables we cannot rely on the
                 # correct view_type passed in, so check for edit_mode
                 # from the request.
                 edit_mode = node.REQUEST.get('edit_mode', 0)
                 if edit_mode:
-                    result.append('[[%s]]' % name)
+                    result.append('[[%s: %s]]' % (name, title))
                 result.append('</a>')
             elif child.nodeName == 'br':
                 result.append('<br />')
@@ -262,9 +264,10 @@ class ParagraphSupport(MixedContentSupport):
                 result.append(self._renderEditableHelper(child))
                 result.append('</u>')
             elif child.nodeName == 'index':
-                result.append('<index>')
-                result.append(mangle.entities(child.getAttribute('name')))
-                result.append('</index>')
+                result.append('<index name="%s" ' % mangle.entities(child.getAttribute('name')))
+                if child.getAttribute('title'):
+                    result.append('title="%s" ' % child.getAttribute('title'))
+                result.append('/>')
             elif child.nodeName == 'acronym':
                 if child.getAttribute('title'):
                     result.append(
