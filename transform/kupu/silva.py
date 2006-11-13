@@ -278,8 +278,9 @@ class link(SilvaElement):
 class index(SilvaElement):
     def convert(self, context):
         return html.a(
-            Text('[%s]' % unicode(self.attr.name.asBytes('utf-8'), 'utf-8')),
+            Text('[%s: %s]' % (unicode(self.attr.name.asBytes('utf-8'), 'utf-8'), unicode(self.attr.title.asBytes('utf-8'), 'utf-8'))),
             name=self.attr.name,
+            title=self.attr.title,
             class_='index',
         )
 
