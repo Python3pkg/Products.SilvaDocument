@@ -1,14 +1,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument trunk"
-"POT-Creation-Date: Tue Oct 17 12:55:55 2006\n"
-"PO-Revision-Date:  Tue Oct 17 12:55:55 2006\n"
-"Last-Translator: eric casteleijn <eric+i18n@infrae.com>\n"
+"POT-Creation-Date: Tue Nov 14 19:25:29 2006\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: zope/app/translation_files/extract.py\n"
+"X-Generated-By: zope/app/translation_files/extract.py\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -190,7 +190,7 @@ msgstr ""
 msgid "${name} attribute not found on tag ${self}"
 msgstr ""
 
-#: /transform/kupu/silva.py:516
+#: /transform/kupu/silva.py:527
 #: /widgets/element/doc_elements/source/rendered_source.py:15
 #: /widgets/element/doc_elements/source/rendered_source.py:20
 #: /widgets/element/doc_elements/source/render.pt:8
@@ -535,27 +535,27 @@ msgstr ""
 msgid "Select an External Source..."
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:28
 msgid " update "
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:26
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:28
 msgid "access key: alt-u"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:82
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:84
 msgid "Select a source from the pulldown list."
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:86
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:88
 msgid "Hit \"update\" to refresh the reference."
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:88
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:90
 msgid "Fill in the parameters (if necessary)."
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:93
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:95
 msgid "Source description:"
 msgstr ""
 
@@ -576,12 +576,12 @@ msgid "description:"
 msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:32
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:40
 msgid "No parameters to be filled for this source."
 msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:41
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:47
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:49
 msgid "Source parameters"
 msgstr ""
 
@@ -725,7 +725,11 @@ msgid "target"
 msgstr ""
 
 #: /widgets/macro_notes.pt:14
-msgid "index item"
+msgid "title of the index item"
+msgstr ""
+
+#: /widgets/macro_notes.pt:14
+msgid "anchorname"
 msgstr ""
 
 #: /widgets/macro_notes.pt:15
