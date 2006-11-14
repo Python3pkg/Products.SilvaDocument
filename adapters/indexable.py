@@ -4,7 +4,9 @@ from Products.Silva.adapters import interfaces
 class DocumentIndexableAdapter(IndexableAdapter):
     def getIndexes(self):
         version = self.context.get_viewable()
-        return interfaces.IIndexable(version).getIndexes()
+        if version:
+            return interfaces.IIndexable(version).getIndexes()
+        return []
 
 class DocumentVersionIndexableAdapter(IndexableAdapter):
     def getIndexes(self):
@@ -15,6 +17,8 @@ class DocumentVersionIndexableAdapter(IndexableAdapter):
         docElement = version.content.firstChild
         nodes = docElement.getElementsByTagName('index')
         for node in nodes:
-            indexName = node.getAttribute('name')
-            indexes.append(indexName)
-        return indexes        
+            indexTitle = node.getAttribute('title')
+            if indexTitle:
+                indexName = node.getAttribute('name')
+                indexes.append((indexName, indexTitle))
+        return indexes
