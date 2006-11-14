@@ -197,7 +197,10 @@ class ParagraphSupport(MixedContentSupport):
                 # from the request.
                 edit_mode = node.REQUEST.get('edit_mode', 0)
                 if edit_mode:
-                    result.append('[[%s: %s]]' % (name, title))
+                    if title:
+                        result.append('[#%s: %s]' % (name, title))
+                    else:
+                        result.append('[#%s]' % name, title)
                 result.append('</a>')
             elif child.nodeName == 'br':
                 result.append('<br />')

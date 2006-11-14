@@ -283,8 +283,12 @@ class index(SilvaElement):
             title = unicode(self.attr.title.asBytes('utf-8'), 'utf-8')
         else:
             title = ''
+        if title:
+            text = Text('[#%s: %s]' % (name, title))
+        else:
+            text = Text('[#%s]' % name)
         return html.a(
-            Text('[%s: %s]' % (name, title)),
+            text,
             name=name,
             title=title,
             class_='index',
