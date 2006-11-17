@@ -200,7 +200,7 @@ class ParagraphSupport(MixedContentSupport):
                     if title:
                         result.append('[#%s: %s]' % (name, title))
                     else:
-                        result.append('[#%s]' % name, title)
+                        result.append('[#%s]' % name)
                 result.append('</a>')
             elif child.nodeName == 'br':
                 result.append('<br />')
