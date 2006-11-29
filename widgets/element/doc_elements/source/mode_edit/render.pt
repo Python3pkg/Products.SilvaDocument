@@ -56,8 +56,8 @@
                 tal:define="
                   iterate repeat/field/odd;
                   id field/id;
-                  title python: field['title'] or nothing;
-                  description python: field['description'] or nothing;
+                  title python: field.get_value('title') or nothing;
+                  description python: field.get_value('description') or nothing;
                   is_required field/is_required | nothing;
                   current_value current_parameters/?id | nothing;
                   "
