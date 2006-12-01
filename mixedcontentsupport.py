@@ -191,7 +191,7 @@ class ParagraphSupport(MixedContentSupport):
                 title = child.getAttribute('title')
                 anchorid = mangle.generateAnchorName(name)
                 result.append(
-                    '<a class="index-element" name="%s">' % anchorid)
+                    '<a class="index-element" id="%s">' % anchorid)
                 # In nested lists and tables we cannot rely on the
                 # correct view_type passed in, so check for edit_mode
                 # from the request.
