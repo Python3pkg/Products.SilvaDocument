@@ -188,8 +188,7 @@ class ParagraphSupport(MixedContentSupport):
                 result.append('</u>')
             elif child.nodeName == 'index':
                 name = child.getAttribute('name')
-                anchorid = mangle.generateAnchorName(name)
-                result.append('<a class="index-element" name="%s">' % anchorid)
+                result.append('<a class="index-element" name="%s">' % name)
                 # In nested lists and tables we cannot rely on the
                 # correct view_type passed in, so check for edit_mode
                 # from the request.
