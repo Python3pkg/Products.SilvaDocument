@@ -253,7 +253,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             append_to_url = ''
         else:
             tree = toc_context.get_tree(depth)
-            append_to_url = 'edit/tab_preview'
+            append_to_url = '/edit/tab_preview'
         text = ''
         for obj in tree:
             indent = obj[0]
