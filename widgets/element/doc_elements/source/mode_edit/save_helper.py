@@ -59,11 +59,13 @@ else:
         param = node.createElement('parameter')
         param.setAttribute('key', ustr(field.id))
         node.appendChild(param)
-        value = ustr(result[field.id])
         vtype = 'string'
+        value = result[field.id]
         if same_type(value, []):
             vtype = 'list'
             value = ustr([x.encode('UTF-8') for x in value])
+        else:            
+            value = ustr(value)
         param.setAttribute('type', vtype)
         valuenode = node.createTextNode(value)
         param.appendChild(valuenode)
