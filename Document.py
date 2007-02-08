@@ -394,8 +394,7 @@ class DocumentVersion(CatalogedVersion):
     def _flattenxml(self, xmlinput):
         """Cuts out all the XML-tags, helper for fulltext (for content-objects)
         """
-        # XXX this need to be fixed by using ZCTextIndex or the like
-        return xmlinput
+        return re.sub('<[^>]*>(?i)(?m)', ' ', xmlinput)
 
     def clearEditorCache(self):
         """ Clears editor cache for this version
