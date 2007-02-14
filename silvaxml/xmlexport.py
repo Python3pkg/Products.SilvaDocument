@@ -4,7 +4,10 @@ from Products.Silva.silvaxml.xmlexport import theXMLExporter, VersionedContentPr
 from sprout.saxext.html2sax import saxify
 from Products.ParsedXML.DOM.Core import Node
 from Products.Silva.adapters.path import getPathAdapter
+from Products.Silva.adapters import tocrendering
 from Products.Silva.interfaces import IImage
+
+
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
@@ -248,33 +251,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
             if ghost_model is not None:
                 toc_context = ghost_model
         public = self.context.version_status() == 'public'
+
+        tocadapter = tocrendering.getTOCRenderingAdapter(toc_context)
         if public:
-            tree = toc_context.get_public_tree(depth)
-            append_to_url = ''
+            append_to_url = None
         else:
-            tree = toc_context.get_tree(depth)
             append_to_url = '/edit/tab_preview'
-        text = ''
-        for obj in tree:
-            indent = obj[0]
-            item = obj[1]
-            if public:
-                title = item.get_title()
-            else:
-                title = item.get_title_editable()
-            url = item.absolute_url()
-            if indent > 0:
-                text = text + '<img width="%s" height="14" alt="" src="%s/globals/pixel.gif" />' % (
-                    str(indent * 24),
-                    self.context.REQUEST['BASE2']
-                    )
-            text = text + '<a href="%s/%s">%s</a><br />' % (
-                url,
-                append_to_url,
-                title
-                )
-        html = '<p class="toc">%s</p>' % text
-        self.render_html(html)
+        self.render_html(tocadapter.render_tree(public, append_to_url, depth))
         self.endElementNS(SilvaDocumentNS, node.nodeName)
 
     def sax_img(self, node):
