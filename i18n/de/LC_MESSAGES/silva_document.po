@@ -3,9 +3,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Fri Feb 16 15:56:07 2007\n"
-"PO-Revision-Date: 2006-05-02 14:34+0000\n"
-"Last-Translator: Marion Neuhold <marion.neuhold@wu-wien.ac.at>\n"
+"POT-Creation-Date: Fri Feb 16 16:22:18 2007\n"
+"PO-Revision-Date: 2007-02-16 15:04+0000\n"
+"Last-Translator: Samuel Schluep <schluep@ethz.ch>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,10 +15,11 @@ msgstr ""
 "X-Is-Fallback-For: de-ch de-at de-li de-lu de-de\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
+"X-Rosetta-Export-Date: 2007-02-16 15:08+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
-msgstr ""
+msgstr "Keine bearbeitbare Version vorhanden!"
 
 #: /Document.py:55
 msgid ""
@@ -32,14 +33,22 @@ msgid ""
 "        forward and made editable.\n"
 "    "
 msgstr ""
+"Dokumente sind die grundlegenden Informationseinheiten in Silva. Dokumente "
+"&#8211; vergleichbar mit Dokumenten anderer Textverarbeitungsprogramme "
+"&#8211; enthalten Text, Listen, Tabellen, Überschriften, "
+"Zwischenüberschriften, Bilder usw. Dokumente können unterschiedliche "
+"Inhaltsversionen enthalten, eine öffentliche Online-Version und eine, die "
+"gerade bearbeitet wird (bearbeitbare oder nicht genehmigte Version). Ältere "
+"Versionen können hervorgeholt und neu bearbeitet werden.\n"
+"    "
 
 #: /ServiceCodeSourceCharset.py:43
 msgid "No charset entered"
-msgstr ""
+msgstr "Kein Zeichensatz eingegeben"
 
 #: /ServiceCodeSourceCharset.py:45
 msgid "Charset set"
-msgstr ""
+msgstr "Zeichensatz"
 
 #: /install.py:151 /views/add/Document/form.form:50
 msgid "title"
@@ -51,7 +60,7 @@ msgstr "Titel"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:36
 msgid "paragraph"
-msgstr ""
+msgstr "Absatz"
 
 #: /install.py:153 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
@@ -59,7 +68,7 @@ msgstr ""
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:37
 msgid "heading"
-msgstr ""
+msgstr "Überschrift"
 
 #: /install.py:154 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
@@ -67,7 +76,7 @@ msgstr ""
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:38
 msgid "list"
-msgstr ""
+msgstr "Liste"
 
 #: /install.py:155 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
@@ -75,23 +84,23 @@ msgstr ""
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:39
 msgid "preformatted"
-msgstr ""
+msgstr "Vorformatiert"
 
 #: /install.py:156
 msgid "table of contents"
-msgstr ""
+msgstr "Inhaltsverzeichnis"
 
 #: /install.py:157
 msgid "image"
-msgstr "Bilder"
+msgstr "Bilde"
 
 #: /install.py:158
 msgid "table"
-msgstr ""
+msgstr "Tabelle"
 
 #: /install.py:159
 msgid "complex list"
-msgstr ""
+msgstr "Komplexe Liste"
 
 #: /install.py:160 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
@@ -99,67 +108,68 @@ msgstr ""
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:41
 msgid "definition list"
-msgstr ""
+msgstr "Definitionsliste"
 
 #: /install.py:161
 msgid "code element"
-msgstr ""
+msgstr "Codeelement"
 
 #: /install.py:162 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
-msgstr ""
+msgstr "Zitat"
 
 #: /install.py:171
+#, fuzzy
 msgid "external source"
-msgstr ""
+msgstr "Code-Source"
 
 #: /install.py:222 /install.py:290
 msgid "Paragraph"
-msgstr ""
+msgstr "Absatz"
 
 #: /install.py:223 /install.py:291
 msgid "Heading"
-msgstr ""
+msgstr "Überschrift"
 
 #: /install.py:224 /install.py:292
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #: /install.py:225 /install.py:293
 msgid "Image"
-msgstr ""
+msgstr "Bild"
 
 #: /install.py:226 /install.py:251 /install.py:294
 msgid "Complex list"
-msgstr ""
+msgstr "Komlexe Liste"
 
 #: /install.py:252
 msgid "List item"
-msgstr ""
+msgstr "Listeneintrag"
 
 #: /install.py:253
 msgid "List title"
-msgstr ""
+msgstr "Listentitel"
 
 #: /install.py:295
 msgid "Preformatted"
-msgstr ""
+msgstr "Vorformatiert"
 
 #: /install.py:296
 msgid "Definition list"
-msgstr ""
+msgstr "Definitionsliste"
 
 #: /install.py:346
 msgid "Table"
-msgstr ""
+msgstr "Tabelle"
 
 #: /install.py:347
 msgid "row"
-msgstr ""
+msgstr "Zeile"
 
 #: /install.py:348
 msgid "row heading"
-msgstr ""
+msgstr "Zeilentitel"
 
 #: /transform/Transformer.py:63
 msgid "Unknown Editor: ${editor}"
@@ -186,7 +196,7 @@ msgstr ""
 #: /widgets/element/doc_elements/source/rendered_source.py:20
 #: /widgets/element/doc_elements/source/render.pt:8
 msgid "external source element is broken"
-msgstr ""
+msgstr "Code-Source ist fehlerhaft"
 
 #: /views/add/Document/form.form:28
 msgid "id"
@@ -202,15 +212,15 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
-msgstr ""
+msgstr "Formulareditor"
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor..."
-msgstr ""
+msgstr "Formulareditor..."
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
-msgstr ""
+msgstr "Editor"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:18
 msgid "preview"
@@ -230,19 +240,19 @@ msgstr "Publizieren"
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor..."
-msgstr ""
+msgstr "Kupu Editor..."
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor"
-msgstr ""
+msgstr "Kupu Editor"
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:101
 msgid "edit with the Kupu Editor: alt-("
-msgstr ""
+msgstr "Kupu zum Bearbeiten verwenden: alt-("
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:111
 msgid "edit with the forms editor: alt-)"
-msgstr ""
+msgstr "Formulareditor zum Bearbeiten verwenden: alt-)"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:18
 msgid "author"
@@ -250,32 +260,36 @@ msgstr "Autor"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:27
 msgid "source"
-msgstr ""
+msgstr "Quelle"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:41
 msgid ""
 "The citation may contain multiple paragraphs. Separate them with an empty "
 "line."
 msgstr ""
+"Zitate können mehrere Abschnitte enthalten. Diese werden durch eine leere "
+"Zeile voneinander abgegrenzt."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
 msgid "Code element is broken"
-msgstr ""
+msgstr "Codeelement fehlerhaft"
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
 msgid "Code element: ${title_or_id} at ${path}"
-msgstr ""
+msgstr "Codeelement: ${title_or_id} bei ${path}"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
 msgid ""
 "They should be located in a (non-Silva) folder in the ZMI named "
 "${code_source}."
 msgstr ""
+"Diese sollten im ZMI in einem Ordner (kein Silva-Ordner!) ${code_source} "
+"abgelegt werden."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
-msgstr ""
+msgstr "Verfügbare Codeobjekte:"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:35
 msgid "Select the code to be executed when document is displayed."
@@ -285,34 +299,37 @@ msgstr ""
 msgid ""
 "No code objects (Python Scripts, Page Templates, DTML Methods) are available."
 msgstr ""
+"Keine Codeobjekte (Python Script, Page Template, DTML Method) verfügbar."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "get link reference..."
-msgstr ""
+msgstr "Linkreferenz auswählen..."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "create a hyperlink: alt-g"
-msgstr ""
+msgstr "Hyperlink erstellen: alt-g"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:45
 msgid "normal"
-msgstr ""
+msgstr "Standard"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:56
 msgid "compact"
-msgstr ""
+msgstr "Kompakt"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:64
 msgid ""
 "Add term on first line, definition on second line. Separate items with an "
 "empty line space."
 msgstr ""
+"Die erste Zeile enthält den Begriff, die zweite die Definition. Die "
+"einzelnen Einträge werden mit einer Leerzeile voneinander abgetrennt."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
@@ -321,7 +338,7 @@ msgstr ""
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
 msgid "Tip:"
-msgstr ""
+msgstr "Tipp:"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:52
@@ -350,47 +367,47 @@ msgstr "Typ"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
 msgid "Normal heading"
-msgstr ""
+msgstr "Überschrift"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:28
 msgid "Sub heading"
-msgstr ""
+msgstr "Zwischenüberschrift"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Sub sub heading"
-msgstr ""
+msgstr "Kleine Überschrift"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
 msgid "Paragraph heading"
-msgstr ""
+msgstr "Absatzüberschrift"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:31
 msgid "Sub paragraph heading"
-msgstr ""
+msgstr "Kleine Absatzüberschrift"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:105
 msgid "float left"
-msgstr ""
+msgstr "nach liks fließen"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:110
 msgid "align left"
-msgstr ""
+msgstr "links ausrichten"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:117
 msgid "default"
-msgstr ""
+msgstr "standard"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:122
 msgid "align center"
-msgstr ""
+msgstr "zentrieren"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:129
 msgid "float right"
-msgstr ""
+msgstr "nach rechts fließen"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:134
 msgid "align right"
-msgstr ""
+msgstr "rechts ausrichten"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:144
 msgid ""
@@ -424,7 +441,7 @@ msgstr ""
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:16
 msgid "get image reference..."
-msgstr ""
+msgstr "Bildreferenz auswählen..."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:16
 msgid "access key: alt-g"
@@ -432,19 +449,19 @@ msgstr "Kurzwahl: alt-g"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:31
 msgid "edit image"
-msgstr ""
+msgstr "Bild bearbeiten"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 msgid "create a hyperlink: alt-l"
-msgstr ""
+msgstr "Hyperlink erstellen:alt-l"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:65
 msgid "High resolution version of image"
-msgstr ""
+msgstr "Hochauflösende Version des Bildes"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:70
 msgid "target frame"
-msgstr ""
+msgstr "Zielfenster"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:83
 msgid "new window"

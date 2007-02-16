@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
-"POT-Creation-Date: Fri Feb 16 15:56:07 2007\n"
-"PO-Revision-Date: 2005-12-03 17:43+0000\n"
-"Last-Translator: kitblake <kitblake@infrae.com>\n"
+"POT-Creation-Date: Fri Feb 16 16:22:18 2007\n"
+"PO-Revision-Date: 2006-12-01 17:22+0000\n"
+"Last-Translator: Pierre Slamich <pierre.slamich@gmail.com>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,6 +15,7 @@ msgstr ""
 "Domain: silva\n"
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
+"X-Rosetta-Export-Date: 2007-02-16 15:08+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -51,23 +52,25 @@ msgstr "titre"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:36
 msgid "paragraph"
-msgstr ""
+msgstr "paragraphe"
 
 #: /install.py:153 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:37
+#, fuzzy
 msgid "heading"
-msgstr ""
+msgstr "en-tête"
 
 #: /install.py:154 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:38
+#, fuzzy
 msgid "list"
-msgstr ""
+msgstr "liste"
 
 #: /install.py:155 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
@@ -78,20 +81,23 @@ msgid "preformatted"
 msgstr ""
 
 #: /install.py:156
+#, fuzzy
 msgid "table of contents"
-msgstr ""
+msgstr "table des matières"
 
 #: /install.py:157
 msgid "image"
 msgstr "image"
 
 #: /install.py:158
+#, fuzzy
 msgid "table"
-msgstr ""
+msgstr "tableau"
 
 #: /install.py:159
+#, fuzzy
 msgid "complex list"
-msgstr ""
+msgstr "liste complexe"
 
 #: /install.py:160 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
@@ -107,7 +113,7 @@ msgstr ""
 
 #: /install.py:162 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
-msgstr ""
+msgstr "citation"
 
 #: /install.py:171
 msgid "external source"
@@ -115,47 +121,53 @@ msgstr ""
 
 #: /install.py:222 /install.py:290
 msgid "Paragraph"
-msgstr ""
+msgstr "Paragraphe"
 
 #: /install.py:223 /install.py:291
+#, fuzzy
 msgid "Heading"
-msgstr ""
+msgstr "En-tête"
 
 #: /install.py:224 /install.py:292
+#, fuzzy
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #: /install.py:225 /install.py:293
 msgid "Image"
-msgstr ""
+msgstr "Image"
 
 #: /install.py:226 /install.py:251 /install.py:294
 msgid "Complex list"
 msgstr ""
 
 #: /install.py:252
+#, fuzzy
 msgid "List item"
-msgstr ""
+msgstr "Élément de liste"
 
 #: /install.py:253
 msgid "List title"
 msgstr ""
 
 #: /install.py:295
+#, fuzzy
 msgid "Preformatted"
-msgstr ""
+msgstr "Préformaté"
 
 #: /install.py:296
+#, fuzzy
 msgid "Definition list"
-msgstr ""
+msgstr "Liste de définition"
 
 #: /install.py:346
+#, fuzzy
 msgid "Table"
-msgstr ""
+msgstr "Tableau"
 
 #: /install.py:347
 msgid "row"
-msgstr ""
+msgstr "ligne"
 
 #: /install.py:348
 msgid "row heading"
@@ -210,7 +222,7 @@ msgstr ""
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
-msgstr ""
+msgstr "éditeur"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:18
 msgid "preview"
@@ -250,7 +262,7 @@ msgstr "auteur"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:27
 msgid "source"
-msgstr ""
+msgstr "source"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:41
 msgid ""
@@ -301,8 +313,9 @@ msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:45
+#, fuzzy
 msgid "normal"
-msgstr ""
+msgstr "normal"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:56
 msgid "compact"
@@ -321,7 +334,7 @@ msgstr ""
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
 msgid "Tip:"
-msgstr ""
+msgstr "Astuce :"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:52
@@ -377,8 +390,9 @@ msgid "align left"
 msgstr ""
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:117
+#, fuzzy
 msgid "default"
-msgstr ""
+msgstr "défaut"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:122
 msgid "align center"
@@ -484,27 +498,27 @@ msgstr ""
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:60
 #: /widgets/top/nlist/render.pt:41
 msgid "1, 2, 3,.."
-msgstr ""
+msgstr "1, 2, 3, .."
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:62
 #: /widgets/top/nlist/render.pt:43
 msgid "I, II, III,.."
-msgstr ""
+msgstr "I, II, III, .."
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:64
 #: /widgets/top/nlist/render.pt:45
 msgid "i, ii, iii,.."
-msgstr ""
+msgstr "i, ii, iii, .."
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:66
 #: /widgets/top/nlist/render.pt:47
 msgid "A, B, C,.."
-msgstr ""
+msgstr "A, B, C, .."
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:68
 #: /widgets/top/nlist/render.pt:49
 msgid "a, b, c,.."
-msgstr ""
+msgstr "a, b, c, .."
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:70
 #: /widgets/top/nlist/render.pt:51
@@ -521,7 +535,7 @@ msgstr ""
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:47
 msgid "annotation"
-msgstr ""
+msgstr "annotation"
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:53
 msgid ""
@@ -579,16 +593,17 @@ msgid "Source is a NoneType - is it not available anymore?"
 msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:14
+#, fuzzy
 msgid "id:"
-msgstr ""
+msgstr "id :"
 
 #: /widgets/element/doc_elements/source/render.pt:16
 msgid "title:"
-msgstr ""
+msgstr "titre :"
 
 #: /widgets/element/doc_elements/source/render.pt:19
 msgid "description:"
-msgstr ""
+msgstr "description :"
 
 #: /widgets/element/doc_elements/source/render.pt:32
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:40
@@ -614,15 +629,15 @@ msgstr ""
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:18
 msgid "1 level"
-msgstr ""
+msgstr "1 niveau"
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:29
 msgid "${n} levels"
-msgstr ""
+msgstr "${n} niveaux"
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:33
 msgid "unlimited"
-msgstr ""
+msgstr "illimité"
 
 #: /widgets/element/table_elements/nest_element.pt:4
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:10
@@ -700,7 +715,7 @@ msgstr ""
 
 #: /widgets/macro_helpers.pt:87
 msgid "insert"
-msgstr ""
+msgstr "insérer"
 
 #: /widgets/macro_normal_view.pt:41
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:33
@@ -710,19 +725,19 @@ msgstr ""
 
 #: /widgets/macro_notes.pt:11
 msgid "subscript"
-msgstr ""
+msgstr "indice"
 
 #: /widgets/macro_notes.pt:11
 msgid "underlined"
-msgstr ""
+msgstr "souligné"
 
 #: /widgets/macro_notes.pt:11
 msgid "superscript"
-msgstr ""
+msgstr "exposant"
 
 #: /widgets/macro_notes.pt:12 /widgets/macro_notes.pt:13
 msgid "text"
-msgstr ""
+msgstr "texte"
 
 #: /widgets/macro_notes.pt:13
 msgid "if ${target} is empty a new window opens"
@@ -730,7 +745,7 @@ msgstr ""
 
 #: /widgets/macro_notes.pt:13
 msgid "target"
-msgstr ""
+msgstr "cible"
 
 #: /widgets/macro_notes.pt:14
 msgid "title of the index item"
@@ -742,7 +757,7 @@ msgstr ""
 
 #: /widgets/macro_notes.pt:15
 msgid "abbreviation"
-msgstr ""
+msgstr "abréviation"
 
 #: /widgets/macro_notes.pt:15 /widgets/macro_notes.pt:16
 msgid "full name"
@@ -750,7 +765,7 @@ msgstr "nom complet"
 
 #: /widgets/macro_notes.pt:16
 msgid "acronym"
-msgstr ""
+msgstr "acronyme"
 
 #: /widgets/macro_notes.pt:9
 msgid "Silva markup"
@@ -764,11 +779,11 @@ msgstr ""
 
 #: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:11
 msgid "italic"
-msgstr ""
+msgstr "italique"
 
 #: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:11
 msgid "bold"
-msgstr ""
+msgstr "gras"
 
 #: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
 #: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
@@ -789,7 +804,7 @@ msgstr ""
 
 #: /widgets/top/nlist/render.pt:31
 msgid "Type:"
-msgstr ""
+msgstr "Type :"
 
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
@@ -817,15 +832,15 @@ msgstr ""
 
 #: /widgets/top/table/render.pt:29
 msgid "l"
-msgstr ""
+msgstr "l"
 
 #: /widgets/top/table/render.pt:31
 msgid "c"
-msgstr ""
+msgstr "c"
 
 #: /widgets/top/table/render.pt:33
 msgid "r"
-msgstr ""
+msgstr "r"
 
 #: /widgets/top/table/render.pt:35
 msgid "relative width"
@@ -1050,7 +1065,6 @@ msgstr ""
 
 # binder -classeur de, organisateur de bibliothéque
 # instill - inspirer, donner l'idée de
-# threshold -seuil, pas de la porte, antesalle
 #~ msgid ""
 #~ "Publications are special folders. They function as the \n"
 #~ "       major organizing blocks of a Silva site. They are comparable to \n"
