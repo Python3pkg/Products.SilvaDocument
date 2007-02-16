@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
-"POT-Creation-Date: Tue Nov 14 19:25:29 2006\n"
+"POT-Creation-Date: Fri Feb 16 15:56:07 2007\n"
 "PO-Revision-Date: 2005-12-03 17:43+0000\n"
 "Last-Translator: kitblake <kitblake@infrae.com>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
@@ -175,10 +175,6 @@ msgstr ""
 
 #: /transform/base.py:143
 msgid "intermingling * is not allowed ${i}"
-msgstr ""
-
-#: /transform/base.py:72
-msgid "not implemented, override in inheriting class"
 msgstr ""
 
 #: /transform/base.py:96

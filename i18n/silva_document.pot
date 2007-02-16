@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument trunk"
-"POT-Creation-Date: Tue Nov 14 19:25:29 2006\n"
+"POT-Creation-Date: Fri Feb 16 15:56:07 2007\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
@@ -180,10 +180,6 @@ msgstr ""
 
 #: /transform/base.py:143
 msgid "intermingling * is not allowed ${i}"
-msgstr ""
-
-#: /transform/base.py:72
-msgid "not implemented, override in inheriting class"
 msgstr ""
 
 #: /transform/base.py:96

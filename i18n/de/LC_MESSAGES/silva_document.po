@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Tue Nov 14 19:25:29 2006\n"
+"POT-Creation-Date: Fri Feb 16 15:56:07 2007\n"
 "PO-Revision-Date: 2006-05-02 14:34+0000\n"
 "Last-Translator: Marion Neuhold <marion.neuhold@wu-wien.ac.at>\n"
 "Language-Team: Name <email>\n"
@@ -175,10 +175,6 @@ msgstr ""
 
 #: /transform/base.py:143
 msgid "intermingling * is not allowed ${i}"
-msgstr ""
-
-#: /transform/base.py:72
-msgid "not implemented, override in inheriting class"
 msgstr ""
 
 #: /transform/base.py:96
