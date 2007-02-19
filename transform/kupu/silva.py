@@ -35,6 +35,7 @@ import types
 from urlparse import urlparse
 
 from Products.Silva.i18n import translate as _
+from Products.Silva import mangle
 
 _attr_origin=u'silva_origin'
 _attr_prefix=u'silva_'
@@ -277,7 +278,7 @@ class link(SilvaElement):
 
 class index(SilvaElement):
     def convert(self, context):
-        name = self.attr.name
+        name = mangle.generateAnchorName(self.attr.name)
         title = self.attr.title
         if title:
             title = unicode(self.attr.title.asBytes('utf-8'), 'utf-8')
