@@ -278,7 +278,7 @@ class link(SilvaElement):
 
 class index(SilvaElement):
     def convert(self, context):
-        name = mangle.generateAnchorName(self.attr.name)
+        name = self.attr.name
         title = self.attr.title
         if title:
             title = unicode(self.attr.title.asBytes('utf-8'), 'utf-8')
