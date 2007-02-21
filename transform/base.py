@@ -69,7 +69,7 @@ class Node:
             return issubclass(self.__class__, tag)
 
     def __eq__(self, other):
-        raise "not implemented, override in inheriting class"
+        raise NotImplementedError, "not implemented, override in inheriting class"
 
     def name(self):
         """ return name of tag """
