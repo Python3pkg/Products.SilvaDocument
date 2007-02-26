@@ -1,9 +1,15 @@
 """Install for Silva Document
 """
+from zope import interface
 
 from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
 import EditorSupportNested
+
+try:
+    from Products.Silva.interfaces import IInvisibleService
+except ImportError:
+    IInvisibleService = None
 
 from Products.SilvaDocument import externalsource
 
@@ -101,6 +107,11 @@ def configureXMLWidgets(root):
                  'service_sub_viewer',
                  'service_table_editor', 'service_table_viewer']:
         root.manage_addProduct['XMLWidgets'].manage_addWidgetRegistry(name)
+        if IInvisibleService is not None:
+            interface.directlyProvides(
+                root[name],
+                IInvisibleService,
+                *interface.directlyProvidedBy(root[name]))
 
     # now register all widgets
     # XXX not really necessary; the "install" should take case of this
