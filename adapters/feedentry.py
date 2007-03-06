@@ -1,5 +1,5 @@
+import re
 from zope.interface import implements
-import Globals
 from Products.Silva.adapters import adapter
 from Products.Silva.adapters import interfaces
 
@@ -11,28 +11,55 @@ class DocumentFeedEntryAdapter(adapter.Adapter):
 
     def __init__(self, context):
         self.context = context
-        self.version = context.get_viewable()
+        self.version = self.context.get_viewable()
+        self.ms = self.context.service_metadata
         
     def id(self):
-        return self.context.id
+        return self.url()
         
     def title(self):
-        return "le titre"
+        return self.context.get_title()
     
+    def html_description(self):
+        document_element = self.version.content.documentElement
+        ps = document_element.getElementsByTagName('p')
+        if not ps:
+            return ''
+        p = ps[0]
+        self.context.service_editor.setViewer('service_doc_viewer')
+        self.context.REQUEST.other['model'] = self.version
+        rendered = self.context.service_editor.renderView(p)
+        del self.context.REQUEST.other['model'] 
+        return rendered
+
     def description(self):
-        return "testing<br /><strong>1, 2</strong>"
+        return re.sub('<[^>]*>(?i)(?m)', ' ', self.html_description())
         
     def url(self):
-        return "url"
+        return self.context.absolute_url()
         
     def authors(self):
-        return ['a1', 'a2']
+        authors = []
+        creator = self.ms.getMetadataValue(self.context, 'silva-extra', 'creator')
+        authors.append(creator)
+        lastauthor = self.ms.getMetadataValue(
+            self.context, 'silva-extra', 'lastauthor')
+        if lastauthor != creator:
+            authors.append(lastauthor)
+        return authors
     
     def date_updated(self):
-        return '2007-03-02T18:12:12ZCET'
+        return self.ms.getMetadataValue(
+            self.version, 'silva-extra', 'publicationtime')
     
     def date_published(self):
-        return '2007-03-02T18:12:12ZCET'
+        return self.context.get_first_publication_date()
     
     def keywords(self):
-        return ['k1','k2']
+        return [self.subject()] + [
+            kw.strip() for kw in self.ms.getMetadataValue(
+                self.context, 'silva-extra', 'keywords').split(',')]
+
+    def subject(self):
+        return self.ms.getMetadataValue(
+            self.context, 'silva-extra', 'subject')

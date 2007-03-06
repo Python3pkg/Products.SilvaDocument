@@ -13,7 +13,7 @@
     provides="Products.Silva.adapters.interfaces.IIndexable"
     factory=".indexable.DocumentVersionIndexableAdapter"
   />
-  
+
   <adapter
     for="Products.SilvaDocument.interfaces.IDocument"
     provides="Products.Silva.adapters.interfaces.IFeedEntry"
