@@ -83,7 +83,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             attributes = get_dict(node.attributes)
         id = attributes['id']
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
-        source = getSourceForId(self.context, id) 	 
+        source = getSourceForId(self.context.get_content(), id) 	 
         parameters = {} 	 
         for child in node.childNodes: 	 
             if child.nodeName == 'parameter': 	 
@@ -97,7 +97,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     parameters[str(child.attributes['key'].value)] = text 	 
                 self.endElementNS(SilvaDocumentNS, 'parameter') 	 
         if self.getSettings().externalRendering(): 	 
-            html = source.to_html(self.context.REQUEST, **parameters) 	 
+            request = self.context.REQUEST
+            request.set('model', self.context)
+            html = source.to_html(request, **parameters)      
             self.render_html(html)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
              
