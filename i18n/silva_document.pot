@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument trunk"
-"POT-Creation-Date: Fri Feb 16 16:22:18 2007\n"
+"POT-Creation-Date: Wed Mar  7 17:34:46 2007\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
@@ -33,12 +33,12 @@ msgstr ""
 msgid "Charset set"
 msgstr ""
 
-#: /install.py:151
-#: /views/add/Document/form.form:50
+#: /install.py:162
+#: /views/add/Document/form.form:48
 msgid "title"
 msgstr ""
 
-#: /install.py:152
+#: /install.py:163
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:36
@@ -47,7 +47,7 @@ msgstr ""
 msgid "paragraph"
 msgstr ""
 
-#: /install.py:153
+#: /install.py:164
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:37
@@ -56,7 +56,7 @@ msgstr ""
 msgid "heading"
 msgstr ""
 
-#: /install.py:154
+#: /install.py:165
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:38
@@ -65,7 +65,7 @@ msgstr ""
 msgid "list"
 msgstr ""
 
-#: /install.py:155
+#: /install.py:166
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:39
@@ -74,23 +74,23 @@ msgstr ""
 msgid "preformatted"
 msgstr ""
 
-#: /install.py:156
+#: /install.py:167
 msgid "table of contents"
 msgstr ""
 
-#: /install.py:157
+#: /install.py:168
 msgid "image"
 msgstr ""
 
-#: /install.py:158
+#: /install.py:169
 msgid "table"
 msgstr ""
 
-#: /install.py:159
+#: /install.py:170
 msgid "complex list"
 msgstr ""
 
-#: /install.py:160
+#: /install.py:171
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
@@ -99,70 +99,70 @@ msgstr ""
 msgid "definition list"
 msgstr ""
 
-#: /install.py:161
+#: /install.py:172
 msgid "code element"
 msgstr ""
 
-#: /install.py:162
+#: /install.py:173
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
 msgstr ""
 
-#: /install.py:171
+#: /install.py:182
 msgid "external source"
 msgstr ""
 
-#: /install.py:222
-#: /install.py:290
+#: /install.py:233
+#: /install.py:301
 msgid "Paragraph"
 msgstr ""
 
-#: /install.py:223
-#: /install.py:291
+#: /install.py:234
+#: /install.py:302
 msgid "Heading"
 msgstr ""
 
-#: /install.py:224
-#: /install.py:292
+#: /install.py:235
+#: /install.py:303
 msgid "List"
 msgstr ""
 
-#: /install.py:225
-#: /install.py:293
+#: /install.py:236
+#: /install.py:304
 msgid "Image"
 msgstr ""
 
-#: /install.py:226
-#: /install.py:251
-#: /install.py:294
+#: /install.py:237
+#: /install.py:262
+#: /install.py:305
 msgid "Complex list"
 msgstr ""
 
-#: /install.py:252
+#: /install.py:263
 msgid "List item"
 msgstr ""
 
-#: /install.py:253
+#: /install.py:264
 msgid "List title"
 msgstr ""
 
-#: /install.py:295
+#: /install.py:306
 msgid "Preformatted"
 msgstr ""
 
-#: /install.py:296
+#: /install.py:307
 msgid "Definition list"
 msgstr ""
 
-#: /install.py:346
+#: /install.py:357
 msgid "Table"
 msgstr ""
 
-#: /install.py:347
+#: /install.py:358
 msgid "row"
 msgstr ""
 
-#: /install.py:348
+#: /install.py:359
 msgid "row heading"
 msgstr ""
 
@@ -186,7 +186,7 @@ msgstr ""
 msgid "${name} attribute not found on tag ${self}"
 msgstr ""
 
-#: /transform/kupu/silva.py:527
+#: /transform/kupu/silva.py:528
 #: /widgets/element/doc_elements/source/rendered_source.py:15
 #: /widgets/element/doc_elements/source/rendered_source.py:20
 #: /widgets/element/doc_elements/source/render.pt:8
@@ -199,6 +199,10 @@ msgstr ""
 
 #: /views/add/Document/form.form:30
 msgid "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; or &#8216;.&#8217;"
+msgstr ""
+
+#: /views/add/Document/form.form:49
+msgid "The title will be publicly visible, and is used for the link in indexes."
 msgstr ""
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
@@ -695,67 +699,67 @@ msgstr ""
 msgid "edit element"
 msgstr ""
 
-#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:10
 msgid "subscript"
 msgstr ""
 
-#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:10
 msgid "underlined"
 msgstr ""
 
-#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:10
 msgid "superscript"
 msgstr ""
 
+#: /widgets/macro_notes.pt:11
 #: /widgets/macro_notes.pt:12
-#: /widgets/macro_notes.pt:13
 msgid "text"
 msgstr ""
 
-#: /widgets/macro_notes.pt:13
+#: /widgets/macro_notes.pt:12
 msgid "if ${target} is empty a new window opens"
 msgstr ""
 
-#: /widgets/macro_notes.pt:13
+#: /widgets/macro_notes.pt:12
 msgid "target"
 msgstr ""
 
-#: /widgets/macro_notes.pt:14
+#: /widgets/macro_notes.pt:13
 msgid "title of the index item"
 msgstr ""
 
-#: /widgets/macro_notes.pt:14
+#: /widgets/macro_notes.pt:13
 msgid "anchorname"
 msgstr ""
 
-#: /widgets/macro_notes.pt:15
+#: /widgets/macro_notes.pt:14
 msgid "abbreviation"
 msgstr ""
 
+#: /widgets/macro_notes.pt:14
 #: /widgets/macro_notes.pt:15
-#: /widgets/macro_notes.pt:16
 msgid "full name"
 msgstr ""
 
-#: /widgets/macro_notes.pt:16
+#: /widgets/macro_notes.pt:15
 msgid "acronym"
 msgstr ""
 
-#: /widgets/macro_notes.pt:9
+#: /widgets/macro_notes.pt:8
 msgid "Silva markup"
 msgstr ""
 
-#: /widgets/macro_notes.pt:9
+#: /widgets/macro_notes.pt:8
 msgid "Text can be formatted &#8211; in ${italic}, ${bold}, etc. &#8211; with ${silva_markup}:"
 msgstr ""
 
-#: /widgets/macro_notes.pt:9
-#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:8
+#: /widgets/macro_notes.pt:10
 msgid "italic"
 msgstr ""
 
-#: /widgets/macro_notes.pt:9
-#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:8
+#: /widgets/macro_notes.pt:10
 msgid "bold"
 msgstr ""
 

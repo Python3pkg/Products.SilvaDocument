@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
-"POT-Creation-Date: Fri Feb 16 16:22:18 2007\n"
+"POT-Creation-Date: Wed Mar  7 17:34:13 2007\n"
 "PO-Revision-Date: 2007-02-16 14:33+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Is-Fallback-For: nl-be\n"
 "Preferred-encodings: utf-8\n"
 "Domain: silva\n"
-"X-Rosetta-Export-Date: 2007-02-16 15:08+0000\n"
+"X-Rosetta-Export-Date: 2007-03-07 16:18+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -53,11 +53,11 @@ msgstr "Geen tekenset ingegeven"
 msgid "Charset set"
 msgstr "Tekenset aktief"
 
-#: /install.py:151 /views/add/Document/form.form:50
+#: /install.py:162 /views/add/Document/form.form:48
 msgid "title"
 msgstr "titel"
 
-#: /install.py:152 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
+#: /install.py:163 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
@@ -65,7 +65,7 @@ msgstr "titel"
 msgid "paragraph"
 msgstr "alinea"
 
-#: /install.py:153 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
+#: /install.py:164 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
@@ -73,7 +73,7 @@ msgstr "alinea"
 msgid "heading"
 msgstr "kop"
 
-#: /install.py:154 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
+#: /install.py:165 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
@@ -81,7 +81,7 @@ msgstr "kop"
 msgid "list"
 msgstr "lijst"
 
-#: /install.py:155 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
+#: /install.py:166 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
@@ -89,23 +89,23 @@ msgstr "lijst"
 msgid "preformatted"
 msgstr "Voorgeformatteerd"
 
-#: /install.py:156
+#: /install.py:167
 msgid "table of contents"
 msgstr "Inhoudsopgave"
 
-#: /install.py:157
+#: /install.py:168
 msgid "image"
 msgstr "afbeelding"
 
-#: /install.py:158
+#: /install.py:169
 msgid "table"
 msgstr "tabel"
 
-#: /install.py:159
+#: /install.py:170
 msgid "complex list"
 msgstr "complexe lijst"
 
-#: /install.py:160 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
+#: /install.py:171 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
@@ -113,63 +113,63 @@ msgstr "complexe lijst"
 msgid "definition list"
 msgstr "definitielijst"
 
-#: /install.py:161
+#: /install.py:172
 msgid "code element"
 msgstr "code-element"
 
-#: /install.py:162 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+#: /install.py:173 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
 msgstr "citaat"
 
-#: /install.py:171
+#: /install.py:182
 msgid "external source"
 msgstr "externe bron"
 
-#: /install.py:222 /install.py:290
+#: /install.py:233 /install.py:301
 msgid "Paragraph"
 msgstr "Alinea"
 
-#: /install.py:223 /install.py:291
+#: /install.py:234 /install.py:302
 msgid "Heading"
 msgstr "Kop"
 
-#: /install.py:224 /install.py:292
+#: /install.py:235 /install.py:303
 msgid "List"
 msgstr "Lijst"
 
-#: /install.py:225 /install.py:293
+#: /install.py:236 /install.py:304
 msgid "Image"
 msgstr "Afbeelding"
 
-#: /install.py:226 /install.py:251 /install.py:294
+#: /install.py:237 /install.py:262 /install.py:305
 msgid "Complex list"
 msgstr "Complexe lijst"
 
-#: /install.py:252
+#: /install.py:263
 msgid "List item"
 msgstr "Lijst-item"
 
-#: /install.py:253
+#: /install.py:264
 msgid "List title"
 msgstr "Lijsttitel"
 
-#: /install.py:295
+#: /install.py:306
 msgid "Preformatted"
 msgstr "Voorgeformatteerd"
 
-#: /install.py:296
+#: /install.py:307
 msgid "Definition list"
 msgstr "Definitielijst"
 
-#: /install.py:346
+#: /install.py:357
 msgid "Table"
 msgstr "Tabel"
 
-#: /install.py:347
+#: /install.py:358
 msgid "row"
 msgstr "rij"
 
-#: /install.py:348
+#: /install.py:359
 #, fuzzy
 msgid "row heading"
 msgstr "rijkop"
@@ -194,7 +194,7 @@ msgstr "onderling verwisselen * is niet toegestaan ${i}"
 msgid "${name} attribute not found on tag ${self}"
 msgstr "${name} attribuut niet gevonden op tag ${self}"
 
-#: /transform/kupu/silva.py:527
+#: /transform/kupu/silva.py:528
 #: /widgets/element/doc_elements/source/rendered_source.py:15
 #: /widgets/element/doc_elements/source/rendered_source.py:20
 #: /widgets/element/doc_elements/source/render.pt:8
@@ -212,6 +212,13 @@ msgid ""
 msgstr ""
 "Geen spaties of speciale tekens behalve &#8216;_&#8217;, &#8216;-&#8217; of "
 "&#8216;.&#8217;"
+
+#: /views/add/Document/form.form:49
+msgid ""
+"The title will be publicly visible, and is used for the link in indexes."
+msgstr ""
+"De titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de link "
+"in indexen."
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
@@ -752,55 +759,55 @@ msgstr "invoegen"
 msgid "edit element"
 msgstr "element bewerken"
 
-#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:10
 msgid "subscript"
 msgstr "subscript"
 
-#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:10
 msgid "underlined"
 msgstr "onderstreept"
 
-#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:10
 msgid "superscript"
 msgstr "superscript"
 
-#: /widgets/macro_notes.pt:12 /widgets/macro_notes.pt:13
+#: /widgets/macro_notes.pt:11 /widgets/macro_notes.pt:12
 msgid "text"
 msgstr "tekst"
 
-#: /widgets/macro_notes.pt:13
+#: /widgets/macro_notes.pt:12
 msgid "if ${target} is empty a new window opens"
 msgstr "als ${target} leeg is, dan opent een nieuw venster"
 
-#: /widgets/macro_notes.pt:13
+#: /widgets/macro_notes.pt:12
 msgid "target"
 msgstr "doel"
 
-#: /widgets/macro_notes.pt:14
+#: /widgets/macro_notes.pt:13
 msgid "title of the index item"
 msgstr ""
 
-#: /widgets/macro_notes.pt:14
+#: /widgets/macro_notes.pt:13
 msgid "anchorname"
 msgstr ""
 
-#: /widgets/macro_notes.pt:15
+#: /widgets/macro_notes.pt:14
 msgid "abbreviation"
 msgstr "afkorting"
 
-#: /widgets/macro_notes.pt:15 /widgets/macro_notes.pt:16
+#: /widgets/macro_notes.pt:14 /widgets/macro_notes.pt:15
 msgid "full name"
 msgstr "volledige naam"
 
-#: /widgets/macro_notes.pt:16
+#: /widgets/macro_notes.pt:15
 msgid "acronym"
 msgstr "afkorting letterwoord"
 
-#: /widgets/macro_notes.pt:9
+#: /widgets/macro_notes.pt:8
 msgid "Silva markup"
 msgstr "Silva opmaak"
 
-#: /widgets/macro_notes.pt:9
+#: /widgets/macro_notes.pt:8
 msgid ""
 "Text can be formatted &#8211; in ${italic}, ${bold}, etc. &#8211; with "
 "${silva_markup}:"
@@ -808,11 +815,11 @@ msgstr ""
 "Tekst kan worden opgemaakt &#8211; in ${italic}, ${bold}, enz. &#8211; met "
 "${silva_markup}:"
 
-#: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:8 /widgets/macro_notes.pt:10
 msgid "italic"
 msgstr "schuingedrukt"
 
-#: /widgets/macro_notes.pt:9 /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:8 /widgets/macro_notes.pt:10
 msgid "bold"
 msgstr "vetgedrukt"
 
@@ -896,11 +903,11 @@ msgstr "gegevens-rastertabel (vetgedrukte kop zonder rand, rijen met rand)"
 #~ msgid "not implemented, override in inheriting class"
 #~ msgstr "niet ingeprogrammeerd, override in inheriting class"
 
-#~ msgid "index item"
-#~ msgstr "index-item"
-
 #~ msgid "return confirm('Really delete?')"
 #~ msgstr "return confirm('Weet je zeker dat je dit wilt verwijderen?')"
+
+#~ msgid "index item"
+#~ msgstr "index-item"
 
 #~ msgid ""
 #~ "This is a special document that automagically displays a\n"
@@ -1825,12 +1832,6 @@ msgstr "gegevens-rastertabel (vetgedrukte kop zonder rand, rijen met rand)"
 
 #~ msgid "aspect"
 #~ msgstr "aspect"
-
-#~ msgid ""
-#~ "The title will be publicly visible, and is used for the link in indexes."
-#~ msgstr ""
-#~ "De titel wordt voor iedereen zichtbaar, en zal worden gebruikt voor de "
-#~ "link in indexen."
 
 #~ msgid ""
 #~ "Sorry, strange characters are in the id. It should only\n"
