@@ -28,7 +28,7 @@
 </enable>
 </td>
 <td class="align-right">
-  <span i18n:translate="">Type:</span>
+  <span i18n:translate="">type</span>
 <select class="manipulator"
   style="text-transform:none;"
   name="element_type">

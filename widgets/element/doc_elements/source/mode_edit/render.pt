@@ -25,7 +25,7 @@
         </option>
       </select>
       &nbsp;
-      <input class="button" type="submit" value=" update " title="access key: alt-u" accesskey="u"
+      <input class="button" type="submit" value="update" title="access key: alt-u" accesskey="u"
         tal:attributes="name string:${rel_url_start}/save:method" i18n:attributes="value;title" />
     </div>
     <tal:block condition="source">

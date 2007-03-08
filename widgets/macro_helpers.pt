@@ -63,7 +63,7 @@
     <a title="insert element" tal:attributes="href string:${url_start}/insert_mode" href="insert_mode" i18n:attributes="title"><img tal:attributes="src string:${silva_root}/globals/insert.gif" width="16" height="16" alt="insert element" border="0" i18n:attributes="alt" /></a>
   </td>
   <td class="invisible" align="left" width="16"
-    tal:condition="python:is_embedded"><a title="insert line item" tal:attributes="href string:${url_start}/insert_mode" href="insert_mode" i18n:attributes="title"><img tal:attributes="src string:${silva_root}/globals/insert_now.gif" width="16" height="7" alt="insert item" border="0" i18n:attributes="alt" /></a></td>
+    tal:condition="python:is_embedded"><a title="insert item" tal:attributes="href string:${url_start}/insert_mode" href="insert_mode" i18n:attributes="title"><img tal:attributes="src string:${silva_root}/globals/insert_now.gif" width="16" height="7" alt="insert item" border="0" i18n:attributes="alt" /></a></td>
   <td tal:attributes="class insert_cell_class" colspan="2">&nbsp;</td>
   <td class="invisible" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
 </tr>
