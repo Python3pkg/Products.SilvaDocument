@@ -23,6 +23,8 @@ def getSourceParameters(context, node):
         if type == 'list':
             # XXX evil eval, same in Formulator, though
             value = eval(value)
+        elif type == 'boolean':
+            value = int(value)
         parameters[name] = value
     return parameters
 
