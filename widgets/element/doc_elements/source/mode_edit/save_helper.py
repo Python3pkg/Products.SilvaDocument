@@ -65,7 +65,11 @@ else:
             vtype = 'list'
             value = ustr([x.encode('UTF-8') for x in value])
         else:            
-            value = ustr(value)
+            if field.meta_type == "CheckBoxField":
+                vtype = 'boolean'
+                value = str(int(value))
+            else:
+                value = ustr(value)
         param.setAttribute('type', vtype)
         valuenode = node.createTextNode(value)
         param.appendChild(valuenode)
