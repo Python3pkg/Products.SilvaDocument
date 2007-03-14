@@ -41,10 +41,11 @@ class DocumentFeedEntryAdapter(adapter.Adapter):
     def authors(self):
         authors = []
         creator = self.ms.getMetadataValue(self.context, 'silva-extra', 'creator')
-        authors.append(creator)
+        if creator != 'unknown':
+            authors.append(creator)
         lastauthor = self.ms.getMetadataValue(
             self.context, 'silva-extra', 'lastauthor')
-        if lastauthor != creator:
+        if lastauthor != creator and lastauthor != 'unknown':
             authors.append(lastauthor)
         return authors
     
