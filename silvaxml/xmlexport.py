@@ -93,13 +93,15 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     if grandChild.nodeType == Node.TEXT_NODE: 	 
                         if grandChild.nodeValue: 	 
                             self.handler.characters(grandChild.nodeValue) 	 
-                            text = text + grandChild.nodeValue 	 
+                            text = text + grandChild.nodeValue
                     parameters[str(child.attributes['key'].value)] = text 	 
                 self.endElementNS(SilvaDocumentNS, 'parameter') 	 
         if self.getSettings().externalRendering(): 	 
             request = self.context.REQUEST
             request.set('model', self.context)
-            html = source.to_html(request, **parameters)      
+            html = source.to_html(request, **parameters)
+            if not request['edit_mode']:
+                request.set('model', None)
             self.render_html(html)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
              
