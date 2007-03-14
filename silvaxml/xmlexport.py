@@ -103,7 +103,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
             request = self.context.REQUEST
             request.set('model', self.context)
             html = source.to_html(request, **parameters)
-            del request['model']
+            if not request['edit_mode']:
+                request.set('model', None)
             self.render_html(html)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
              
