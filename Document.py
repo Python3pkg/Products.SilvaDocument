@@ -378,7 +378,7 @@ class DocumentVersion(CatalogedVersion):
         """Return the content of this object without any xml"""
         if self.version_status() == 'unapproved':
             return ''
-        return [self.get_title(), self._flattenxml(self.content_xml())]
+        return [self.object().id, self.get_title(), self._flattenxml(self.content_xml())]
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'content_xml')
