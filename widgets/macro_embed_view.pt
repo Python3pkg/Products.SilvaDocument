@@ -3,7 +3,7 @@
   i18n:domain="silva_document">
 
 <div metal:define-macro="embed_view" tal:omit-tag="">
-<init tal:omit-tag="" 
+<init tal:omit-tag=""
   tal:define="global silva_root here/silva_root;
     global node request/node;
     global wr_name request/wr_name;
@@ -23,9 +23,9 @@
     global enable_save python:not here.service_editor.hasNodeWidget(node) or here.service_editor.getNodeWidgetPath(node)[-1] != 'mode_edit';
     global url_start string:${request/xml_url}/${node_path}/edit;
     global rel_url_start string:${request/xml_rel_url}/${node_path}/edit" />
-<form name="focusbox" action="." method="POST">
+<form name="focusbox" action="." method="post">
 <!--(m-em-v)-->
-<table class="listing" 
+<table class="listing"
   style="margin-bottom:0;"
   width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr class="halfline" tal:condition="python:is_embedded">

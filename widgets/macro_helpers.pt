@@ -32,11 +32,11 @@
 <div metal:define-macro="edit_bottom_controls" tal:omit-tag="">
   <td class="align-right" nowrap="nowrap">
     <input class="button" type="submit" value="save" title="access key: alt-s" accesskey="s"
-      tal:attributes="name string:${rel_url_start}/save:method" id="default_submit" i18n:attributes="value;title" /> 
+      tal:attributes="name string:${rel_url_start}/save:method" id="default_submit" i18n:attributes="value;title" />
     <input class="button" type="submit" value="save + exit" title="access key: alt-e" accesskey="e"
       tal:attributes="name string:${rel_url_start}/save_and_exit:method" i18n:attributes="value;title" />
     <input class="button" type="submit" value="save + insert" title="access key: alt-i" accesskey="i"
-         tal:condition="python:not disable_insert" 
+         tal:condition="python:not disable_insert"
          tal:attributes="name string:${rel_url_start}/save_and_insert:method" i18n:attributes="value;title" />
     <script language="JavaScript">
       setAutoSave();
@@ -67,7 +67,7 @@
   <td tal:attributes="class insert_cell_class" colspan="2">&nbsp;</td>
   <td class="invisible" width="60"><img tal:attributes="src string:${silva_root}/globals/pixel.gif" width="60" height="1" /></td>
 </tr>
-<form tal:condition="python:mode == 'insert'" action="." method="POST" tal:omit-tag="is_embedded">
+<form tal:condition="python:mode == 'insert'" action="." method="post" tal:omit-tag="is_embedded">
 <tr class="halfline" tal:condition="python:not is_embedded">
   <td class="invisible" colspan="4">
     <a name="focus"><img width="1" height="4" tal:attributes="src string:${silva_root}/globals/pixel.gif" /></a>
@@ -79,8 +79,8 @@
     <span i18n:translate="">add element&nbsp;</span>
     <select class="manipulator"
       name="what">
-      <option tal:repeat="item python:here.get_allowed_info(wr_name, node)" 
-        tal:attributes="value python:item[1]" 
+      <option tal:repeat="item python:here.get_allowed_info(wr_name, node)"
+        tal:attributes="value python:item[1]"
         tal:content="python:item[0]"
         i18n:translate=""></option>
     </select>

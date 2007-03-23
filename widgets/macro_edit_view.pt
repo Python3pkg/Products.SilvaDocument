@@ -3,7 +3,7 @@
   i18n:domain="silva_document">
 
 <metal:block define-macro="edit_view">
-<tal:block 
+<tal:block
   define="global silva_root here/silva_root;
     global node request/node;
     global wr_name request/wr_name;
@@ -16,10 +16,10 @@
     global disable_move_up disable_move_up | nothing;
     global disable_move_down disable_move_down | nothing;
     global enable_cancel_button enable_cancel_button | nothing;
-    global disable_notes disable_notes | nothing; 
+    global disable_notes disable_notes | nothing;
     global url_start string:${request/xml_url}/${node_path}/edit;
-    global rel_url_start string:${request/xml_rel_url}/${node_path}/edit" />  
-<form name="focusbox" action="." method="POST" tal:omit-tag="is_embedded">
+    global rel_url_start string:${request/xml_rel_url}/${node_path}/edit" />
+<form name="focusbox" action="." method="post" tal:omit-tag="is_embedded">
 <!--(m-e-v)-->
 <table class="listing" width="100%" cellspacing="0" cellpadding="0" border="0">
 <div metal:use-macro="container/macro_helpers/macros/edit_top" />
