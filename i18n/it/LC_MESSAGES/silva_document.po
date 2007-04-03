@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Wed Mar  7 17:34:13 2007\n"
+"POT-Creation-Date: Tue Apr  3 11:40:43 2007\n"
 "PO-Revision-Date: 2006-12-09 19:48+0000\n"
-"Last-Translator: Michele Angrisano <darksun1988@gmail.com>\n"
+"Last-Translator: Michele Angrisano <micheleangrisano@ubuntu-it.org>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Export-Date: 2007-03-07 16:18+0000\n"
+"X-Rosetta-Export-Date: 2007-04-03 09:28:17+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -42,7 +42,7 @@ msgstr "Nessun charset in entrata"
 msgid "Charset set"
 msgstr "Impostare il charset"
 
-#: /install.py:162 /views/add/Document/form.form:48
+#: /install.py:162
 msgid "title"
 msgstr "titolo"
 
@@ -189,23 +189,6 @@ msgstr "${nome} attributo non trovato sul tag ${self}"
 msgid "external source element is broken"
 msgstr "l'elemento sorgente esterno è corrotto"
 
-#: /views/add/Document/form.form:28
-msgid "id"
-msgstr "id"
-
-#: /views/add/Document/form.form:30
-msgid ""
-"No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
-"or &#8216;.&#8217;"
-msgstr ""
-"Nessuni spazi o caratteri speciali oltre a &#8216;_&#8217; or &#8216;-"
-"&#8217; or &#8216;.&#8217;"
-
-#: /views/add/Document/form.form:49
-msgid ""
-"The title will be publicly visible, and is used for the link in indexes."
-msgstr ""
-
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
 msgstr "editor di forme"
@@ -334,19 +317,17 @@ msgstr ""
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
-msgid "Tip:"
-msgstr "Suggerimento:"
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
 msgid "${tip} tab to the exit button or use alt-e."
 msgstr "${tip} tab per il bottone exit oppure usare alt-e"
 
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-msgid "${tip} Tab to the exit button or alt-e."
-msgstr "${tip} ab per il bottone exit oppure usare alt-e"
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+msgid "Tip:"
+msgstr "Suggerimento:"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:34
@@ -358,7 +339,7 @@ msgstr "Elemento"
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:43
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47
+#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
 msgid "type"
 msgstr ""
 
@@ -554,10 +535,6 @@ msgid ""
 "displayed literally. White space is preserved (unless the textarea is empty)."
 msgstr ""
 
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-msgid "${tip} tab to the exit button or alt-e."
-msgstr "${tip} tab per il bottone exit oppure alt-e"
-
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:11
 msgid "source id"
 msgstr "sorgente id"
@@ -567,8 +544,8 @@ msgid "Select an External Source..."
 msgstr "Selezionare un Sorgente Esterno..."
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:28
-msgid " update "
-msgstr " aggiornamento "
+msgid "update"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:28
 msgid "access key: alt-u"
@@ -641,13 +618,10 @@ msgid "unlimited"
 msgstr "illimitato"
 
 #: /widgets/element/table_elements/nest_element.pt:4
+#: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:10
 msgid "nest element"
 msgstr "prossimo elemento"
-
-#: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
-msgid "nest elements"
-msgstr "prossimi elementi"
 
 #: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
 msgid "The stored xml is invalid."
@@ -705,10 +679,6 @@ msgstr "inserire elemento"
 #: /widgets/macro_helpers.pt:66
 msgid "insert item"
 msgstr "inserire termine"
-
-#: /widgets/macro_helpers.pt:66
-msgid "insert line item"
-msgstr "inserire linea di termine"
 
 #: /widgets/macro_helpers.pt:79
 msgid "add element&nbsp;"
@@ -805,10 +775,6 @@ msgstr "sottoeditor"
 msgid "Up to parent"
 msgstr "Fino al parente"
 
-#: /widgets/top/nlist/render.pt:31
-msgid "Type:"
-msgstr "Tipo:"
-
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
 msgstr ""
@@ -864,3 +830,31 @@ msgstr ""
 #: /widgets/top/table/render.pt:62
 msgid "Data grid table (bold borderless heading, bordered rows)"
 msgstr ""
+
+#~ msgid "id"
+#~ msgstr "id"
+
+#~ msgid ""
+#~ "No spaces or special characters besides &#8216;_&#8217; or &#8216;-"
+#~ "&#8217; or &#8216;.&#8217;"
+#~ msgstr ""
+#~ "Nessuni spazi o caratteri speciali oltre a &#8216;_&#8217; or &#8216;-"
+#~ "&#8217; or &#8216;.&#8217;"
+
+#~ msgid "${tip} Tab to the exit button or alt-e."
+#~ msgstr "${tip} ab per il bottone exit oppure usare alt-e"
+
+#~ msgid "${tip} tab to the exit button or alt-e."
+#~ msgstr "${tip} tab per il bottone exit oppure alt-e"
+
+#~ msgid " update "
+#~ msgstr " aggiornamento "
+
+#~ msgid "nest elements"
+#~ msgstr "prossimi elementi"
+
+#~ msgid "insert line item"
+#~ msgstr "inserire linea di termine"
+
+#~ msgid "Type:"
+#~ msgstr "Tipo:"

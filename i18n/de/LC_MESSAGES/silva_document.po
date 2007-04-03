@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Wed Mar  7 17:34:13 2007\n"
+"POT-Creation-Date: Tue Apr  3 11:40:43 2007\n"
 "PO-Revision-Date: 2007-02-22 13:42+0000\n"
 "Last-Translator: Samuel Schluep <schluep@ethz.ch>\n"
 "Language-Team: Name <email>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "X-Is-Fallback-For: de-ch de-at de-li de-lu de-de\n"
 "Preferred-encodings: utf-8 latin1\n"
 "Domain: silva\n"
-"X-Rosetta-Export-Date: 2007-03-07 16:18+0000\n"
+"X-Rosetta-Export-Date: 2007-04-03 09:28:11+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -49,7 +49,7 @@ msgstr "Kein Zeichensatz / Zeichencodierung eingegeben"
 msgid "Charset set"
 msgstr "Zeichensatz / Zeichencodierung geändert"
 
-#: /install.py:162 /views/add/Document/form.form:48
+#: /install.py:162
 msgid "title"
 msgstr "Titel"
 
@@ -196,25 +196,6 @@ msgstr "Element &#8216;${self}&#8217; hat kein Attribut &#8216;${name}&#8217;"
 msgid "external source element is broken"
 msgstr "Die Datenquelle ist nicht verfügbar."
 
-#: /views/add/Document/form.form:28
-msgid "id"
-msgstr "Id"
-
-#: /views/add/Document/form.form:30
-msgid ""
-"No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
-"or &#8216;.&#8217;"
-msgstr ""
-"Keine Leer- oder Sonderzeichen ausser &#8216;_&#8217; oder &#8216;-&#8217; "
-"oder &#8216;.&#8217;"
-
-#: /views/add/Document/form.form:49
-msgid ""
-"The title will be publicly visible, and is used for the link in indexes."
-msgstr ""
-"Der Titel wird öffentlich sichtbar sein und als Linktext in Indizes "
-"verwendet werden."
-
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
 msgstr "Formulareditor"
@@ -342,23 +323,19 @@ msgstr ""
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
-msgid "Tip:"
-msgstr "Tipp:"
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
 msgid "${tip} tab to the exit button or use alt-e."
 msgstr ""
 "${tip} &#8220;Speichern + schließen&#8221; mit der Tabulatortaste anwählen "
 "oder alt-e eingeben."
 
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-msgid "${tip} Tab to the exit button or alt-e."
-msgstr ""
-"${tip} &#8220;Speichern + schließen&#8221; mit der Tabulatortaste anwählen "
-"oder alt-e eingeben."
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+msgid "Tip:"
+msgstr "Tipp:"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:34
@@ -370,7 +347,7 @@ msgstr "Element"
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:43
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47
+#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
 msgid "type"
 msgstr "Typ"
 
@@ -581,12 +558,6 @@ msgstr ""
 "eingegeben wurden. Leerraumzeichen bleiben erhalten (außer bei leerem "
 "Texteingabefeld)."
 
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-msgid "${tip} tab to the exit button or alt-e."
-msgstr ""
-"${tip} &#8220;Speichern + schließen&#8221; mit der Tabulatortaste anwählen "
-"oder alt-e eingeben."
-
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:11
 msgid "source id"
 msgstr "Id der Datenquelle"
@@ -596,8 +567,8 @@ msgid "Select an External Source..."
 msgstr "Datenquelle auswählen..."
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:28
-msgid " update "
-msgstr " Aktualisieren "
+msgid "update"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:28
 msgid "access key: alt-u"
@@ -671,12 +642,9 @@ msgid "unlimited"
 msgstr "Unbegrenzt"
 
 #: /widgets/element/table_elements/nest_element.pt:4
+#: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:10
 msgid "nest element"
-msgstr "Verschachtelten Eintrag bearbeiten"
-
-#: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
-msgid "nest elements"
 msgstr "Verschachtelten Eintrag bearbeiten"
 
 #: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
@@ -734,10 +702,6 @@ msgstr "Eintrag einfügen"
 
 #: /widgets/macro_helpers.pt:66
 msgid "insert item"
-msgstr "Zeile einfügen"
-
-#: /widgets/macro_helpers.pt:66
-msgid "insert line item"
 msgstr "Zeile einfügen"
 
 #: /widgets/macro_helpers.pt:79
@@ -834,10 +798,6 @@ msgstr "Editor für verschachtelte Einträge"
 msgid "Up to parent"
 msgstr "Eine Ebene hoch"
 
-#: /widgets/top/nlist/render.pt:31
-msgid "Type:"
-msgstr "Typ:"
-
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
 msgstr "Editor für verschachtelte Einträge"
@@ -893,6 +853,44 @@ msgstr "Gittertabelle (Rahmen um Zellen und Überschriften)"
 #: /widgets/top/table/render.pt:62
 msgid "Data grid table (bold borderless heading, bordered rows)"
 msgstr "Daten-Gitttertabelle (Rahmen nur um Zellen)"
+
+#~ msgid "id"
+#~ msgstr "Id"
+
+#~ msgid ""
+#~ "No spaces or special characters besides &#8216;_&#8217; or &#8216;-"
+#~ "&#8217; or &#8216;.&#8217;"
+#~ msgstr ""
+#~ "Keine Leer- oder Sonderzeichen ausser &#8216;_&#8217; oder &#8216;-"
+#~ "&#8217; oder &#8216;.&#8217;"
+
+#~ msgid ""
+#~ "The title will be publicly visible, and is used for the link in indexes."
+#~ msgstr ""
+#~ "Der Titel wird öffentlich sichtbar sein und als Linktext in Indizes "
+#~ "verwendet werden."
+
+#~ msgid "${tip} Tab to the exit button or alt-e."
+#~ msgstr ""
+#~ "${tip} &#8220;Speichern + schließen&#8221; mit der Tabulatortaste "
+#~ "anwählen oder alt-e eingeben."
+
+#~ msgid "${tip} tab to the exit button or alt-e."
+#~ msgstr ""
+#~ "${tip} &#8220;Speichern + schließen&#8221; mit der Tabulatortaste "
+#~ "anwählen oder alt-e eingeben."
+
+#~ msgid " update "
+#~ msgstr " Aktualisieren "
+
+#~ msgid "nest elements"
+#~ msgstr "Verschachtelten Eintrag bearbeiten"
+
+#~ msgid "insert line item"
+#~ msgstr "Zeile einfügen"
+
+#~ msgid "Type:"
+#~ msgstr "Typ:"
 
 #~ msgid ""
 #~ "This is a special document that automagically displays a\n"

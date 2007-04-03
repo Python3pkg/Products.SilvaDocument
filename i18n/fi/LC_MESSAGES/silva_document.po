@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Wed Mar  7 17:34:13 2007\n"
+"POT-Creation-Date: Tue Apr  3 11:40:43 2007\n"
 "PO-Revision-Date: 2006-11-06 23:08+0000\n"
 "Last-Translator: Tuomas Tonteri <tuomas.tonteri@kansanmedia.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Export-Date: 2007-03-07 16:18+0000\n"
+"X-Rosetta-Export-Date: 2007-04-03 09:28:16+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -42,7 +42,7 @@ msgstr "Ei merkkijärjestelmää syötetty"
 msgid "Charset set"
 msgstr "Merkkijärjestelmä asetettu"
 
-#: /install.py:162 /views/add/Document/form.form:48
+#: /install.py:162
 msgid "title"
 msgstr "otsikko"
 
@@ -189,23 +189,6 @@ msgstr "${name} ominaisuutta ei löytynyt tuntomerkissä ${self}"
 msgid "external source element is broken"
 msgstr "ulkoisen lähteen elementti ei toimi"
 
-#: /views/add/Document/form.form:28
-msgid "id"
-msgstr "tunnus"
-
-#: /views/add/Document/form.form:30
-msgid ""
-"No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
-"or &#8216;.&#8217;"
-msgstr ""
-"Ei välilyöntejä tai erikoismerkkejä, paitsi &#8216;_&#8217; tai &#8216;-"
-"&#8217; or &#8216;.&#8217;"
-
-#: /views/add/Document/form.form:49
-msgid ""
-"The title will be publicly visible, and is used for the link in indexes."
-msgstr ""
-
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
 msgstr "forms muokkaaja"
@@ -331,19 +314,17 @@ msgstr ""
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
-msgid "Tip:"
-msgstr "Vinkki:"
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
 msgid "${tip} tab to the exit button or use alt-e."
 msgstr ""
 
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-msgid "${tip} Tab to the exit button or alt-e."
-msgstr ""
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+msgid "Tip:"
+msgstr "Vinkki:"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:34
@@ -355,7 +336,7 @@ msgstr "elementti"
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:43
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47
+#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
 msgid "type"
 msgstr "tyyppi"
 
@@ -557,10 +538,6 @@ msgstr ""
 "Esimuotoiltu teksti näkyy niinkuin se on kirjoitettu. Tyhjä tila tulee "
 "mukaan (ellei tekstialue ole tyhjä)."
 
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-msgid "${tip} tab to the exit button or alt-e."
-msgstr ""
-
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:11
 msgid "source id"
 msgstr "lähteen tunnus"
@@ -570,8 +547,8 @@ msgid "Select an External Source..."
 msgstr "Valitse Ulkoinen Lähde..."
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:28
-msgid " update "
-msgstr " päivitä "
+msgid "update"
+msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:28
 msgid "access key: alt-u"
@@ -644,13 +621,10 @@ msgid "unlimited"
 msgstr "rajoittamaton"
 
 #: /widgets/element/table_elements/nest_element.pt:4
+#: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:10
 msgid "nest element"
 msgstr "sisäkkäinen elementti"
-
-#: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
-msgid "nest elements"
-msgstr "sisäkkäiset elementit"
 
 #: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
 msgid "The stored xml is invalid."
@@ -708,10 +682,6 @@ msgstr "lisää elementti"
 #: /widgets/macro_helpers.pt:66
 msgid "insert item"
 msgstr "lisää osa"
-
-#: /widgets/macro_helpers.pt:66
-msgid "insert line item"
-msgstr "lisää viiva-osa"
 
 #: /widgets/macro_helpers.pt:79
 msgid "add element&nbsp;"
@@ -808,10 +778,6 @@ msgstr "alamuokkaaja"
 msgid "Up to parent"
 msgstr "Ylös vanhempaan"
 
-#: /widgets/top/nlist/render.pt:31
-msgid "Type:"
-msgstr "Tyyppi:"
-
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
 msgstr "Sisäkkäisten elementtien muokkaaja"
@@ -868,3 +834,25 @@ msgstr "Ruudukko-taulukko (lihavoitu ja rajattu otsikko, rajatut rivit)"
 #: /widgets/top/table/render.pt:62
 msgid "Data grid table (bold borderless heading, bordered rows)"
 msgstr "Aineisto-taulukko (lihavoitu rajaton otsikko, rajatut rivit)"
+
+#~ msgid "id"
+#~ msgstr "tunnus"
+
+#~ msgid ""
+#~ "No spaces or special characters besides &#8216;_&#8217; or &#8216;-"
+#~ "&#8217; or &#8216;.&#8217;"
+#~ msgstr ""
+#~ "Ei välilyöntejä tai erikoismerkkejä, paitsi &#8216;_&#8217; tai &#8216;-"
+#~ "&#8217; or &#8216;.&#8217;"
+
+#~ msgid " update "
+#~ msgstr " päivitä "
+
+#~ msgid "nest elements"
+#~ msgstr "sisäkkäiset elementit"
+
+#~ msgid "insert line item"
+#~ msgstr "lisää viiva-osa"
+
+#~ msgid "Type:"
+#~ msgstr "Tyyppi:"
