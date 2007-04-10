@@ -60,6 +60,6 @@ class EditorTransformer(Transformer):
                                  source='kupu.silva', 
                                  target='kupu.html')
         else:
-            message = _("Unknown Editor: ${editor}")
-            message.set_mapping({'editor': editor})
+            message = _("Unknown Editor: ${editor}",
+                        mapping={'editor': editor})
             raise message

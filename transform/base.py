@@ -93,8 +93,8 @@ class Node:
 
         if vars(self.attr).has_key(name):
             return getattr(self.attr, name)
-        message = _("${name} attribute not found on tag ${self}")
-        message.set_mapping({'name': name, 'self': self})
+        message = _("${name} attribute not found on tag ${self}",
+                    mapping={'name': name, 'self': self})
         raise AttributeError,  message
 
     def conv(self):
@@ -104,14 +104,13 @@ class Node:
         """ return exactly one tag pointed to by a simple 'path' or raise a ValueError"""
         dic = self.query(path)
         if len(dic) == 0:
-            message = _("no ${path} element")
-            message.set_mapping({'path': path})
+            message = _("no ${path} element", mapping={'path': path})
             raise ValueError,  message
         elif len(dic) == 1 and len(dic.values()[0]) == 1:
             return dic.values()[0][0]
         else:
-            message = _("more than one ${path} element")
-            message.set_mapping({'path': path})
+            message = _("more than one ${path} element",
+                        mapping={'path': path})
             raise ValueError, message
 
     def query(self, querypath):

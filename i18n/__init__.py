@@ -1,3 +1,3 @@
-from zope.i18nmessageid import MessageIDFactory
+from zope.i18nmessageid import MessageFactory
 
-translate = MessageIDFactory('silva_document')
+translate = MessageFactory('silva_document')

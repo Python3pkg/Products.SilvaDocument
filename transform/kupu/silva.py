@@ -35,7 +35,6 @@ import types
 from urlparse import urlparse
 
 from Products.Silva.i18n import translate as _
-from Products.Silva import mangle
 
 _attr_origin=u'silva_origin'
 _attr_prefix=u'silva_'

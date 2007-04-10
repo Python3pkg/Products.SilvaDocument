@@ -18,7 +18,7 @@
     name="SilvaDocument" 
     title="Silva Document"
     />
-  
+
   <silva:versionedcontent
     content=".Document.Document"
     version=".Document.DocumentVersion"
@@ -27,4 +27,19 @@
     priority="-6"
     />  
 
+  <!-- event handlers -->
+  
+  <subscriber
+    for=".interfaces.IDocument
+      OFS.interfaces.IObjectWillBeRemovedEvent"
+    handler=".Document.document_will_be_removed" 
+  />
+  
+  <subscriber
+    for=".interfaces.IDocumentVersion
+      OFS.interfaces.IObjectClonedEvent"
+    handler=".Document.documentversion_cloned" 
+  />
+  
+  
 </configure>

@@ -252,14 +252,6 @@ class Document(CatalogedVersionedContent):
         version = self.get_editable()
         version.clearEditorCache()
 
-    def manage_beforeDelete(self, item, container):
-        Document.inheritedAttribute('manage_beforeDelete')(self, item, container)
-        # Does the widget cache needs be cleared for all versions - I think so...
-        for version in self._get_indexable_versions():
-            version_object = getattr(self, str(version), None)
-            if version_object:
-                self.service_editor.clearCache(version_object.content)
-
     def transform_and_store(self, content_type, content):
         ret = content
         try:
@@ -338,6 +330,13 @@ class Document(CatalogedVersionedContent):
 
 InitializeClass(Document)
 
+def document_will_be_removed(document, event):
+    # Does the widget cache needs be cleared for all versions - I think so...
+    for version in document._get_indexable_versions():
+        version_object = getattr(document, str(version), None)
+        if version_object:
+            document.service_editor.clearCache(version_object.content)
+
 class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
@@ -367,10 +366,6 @@ class DocumentVersion(CatalogedVersion):
     def get_xml_content(self, f):
         self.content.documentElement.writeStream(f)
 
-    def manage_afterClone(self, item):
-        # if we're a copy, clear cache
-        # XXX should be part of workflow system
-        self.clearEditorCache()
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fulltext')
@@ -404,6 +399,11 @@ class DocumentVersion(CatalogedVersion):
         editor_service.clearCache(document_element)
 
 InitializeClass(DocumentVersion)
+
+def documentversion_cloned(documentversion, event):
+    # if we're a copy, clear cache
+    # XXX should be part of workflow system
+    documentversion.clearEditorCache()
 
 def xml_import_handler(object, node):
     id = get_xml_id(node)
