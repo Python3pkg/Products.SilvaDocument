@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Tue Apr  3 11:40:43 2007\n"
+"POT-Creation-Date: Wed Mar  7 17:34:13 2007\n"
 "PO-Revision-Date: 2006-11-06 23:08+0000\n"
 "Last-Translator: Tuomas Tonteri <tuomas.tonteri@kansanmedia.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Export-Date: 2007-04-03 09:28:16+0000\n"
+"X-Rosetta-Export-Date: 2007-05-21 14:58:18+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -46,7 +46,8 @@ msgstr "Merkkijärjestelmä asetettu"
 msgid "title"
 msgstr "otsikko"
 
-#: /install.py:163 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
+#: /install.py:163
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
@@ -54,7 +55,8 @@ msgstr "otsikko"
 msgid "paragraph"
 msgstr "kappale"
 
-#: /install.py:164 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
+#: /install.py:164
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
@@ -62,7 +64,8 @@ msgstr "kappale"
 msgid "heading"
 msgstr "otsikko"
 
-#: /install.py:165 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
+#: /install.py:165
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
@@ -70,7 +73,8 @@ msgstr "otsikko"
 msgid "list"
 msgstr "luettelo"
 
-#: /install.py:166 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
+#: /install.py:166
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
@@ -94,7 +98,8 @@ msgstr "taulukko"
 msgid "complex list"
 msgstr "monimutkainen lista"
 
-#: /install.py:171 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
+#: /install.py:171
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
@@ -106,7 +111,8 @@ msgstr "määritelmien luettelo"
 msgid "code element"
 msgstr "koodin osa"
 
-#: /install.py:173 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+#: /install.py:173
+#: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
 msgstr "lainaus"
 
@@ -114,23 +120,29 @@ msgstr "lainaus"
 msgid "external source"
 msgstr "ulkoinen lähde"
 
-#: /install.py:233 /install.py:301
+#: /install.py:233
+#: /install.py:301
 msgid "Paragraph"
 msgstr "Kappale"
 
-#: /install.py:234 /install.py:302
+#: /install.py:234
+#: /install.py:302
 msgid "Heading"
 msgstr "Yläotsikko"
 
-#: /install.py:235 /install.py:303
+#: /install.py:235
+#: /install.py:303
 msgid "List"
 msgstr "Luettelo"
 
-#: /install.py:236 /install.py:304
+#: /install.py:236
+#: /install.py:304
 msgid "Image"
 msgstr "Kuva"
 
-#: /install.py:237 /install.py:262 /install.py:305
+#: /install.py:237
+#: /install.py:262
+#: /install.py:305
 msgid "Complex list"
 msgstr "Monimutkainen luettelo"
 
@@ -336,7 +348,8 @@ msgstr "elementti"
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:43
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
+#: /widgets/top/table/render.pt:47
+#: /widgets/top/nlist/render.pt:31
 msgid "type"
 msgstr "tyyppi"
 
@@ -631,13 +644,16 @@ msgid "The stored xml is invalid."
 msgstr "Varastoitu xml on kelvotonta."
 
 #: /widgets/macro_helpers.pt:106
+#: /widgets/macro_helpers.pt:106
 msgid "delete element"
 msgstr "tuhoa elementti"
 
 #: /widgets/macro_helpers.pt:107
+#: /widgets/macro_helpers.pt:107
 msgid "move down"
 msgstr "siirrä alas"
 
+#: /widgets/macro_helpers.pt:108
 #: /widgets/macro_helpers.pt:108
 msgid "move up"
 msgstr "siirrä ylös"
@@ -674,11 +690,15 @@ msgstr "tallenna + lisää"
 msgid "access key: alt-i"
 msgstr "pikanäppäin: alt-i"
 
-#: /widgets/macro_helpers.pt:49 /widgets/macro_helpers.pt:50
-#: /widgets/macro_helpers.pt:51 /widgets/macro_helpers.pt:63
+#: /widgets/macro_helpers.pt:49
+#: /widgets/macro_helpers.pt:50
+#: /widgets/macro_helpers.pt:51
+#: /widgets/macro_helpers.pt:63
+#: /widgets/macro_helpers.pt:63
 msgid "insert element"
 msgstr "lisää elementti"
 
+#: /widgets/macro_helpers.pt:66
 #: /widgets/macro_helpers.pt:66
 msgid "insert item"
 msgstr "lisää osa"
@@ -709,7 +729,8 @@ msgstr "alleviivattu"
 msgid "superscript"
 msgstr "yläindeksi"
 
-#: /widgets/macro_notes.pt:11 /widgets/macro_notes.pt:12
+#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:12
 msgid "text"
 msgstr "teksti"
 
@@ -733,7 +754,8 @@ msgstr ""
 msgid "abbreviation"
 msgstr "lyhenne"
 
-#: /widgets/macro_notes.pt:14 /widgets/macro_notes.pt:15
+#: /widgets/macro_notes.pt:14
+#: /widgets/macro_notes.pt:15
 msgid "full name"
 msgstr "täydellinen nimi"
 
@@ -753,20 +775,25 @@ msgstr ""
 "Tekstiä voidaan muotoilla &#8211; kursivoituna, lihavoituna jne. &#8211; "
 "${silva_markup}:"
 
-#: /widgets/macro_notes.pt:8 /widgets/macro_notes.pt:10
+#: /widgets/macro_notes.pt:8
+#: /widgets/macro_notes.pt:10
 msgid "italic"
 msgstr "kursivoitu"
 
-#: /widgets/macro_notes.pt:8 /widgets/macro_notes.pt:10
+#: /widgets/macro_notes.pt:8
+#: /widgets/macro_notes.pt:10
 msgid "bold"
 msgstr "lihavointi"
 
-#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
-#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:14
+#: /widgets/top/field/render.pt:20
+#: /widgets/top/sub/render.pt:14
+#: /widgets/top/sub/render.pt:20
 msgid "edit parent"
 msgstr "muokkaa vanhempaa"
 
-#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
+#: /widgets/top/field/render.pt:14
+#: /widgets/top/sub/render.pt:14
 msgid "Up to parent: alt-u"
 msgstr "Ylös vanhempaan: alt-u"
 
@@ -774,7 +801,8 @@ msgstr "Ylös vanhempaan: alt-u"
 msgid "subeditor"
 msgstr "alamuokkaaja"
 
-#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:20
+#: /widgets/top/sub/render.pt:20
 msgid "Up to parent"
 msgstr "Ylös vanhempaan"
 
@@ -839,8 +867,8 @@ msgstr "Aineisto-taulukko (lihavoitu rajaton otsikko, rajatut rivit)"
 #~ msgstr "tunnus"
 
 #~ msgid ""
-#~ "No spaces or special characters besides &#8216;_&#8217; or &#8216;-"
-#~ "&#8217; or &#8216;.&#8217;"
+#~ "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
+#~ "or &#8216;.&#8217;"
 #~ msgstr ""
 #~ "Ei välilyöntejä tai erikoismerkkejä, paitsi &#8216;_&#8217; tai &#8216;-"
 #~ "&#8217; or &#8216;.&#8217;"

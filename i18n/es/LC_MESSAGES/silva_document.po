@@ -1,4 +1,4 @@
-# Portuguese translation for silvadocument
+# Spanish translation for silvadocument
 # Copyright (c) 2007 Rosetta Contributors and Canonical Ltd 2007
 # This file is distributed under the same license as the silvadocument package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2007.
@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Wed Mar  7 17:34:13 2007\n"
+"POT-Creation-Date: 2006-10-18 20:26:18.680128+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Portuguese <pt@li.org>\n"
+"Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Export-Date: 2007-05-21 14:58:17+0000\n"
+"X-Rosetta-Export-Date: 2007-05-21 14:58:12+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
