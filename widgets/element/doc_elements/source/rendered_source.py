@@ -11,6 +11,9 @@ for key, value in uparameters.items():
 try:
     html = source.to_html(request, **parameters)
 except (Exception), err:
+    #only log traceback if ExternalSources version has the function
+    if source and hasattr(source,'log_traceback'):
+            source.log_traceback()
     html = """<div class="warning"><b>[""" + \
     unicode(_("external source element is broken")) + \
     "]</b><br /> " + unicode(_("error message:")) + " " + str(err) + "</div>"

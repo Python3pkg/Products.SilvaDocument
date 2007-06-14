@@ -6,6 +6,7 @@ from __future__ import nested_scopes
 import re
 from xml.sax.saxutils import escape, unescape, quoteattr
 from urlparse import urlparse
+from types import UnicodeType
 
 from zope.interface import implements
 # Zope
@@ -21,6 +22,11 @@ from Products.Silva.adapters.path import getPathAdapter
 
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
+
+def ustr(inputstr,encoding):
+    if not isinstance(inputstr, UnicodeType):
+        inputstr = unicode(inputstr,encoding)
+    return inputstr
 
 class SupportRegistry:
     def __init__(self, default_class):
@@ -104,7 +110,7 @@ class ParagraphSupport(MixedContentSupport):
         """
         from sprout.silvasubset import PARAGRAPH_SUBSET
 
-        inputstr = unicode(inputstr, 'UTF-8')
+        inputstr = ustr(inputstr, 'UTF-8')
         node = self._node
         # remove all old subnodes of node
         while node.hasChildNodes():
@@ -348,7 +354,7 @@ class HeadingSupport(ParagraphSupport):
         """
         from sprout.silvasubset import HEADING_SUBSET
 
-        inputstr = unicode(inputstr, 'UTF-8')
+        inputstr = ustr(inputstr, 'UTF-8')
         node = self._node
         # remove all old subnodes of node
         while node.hasChildNodes():
@@ -371,7 +377,7 @@ class PreSupport(ParagraphSupport):
         """
         # Since we don't use Formulator we get UTF8 from the forms,
         # so decode to unicode manually here.
-        inputstr = unicode(inputstr, 'utf-8')
+        inputstr = ustr(inputstr, 'utf-8')
         inputstr = self._unifyLineBreak(inputstr)
         node = self._node
         doc = node.ownerDocument
