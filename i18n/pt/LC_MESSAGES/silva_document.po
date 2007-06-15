@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Wed Mar  7 17:34:13 2007\n"
+"POT-Creation-Date: Fri Jun 15 11:37:20 2007\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -46,36 +46,32 @@ msgstr ""
 msgid "title"
 msgstr ""
 
-#: /install.py:163
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
+#: /install.py:163 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:36
 msgid "paragraph"
 msgstr ""
 
-#: /install.py:164
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
+#: /install.py:164 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:37
 msgid "heading"
 msgstr ""
 
-#: /install.py:165
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
+#: /install.py:165 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:38
 msgid "list"
 msgstr ""
 
-#: /install.py:166
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
+#: /install.py:166 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:39
@@ -98,9 +94,8 @@ msgstr ""
 msgid "complex list"
 msgstr ""
 
-#: /install.py:171
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
+#: /install.py:171 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:41
@@ -111,8 +106,7 @@ msgstr ""
 msgid "code element"
 msgstr ""
 
-#: /install.py:173
-#: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+#: /install.py:173 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
 msgstr ""
 
@@ -120,29 +114,23 @@ msgstr ""
 msgid "external source"
 msgstr ""
 
-#: /install.py:233
-#: /install.py:301
+#: /install.py:233 /install.py:301
 msgid "Paragraph"
 msgstr ""
 
-#: /install.py:234
-#: /install.py:302
+#: /install.py:234 /install.py:302
 msgid "Heading"
 msgstr ""
 
-#: /install.py:235
-#: /install.py:303
+#: /install.py:235 /install.py:303
 msgid "List"
 msgstr ""
 
-#: /install.py:236
-#: /install.py:304
+#: /install.py:236 /install.py:304
 msgid "Image"
 msgstr ""
 
-#: /install.py:237
-#: /install.py:262
-#: /install.py:305
+#: /install.py:237 /install.py:262 /install.py:305
 msgid "Complex list"
 msgstr ""
 
@@ -182,21 +170,22 @@ msgstr ""
 msgid "no ${path} element"
 msgstr ""
 
-#: /transform/base.py:113
+#: /transform/base.py:112
 msgid "more than one ${path} element"
 msgstr ""
 
-#: /transform/base.py:143
+#: /transform/base.py:142
 msgid "intermingling * is not allowed ${i}"
 msgstr ""
 
+# Default: "self"
 #: /transform/base.py:96
-msgid "${name} attribute not found on tag ${self}"
+msgid "name"
 msgstr ""
 
-#: /transform/kupu/silva.py:528
-#: /widgets/element/doc_elements/source/rendered_source.py:15
-#: /widgets/element/doc_elements/source/rendered_source.py:20
+#: /transform/kupu/silva.py:527
+#: /widgets/element/doc_elements/source/rendered_source.py:18
+#: /widgets/element/doc_elements/source/rendered_source.py:23
 #: /widgets/element/doc_elements/source/render.pt:8
 msgid "external source element is broken"
 msgstr ""
@@ -333,38 +322,37 @@ msgstr ""
 msgid "Tip:"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:34
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:33
 msgid "element"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:43
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47
-#: /widgets/top/nlist/render.pt:31
+#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
 msgid "type"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Normal heading"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
 msgid "Sub heading"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:31
 msgid "Sub sub heading"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:32
 msgid "Paragraph heading"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:31
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:33
 msgid "Sub paragraph heading"
 msgstr ""
 
@@ -596,11 +584,11 @@ msgstr ""
 msgid "Source parameters"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/rendered_source.py:16
+#: /widgets/element/doc_elements/source/rendered_source.py:19
 msgid "error message:"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/rendered_source.py:21
+#: /widgets/element/doc_elements/source/rendered_source.py:24
 msgid "Unfortunately however, there no error message available..."
 msgstr ""
 
@@ -631,16 +619,13 @@ msgid "The stored xml is invalid."
 msgstr ""
 
 #: /widgets/macro_helpers.pt:106
-#: /widgets/macro_helpers.pt:106
 msgid "delete element"
 msgstr ""
 
 #: /widgets/macro_helpers.pt:107
-#: /widgets/macro_helpers.pt:107
 msgid "move down"
 msgstr ""
 
-#: /widgets/macro_helpers.pt:108
 #: /widgets/macro_helpers.pt:108
 msgid "move up"
 msgstr ""
@@ -677,15 +662,11 @@ msgstr ""
 msgid "access key: alt-i"
 msgstr ""
 
-#: /widgets/macro_helpers.pt:49
-#: /widgets/macro_helpers.pt:50
-#: /widgets/macro_helpers.pt:51
-#: /widgets/macro_helpers.pt:63
-#: /widgets/macro_helpers.pt:63
+#: /widgets/macro_helpers.pt:49 /widgets/macro_helpers.pt:50
+#: /widgets/macro_helpers.pt:51 /widgets/macro_helpers.pt:63
 msgid "insert element"
 msgstr ""
 
-#: /widgets/macro_helpers.pt:66
 #: /widgets/macro_helpers.pt:66
 msgid "insert item"
 msgstr ""
@@ -716,8 +697,7 @@ msgstr ""
 msgid "superscript"
 msgstr ""
 
-#: /widgets/macro_notes.pt:11
-#: /widgets/macro_notes.pt:12
+#: /widgets/macro_notes.pt:11 /widgets/macro_notes.pt:12
 msgid "text"
 msgstr ""
 
@@ -741,8 +721,7 @@ msgstr ""
 msgid "abbreviation"
 msgstr ""
 
-#: /widgets/macro_notes.pt:14
-#: /widgets/macro_notes.pt:15
+#: /widgets/macro_notes.pt:14 /widgets/macro_notes.pt:15
 msgid "full name"
 msgstr ""
 
@@ -760,25 +739,20 @@ msgid ""
 "${silva_markup}:"
 msgstr ""
 
-#: /widgets/macro_notes.pt:8
-#: /widgets/macro_notes.pt:10
+#: /widgets/macro_notes.pt:8 /widgets/macro_notes.pt:10
 msgid "italic"
 msgstr ""
 
-#: /widgets/macro_notes.pt:8
-#: /widgets/macro_notes.pt:10
+#: /widgets/macro_notes.pt:8 /widgets/macro_notes.pt:10
 msgid "bold"
 msgstr ""
 
-#: /widgets/top/field/render.pt:14
-#: /widgets/top/field/render.pt:20
-#: /widgets/top/sub/render.pt:14
-#: /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
+#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
 msgid "edit parent"
 msgstr ""
 
-#: /widgets/top/field/render.pt:14
-#: /widgets/top/sub/render.pt:14
+#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
 msgid "Up to parent: alt-u"
 msgstr ""
 
@@ -786,8 +760,7 @@ msgstr ""
 msgid "subeditor"
 msgstr ""
 
-#: /widgets/top/field/render.pt:20
-#: /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
 msgid "Up to parent"
 msgstr ""
 

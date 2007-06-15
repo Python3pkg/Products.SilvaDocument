@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: SilvaDocument trunk"
-"POT-Creation-Date: Tue Apr  3 11:41:27 2007\n"
+"POT-Creation-Date: Fri Jun 15 11:37:20 2007\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Silva Translators <eric+i18n@infrae.com>\n"
@@ -39,7 +39,7 @@ msgstr ""
 
 #: /install.py:163
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:18
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:36
@@ -48,7 +48,7 @@ msgstr ""
 
 #: /install.py:164
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:19
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:37
@@ -57,7 +57,7 @@ msgstr ""
 
 #: /install.py:165
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:38
@@ -66,7 +66,7 @@ msgstr ""
 
 #: /install.py:166
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:39
@@ -91,7 +91,7 @@ msgstr ""
 
 #: /install.py:171
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:41
@@ -166,28 +166,32 @@ msgid "row heading"
 msgstr ""
 
 #: /transform/Transformer.py:63
+# Default: "editor"
 msgid "Unknown Editor: ${editor}"
 msgstr ""
 
 #: /transform/base.py:107
+# Default: "path"
 msgid "no ${path} element"
 msgstr ""
 
-#: /transform/base.py:113
+#: /transform/base.py:112
+# Default: "path"
 msgid "more than one ${path} element"
 msgstr ""
 
-#: /transform/base.py:143
+#: /transform/base.py:142
 msgid "intermingling * is not allowed ${i}"
 msgstr ""
 
 #: /transform/base.py:96
-msgid "${name} attribute not found on tag ${self}"
+# Default: "self"
+msgid "name"
 msgstr ""
 
-#: /transform/kupu/silva.py:528
-#: /widgets/element/doc_elements/source/rendered_source.py:15
-#: /widgets/element/doc_elements/source/rendered_source.py:20
+#: /transform/kupu/silva.py:527
+#: /widgets/element/doc_elements/source/rendered_source.py:18
+#: /widgets/element/doc_elements/source/rendered_source.py:23
 #: /widgets/element/doc_elements/source/render.pt:8
 msgid "external source element is broken"
 msgstr ""
@@ -254,6 +258,7 @@ msgid "Code element is broken"
 msgstr ""
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
+# Default: "title_or_id"
 msgid "Code element: ${title_or_id} at ${path}"
 msgstr ""
 
@@ -317,14 +322,14 @@ msgstr ""
 msgid "Tip:"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:15
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:34
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:33
 msgid "element"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:43
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:50
 #: /widgets/top/table/render.pt:47
@@ -332,23 +337,23 @@ msgstr ""
 msgid "type"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Normal heading"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
 msgid "Sub heading"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:31
 msgid "Sub sub heading"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:32
 msgid "Paragraph heading"
 msgstr ""
 
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:31
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:33
 msgid "Sub paragraph heading"
 msgstr ""
 
@@ -567,11 +572,11 @@ msgstr ""
 msgid "Source parameters"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/rendered_source.py:16
+#: /widgets/element/doc_elements/source/rendered_source.py:19
 msgid "error message:"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/rendered_source.py:21
+#: /widgets/element/doc_elements/source/rendered_source.py:24
 msgid "Unfortunately however, there no error message available..."
 msgstr ""
 
