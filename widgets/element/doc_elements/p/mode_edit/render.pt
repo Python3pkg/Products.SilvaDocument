@@ -10,7 +10,7 @@
   <input type="button" class="transport" name="" 
     value="get link reference..." title="create a hyperlink: alt-g" 
     accesskey="g"
-    tal:define="container node/get_container"
+    tal:define="container python: node.get_container()"
     tal:attributes="lookup:contexturl container/absolute_url"
     onclick="reference.getReference(
                 function(path, id, title) {
