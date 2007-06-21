@@ -526,7 +526,8 @@ class source(SilvaElement):
                 header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, id)))
             else:
                 header = html.h4(Text('[%s]' % _('external source element is broken')))
-            content = Frag(header, divcontent, pre);
+            pre = Frag(divcontent)
+            content = Frag(header, pre);
             return html.div(content,
                         source_id=id,
                         class_='externalsource',
