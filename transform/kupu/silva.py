@@ -1,11 +1,11 @@
 """
 module for conversion from current silva (0.9.1) XML to
-kupu (HEAD) version HTML. 
+kupu (HEAD) version HTML.
 
 the notation used for the transformation roughly
-follows the ideas used with XIST (but simpler).  
-Note that we can't use XIST itself as long as 
-silva is running on a Zope version that 
+follows the ideas used with XIST (but simpler).
+Note that we can't use XIST itself as long as
+silva is running on a Zope version that
 doesn't allow python2.2.1
 
 """
@@ -45,7 +45,7 @@ _attr_prefix=u'silva_'
 class SilvaElement(Element):
     def backattr(self):
         """ return dictionary with back attributes
-            these attributes are later used for 
+            these attributes are later used for
             the transformation from html to silvaxml.
         """
         attrs = {}
@@ -57,9 +57,9 @@ class SilvaElement(Element):
         return attrs
 
     def convert(self, context):
-        """ for transformation of silva nodes to 
-            html often we just want the content of 
-            the node without the surrounding tags. 
+        """ for transformation of silva nodes to
+            html often we just want the content of
+            the node without the surrounding tags.
         """
         return self.content.convert(context)
 
@@ -73,7 +73,7 @@ class silva_document(SilvaElement):
         node_body = self.find(tag=doc)[0]
 
         body = html.body(
-            html.h2(node_title.convert(context), 
+            html.h2(node_title.convert(context),
                     silva_origin='silva_document',
                     silva_id=self.attr.id
                     ),
@@ -85,7 +85,7 @@ class silva_document(SilvaElement):
     def asBytes(self, *args, **kwargs):
         return SilvaElement.asBytes(self, *args, **kwargs)
 
-class title(SilvaElement): 
+class title(SilvaElement):
     """ us used with documents, list and tables (i guess) """
 
 class doc(SilvaElement):
@@ -99,8 +99,8 @@ class heading(SilvaElement):
     def convert(self, context):
         # some defensive programming here...
         level = self.attr.type
-        h_tag = {u'normal' : html.h3, 
-                 u'sub': html.h4, 
+        h_tag = {u'normal' : html.h3,
+                 u'sub': html.h4,
                  u'subsub': html.h5,
                  u'paragraph': html.h6,
                  u'subparagraph': html.h6,
@@ -252,9 +252,9 @@ class link(SilvaElement):
                         alignment=img.getattr('alignment', 'default'),
                 )
             else:
-                if (img.hasattr('link_to_hires') and 
+                if (img.hasattr('link_to_hires') and
                         img.getattr('link_to_hires') == '1'):
-                    
+
                     return html.img(
                             img.content.convert(context),
                             src=path,
@@ -306,9 +306,9 @@ class image(SilvaElement):
         if not src:
             src = ''
 
-        if ((not self.hasattr('link') or 
+        if ((not self.hasattr('link') or
                 str(self.getattr('link')).strip() == '')and (
-                    not self.hasattr('link_to_hires') or 
+                    not self.hasattr('link_to_hires') or
                     self.getattr('link_to_hires') == '0')):
             return html.img(
                         self.content.convert(context),
@@ -395,7 +395,7 @@ class table(SilvaElement):
     def compute_aligns_relwidths(self):
         """ return a list with the alignments """
         infos = str(self.attr.column_info).split(' ')
-        aligns = [(self.alignmapping.has_key(i[0]) and 
+        aligns = [(self.alignmapping.has_key(i[0]) and
                         self.alignmapping[i[0]] or 'left')
                     for i in infos]
         try:
@@ -403,7 +403,7 @@ class table(SilvaElement):
         except ValueError:
             return ([], [])
         return aligns, relwidths
-   
+
 class row(SilvaElement):
     def convert(self, context):
         relwidths = context.tablestack[-1].relwidths
@@ -411,7 +411,7 @@ class row(SilvaElement):
             context.tablestack[-1].row_count = 1
         else:
             context.tablestack[-1].row_count += 1
-            
+
         widths = []
         if relwidths:
             units = 100 / reduce(operator.add, relwidths)
@@ -435,14 +435,14 @@ class row(SilvaElement):
 
 class row_heading(SilvaElement):
     def convert(self, context):
-        cols = context.tablestack[-1].cols 
+        cols = context.tablestack[-1].cols
         return html.tr(
             html.th(
                self.content.convert(context),
                colspan = str(cols)
             )
         )
-  
+
 class field(SilvaElement):
     def convert(self, context):
         return html.td(
@@ -476,7 +476,7 @@ class cite(SilvaElement):
         author = self.find('author')[0].convert(context)
         source = self.find('source')[0].convert(context)
         content = [p.convert(context) for p in self.find('p')]
-        
+
         return html.div(
             content,
             author=author,
@@ -516,7 +516,7 @@ class source(SilvaElement):
                     value = ', '.join([unicode(x, 'UTF-8') for x in value])
                 else:
                     value = unicode(value, 'UTF-8')
-                divcontent.append(Text('%s: %s\n' % 
+                divcontent.append(Text('%s: %s\n' %
                                     (unicode(key, 'UTF-8'), value)))
                 divcontent.append(html.br());
             object = getSourceForId(context.model, str(id))
@@ -525,7 +525,7 @@ class source(SilvaElement):
                 header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, id)))
             else:
                 header = html.h4(Text('[%s]' % _('external source element is broken')))
-            pre = Frage(divcontent)
+            pre = Frag(divcontent)
             content = Frag(header, pre);
             return html.div(content,
                         source_id=id,
