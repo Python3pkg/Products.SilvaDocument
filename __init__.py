@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id: __init__.py,v 1.12 2006/01/24 16:15:05 faassen Exp $
 
-from Products.Silva.ExtensionRegistry import extensionRegistry
 from Products.Silva.ImporterRegistry import importer_registry
 import EditorSupportNested
 import ServiceCodeSourceCharset
