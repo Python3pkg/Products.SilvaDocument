@@ -189,9 +189,9 @@ class ParagraphSupport(MixedContentSupport):
                 result.append(self._renderHtmlHelper(child, view_type))
                 result.append('</a>')
             elif child.nodeName == 'underline':
-                result.append('<u>')
+                result.append('<span class="underline">')
                 result.append(self._renderHtmlHelper(child, view_type))
-                result.append('</u>')
+                result.append('</span>')
             elif child.nodeName == 'index':
                 name = child.getAttribute('name')
                 title = child.getAttribute('title')
@@ -269,9 +269,9 @@ class ParagraphSupport(MixedContentSupport):
                 result.append(linktext)
                 result.append('</a>')
             elif child.nodeName == 'underline':
-                result.append('<u>')
+                result.append('<span class="underline">')
                 result.append(self._renderEditableHelper(child))
-                result.append('</u>')
+                result.append('</span>')
             elif child.nodeName == 'index':
                 result.append('<index name="%s" ' % mangle.entities(child.getAttribute('name')))
                 if child.getAttribute('title'):
