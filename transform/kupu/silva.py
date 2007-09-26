@@ -454,7 +454,11 @@ class field(SilvaElement):
 
 class toc(SilvaElement):
     def convert(self, context):
-        depth = str(self.attr.toc_depth) or 1
+        depth = self.attr.toc_depth
+        if not depth:
+            depth = "-1"
+        else:
+            depth = str(depth)
         multiple_s = 's'
         if int(depth) == 0:
             depth_string = '1'

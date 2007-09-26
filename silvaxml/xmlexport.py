@@ -246,7 +246,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if node.attributes:
             attributes = get_dict(node.attributes)
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
-        depth = attributes['toc_depth']
+        # default depth of -1
+        depth = attributes.get('toc_depth',-1)
         toc_context = self.context
         depth = int(depth)
         request = getattr(self.context, 'REQUEST', None)
