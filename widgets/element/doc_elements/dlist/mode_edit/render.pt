@@ -22,7 +22,7 @@
                             path + '&lt;/a&gt;';
                   textarea.value = text;
                   textarea.focus();
-                }, this.getAttribute('lookup:contexturl'), '', true);
+                }, this.getAttribute('lookup:contexturl'), '', true, '');
             "
     i18n:attributes="value;title" />
 </div>
