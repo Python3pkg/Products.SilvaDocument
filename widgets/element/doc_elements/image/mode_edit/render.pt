@@ -22,7 +22,7 @@
                                       )[0].value = path;;
                                     },
                                     '${asset_context/absolute_url}',
-                                    'Silva Image', true)"
+                                    'Silva Image', true, '')"
           i18n:attributes="value;title" />
       </td>
       <td class="invisible align-left" style="white-space:nowrap;" colspan="3"
@@ -45,7 +45,7 @@
                                       )[0].value = path;;
                                     },
                                     '${container/absolute_url}',
-                                    '', true)"
+                                    '', true, '')"
           i18n:attributes="value;title" />
       </td>
       <td class="invisible align-left" style="background:#d7e4f0;" colspan="3">
