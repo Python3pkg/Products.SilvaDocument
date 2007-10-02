@@ -14,13 +14,13 @@ except (Exception), err:
     #only log traceback if ExternalSources version has the function
     if source and hasattr(source,'log_traceback'):
             source.log_traceback()
-    html = """<div class="warning"><b>[""" + \
+    html = """<div class="warning"><strong>[""" + \
     unicode(_("external source element is broken")) + \
-    "]</b><br /> " + unicode(_("error message:")) + " " + str(err) + "</div>"
+    "]</strong><br /> " + unicode(_("error message:")) + " " + str(err) + "</div>"
 except:
     # Ugh, bare except to catch *all* cases...
-    html = """<div class="warning"><b>[""" + \
-    unicode(_("external source element is broken")) + "]</b><br />" + \
+    html = """<div class="warning"><strong>[""" + \
+    unicode(_("external source element is broken")) + "]</strong><br />" + \
     unicode(_("Unfortunately however, there no error message available...")) + \
     "</div>"
 
