@@ -6,8 +6,7 @@ from Products.ParsedXML.DOM.Core import Node
 from Products.Silva.adapters.path import getPathAdapter
 from Products.Silva.adapters import tocrendering
 from Products.Silva.interfaces import IImage
-
-
+from Products.SilvaDocument.i18n import translate as _
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
@@ -76,17 +75,31 @@ class DocumentVersionProducer(SilvaBaseProducer):
             elif child.nodeType == Node.ELEMENT_NODE:
                 self.sax_node(child)
         
-    def sax_source(self, node): 	 
-        try:
-            from Products.SilvaExternalSources.ExternalSource import getSourceForId 	 
-        except ImportError:
-            return
+    def sax_source(self, node):
+        #simple output reporting to emulate behavior of widgets renderer
+        def source_error(thiserror):
+            html = ['<div class="warning"><strong>[',
+                    unicode(_("external source element is broken")),
+                    ']</strong><br />',
+                    thiserror,
+                    '</div>']
+            self.render_html("".join(html))
+            self.endElementNS(SilvaDocumentNS, node.nodeName)
         attributes = {}
         if node.attributes:
             attributes = get_dict(node.attributes)
-        id = attributes['id']
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
-        source = getSourceForId(self.context.get_content(), id) 	 
+        try:
+            from Products.SilvaExternalSources.ExternalSource import getSourceForId 	 
+        except ImportError:
+            source_error(unicode(_("external source element specified but silvaexternalsources not installed!")))
+            return
+        try: #this can happen if no source was specified when the element was added
+            id = attributes['id']
+        except KeyError:
+            source_error(unicode(_("no external source specified")))
+            return
+        source = getSourceForId(self.context.get_content(), id)
         parameters = {} 	 
         for child in node.childNodes: 	 
             if child.nodeName == 'parameter': 	 
@@ -95,14 +108,23 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     text = '' 	 
                     if grandChild.nodeType == Node.TEXT_NODE: 	 
                         if grandChild.nodeValue: 	 
-                            self.handler.characters(grandChild.nodeValue) 	 
+                            self.handler.characters(grandChild.nodeValue)
                             text = text + grandChild.nodeValue
                     parameters[str(child.attributes['key'].value)] = text 	 
-                self.endElementNS(SilvaDocumentNS, 'parameter') 	 
-        if self.getSettings().externalRendering(): 	 
+                self.endElementNS(SilvaDocumentNS, 'parameter')
+        if self.getSettings().externalRendering():
             request = self.context.REQUEST
             request.set('model', self.context.aq_inner)
-            html = source.to_html(request, **parameters)
+            try:
+                html = source.to_html(request, **parameters)
+            except Exception, err:
+                if source and hasattr(source.aq_explicit,'log_traceback'):
+                    source.log_traceback()
+                source_error(unicode(_("error message:")) + " " + str(err))
+                return
+            if not html:
+                source_error(unicode(_("error message:")) + " " + unicode(_("None returned from source")))
+                return
             if not request.get('edit_mode', None):
                 request.set('model', None)
             self.render_html(html)
