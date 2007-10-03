@@ -24,7 +24,7 @@ if len(childNodes) == 0:
 result = []
 firstNode = childNodes[0]
 viewer = context.service_editor.getViewer()
-if firstNode.nodeName == 'p':
+if firstNode.nodeName == 'p' and len(childNodes)==1:
     editorsupport = model.service_editorsupport
     supp = editorsupport.getMixedContentSupport(model, firstNode)
     result.append(supp.renderHTML(view_type='public'))
