@@ -139,8 +139,9 @@ class Node:
             elif i == '**':
                 l.append(r'.+')
             elif '*' in i:
-                message = _("intermingling * is not allowed ${i}")
-                message.set_mapping({'i': i})
+                message = _(
+                    "intermingling * is not allowed ${i}",
+                    mapping={'i': i})
                 raise ValueError,  message
             elif '|' in i:
                 l.append("(%s)" % i)
