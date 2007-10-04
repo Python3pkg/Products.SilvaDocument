@@ -37,7 +37,7 @@
     <tr>
       <td class="invisible align-right" style="background:#d7e4f0;">
         <input type="button" class="transport" name="" value="get link reference..." title="create a hyperlink: alt-l" accesskey="l"
-          tal:define="container node/get_container"
+          tal:define="container python:node.get_container()"
           tal:attributes="onclick string: reference.getReference(
                                     function(path, id, title) {
                                       document.getElementsByName(
