@@ -21,6 +21,7 @@ alignment = node.getAttribute('alignment')
 link = node.getAttribute('link')
 link_title = node.getAttribute('title')
 target = node.getAttribute('target')
+link_to_hires = node.getAttribute('link_to_hires')
 
 if not alignment:
     alignment = 'default'
@@ -42,6 +43,8 @@ params = {
 tag = tag_template % image.tag(**params)
 
 if link:
+    if link_to_hires=="1" and not link.endswith("?hires")==-1:
+        link += "?hires"
     tag = '<a class="image" href="%s" title="%s" target="%s">%s</a>' % (
         entities(link), link_title, target, tag)
 
