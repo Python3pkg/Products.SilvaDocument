@@ -5,8 +5,12 @@
     tal:define="
       source here/get_source | nothing;
       source_id source/id | nothing;
-      "
+      es_enabled python:'SilvaExternalSources' in here.service_extensions.get_installed_names()"
     >
+  <div tal:condition="python:not es_enabled and not source_id">
+   <p>The External Sources product is not installed.  Unable to create new External Source elements.</p>
+  </div>
+  <div tal:condition="python:es_enabled or source_id">
     <div>
       <tal:block i18n:translate="">source id</tal:block>&nbsp;<select name="id">
       <option disabled="disabled" i18n:translate="">Select an External Source...</option>
@@ -74,7 +78,9 @@
             </tal:block>
           </tbody>
         </table>
-      </div></tal:block>
+      </div>
+     </tal:block>
+    </div> <!-- es is enabled -->
   </metal:block>
 
   <metal:block fill-slot="edit_notes"
