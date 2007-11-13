@@ -43,7 +43,7 @@ params = {
 tag = tag_template % image.tag(**params)
 
 if link:
-    if link_to_hires=="1" and not link.endswith("?hires")==-1:
+    if link_to_hires=="1" and not link.endswith("?hires"):
         link += "?hires"
     tag = '<a class="image" href="%s" title="%s" target="%s">%s</a>' % (
         entities(link), link_title, target, tag)

@@ -20,6 +20,8 @@ from Products.Silva import mangle
 from Products.SilvaDocument import interfaces
 from Products.Silva.adapters.path import getPathAdapter
 
+from zLOG import LOG,INFO
+
 URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
 _url_match = re.compile(URL_PATTERN)
 
@@ -300,6 +302,7 @@ class ParagraphSupport(MixedContentSupport):
         return ''.join(result)
 
     def _linkHelper(self, context, path):
+        #XXXX may need to fix this, too!
         # If path is empty (can it be?), just return it
         if path == '':
             return path
@@ -396,6 +399,7 @@ class PreSupport(ParagraphSupport):
             assert child.nodeType == child.TEXT_NODE
             assert child.firstChild is None
             result += child.nodeValue
+        LOG('renderEditable',INFO, result)
         return result
         
     def _unifyLineBreak(self, inputstr):
