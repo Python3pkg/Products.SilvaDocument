@@ -23,7 +23,7 @@ if context.is_field_simple(node):
                 info['align'], width)
         return '<td class="align-%s">&nbsp;</td>' % (info['align'])
     if (len(node.childNodes) == 1 and
-        hasattr(node.childNodes[0].aq_explixit, 'data') and 
+        hasattr(node.childNodes[0].aq_explicit, 'data') and 
         len(node.childNodes[0].data.strip()) == 0):
         width = info.get('html_width')
         if width:
