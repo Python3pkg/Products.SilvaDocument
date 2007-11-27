@@ -299,7 +299,6 @@ class image(SilvaElement):
         src = self.attr.path
         pad = pathadapter.getPathAdapter(context.model.REQUEST)
         src = pad.pathToUrlPath(str(src))
-
         try:
             obj = context.model.unrestrictedTraverse(src.split('/'))
         except:
@@ -309,10 +308,8 @@ class image(SilvaElement):
             src = src.content
         except AttributeError:
             pass
-
         if not src:
             src = ''
-
 
         hires = (self.hasattr('link_to_hires') or
                             self.getattr('link_to_hires') == '0')
