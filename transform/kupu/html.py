@@ -683,7 +683,6 @@ class img(Element):
         if alignment == 'default' or alignment is None:
             alignment = ''
         if self.hasattr('link_to_hires') and self.getattr('link_to_hires') == '1':
-            dimensions = obj.getDimensions(obj.hires_image) 
             return silva.image(
                         self.content.convert(context),
                         path = src,
@@ -691,12 +690,9 @@ class img(Element):
                         alignment = alignment,
                         target = self.getattr('target', '_self'),
                         link_to_hires = '1',
-                        width=dimensions[0],
-                        height=dimensions[1],
                         title = self.getattr('title', ''),
                     )
         else:
-            dimensions = obj.getDimensions(obj.image) 
             return silva.image(
                         self.content.convert(context),
                         path = src,
@@ -704,8 +700,6 @@ class img(Element):
                         alignment = alignment,
                         target = self.getattr('target', '_self'),
                         link_to_hires = '0',
-                        width=dimensions[0],
-                        height=dimensions[1],
                         title = self.getattr('title', ''),
                     )
 

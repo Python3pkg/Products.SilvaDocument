@@ -299,23 +299,36 @@ class image(SilvaElement):
         src = self.attr.path
         pad = pathadapter.getPathAdapter(context.model.REQUEST)
         src = pad.pathToUrlPath(str(src))
+
+        try:
+            obj = context.model.unrestrictedTraverse(src.split('/'))
+        except:
+            obj = None
+
         try:
             src = src.content
         except AttributeError:
             pass
+
         if not src:
             src = ''
 
+
+        hires = (self.hasattr('link_to_hires') or
+                            self.getattr('link_to_hires') == '0')
+        width = ''
+        height = ''
+        if obj:
+            width, height = obj.getDimensions(obj.image)
+
         if ((not self.hasattr('link') or
-                str(self.getattr('link')).strip() == '')and (
-                    not self.hasattr('link_to_hires') or
-                    self.getattr('link_to_hires') == '0')):
+                str(self.getattr('link')).strip() == '')and not hires):
             return html.img(
                         self.content.convert(context),
                         src=src,
                         silva_src=src,
-                        width=self.getattr('width', ''),
-                        height=self.getattr('height', ''),
+                        width=width,
+                        height=height,
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
                         title = self.getattr('title', ''),
@@ -325,8 +338,8 @@ class image(SilvaElement):
                         self.content.convert(context),
                         src='%s/image' % src,
                         silva_src='%s/image' % src,
-                        width=self.getattr('width', ''),
-                        height=self.getattr('height', ''),
+                        width=width,
+                        height=height,
                         link_to_hires='1',
                         target=self.getattr('target', '_self'),
                         alignment=self.getattr('alignment', 'default'),
@@ -339,8 +352,8 @@ class image(SilvaElement):
                         self.content.convert(context),
                         src=src,
                         silva_src=src,
-                        width=self.getattr('width', ''),
-                        height=self.getattr('height', ''),
+                        width=width,
+                        height=height,
                         link_to_hires = '1',
                         target = self.getattr('target', '_self'),
                         alignment = self.getattr('alignment', 'default'),
@@ -351,8 +364,8 @@ class image(SilvaElement):
                         self.content.convert(context),
                         src=src,
                         silva_src=src,
-                        width=self.getattr('width', ''),
-                        height=self.getattr('height', ''),
+                        width=width,
+                        height=height,
                         link_to_hires=self.attr.link_to_hires,
                         link=self.getattr('link', ''),
                         target=self.getattr('target', '_self'),
