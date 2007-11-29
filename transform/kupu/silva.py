@@ -311,15 +311,15 @@ class image(SilvaElement):
         if not src:
             src = ''
 
-        hires = (self.hasattr('link_to_hires') or
-                            self.getattr('link_to_hires') == '0')
         width = ''
         height = ''
         if obj:
             width, height = obj.getDimensions(obj.image)
 
         if ((not self.hasattr('link') or
-                str(self.getattr('link')).strip() == '')and not hires):
+                str(self.getattr('link')).strip() == '')and (
+		   not self.hasattr('link_to_hires') or 	 
+	           self.getattr('link_to_hires') == '0')):
             return html.img(
                         self.content.convert(context),
                         src=src,
@@ -333,8 +333,8 @@ class image(SilvaElement):
         elif not self.hasattr('link') or str(self.getattr('link')).strip() == '':
             return html.img(
                         self.content.convert(context),
-                        src='%s/image' % src,
-                        silva_src='%s/image' % src,
+                        src=src,
+                        silva_src=src,
                         width=width,
                         height=height,
                         link_to_hires='1',
