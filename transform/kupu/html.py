@@ -686,7 +686,7 @@ class img(Element):
             return silva.image(
                         self.content.convert(context),
                         path = src,
-                        link = '%s?hires' % src,
+                        link = src,
                         alignment = alignment,
                         target = self.getattr('target', '_self'),
                         link_to_hires = '1',
