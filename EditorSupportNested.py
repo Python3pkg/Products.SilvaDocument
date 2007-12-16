@@ -7,9 +7,11 @@ from __future__ import nested_scopes
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
 from OFS.SimpleItem import SimpleItem
+from zope import interface
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
+from Products.Silva.interfaces import IInvisibleService
 # SilvaDocument
 from Products.SilvaDocument import externalsource    
 from Products.SilvaDocument import interfaces
@@ -28,7 +30,7 @@ class EditorSupport(SimpleItem):
     """XML editor support. """
     
     security = ClassSecurityInfo()
-
+    interface.implements(IInvisibleService)
     meta_type = 'Silva Editor Support Service'
 
     def __init__(self, id):
