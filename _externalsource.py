@@ -24,7 +24,10 @@ def getSourceParameters(context, node):
             # XXX evil eval, same in Formulator, though
             value = eval(value)
         elif type == 'boolean':
-            value = int(value)
+            try:
+                value = int(value)
+            except ValueError: #if it's not a number, assume false
+                value = 0
         parameters[name] = value
     return parameters
 
