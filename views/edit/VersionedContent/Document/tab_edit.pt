@@ -106,9 +106,7 @@
       href python: '%s/edit?editor=kupu' % model.absolute_url()"
     i18n:attributes="title"
     i18n:translate="">
-    </a>
-  <div class="air"> </div>
-  <a title="edit with the forms editor: alt-)"
+  </a><a title="edit with the forms editor: alt-)"
     accesskey=")"
     tal:content="python: here.forms_editor_display(not active)"
     tal:attributes="
