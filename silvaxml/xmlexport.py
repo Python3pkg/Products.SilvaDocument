@@ -261,9 +261,6 @@ class DocumentVersionProducer(SilvaBaseProducer):
         return result
         
     def sax_toc(self, node):
-        # XXX hack to get the right context for the toc, in case we're
-        # actually rendering a ghost. This probably will change (for the
-        # better:) in Silva 1.2 or later.
         attributes = {}
         if node.attributes:
             attributes = get_dict(node.attributes)
@@ -272,6 +269,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
         depth = attributes.get('toc_depth',-1)
         toc_context = self.context
         depth = int(depth)
+
+        # XXX hack to get the right context for the toc, in case we're
+        # actually rendering a ghost. This probably will change (for the
+        # better:) in Silva 1.2 or later.
         request = getattr(self.context, 'REQUEST', None)
         if request is not None:
             ghost_model = getattr(request, 'ghost_model', None)
