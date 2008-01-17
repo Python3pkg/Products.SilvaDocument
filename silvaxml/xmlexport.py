@@ -270,7 +270,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         toc_context = self.context
         depth = int(depth)
 
-        # XXX hack to get the right context for the toc, in case we're
+        # hack to get the right context for the toc, in case we're
         # rendering a ghost. The toc in a ghosted document actually
         # renders a table of contents for the context of the ghost
         request = getattr(self.context, 'REQUEST', None)
