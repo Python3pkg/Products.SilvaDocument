@@ -271,8 +271,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
         depth = int(depth)
 
         # XXX hack to get the right context for the toc, in case we're
-        # actually rendering a ghost. This probably will change (for the
-        # better:) in Silva 1.2 or later.
+        # rendering a ghost. The toc in a ghosted document actually
+        # renders a table of contents for the context of the ghost
         request = getattr(self.context, 'REQUEST', None)
         if request is not None:
             ghost_model = getattr(request, 'ghost_model', None)
