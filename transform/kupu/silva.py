@@ -316,10 +316,10 @@ class image(SilvaElement):
         if obj:
             width, height = obj.getDimensions(obj.image)
 
-        if ((not self.hasattr('link') or
-                str(self.getattr('link')).strip() == '')and (
-		   not self.hasattr('link_to_hires') or 	 
-	           self.getattr('link_to_hires') == '0')):
+        if ((not self.hasattr('link') or str(
+            self.getattr('link')).strip() == '') and (
+                not self.hasattr('link_to_hires')
+                or self.getattr('link_to_hires') == '0')):
             return html.img(
                         self.content.convert(context),
                         src=src,
