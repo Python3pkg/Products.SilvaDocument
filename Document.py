@@ -392,8 +392,14 @@ class DocumentVersion(CatalogedVersion):
         return value
 
     def _flattenxml(self, xmlinput):
-        """Cuts out all the XML-tags, helper for fulltext (for content-objects)
+        """Cuts out all the XML-tags, helper for fulltext (for
+        content-objects)
         """
+        # XXX: remove code sources, since the parameters are
+        # potentially sensitive data.
+        matchstr = re.compile(
+            r'<source id=".*?">.*?</source>', re.DOTALL|re.MULTILINE)
+        xmlinput = matchstr.sub('', xmlinput)
         return re.sub('<[^>]*>(?i)(?m)', ' ', xmlinput)
 
     def clearEditorCache(self):
