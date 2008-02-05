@@ -1,1 +1,1 @@
-SilvaDocument 2.0.5b1
+SilvaDocument 2.0.5
