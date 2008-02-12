@@ -9,7 +9,7 @@ from Products.Silva.interfaces import IImage
 from Products.SilvaDocument.i18n import translate as _
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
-URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
+URL_PATTERN = r'(http://|https://|ftp://|news://|mailto:)+'
 _url_match = re.compile(URL_PATTERN)
 
 def initializeXMLExportRegistry():
