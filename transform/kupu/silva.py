@@ -544,15 +544,19 @@ class source(SilvaElement):
             object = getSourceForId(context.model, str(id))
             if object is not None:
                 meta_type = object.meta_type
-                header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, id)))
+                source_title = object.get_title() or id
+                header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
+                                 title=u'source id: %s'%id)
             else:
+                source_title = ''
                 header = html.h4(Text('[%s]' % _('external source element is broken')))
             pre = Frag(divcontent)
             content = Frag(header, pre);
             return html.div(content,
-                        source_id=id,
-                        class_='externalsource',
-                        **attrparams)
+                            source_id=id,
+                            source_title=source_title,
+                            class_='externalsource',
+                            **attrparams)
 
 class parameter(SilvaElement):
     def convert(self):

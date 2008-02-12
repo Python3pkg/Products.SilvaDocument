@@ -101,7 +101,8 @@ def fix_tables_and_divs(el, context, tables=None):
                 (child.name() == 'div' and 
                     (child.getattr('is_citation', None) or 
                         child.getattr('toc_depth', None) or 
-                        child.getattr('source_id', None)
+                        child.getattr('source_id', None) or
+                        child.getattr('source_title', None)
                     )
                 )
             ):
@@ -822,7 +823,7 @@ class div(Element):
         elif self.attr.source_id:
             content = []
             for key, value in self.attr.__dict__.items():
-                if key != 'source_id' and key != 'class':
+                if key not in ('source_id','source_title','class'):
                     value = value.content
                     vtype = 'string' # default type
                     if '__type__' in key:
