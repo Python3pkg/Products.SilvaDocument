@@ -8,6 +8,7 @@ import ServiceCodeSourceCharset
 import install
 
 from Products.Silva.fssite import registerDirectory
+from Products.Silva.helpers import makeContainerFilter
 from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
 
 from Products.SilvaDocument import Document
@@ -18,14 +19,16 @@ def initialize(context):
     context.registerClass(
         EditorSupportNested.EditorSupport,
         constructors = (EditorSupportNested.manage_addEditorSupport, ),
-        icon = "www/editorservice.gif"
+        icon = "www/editorservice.gif",
+        container_filter = makeContainerFilter()
         )
     
     context.registerClass(
         ServiceCodeSourceCharset.CodeSourceCharsetService,
         constructors = (ServiceCodeSourceCharset.manage_addCodeSourceCharsetServiceForm, 
                         ServiceCodeSourceCharset.manage_addCodeSourceCharsetService),
-        icon = "www/editorservice.gif"
+        icon = "www/editorservice.gif",
+        container_filter = makeContainerFilter()
         )
     # old XML importer
     importer_registry.register_tag('silva_document', 	 
