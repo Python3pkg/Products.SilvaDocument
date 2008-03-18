@@ -432,7 +432,10 @@ class row(SilvaElement):
 
         widths = []
         if relwidths:
-            units = 100 / reduce(operator.add, relwidths)
+            reduced = reduce(operator.add, relwidths)
+            if not reduced: #set it to 100 if all relwidths are 0
+                reduced = 100
+            units = 100 / reduced
             widths = [units * i for i in relwidths]
         aligns = context.tablestack[-1].aligns
         cells = self.find('field')
