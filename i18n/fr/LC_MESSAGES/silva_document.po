@@ -1,21 +1,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
-"POT-Creation-Date: Fri Jun 15 11:37:20 2007\n"
-"PO-Revision-Date: 2006-12-01 17:22+0000\n"
-"Last-Translator: Pierre Slamich <pierre.slamich@gmail.com>\n"
+"Report-Msgid-Bugs-To:  \n"
+"POT-Creation-Date: Thu Apr  3 17:21:11 2008\n"
+"PO-Revision-Date: 2008-03-17 15:41+0000\n"
+"Last-Translator: Yves MATHIEU <ymathieu@moulins-vichy.cci.fr>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2008-04-02 06:04+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 "Language-code: fr\n"
+"Domain: silva\n"
+"X-Poedit-Country: FRANCE\n"
 "Language-name: French\n"
 "X-Is-Fallback-For: fr-fr fr-be fr-ca fr-lu fr-mc fr-ch\n"
-"Preferred-encodings: utf-8\n"
-"Domain: silva\n"
 "X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
-"X-Rosetta-Export-Date: 2007-05-21 14:58:13+0000\n"
+"Preferred-encodings: utf-8\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -47,41 +49,39 @@ msgid "title"
 msgstr "titre"
 
 #: /install.py:163 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 msgid "paragraph"
 msgstr "paragraphe"
 
 #: /install.py:164 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:37
-#, fuzzy
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:37
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 msgid "heading"
 msgstr "en-tête"
 
 #: /install.py:165 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
 #, fuzzy
 msgid "list"
 msgstr "liste"
 
 #: /install.py:166 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 msgid "preformatted"
 msgstr ""
 
 #: /install.py:167
-#, fuzzy
 msgid "table of contents"
 msgstr "table des matières"
 
@@ -90,26 +90,24 @@ msgid "image"
 msgstr "image"
 
 #: /install.py:169
-#, fuzzy
 msgid "table"
 msgstr "tableau"
 
 #: /install.py:170
-#, fuzzy
 msgid "complex list"
 msgstr "liste complexe"
 
 #: /install.py:171 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:41
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 msgid "definition list"
 msgstr ""
 
 #: /install.py:172
 msgid "code element"
-msgstr ""
+msgstr "élément de code"
 
 #: /install.py:173 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
@@ -117,14 +115,13 @@ msgstr "citation"
 
 #: /install.py:182
 msgid "external source"
-msgstr ""
+msgstr "source externe"
 
 #: /install.py:233 /install.py:301
 msgid "Paragraph"
 msgstr "Paragraphe"
 
 #: /install.py:234 /install.py:302
-#, fuzzy
 msgid "Heading"
 msgstr "En-tête"
 
@@ -142,7 +139,6 @@ msgid "Complex list"
 msgstr ""
 
 #: /install.py:263
-#, fuzzy
 msgid "List item"
 msgstr "Élément de liste"
 
@@ -151,12 +147,10 @@ msgid "List title"
 msgstr ""
 
 #: /install.py:306
-#, fuzzy
 msgid "Preformatted"
 msgstr "Préformaté"
 
 #: /install.py:307
-#, fuzzy
 msgid "Definition list"
 msgstr "Liste de définition"
 
@@ -173,17 +167,42 @@ msgstr "ligne"
 msgid "row heading"
 msgstr ""
 
+#: /silvaxml/xmlexport.py:100
+msgid "no external source specified"
+msgstr ""
+
+#: /silvaxml/xmlexport.py:123 /silvaxml/xmlexport.py:126
+#: /widgets/element/doc_elements/source/rendered_source.py:19
+msgid "error message:"
+msgstr "message d'erreur&nbsp;:"
+
+#: /silvaxml/xmlexport.py:126
+msgid "None returned from source"
+msgstr ""
+
+#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:555
+#: /widgets/element/doc_elements/source/rendered_source.py:18
+#: /widgets/element/doc_elements/source/rendered_source.py:23
+#: /widgets/element/doc_elements/source/render.pt:8
+msgid "external source element is broken"
+msgstr "l'élément  de la source externe est cassé"
+
+#: /silvaxml/xmlexport.py:95
+msgid ""
+"external source element specified but silvaexternalsources not installed!"
+msgstr ""
+
 #: /transform/Transformer.py:63
 msgid "Unknown Editor: ${editor}"
-msgstr ""
+msgstr "Éditeur Inconnu: ${editor}"
 
 #: /transform/base.py:107
 msgid "no ${path} element"
-msgstr ""
+msgstr "pas d'élément ${path}"
 
 #: /transform/base.py:112
 msgid "more than one ${path} element"
-msgstr ""
+msgstr "plus d'un élement ${path}"
 
 #: /transform/base.py:142
 msgid "intermingling * is not allowed ${i}"
@@ -193,20 +212,13 @@ msgstr ""
 msgid "name"
 msgstr "nom"
 
-#: /transform/kupu/silva.py:527
-#: /widgets/element/doc_elements/source/rendered_source.py:18
-#: /widgets/element/doc_elements/source/rendered_source.py:23
-#: /widgets/element/doc_elements/source/render.pt:8
-msgid "external source element is broken"
-msgstr ""
-
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
-msgstr ""
+msgstr "éditeur via formulaire"
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor..."
-msgstr ""
+msgstr "éditeur via formulaire&nbsp;..."
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
@@ -214,7 +226,7 @@ msgstr "éditeur"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:18
 msgid "preview"
-msgstr "apperçu"
+msgstr "aperçu"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:19
 msgid "properties"
@@ -230,19 +242,19 @@ msgstr "publier"
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor..."
-msgstr ""
+msgstr "éditeur Kupu&nbsp;..."
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor"
-msgstr ""
+msgstr "éditeur Kupu"
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:101
 msgid "edit with the Kupu Editor: alt-("
-msgstr ""
+msgstr "éditer avec Kupu&nbsp;: alt-("
 
-#: /views/edit/VersionedContent/Document/tab_edit.pt:111
+#: /views/edit/VersionedContent/Document/tab_edit.pt:109
 msgid "edit with the forms editor: alt-)"
-msgstr ""
+msgstr "éditer avec l'éditeur de formulaires&nbsp;: alt-)"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:18
 msgid "author"
@@ -257,11 +269,13 @@ msgid ""
 "The citation may contain multiple paragraphs. Separate them with an empty "
 "line."
 msgstr ""
+"La citation peut contenir plusieurs paragraphes. Séparez-les avec une ligne "
+"vide."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
 msgid "Code element is broken"
-msgstr ""
+msgstr "Élément de code endommagé."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
 msgid "Code element: ${title_or_id} at ${path}"
@@ -272,36 +286,39 @@ msgid ""
 "They should be located in a (non-Silva) folder in the ZMI named "
 "${code_source}."
 msgstr ""
+"Ils devraient se situer dans un dossier \"non-Silva\" en ZMI nommé "
+"${code_source}."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
-msgstr ""
+msgstr "Objets de code disponibles:"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:35
 msgid "Select the code to be executed when document is displayed."
-msgstr ""
+msgstr "Sélectionner le code à exécuter quand le document est affiché."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:9
 msgid ""
 "No code objects (Python Scripts, Page Templates, DTML Methods) are available."
 msgstr ""
+"Aucun objet de code (Script Python, modèle de page, méthode DTML) ne sont "
+"disponibles."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+msgid "create a hyperlink: alt-g"
+msgstr "créer un hyperlien&nbsp;: alt-g"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:39
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "get link reference..."
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
-msgid "create a hyperlink: alt-g"
-msgstr ""
+msgstr "obtenir la référence du lien&nbsp;..."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:45
-#, fuzzy
 msgid "normal"
 msgstr "normal"
 
@@ -314,38 +331,26 @@ msgid ""
 "Add term on first line, definition on second line. Separate items with an "
 "empty line space."
 msgstr ""
+"Ajoutez un terme sur la première ligne et une définition sur la seconde. "
+"Séparez vos éléments avec une ligne vide."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "${tip} tab to the exit button or use alt-e."
 msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "Tip:"
 msgstr "Astuce :"
-
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
-msgid "element"
-msgstr "élément"
-
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
-msgid "type"
-msgstr "type"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Normal heading"
@@ -373,16 +378,15 @@ msgstr ""
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:110
 msgid "align left"
-msgstr ""
+msgstr "aligner à gauche"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:117
-#, fuzzy
 msgid "default"
 msgstr "défaut"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:122
 msgid "align center"
-msgstr ""
+msgstr "centrer"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:129
 msgid "float right"
@@ -390,7 +394,7 @@ msgstr ""
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:134
 msgid "align right"
-msgstr ""
+msgstr "aligner à droite"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:144
 msgid ""
@@ -424,7 +428,7 @@ msgstr ""
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:16
 msgid "get image reference..."
-msgstr ""
+msgstr "obtenir référence de l'image&nbsp;..."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:16
 msgid "access key: alt-g"
@@ -432,54 +436,61 @@ msgstr "touche d'accès: alt-g"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:31
 msgid "edit image"
-msgstr ""
+msgstr "éditer l'image"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 msgid "create a hyperlink: alt-l"
-msgstr ""
+msgstr "créer un hyperlien&nbsp;: alt-l"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:65
 msgid "High resolution version of image"
-msgstr ""
+msgstr "Version haute résolution de l'image"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:70
 msgid "target frame"
-msgstr ""
+msgstr "cadre cible"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:83
 msgid "new window"
-msgstr ""
+msgstr "nouvelle fenêtre"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:88
 msgid "tooltip for link"
-msgstr ""
+msgstr "info-bulle pour lien"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:97
 msgid "image alignment"
-msgstr ""
+msgstr "alignement de l'image"
 
 #: /widgets/element/doc_elements/image/render.pt:10
 msgid "image element is broken"
-msgstr ""
+msgstr "l'élément image est endommagé"
 
 #: /widgets/element/doc_elements/image/tag.py:18
 msgid "image reference is broken"
-msgstr ""
+msgstr "la référence à l'image est endommagé"
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
+#: /widgets/top/nlist/render.pt:31 /widgets/top/table/render.pt:47
+msgid "type"
+msgstr "type"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:54
 #: /widgets/top/nlist/render.pt:35
 msgid "disc bullets"
-msgstr ""
+msgstr "puce disque"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:56
 #: /widgets/top/nlist/render.pt:37
 msgid "square bullets"
-msgstr ""
+msgstr "puce carrée"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:58
 #: /widgets/top/nlist/render.pt:39
 msgid "circle bullets"
-msgstr ""
+msgstr "puce ronde"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:60
 #: /widgets/top/nlist/render.pt:41
@@ -509,11 +520,11 @@ msgstr "a, b, c, .."
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:70
 #: /widgets/top/nlist/render.pt:51
 msgid "no bullet"
-msgstr ""
+msgstr "pas de puce"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:78
 msgid "Add list items separated by an empty line."
-msgstr ""
+msgstr "Ajoutez les éléments de la liste séparés d'une ligne vide."
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:46
 msgid "lead"
@@ -527,6 +538,15 @@ msgstr "annotation"
 msgid ""
 "Multiple paragraphs can be entered in one step by adding an empty line space."
 msgstr ""
+"Des paragraphes multiples peuvent être insérés en une seule étape en les "
+"séparants d'une ligne vide."
+
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
+msgid "element"
+msgstr "élément"
 
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:24
 msgid "none"
@@ -538,46 +558,46 @@ msgid ""
 "displayed literally. White space is preserved (unless the textarea is empty)."
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:101
+msgid "Source description:"
+msgstr "Description de la source&nbsp;:"
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:15
 msgid "source id"
-msgstr ""
+msgstr "identifiant source"
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:16
 msgid "Select an External Source..."
-msgstr ""
+msgstr "Choisir une source externe&nbsp;..."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:32
 msgid "update"
-msgstr ""
+msgstr "mettre à jour"
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:32
 msgid "access key: alt-u"
 msgstr "touche d'accès: alt-u"
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:84
-msgid "Select a source from the pulldown list."
-msgstr ""
-
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:88
-msgid "Hit \"update\" to refresh the reference."
-msgstr ""
-
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:90
-msgid "Fill in the parameters (if necessary)."
-msgstr ""
+msgid "Select a source from the pulldown list."
+msgstr "Sélectionner une source à partir du menu déroulant."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:95
-msgid "Source description:"
-msgstr ""
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:94
+msgid "Hit \"update\" to refresh the reference."
+msgstr "Cliquez \"mise-à-jour\" pour rafraîchir la référence."
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:96
+msgid "Fill in the parameters (if necessary)."
+msgstr "Complétez les paramètres (si nécessaire)."
 
 #: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
 msgid "Source is a NoneType - is it not available anymore?"
-msgstr ""
+msgstr "Cette source est NoneType, est-elle toujours disponible ?"
 
 #: /widgets/element/doc_elements/source/render.pt:14
 #, fuzzy
 msgid "id:"
-msgstr "id :"
+msgstr "identifiant&nbsp;:"
 
 #: /widgets/element/doc_elements/source/render.pt:16
 msgid "title:"
@@ -588,26 +608,22 @@ msgid "description:"
 msgstr "description :"
 
 #: /widgets/element/doc_elements/source/render.pt:32
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:44
 msgid "No parameters to be filled for this source."
-msgstr ""
+msgstr "Aucun paramètres à remplir pour cette source."
 
 #: /widgets/element/doc_elements/source/render.pt:41
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:49
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:53
 msgid "Source parameters"
-msgstr ""
-
-#: /widgets/element/doc_elements/source/rendered_source.py:19
-msgid "error message:"
-msgstr ""
+msgstr "Paramètres de la source"
 
 #: /widgets/element/doc_elements/source/rendered_source.py:24
 msgid "Unfortunately however, there no error message available..."
-msgstr ""
+msgstr "Malheureusement, il n'y a pas de message d'erreur disponible&nbsp;..."
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:15
 msgid "Table of contents depth:"
-msgstr ""
+msgstr "Profondeur de la table des matières:"
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:18
 msgid "1 level"
@@ -625,15 +641,15 @@ msgstr "illimité"
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:10
 msgid "nest element"
-msgstr ""
+msgstr "élément proche"
 
 #: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
 msgid "The stored xml is invalid."
-msgstr ""
+msgstr "Le xml stocké est invalide."
 
 #: /widgets/macro_helpers.pt:106
 msgid "delete element"
-msgstr ""
+msgstr "supprimer élément"
 
 #: /widgets/macro_helpers.pt:107
 msgid "move down"
@@ -645,7 +661,7 @@ msgstr "déplacer vers le haut"
 
 #: /widgets/macro_helpers.pt:17
 msgid "up to top of page"
-msgstr ""
+msgstr "sommet de la page"
 
 #: /widgets/macro_helpers.pt:19
 msgid "Notes"
@@ -653,7 +669,7 @@ msgstr "Notes"
 
 #: /widgets/macro_helpers.pt:34
 msgid "save"
-msgstr "sauvegarder"
+msgstr "enregistrer"
 
 #: /widgets/macro_helpers.pt:34
 msgid "access key: alt-s"
@@ -661,7 +677,7 @@ msgstr "touche d'accès: alt-s"
 
 #: /widgets/macro_helpers.pt:36
 msgid "save + exit"
-msgstr ""
+msgstr "enregistrer + quitter"
 
 #: /widgets/macro_helpers.pt:36
 msgid "access key: alt-e"
@@ -669,7 +685,7 @@ msgstr "touche d'accès: alt-e"
 
 #: /widgets/macro_helpers.pt:38
 msgid "save + insert"
-msgstr ""
+msgstr "enregistrer + insérer"
 
 #: /widgets/macro_helpers.pt:38
 msgid "access key: alt-i"
@@ -678,25 +694,25 @@ msgstr "touche d'accès: alt-i"
 #: /widgets/macro_helpers.pt:49 /widgets/macro_helpers.pt:50
 #: /widgets/macro_helpers.pt:51 /widgets/macro_helpers.pt:63
 msgid "insert element"
-msgstr ""
+msgstr "insérer élément"
 
 #: /widgets/macro_helpers.pt:66
 msgid "insert item"
-msgstr ""
+msgstr "insérer l'élément"
 
 #: /widgets/macro_helpers.pt:79
 msgid "add element&nbsp;"
-msgstr ""
+msgstr "ajouter élément&nbsp;"
 
 #: /widgets/macro_helpers.pt:87
 msgid "insert"
 msgstr "insérer"
 
 #: /widgets/macro_normal_view.pt:41
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 #: /widgets/element/table_elements/nest_element.pt:4
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 msgid "edit element"
-msgstr ""
+msgstr "éditer l'élément"
 
 #: /widgets/macro_notes.pt:10
 msgid "subscript"
@@ -716,7 +732,7 @@ msgstr "texte"
 
 #: /widgets/macro_notes.pt:12
 msgid "if ${target} is empty a new window opens"
-msgstr ""
+msgstr "si ${target} est vide, une nouvelle fenêtre s'ouvre"
 
 #: /widgets/macro_notes.pt:12
 msgid "target"
@@ -724,11 +740,11 @@ msgstr "cible"
 
 #: /widgets/macro_notes.pt:13
 msgid "title of the index item"
-msgstr ""
+msgstr "titre de l'élément d'index"
 
 #: /widgets/macro_notes.pt:13
 msgid "anchorname"
-msgstr ""
+msgstr "nom de l'ancre"
 
 #: /widgets/macro_notes.pt:14
 msgid "abbreviation"
@@ -760,30 +776,30 @@ msgstr "italique"
 msgid "bold"
 msgstr "gras"
 
-#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
-#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
-msgid "edit parent"
-msgstr ""
-
-#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
-msgid "Up to parent: alt-u"
-msgstr ""
-
 #: /widgets/top/field/render.pt:17
 msgid "subeditor"
-msgstr ""
+msgstr "sous-éditeur"
 
-#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
-msgid "Up to parent"
-msgstr ""
+#: /widgets/top/sub/render.pt:14 /widgets/top/field/render.pt:14
+msgid "Up to parent: alt-u"
+msgstr "Aller au parent: Alt-u"
+
+#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
+msgid "edit parent"
+msgstr "Éditer le parent"
 
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
 msgstr ""
 
+#: /widgets/top/sub/render.pt:20 /widgets/top/field/render.pt:20
+msgid "Up to parent"
+msgstr "Aller au parent"
+
 #: /widgets/top/table/render.pt:14
 msgid "column settings"
-msgstr ""
+msgstr "paramètre de la colonne"
 
 #: /widgets/top/table/render.pt:18
 msgid "accesskey: alt-a"
@@ -791,11 +807,11 @@ msgstr ""
 
 #: /widgets/top/table/render.pt:18
 msgid "add column"
-msgstr ""
+msgstr "ajouter une colonne"
 
 #: /widgets/top/table/render.pt:19
 msgid "delete column"
-msgstr ""
+msgstr "supprimer la colonne"
 
 #: /widgets/top/table/render.pt:19
 msgid "accesskey: alt-d"
@@ -815,7 +831,7 @@ msgstr "r"
 
 #: /widgets/top/table/render.pt:35
 msgid "relative width"
-msgstr ""
+msgstr "largeur relative"
 
 #: /widgets/top/table/render.pt:50
 msgid "Plain table (bold heading, no borders)"
@@ -843,15 +859,11 @@ msgstr ""
 #~ "Aucun espace ou cacractère spécial autre que &#8216;_&#8217; or &#8216;-"
 #~ "&#8217; or &#8216;.&#8217;"
 
-#~ msgid ""
-#~ "The title will be publicly visible, and is used for the link in indexes."
-#~ msgstr "Le titre sera visible au public et utilisé pour le lien des Indexes"
+#~ msgid "return confirm('Really delete?')"
+#~ msgstr "confirmation ('Effacer vraiement?')"
 
 #~ msgid "Type:"
 #~ msgstr "Type :"
-
-#~ msgid "return confirm('Really delete?')"
-#~ msgstr "confirmation ('Effacer vraiement?')"
 
 #~ msgid ""
 #~ "This is a special document that automagically displays a\n"
@@ -1809,6 +1821,10 @@ msgstr ""
 
 #~ msgid "aspect"
 #~ msgstr "aspect"
+
+#~ msgid ""
+#~ "The title will be publicly visible, and is used for the link in indexes."
+#~ msgstr "Le titre sera visible au public et utilisé pour le lien des Indexes"
 
 #~ msgid ""
 #~ "Sorry, strange characters are in the id. It should only\n"
@@ -4727,6 +4743,114 @@ msgstr ""
 #~ msgid "select <u>a</u>ll"
 #~ msgstr "choisir tout"
 
+#~ msgid "view_original_image_accesskey"
+#~ msgstr "v"
+
+#~ msgid "if (!confirm('Are you sure?')) return false"
+#~ msgstr "if (!confirm('Etes vous sur?')) return false"
+
+#~ msgid ""
+#~ "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP- "
+#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+#~ msgstr ""
+#~ "<strong>Peut être:</strong><br /> IP&nbsp;(comme: 10.1.1.1), <br /> IP- "
+#~ "IP&nbsp;(comme:&nbsp;10.1.1.1-10.1.1.255) ou<br /> IP/Netmask&nbsp;(comme:"
+#~ "&nbsp;10.1.1.0/255.255.255.0)."
+
+#~ msgid "view this asset"
+#~ msgstr "voir cet élément"
+
+#~ msgid "No ${asset} in this folder."
+#~ msgstr "Aucun ${asset} dans ce dossier"
+
+#~ msgid "add a new item: alt-n"
+#~ msgstr "ajouter nouvel item: alt-n"
+
+#~ msgid "content is approved or published"
+#~ msgstr "le contenu est approuvé ou publié"
+
+#~ msgid "insert the reference: alt-p"
+#~ msgstr "inserez la référence: alt-p"
+
+#~ msgid "Silva forms editor"
+#~ msgstr "Editeur de Formes Silva"
+
+#~ msgid "Silva - Reference"
+#~ msgstr "Reference Silva"
+
+#~ msgid "container"
+#~ msgstr "conteneur"
+
+#~ msgid "or_pdf"
+#~ msgstr "ou pdf"
+
+#~ msgid "export only last version?"
+#~ msgstr "exporter seulement la dernière version"
+
+#~ msgid "Check to export only the last version."
+#~ msgstr "Cocher pour exporter seulement la dernière version"
+
+#~ msgid "publish the unapproved version: alt-o"
+#~ msgstr "Publier la version non approuvée: alt-o"
+
+#~ msgid "p<u>u</u>blish right now?"
+#~ msgstr "p<u>u</u>blier maintenant?"
+
+#~ msgid "clear ex<u>p</u>iration?"
+#~ msgstr "remise à zéro d'ex<u>p</u>iration?"
+
+#~ msgid "change timings"
+#~ msgstr "changer délais"
+
+#~ msgid " Reject approval request "
+#~ msgstr " Rejet demande d'approbation "
+
+#~ msgid "Silva Root in the ZMI"
+#~ msgstr "Racine Publication dans le ZMI"
+
+#~ msgid "settings..."
+#~ msgstr "paramétres..."
+
+#~ msgid "subscriptions..."
+#~ msgstr "abonnements..."
+
+#~ msgid "subscriptions"
+#~ msgstr "abonnements"
+
+#~ msgid "addables..."
+#~ msgstr "héritages..."
+
+#~ msgid "change Publication into Folder: alt-f"
+#~ msgstr "change Publication au Dossier: alt-f"
+
+#~ msgid "convert this ghost folder to a normal folder: alt-c"
+#~ msgstr "convertir ce dossier ghost à dossier normal"
+
+#~ msgid "convert this ghost folder to a normal publication: alt-p"
+#~ msgstr "convertir ce dossier ghost à une publication normal: alt-p"
+
+#~ msgid "Manage subscriptions for &#xab;${title}&#xbb;"
+#~ msgstr "Gérer abonnements pour &#xab;${title}&#xbb;"
+
+#~ msgid "Layout has been copied for customization."
+#~ msgstr "La maquette a été copiée pour personnalisation"
+
+#~ msgid "copy the layout into the Publication in order to customize it"
+#~ msgstr "copier la maquette vers la Publication pour la personnaliser"
+
+#~ msgid "customize layout"
+#~ msgstr "personnalisation de la maquette"
+
+#~ msgid "save layout"
+#~ msgstr "sauvegarder maquette"
+
+#~ msgid "acquired layout"
+#~ msgstr "acquisition de maquette de mise en page"
+
+#~ msgid "The data that was submitted did not validate properly."
+#~ msgstr "Les données saisies n'ont pas été validées correctement"
+
 #~ msgid ""
 #~ "Someday browsers will automatically underline the access key of a link or "
 #~ "button. In the meantime, send a mail and complain."
@@ -4737,14 +4861,8 @@ msgstr ""
 #~ msgid "return confirm('Really remove?')"
 #~ msgstr "confirmer ('Enlever vraiement?')"
 
-#~ msgid "view_original_image_accesskey"
-#~ msgstr "v"
-
 #~ msgid "export_pdf_accesskey"
 #~ msgstr "p"
-
-#~ msgid "if (!confirm('Are you sure?')) return false"
-#~ msgstr "if (!confirm('Etes vous sur?')) return false"
 
 #~ msgid "settings_accesskey"
 #~ msgstr "settings_accesskey"
@@ -4774,30 +4892,6 @@ msgstr ""
 #~ "suivant, comme dans les Mac."
 
 #~ msgid ""
-#~ "<strong>Can be:</strong><br /> IP&nbsp;(like: 10.1.1.1), <br /> IP- "
-#~ "IP&nbsp;(like:&nbsp;10.1.1.1-10.1.1.255) or<br /> IP/Netmask&nbsp;(like:"
-#~ "&nbsp;10.1.1.0/255.255.255.0)."
-#~ msgstr ""
-#~ "<strong>Peut être:</strong><br /> IP&nbsp;(comme: 10.1.1.1), <br /> IP- "
-#~ "IP&nbsp;(comme:&nbsp;10.1.1.1-10.1.1.255) ou<br /> IP/Netmask&nbsp;(comme:"
-#~ "&nbsp;10.1.1.0/255.255.255.0)."
-
-#~ msgid "view this asset"
-#~ msgstr "voir cet élément"
-
-#~ msgid "No ${asset} in this folder."
-#~ msgstr "Aucun ${asset} dans ce dossier"
-
-#~ msgid "add a new item: alt-n"
-#~ msgstr "ajouter nouvel item: alt-n"
-
-#~ msgid "content is approved or published"
-#~ msgstr "le contenu est approuvé ou publié"
-
-#~ msgid "insert the reference: alt-p"
-#~ msgstr "inserez la référence: alt-p"
-
-#~ msgid ""
 #~ "${listing_footer}<br /> a &nbsp; Select all<br /> r &nbsp; Rename<br /> d "
 #~ "&nbsp; Delete<br /> x &nbsp; Cut<br /> c &nbsp; Copy<br /> v &nbsp; "
 #~ "Paste<br /> g &nbsp; Paste as ghost"
@@ -4824,9 +4918,6 @@ msgstr ""
 #~ msgstr ""
 #~ "c &nbsp; Annuler<br /> a &nbsp; Ajouter<br /> e &nbsp; Ajouter et editer/"
 #~ "valider"
-
-#~ msgid "Silva forms editor"
-#~ msgstr "Editeur de Formes Silva"
 
 #~ msgid ""
 #~ "s &nbsp; Save<br /> e &nbsp; Save and exit<br /> i &nbsp; Save and "
@@ -4903,9 +4994,6 @@ msgstr ""
 #~ "${listing_body}<br /> p &nbsp; Choisir liste pour nombre de position<br /"
 #~ "> m &nbsp; Déplacer"
 
-#~ msgid "Silva - Reference"
-#~ msgstr "Reference Silva"
-
 #~ msgid ""
 #~ "<br /> <br /> ${silva_version}<br /> ${silva_icon} &#xa9; Copyright 2001-"
 #~ "2004 Infrae. All rights reserved."
@@ -4916,38 +5004,11 @@ msgstr ""
 #~ msgid "${Silva} &#8211; medium independent content management"
 #~ msgstr "${Silva} &#8211; management de contenus médium indépendant"
 
-#~ msgid "container"
-#~ msgstr "conteneur"
-
-#~ msgid "or_pdf"
-#~ msgstr "ou pdf"
-
-#~ msgid "export only last version?"
-#~ msgstr "exporter seulement la dernière version"
-
-#~ msgid "Check to export only the last version."
-#~ msgstr "Cocher pour exporter seulement la dernière version"
-
 #~ msgid "open&nbsp;to&nbsp;public&nbsp;now"
 #~ msgstr "ouvrir&nbsp;au&nbsp;public&nbsp;maintenant"
 
-#~ msgid "publish the unapproved version: alt-o"
-#~ msgstr "Publier la version non approuvée: alt-o"
-
 #~ msgid "day / month / year &nbsp;23:59"
 #~ msgstr "jour / mois / année &nbsp;23:59"
-
-#~ msgid "p<u>u</u>blish right now?"
-#~ msgstr "p<u>u</u>blier maintenant?"
-
-#~ msgid "clear ex<u>p</u>iration?"
-#~ msgstr "remise à zéro d'ex<u>p</u>iration?"
-
-#~ msgid "change timings"
-#~ msgstr "changer délais"
-
-#~ msgid " Reject approval request "
-#~ msgstr " Rejet demande d'approbation "
 
 #~ msgid " Withdraw approval request "
 #~ msgstr " Retourner demande approuvée "
@@ -4955,26 +5016,8 @@ msgstr ""
 #~ msgid "propeties ${for_title}"
 #~ msgstr "propriétés ${for_title}"
 
-#~ msgid "Silva Root in the ZMI"
-#~ msgstr "Racine Publication dans le ZMI"
-
-#~ msgid "settings..."
-#~ msgstr "paramétres..."
-
-#~ msgid "subscriptions..."
-#~ msgstr "abonnements..."
-
-#~ msgid "subscriptions"
-#~ msgstr "abonnements"
-
-#~ msgid "addables..."
-#~ msgstr "héritages..."
-
 #~ msgid "properties ${for_approved_version_of_title}"
 #~ msgstr "propriétés ${for_approved_version_of_title}"
-
-#~ msgid "Manage subscriptions for &#xab;${title}&#xbb;"
-#~ msgstr "Gérer abonnements pour &#xab;${title}&#xbb;"
 
 #~ msgid "Index"
 #~ msgstr "Index"
@@ -4988,38 +5031,11 @@ msgstr ""
 #~ msgid "change Folder into Publication: alt-c"
 #~ msgstr "convertir Dossier en Publication: alt-c"
 
-#~ msgid "change Publication into Folder: alt-f"
-#~ msgstr "change Publication au Dossier: alt-f"
-
-#~ msgid "convert this ghost folder to a normal folder: alt-c"
-#~ msgstr "convertir ce dossier ghost à dossier normal"
-
-#~ msgid "convert this ghost folder to a normal publication: alt-p"
-#~ msgstr "convertir ce dossier ghost à une publication normal: alt-p"
-
 #~ msgid "for &#xab;${title}&#xbb;"
 #~ msgstr "de &#xab;${title}&#xbb;"
 
 #~ msgid "of &#8216;original&#8217;"
 #~ msgstr "de &#8216;original&#8217;"
 
-#~ msgid "Layout has been copied for customization."
-#~ msgstr "La maquette a été copiée pour personnalisation"
-
-#~ msgid "copy the layout into the Publication in order to customize it"
-#~ msgstr "copier la maquette vers la Publication pour la personnaliser"
-
-#~ msgid "customize layout"
-#~ msgstr "personnalisation de la maquette"
-
 #~ msgid "return confirm('Really remove copied layout?')"
 #~ msgstr "confirmation ('Vraiment enlever la maquette copiée?')"
-
-#~ msgid "save layout"
-#~ msgstr "sauvegarder maquette"
-
-#~ msgid "acquired layout"
-#~ msgstr "acquisition de maquette de mise en page"
-
-#~ msgid "The data that was submitted did not validate properly."
-#~ msgstr "Les données saisies n'ont pas été validées correctement"

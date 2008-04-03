@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the silvadocument package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Fri Jun 15 11:37:20 2007\n"
+"POT-Creation-Date: Thu Apr  3 17:21:11 2008\n"
 "PO-Revision-Date: 2006-11-06 23:08+0000\n"
 "Last-Translator: Tuomas Tonteri <tuomas.tonteri@kansanmedia.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Rosetta-Export-Date: 2007-05-21 14:58:18+0000\n"
+"X-Launchpad-Export-Date: 2008-04-02 06:04+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -47,34 +47,34 @@ msgid "title"
 msgstr "otsikko"
 
 #: /install.py:163 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 msgid "paragraph"
 msgstr "kappale"
 
 #: /install.py:164 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:37
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:37
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 msgid "heading"
 msgstr "otsikko"
 
 #: /install.py:165 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
 msgid "list"
 msgstr "luettelo"
 
 #: /install.py:166 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 msgid "preformatted"
 msgstr "esimuotoiltu"
 
@@ -95,10 +95,10 @@ msgid "complex list"
 msgstr "monimutkainen lista"
 
 #: /install.py:171 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:41
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 msgid "definition list"
 msgstr "määritelmien luettelo"
 
@@ -162,6 +162,31 @@ msgstr "rivi"
 msgid "row heading"
 msgstr "rivin otsikko"
 
+#: /silvaxml/xmlexport.py:100
+msgid "no external source specified"
+msgstr ""
+
+#: /silvaxml/xmlexport.py:123 /silvaxml/xmlexport.py:126
+#: /widgets/element/doc_elements/source/rendered_source.py:19
+msgid "error message:"
+msgstr "virheilmoitus:"
+
+#: /silvaxml/xmlexport.py:126
+msgid "None returned from source"
+msgstr ""
+
+#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:555
+#: /widgets/element/doc_elements/source/rendered_source.py:18
+#: /widgets/element/doc_elements/source/rendered_source.py:23
+#: /widgets/element/doc_elements/source/render.pt:8
+msgid "external source element is broken"
+msgstr "ulkoisen lähteen elementti ei toimi"
+
+#: /silvaxml/xmlexport.py:95
+msgid ""
+"external source element specified but silvaexternalsources not installed!"
+msgstr ""
+
 #: /transform/Transformer.py:63
 msgid "Unknown Editor: ${editor}"
 msgstr "Tuntematon toimittaja: ${editor}"
@@ -178,17 +203,9 @@ msgstr "enemmän kuin yksi ${path} elementti"
 msgid "intermingling * is not allowed ${i}"
 msgstr "* sekoittaminen ei ole sallittu ${i}"
 
-# Default: "self"
 #: /transform/base.py:96
 msgid "name"
 msgstr ""
-
-#: /transform/kupu/silva.py:527
-#: /widgets/element/doc_elements/source/rendered_source.py:18
-#: /widgets/element/doc_elements/source/rendered_source.py:23
-#: /widgets/element/doc_elements/source/render.pt:8
-msgid "external source element is broken"
-msgstr "ulkoisen lähteen elementti ei toimi"
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
@@ -230,7 +247,7 @@ msgstr "kupu editori"
 msgid "edit with the Kupu Editor: alt-("
 msgstr "muokkaa Kupu-editorilla: atl-("
 
-#: /views/edit/VersionedContent/Document/tab_edit.pt:111
+#: /views/edit/VersionedContent/Document/tab_edit.pt:109
 msgid "edit with the forms editor: alt-)"
 msgstr "muokkaa forms-editorilla: alt-)"
 
@@ -280,17 +297,17 @@ msgstr ""
 "saatavilla."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:11
-msgid "get link reference..."
-msgstr "hae linkin lähde..."
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "create a hyperlink: alt-g"
 msgstr "luo hyperlinkki: alt-g"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
+msgid "get link reference..."
+msgstr "hae linkin lähde..."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:45
@@ -310,36 +327,22 @@ msgstr ""
 "tyhjällä viivalla."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "${tip} tab to the exit button or use alt-e."
 msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "Tip:"
 msgstr "Vinkki:"
-
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
-msgid "element"
-msgstr "elementti"
-
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
-msgid "type"
-msgstr "tyyppi"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Normal heading"
@@ -464,6 +467,13 @@ msgstr "kuvan osa on hajalla"
 msgid "image reference is broken"
 msgstr "kuvan lähde on hajalla"
 
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
+#: /widgets/top/nlist/render.pt:31 /widgets/top/table/render.pt:47
+msgid "type"
+msgstr "tyyppi"
+
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:54
 #: /widgets/top/nlist/render.pt:35
 msgid "disc bullets"
@@ -527,6 +537,13 @@ msgid ""
 msgstr ""
 "Useita kappaleita voidaan laittaa yhdellä kertaa lisäämällä tyhjä viiva."
 
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
+msgid "element"
+msgstr "elementti"
+
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:24
 msgid "none"
 msgstr "ei mitään"
@@ -539,37 +556,37 @@ msgstr ""
 "Esimuotoiltu teksti näkyy niinkuin se on kirjoitettu. Tyhjä tila tulee "
 "mukaan (ellei tekstialue ole tyhjä)."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:101
+msgid "Source description:"
+msgstr "Lähteen kuvaus:"
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:15
 msgid "source id"
 msgstr "lähteen tunnus"
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:16
 msgid "Select an External Source..."
 msgstr "Valitse Ulkoinen Lähde..."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:32
 msgid "update"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:32
 msgid "access key: alt-u"
 msgstr "pikanäppäin: alt-u"
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:84
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:90
 msgid "Select a source from the pulldown list."
 msgstr "Valitse lähde avautuvasta luettelosta"
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:88
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:94
 msgid "Hit \"update\" to refresh the reference."
 msgstr "Paina \"päivitä\" päivittääksesi lähteen."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:90
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:96
 msgid "Fill in the parameters (if necessary)."
 msgstr "Täytä parametrit (jos tarpeellista)."
-
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:95
-msgid "Source description:"
-msgstr "Lähteen kuvaus:"
 
 #: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
 msgid "Source is a NoneType - is it not available anymore?"
@@ -588,18 +605,14 @@ msgid "description:"
 msgstr "kuvaus:"
 
 #: /widgets/element/doc_elements/source/render.pt:32
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:44
 msgid "No parameters to be filled for this source."
 msgstr "Ei täytettäviä parametrejä tälle lähteelle."
 
 #: /widgets/element/doc_elements/source/render.pt:41
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:49
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:53
 msgid "Source parameters"
 msgstr "Lähteen parametrit"
-
-#: /widgets/element/doc_elements/source/rendered_source.py:19
-msgid "error message:"
-msgstr "virheilmoitus:"
 
 #: /widgets/element/doc_elements/source/rendered_source.py:24
 msgid "Unfortunately however, there no error message available..."
@@ -693,8 +706,8 @@ msgid "insert"
 msgstr "lisää"
 
 #: /widgets/macro_normal_view.pt:41
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 #: /widgets/element/table_elements/nest_element.pt:4
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 msgid "edit element"
 msgstr "muokkaa elementtiä"
 
@@ -762,26 +775,26 @@ msgstr "kursivoitu"
 msgid "bold"
 msgstr "lihavointi"
 
-#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
-#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
-msgid "edit parent"
-msgstr "muokkaa vanhempaa"
-
-#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
-msgid "Up to parent: alt-u"
-msgstr "Ylös vanhempaan: alt-u"
-
 #: /widgets/top/field/render.pt:17
 msgid "subeditor"
 msgstr "alamuokkaaja"
 
-#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
-msgid "Up to parent"
-msgstr "Ylös vanhempaan"
+#: /widgets/top/sub/render.pt:14 /widgets/top/field/render.pt:14
+msgid "Up to parent: alt-u"
+msgstr "Ylös vanhempaan: alt-u"
+
+#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
+msgid "edit parent"
+msgstr "muokkaa vanhempaa"
 
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
 msgstr "Sisäkkäisten elementtien muokkaaja"
+
+#: /widgets/top/sub/render.pt:20 /widgets/top/field/render.pt:20
+msgid "Up to parent"
+msgstr "Ylös vanhempaan"
 
 #: /widgets/top/table/render.pt:14
 msgid "column settings"

@@ -3,19 +3,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Silva\n"
-"POT-Creation-Date: Fri Jun 15 11:37:20 2007\n"
+"Report-Msgid-Bugs-To:  \n"
+"POT-Creation-Date: Thu Apr  3 17:21:11 2008\n"
 "PO-Revision-Date: 2007-02-22 13:42+0000\n"
 "Last-Translator: Samuel Schluep <schluep@ethz.ch>\n"
 "Language-Team: Name <email>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2008-04-02 06:04+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 "Language-code: de\n"
+"Domain: silva\n"
 "Language-name: Deutsch\n"
 "X-Is-Fallback-For: de-ch de-at de-li de-lu de-de\n"
 "Preferred-encodings: utf-8 latin1\n"
-"Domain: silva\n"
-"X-Rosetta-Export-Date: 2007-05-21 14:58:16+0000\n"
 
 #: /Document.py:165
 msgid "No version to store to!"
@@ -54,34 +56,34 @@ msgid "title"
 msgstr "Titel"
 
 #: /install.py:163 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 msgid "paragraph"
 msgstr "Absatz"
 
 #: /install.py:164 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:37
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:37
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 msgid "heading"
 msgstr "Überschrift"
 
 #: /install.py:165 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:38
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
 msgid "list"
 msgstr "Liste"
 
 #: /install.py:166 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 msgid "preformatted"
 msgstr "Vorformatiert"
 
@@ -102,10 +104,10 @@ msgid "complex list"
 msgstr "Zusammengesetzte Liste"
 
 #: /install.py:171 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:41
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 msgid "definition list"
 msgstr "Definitionsliste"
 
@@ -169,6 +171,31 @@ msgstr "Zeile"
 msgid "row heading"
 msgstr "Zeilenüberschrift"
 
+#: /silvaxml/xmlexport.py:100
+msgid "no external source specified"
+msgstr ""
+
+#: /silvaxml/xmlexport.py:123 /silvaxml/xmlexport.py:126
+#: /widgets/element/doc_elements/source/rendered_source.py:19
+msgid "error message:"
+msgstr "Fehlermeldung"
+
+#: /silvaxml/xmlexport.py:126
+msgid "None returned from source"
+msgstr ""
+
+#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:555
+#: /widgets/element/doc_elements/source/rendered_source.py:18
+#: /widgets/element/doc_elements/source/rendered_source.py:23
+#: /widgets/element/doc_elements/source/render.pt:8
+msgid "external source element is broken"
+msgstr "Die Datenquelle ist nicht verfügbar."
+
+#: /silvaxml/xmlexport.py:95
+msgid ""
+"external source element specified but silvaexternalsources not installed!"
+msgstr ""
+
 #: /transform/Transformer.py:63
 msgid "Unknown Editor: ${editor}"
 msgstr "Der Editor &#8216;${editor}&#8217; wird nicht unterstüzt"
@@ -188,13 +215,6 @@ msgstr "Vermischen von &#8216;*&#8217; mit anderen Zeichen nicht erlaubt: ${i}"
 #: /transform/base.py:96
 msgid "name"
 msgstr "Name"
-
-#: /transform/kupu/silva.py:527
-#: /widgets/element/doc_elements/source/rendered_source.py:18
-#: /widgets/element/doc_elements/source/rendered_source.py:23
-#: /widgets/element/doc_elements/source/render.pt:8
-msgid "external source element is broken"
-msgstr "Die Datenquelle ist nicht verfügbar."
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
@@ -236,7 +256,7 @@ msgstr "Kupu Editor"
 msgid "edit with the Kupu Editor: alt-("
 msgstr "Bearbeiten mit Kupu: alt-("
 
-#: /views/edit/VersionedContent/Document/tab_edit.pt:111
+#: /views/edit/VersionedContent/Document/tab_edit.pt:109
 msgid "edit with the forms editor: alt-)"
 msgstr "Bearbeiten mit dem Formulareditor: alt-)"
 
@@ -287,17 +307,17 @@ msgid ""
 msgstr "Leider sind hier keine Spezialelemente verfügbar."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:11
-msgid "get link reference..."
-msgstr "Zu anderem Inhalt verlinken..."
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "create a hyperlink: alt-g"
 msgstr "Link angelegen: alt-g"
+
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
+msgid "get link reference..."
+msgstr "Zu anderem Inhalt verlinken..."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:45
@@ -318,38 +338,24 @@ msgstr ""
 "voneinander abgetrennt."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "${tip} tab to the exit button or use alt-e."
 msgstr ""
 "${tip} &#8220;Speichern + schließen&#8221; mit der Tabulatortaste anwählen "
 "oder alt-e eingeben."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
 msgid "Tip:"
 msgstr "Tipp:"
-
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
-msgid "element"
-msgstr "Element"
-
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
-msgid "type"
-msgstr "Typ"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Normal heading"
@@ -481,6 +487,13 @@ msgstr "Das Bild ist leider nicht verfügbar."
 msgid "image reference is broken"
 msgstr "Das Bild wurde gelöscht oder umbenannt."
 
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
+#: /widgets/top/nlist/render.pt:31 /widgets/top/table/render.pt:47
+msgid "type"
+msgstr "Typ"
+
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:54
 #: /widgets/top/nlist/render.pt:35
 msgid "disc bullets"
@@ -545,6 +558,13 @@ msgstr ""
 "Um mehrere Absätze gleichzeitig einzugeben, werden diese durch Leerzeilen "
 "getrennt."
 
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
+msgid "element"
+msgstr "Element"
+
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:24
 msgid "none"
 msgstr "Keine Auswahl"
@@ -558,38 +578,38 @@ msgstr ""
 "eingegeben wurden. Leerraumzeichen bleiben erhalten (außer bei leerem "
 "Texteingabefeld)."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:101
+msgid "Source description:"
+msgstr "Beschreibung der Datenquelle:"
+
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:15
 msgid "source id"
 msgstr "Id der Datenquelle"
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:16
 msgid "Select an External Source..."
 msgstr "Datenquelle auswählen..."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:32
 msgid "update"
 msgstr ""
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:28
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:32
 msgid "access key: alt-u"
 msgstr "Kurzwahl: alt-u"
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:84
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:90
 msgid "Select a source from the pulldown list."
 msgstr "Datenquelle vom Pulldown-Menü auswählen."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:88
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:94
 msgid "Hit \"update\" to refresh the reference."
 msgstr ""
 "Nach der Auswahl der Datenquelle &#8220;Aktualisieren&#8221; anklicken."
 
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:90
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:96
 msgid "Fill in the parameters (if necessary)."
 msgstr "Parameter eingeben (falls erforderlich)."
-
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:95
-msgid "Source description:"
-msgstr "Beschreibung der Datenquelle:"
 
 #: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
 msgid "Source is a NoneType - is it not available anymore?"
@@ -608,18 +628,14 @@ msgid "description:"
 msgstr "Beschreibung:"
 
 #: /widgets/element/doc_elements/source/render.pt:32
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:40
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:44
 msgid "No parameters to be filled for this source."
 msgstr "Diese Datenquelle benötigt keine Eingabeparameter."
 
 #: /widgets/element/doc_elements/source/render.pt:41
-#: /widgets/element/doc_elements/source/mode_edit/render.pt:49
+#: /widgets/element/doc_elements/source/mode_edit/render.pt:53
 msgid "Source parameters"
 msgstr "Eingabeparameter"
-
-#: /widgets/element/doc_elements/source/rendered_source.py:19
-msgid "error message:"
-msgstr "Fehlermeldung"
 
 #: /widgets/element/doc_elements/source/rendered_source.py:24
 msgid "Unfortunately however, there no error message available..."
@@ -713,8 +729,8 @@ msgid "insert"
 msgstr "Einfügen"
 
 #: /widgets/macro_normal_view.pt:41
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 #: /widgets/element/table_elements/nest_element.pt:4
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 msgid "edit element"
 msgstr "Eintrag bearbeiten"
 
@@ -781,26 +797,26 @@ msgstr "kursiv"
 msgid "bold"
 msgstr "fett"
 
-#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
-#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
-msgid "edit parent"
-msgstr "Eine Ebene hoch"
-
-#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
-msgid "Up to parent: alt-u"
-msgstr "Eine Ebene hoch: alt-u"
-
 #: /widgets/top/field/render.pt:17
 msgid "subeditor"
 msgstr "Editor für verschachtelte Einträge"
 
-#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
-msgid "Up to parent"
+#: /widgets/top/sub/render.pt:14 /widgets/top/field/render.pt:14
+msgid "Up to parent: alt-u"
+msgstr "Eine Ebene hoch: alt-u"
+
+#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
+msgid "edit parent"
 msgstr "Eine Ebene hoch"
 
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
 msgstr "Editor für verschachtelte Einträge"
+
+#: /widgets/top/sub/render.pt:20 /widgets/top/field/render.pt:20
+msgid "Up to parent"
+msgstr "Eine Ebene hoch"
 
 #: /widgets/top/table/render.pt:14
 msgid "column settings"
@@ -867,12 +883,6 @@ msgstr "Daten-Gitttertabelle (Rahmen nur um Zellen)"
 #~ msgstr ""
 #~ "Keine Leer- oder Sonderzeichen ausser &#8216;_&#8217; oder &#8216;-"
 #~ "&#8217; oder &#8216;.&#8217;"
-
-#~ msgid ""
-#~ "The title will be publicly visible, and is used for the link in indexes."
-#~ msgstr ""
-#~ "Der Titel wird öffentlich sichtbar sein und als Linktext in Indizes "
-#~ "verwendet werden."
 
 #~ msgid "${tip} Tab to the exit button or alt-e."
 #~ msgstr ""
@@ -1859,6 +1869,12 @@ msgstr "Daten-Gitttertabelle (Rahmen nur um Zellen)"
 
 #~ msgid "aspect"
 #~ msgstr "Aspekt"
+
+#~ msgid ""
+#~ "The title will be publicly visible, and is used for the link in indexes."
+#~ msgstr ""
+#~ "Der Titel wird öffentlich sichtbar sein und als Linktext in Indizes "
+#~ "verwendet werden."
 
 #~ msgid ""
 #~ "Sorry, strange characters are in the id. It should only\n"
