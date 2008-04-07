@@ -550,6 +550,9 @@ class source(SilvaElement):
                 source_title = object.get_title() or id
                 header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
                                  title=u'source id: %s'%id)
+                desc = object.description()
+                if desc:
+                    divcontent.insert(0,html.p(desc))
             else:
                 source_title = ''
                 header = html.h4(Text('[%s]' % _('external source element is broken')))
