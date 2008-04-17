@@ -522,7 +522,6 @@ class source(SilvaElement):
         else:
             # external source element
             id = self.attr.id
-            params = {}
             attrparams = {}
             for child in self.find():
                 if child.name() == 'parameter':
@@ -533,17 +532,8 @@ class source(SilvaElement):
                     if vtype == 'list':
                         value = eval(value)
                         attrkey = '%s__type__list' % key
-                    params[key] = value
                     attrparams[attrkey] = value
             divcontent = []
-            for key, value in params.items():
-                if type(value) == types.ListType:
-                    value = ', '.join([unicode(x, 'UTF-8') for x in value])
-                else:
-                    value = unicode(value, 'UTF-8')
-                divcontent.append(Text('%s: %s\n' %
-                                    (unicode(key, 'UTF-8'), value)))
-                divcontent.append(html.br());
             object = getSourceForId(context.model, str(id))
             if object is not None:
                 meta_type = object.meta_type
@@ -552,10 +542,11 @@ class source(SilvaElement):
                                  title=u'source id: %s'%id)
                 desc = object.description()
                 if desc:
-                    divcontent.insert(0,html.p(desc))
+                    divcontent.append(html.p(desc,class_="externalsource-description"))
             else:
                 source_title = ''
                 header = html.h4(Text('[%s]' % _('external source element is broken')))
+
             pre = Frag(divcontent)
             content = Frag(header, pre);
             return html.div(content,
