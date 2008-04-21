@@ -35,7 +35,7 @@ import types
 from urlparse import urlparse
 
 from Products.Silva.i18n import translate as _
-
+from Products.Silva.Image import Image
 _attr_origin=u'silva_origin'
 _attr_prefix=u'silva_'
 
@@ -313,7 +313,7 @@ class image(SilvaElement):
 
         width = ''
         height = ''
-        if obj:
+        if obj and isinstance(obj, Image):
             width, height = obj.getDimensions(obj.image)
 
         if ((not self.hasattr('link') or str(
