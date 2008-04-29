@@ -322,14 +322,7 @@ class h3(Element):
             fixedcontent,
             type="normal"
             )
-        return self.process_result(result, context)
-
-    # XXX wtf is this?
-    def process_result(self, result, context):
-        if hasattr(context, 'toplist_result'):
-            context.toplist_result.append(result)
-        else:
-            return result
+        return result
 
 class h4(h3):
     ""
@@ -341,7 +334,7 @@ class h4(h3):
             fixedcontent,
             type="sub"
             )
-        return self.process_result(result, context)
+        return result
 
 class h5(h3):
     """ List heading """
@@ -358,7 +351,8 @@ class h5(h3):
             fixedcontent,
             type="subsub",
             )
-        return self.process_result(result, context)
+
+        return result
 
 class h6(h3):
     def convert(self, context):
@@ -376,7 +370,7 @@ class h6(h3):
             fixedcontent,
             type=eltype,
             )
-        return self.process_result(result, context)
+        return result
     
 class h7(h3):
     def convert(self, context):
@@ -390,7 +384,7 @@ class h7(h3):
             fixedcontent,
             type="subparagraph",
             )
-        return self.process_result(result, context)
+        return result
 
 class p(Element):
     """ the html p element can contain nodes which are "standalone"
