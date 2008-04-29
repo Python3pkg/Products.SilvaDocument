@@ -321,15 +321,6 @@ class h3(Element):
             fixedcontent,
             type="normal"
             )
-        return self.process_result(result, context)
-
-    # XXX wtf is this?
-    # 3/6/08 aaltepet: it seems that this was supposed to be used to
-    # push "toplevel" elements that were inadvertently added to
-    # a list item in a ul up to the toplevel.
-    # well, toplevel elements are allowed
-    def process_result(self, result, context):
-        #just return result here, and leave the rest
         return result
 
 class h4(h3):
@@ -342,7 +333,7 @@ class h4(h3):
             fixedcontent,
             type="sub"
             )
-        return self.process_result(result, context)
+        return result
 
 class h5(h3):
     """ List heading """
@@ -359,7 +350,7 @@ class h5(h3):
             fixedcontent,
             type="subsub",
             )
-        return self.process_result(result, context)
+        return result
 
 class h6(h3):
     def convert(self, context):
@@ -377,7 +368,7 @@ class h6(h3):
             fixedcontent,
             type=eltype,
             )
-        return self.process_result(result, context)
+        return result
     
 class h7(h3):
     def convert(self, context):
@@ -391,7 +382,7 @@ class h7(h3):
             fixedcontent,
             type="subparagraph",
             )
-        return self.process_result(result, context)
+        return result
 
 class p(Element):
     """ the html p element can contain nodes which are "standalone"
@@ -455,10 +446,10 @@ class ul(Element):
                 # to get a similar result
                 return 1
         if (self.query('**/img') or self.query('**/p') or 
-                self.query('**/table') or self.query('**/ul') or
-                self.query('**/h3') or self.query('**/h4') or
-                self.query('**/h5') or self.query('**/h6') or
-                self.query('**/ol') or self.query('**/pre')):
+            self.query('**/table') or self.query('**/ul') or
+            self.query('**/h3') or self.query('**/h4') or
+            self.query('**/h5') or self.query('**/h6') or
+            self.query('**/ol') or self.query('**/pre')):
             return 1
         else:
             return 0
