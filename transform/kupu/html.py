@@ -422,9 +422,6 @@ class ul(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
-        hadctx = hasattr(context, 'toplist_result')
-        if not hadctx:
-            context.toplist_result = context.resultstack[-1]
         if self.is_nlist(context):
             curlisttype = getattr(context, 'listtype', None)
             context.listtype = 'nlist'
@@ -441,9 +438,6 @@ class ul(Element):
                 context.listtype = curlisttype
             else:
                 del context.listtype
-
-        if not hadctx:
-            del context.toplist_result 
         return result
 
     def is_nlist(self, context):
@@ -454,8 +448,10 @@ class ul(Element):
                 # to get a similar result
                 return 1
         if (self.query('**/img') or self.query('**/p') or 
-                self.query('**/table') or self.query('**/ul') or
-                self.query('**/ol') or self.query('**/pre')):
+            self.query('**/table') or self.query('**/ul') or
+            self.query('**/h3') or self.query('**/h4') or
+            self.query('**/h5') or self.query('**/h6') or
+            self.query('**/ol') or self.query('**/pre')):
             return 1
         else:
             return 0
