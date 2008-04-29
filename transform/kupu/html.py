@@ -52,6 +52,10 @@ except:
 
 import re
 
+
+# don't do 'from' import, to prevent namespace pollution..
+import Products.Silva.Image
+
 DEBUG=0
 
 TOPLEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'pre', 'table', 'img', 'ul', 'ol', 'dl', 'div']
@@ -672,6 +676,10 @@ class img(Element):
         # such as '/silva/index/edit/index/edit/foo.jpg'
         try:
             obj = context.model.unrestrictedTraverse(src.split('/'))
+            # bail out if obj is not a Silva Image, otherwise the old
+            # href value would be lost
+            if not isinstance(obj, Products.Silva.Image.Image):
+                raise NotFound
         except KeyError:
             pass
         except NotFound:
