@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Thu Apr  3 17:21:11 2008\n"
+"POT-Creation-Date: Wed May  7 15:01:45 2008\n"
 "PO-Revision-Date: 2007-03-06 19:49+0000\n"
 "Last-Translator: Tiago Silva <Unknown>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-04-02 06:04+0000\n"
+"X-Launchpad-Export-Date: 2008-05-07 12:56+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /Document.py:165
@@ -46,35 +46,35 @@ msgstr ""
 msgid "title"
 msgstr ""
 
-#: /install.py:163 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
+#: /install.py:163 /widgets/element/doc_elements/list/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
 msgid "paragraph"
 msgstr ""
 
-#: /install.py:164 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
+#: /install.py:164 /widgets/element/doc_elements/list/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 msgid "heading"
 msgstr ""
 
-#: /install.py:165 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
+#: /install.py:165 /widgets/element/doc_elements/list/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 msgid "list"
 msgstr ""
 
-#: /install.py:166 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
+#: /install.py:166 /widgets/element/doc_elements/list/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 msgid "preformatted"
 msgstr ""
 
@@ -94,11 +94,11 @@ msgstr ""
 msgid "complex list"
 msgstr ""
 
-#: /install.py:171 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
+#: /install.py:171 /widgets/element/doc_elements/list/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 msgid "definition list"
 msgstr ""
 
@@ -175,7 +175,7 @@ msgstr ""
 msgid "None returned from source"
 msgstr ""
 
-#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:555
+#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:548
 #: /widgets/element/doc_elements/source/rendered_source.py:18
 #: /widgets/element/doc_elements/source/rendered_source.py:23
 #: /widgets/element/doc_elements/source/render.pt:8
@@ -293,24 +293,6 @@ msgid ""
 "No code objects (Python Scripts, Page Templates, DTML Methods) are available."
 msgstr ""
 
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-msgid "create a hyperlink: alt-g"
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
-#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
-msgid "get link reference..."
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:45
-msgid "normal"
-msgstr ""
-
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:56
 msgid "compact"
 msgstr ""
@@ -319,24 +301,6 @@ msgstr ""
 msgid ""
 "Add term on first line, definition on second line. Separate items with an "
 "empty line space."
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-msgid "${tip} tab to the exit button or use alt-e."
-msgstr ""
-
-#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
-#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
-msgid "Tip:"
 msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
@@ -457,60 +421,51 @@ msgstr ""
 msgid "image reference is broken"
 msgstr ""
 
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
-#: /widgets/top/nlist/render.pt:31 /widgets/top/table/render.pt:47
-msgid "type"
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+msgid "create a hyperlink: alt-g"
 msgstr ""
 
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:54
-#: /widgets/top/nlist/render.pt:35
-msgid "disc bullets"
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:11
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/image/mode_edit/render.pt:39
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
+msgid "get link reference..."
 msgstr ""
 
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:56
-#: /widgets/top/nlist/render.pt:37
-msgid "square bullets"
-msgstr ""
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:58
-#: /widgets/top/nlist/render.pt:39
-msgid "circle bullets"
-msgstr ""
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:60
-#: /widgets/top/nlist/render.pt:41
-msgid "1, 2, 3,.."
-msgstr ""
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:62
-#: /widgets/top/nlist/render.pt:43
-msgid "I, II, III,.."
-msgstr ""
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:64
-#: /widgets/top/nlist/render.pt:45
-msgid "i, ii, iii,.."
-msgstr ""
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:66
-#: /widgets/top/nlist/render.pt:47
-msgid "A, B, C,.."
-msgstr ""
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:68
-#: /widgets/top/nlist/render.pt:49
-msgid "a, b, c,.."
-msgstr ""
-
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:70
-#: /widgets/top/nlist/render.pt:51
-msgid "no bullet"
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
+msgid "element"
 msgstr ""
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:78
 msgid "Add list items separated by an empty line."
+msgstr ""
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
+msgid "${tip} tab to the exit button or use alt-e."
+msgstr ""
+
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:79
+#: /widgets/element/doc_elements/pre/mode_edit/render.pt:30
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:52
+#: /widgets/element/doc_elements/code/mode_edit/render.pt:36
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
+msgid "Tip:"
+msgstr ""
+
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:45
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
+msgid "normal"
 msgstr ""
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:46
@@ -524,13 +479,6 @@ msgstr ""
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:53
 msgid ""
 "Multiple paragraphs can be entered in one step by adding an empty line space."
-msgstr ""
-
-#: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
-#: /widgets/element/doc_elements/list/mode_edit/render.pt:33
-#: /widgets/element/doc_elements/p/mode_edit/render.pt:34
-#: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
-msgid "element"
 msgstr ""
 
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:24
@@ -760,25 +708,77 @@ msgstr ""
 msgid "bold"
 msgstr ""
 
+#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
+#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+msgid "edit parent"
+msgstr ""
+
+#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
+msgid "Up to parent: alt-u"
+msgstr ""
+
 #: /widgets/top/field/render.pt:17
 msgid "subeditor"
 msgstr ""
 
-#: /widgets/top/sub/render.pt:14 /widgets/top/field/render.pt:14
-msgid "Up to parent: alt-u"
+#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
+msgid "Up to parent"
 msgstr ""
 
-#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
-#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
-msgid "edit parent"
+#: /widgets/top/nlist/render.pt:31 /widgets/top/table/render.pt:47
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:50
+#: /widgets/element/doc_elements/p/mode_edit/render.pt:43
+#: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
+msgid "type"
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:35
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:54
+msgid "disc bullets"
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:37
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:56
+msgid "square bullets"
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:39
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:58
+msgid "circle bullets"
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:41
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:60
+msgid "1, 2, 3,.."
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:43
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:62
+msgid "I, II, III,.."
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:45
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:64
+msgid "i, ii, iii,.."
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:47
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:66
+msgid "A, B, C,.."
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:49
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:68
+msgid "a, b, c,.."
+msgstr ""
+
+#: /widgets/top/nlist/render.pt:51
+#: /widgets/element/doc_elements/list/mode_edit/render.pt:70
+msgid "no bullet"
 msgstr ""
 
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
-msgstr ""
-
-#: /widgets/top/sub/render.pt:20 /widgets/top/field/render.pt:20
-msgid "Up to parent"
 msgstr ""
 
 #: /widgets/top/table/render.pt:14
