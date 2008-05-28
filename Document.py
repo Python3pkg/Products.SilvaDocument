@@ -263,7 +263,7 @@ class Document(CatalogedVersionedContent):
     def transform_and_store(self, content_type, content):
         ret = content
         try:
-            if content_type in ['text/html', 'application/xhtml+xml']:
+            if content_type.split(';')[0] in ['text/html', 'application/xhtml+xml']:
                 html = content
                 self.editor_storage(html, 'kupu')
 
