@@ -254,6 +254,7 @@ class Document(CatalogedVersionedContent):
 
     def transform_and_store(self, content_type, content):
         ret = content
+        import pdb;pdb.set_trace()
         try:
             if content_type.split(';')[0] in ['text/html', 'application/xhtml+xml']:
                 html = content
@@ -288,6 +289,7 @@ class Document(CatalogedVersionedContent):
         """PUT support"""
         # XXX we may want to make this more modular/pluggable at some point
         # to allow more content-types (+ transformations)
+        import pdb;pdb.set_trace()
         if REQUEST is None:
             REQUEST = self.REQUEST
         if RESPONSE is None:
