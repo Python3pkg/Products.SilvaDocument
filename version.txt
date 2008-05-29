@@ -1,1 +1,1 @@
-SilvaDocument 2.0.8b1
+SilvaDocument 2.0.8 (unreleased)
