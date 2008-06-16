@@ -288,7 +288,6 @@ class Document(CatalogedVersionedContent):
         """PUT support"""
         # XXX we may want to make this more modular/pluggable at some point
         # to allow more content-types (+ transformations)
-        import pdb;pdb.set_trace()
         if REQUEST is None:
             REQUEST = self.REQUEST
         if RESPONSE is None:
