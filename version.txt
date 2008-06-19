@@ -1,1 +1,1 @@
-SilvaDocument 2.1a2
+SilvaDocument 2.1 (unreleased)
