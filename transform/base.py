@@ -371,11 +371,9 @@ class Element(Node):
 class CharRef:
     pass
 
-class quot(CharRef): "quotation mark = APL quote, U+0022 ISOnum"; codepoint = 34
 class amp(CharRef): "ampersand, U+0026 ISOnum"; codepoint = 38
 class lt(CharRef): "less-than sign, U+003C ISOnum"; codepoint = 60
 class gt(CharRef): "greater-than sign, U+003E ISOnum"; codepoint = 62
-#class apos(CharRef): "apostrophe mark, U+0027 ISOnum"; codepoint = 39
 
 class _escape_chars:
     def __init__(self):
