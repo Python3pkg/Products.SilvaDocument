@@ -819,15 +819,30 @@ class div(Element):
             )
         elif self.attr.source_id:
             content = []
-            for key, value in self.attr.__dict__.items():
-                if key != 'source_id' and key != 'class':
-                    value = value.content
+            params = {}
+            for child in self.find():
+                if child.name() == 'span':
+                    key = child.attr.key.content
+                    value = child.content[0].content
                     vtype = 'string' # default type
                     if '__type__' in key:
-                        key, vtype = key.split('__type__')
+                        vtype = key.split('__type__')[1]
                     if type(value) != unicode:
                         value = unicode(value, 'UTF-8')
-                    content.append(silva.parameter(value, key=key, type=vtype))
+                    if vtype == 'list':
+                        if not key in params:
+                            params[key] = []
+                        params[key].append(value)
+                    else:
+                        params[key] = value
+            for key in params:
+                if '__type__' in key:
+                    vkey, vtype = key.split('__type__')
+                content.append(
+                    silva.parameter(
+                    str([x.encode('utf-8') for x in params[key]]),
+                    key=vkey, type=vtype))
+
             return silva.source(
                         Frag(content), 
                         id=self.attr.source_id,
@@ -839,6 +854,12 @@ class div(Element):
     def do_not_fix_content(self):
         return 1
 
+class span(Element):
+    def convert(self, context):
+        if hasattr(self, 'should_be_removed') and self.should_be_removed:
+            return Frag()
+        return silva.pre(extract_texts(self.content, context))
+        
 class dl(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
