@@ -522,18 +522,37 @@ class source(SilvaElement):
         else:
             # external source element
             id = self.attr.id
+            params = {}
             attrparams = {}
+            divcontent = []
             for child in self.find():
                 if child.name() == 'parameter':
                     vtype = child.getattr('type', 'string')
                     value = child.content.convert(context).asBytes('utf-8')
-                    key = child.attr.key.convert(context).asBytes('utf-8')
-                    attrkey = key
+                    key = child.attr.key.convert(context).extract_text()
+                    attrkey = key 
                     if vtype == 'list':
-                        value = eval(value)
                         attrkey = '%s__type__list' % key
-                    attrparams[attrkey] = value
-            divcontent = []
+                        value = [unicode(x, 'utf-8') for x in eval(value)]
+                    else:
+                        value = unicode(value, 'utf-8')
+                    params[attrkey] = value
+            for key in params:
+                display_key = key
+                if '__type__' in key:
+                    display_key = key.split('__type__')[0]
+                divcontent.append(
+                    html.strong("%s: " % display_key))
+                if '__type__list' in key:
+                    for value in params[key]:
+                        divcontent.append(html.span(
+                            Text(value), {'key': key}))
+                        divcontent.append(Text(', '))
+                    divcontent.pop()
+                else:
+                    divcontent.append(html.span(
+                        Text(params[key]), {'key': key}))
+                divcontent.append(html.br());
             object = getSourceForId(context.model, str(id))
             if object is not None:
                 meta_type = object.meta_type
@@ -547,13 +566,11 @@ class source(SilvaElement):
                 source_title = ''
                 header = html.h4(Text('[%s]' % _('external source element is broken')))
 
-            pre = Frag(divcontent)
-            content = Frag(header, pre);
+            content = Frag(header, divcontent);
             return html.div(content,
-                            source_id=id,
-                            source_title=source_title,
-                            class_='externalsource',
-                            **attrparams)
+                        source_id=id,
+                        class_='externalsource',
+                        **attrparams)
 
 class parameter(SilvaElement):
     def convert(self):
