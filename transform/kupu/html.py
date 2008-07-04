@@ -823,7 +823,10 @@ class div(Element):
             for child in self.find():
                 if child.name() == 'span':
                     key = child.attr.key.content
-                    value = child.content[0].content
+                    if child.find():
+                        value = child.content[0].content
+                    else:
+                        value = ''
                     vtype = 'string' # default type
                     if '__type__' in key:
                         vtype = key.split('__type__')[1]
@@ -836,11 +839,17 @@ class div(Element):
                     else:
                         params[key] = value
             for key in params:
+                vkey = key
+                vtype = 'string'
                 if '__type__' in key:
                     vkey, vtype = key.split('__type__')
+                if vtype == 'list':
+                    utfvalue = str([x.encode('utf-8') for x in params[key]])
+                else:
+                    utfvalue = params[key].encode('utf-8')
                 content.append(
                     silva.parameter(
-                    str([x.encode('utf-8') for x in params[key]]),
+                    utfvalue,
                     key=vkey, type=vtype))
 
             return silva.source(
