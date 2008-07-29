@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Silva 1.1\n"
 "Report-Msgid-Bugs-To:  \n"
-"POT-Creation-Date: Wed May  7 15:01:45 2008\n"
+"POT-Creation-Date: Tue Jul 29 11:22:06 2008\n"
 "PO-Revision-Date: 2007-05-30 10:16+0000\n"
 "Last-Translator: thisfred <eric@infrae.com>\n"
 "Language-Team: Infrae i18n team <walco@infrae.com>\n"
@@ -185,7 +185,7 @@ msgstr "foutbericht:"
 msgid "None returned from source"
 msgstr ""
 
-#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:548
+#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:567
 #: /widgets/element/doc_elements/source/rendered_source.py:18
 #: /widgets/element/doc_elements/source/rendered_source.py:23
 #: /widgets/element/doc_elements/source/render.pt:8

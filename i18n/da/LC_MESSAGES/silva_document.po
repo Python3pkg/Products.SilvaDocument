@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Wed May  7 15:01:45 2008\n"
+"POT-Creation-Date: Tue Jul 29 11:22:06 2008\n"
 "PO-Revision-Date: 2008-03-16 15:45+0000\n"
 "Last-Translator: carson <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
@@ -175,7 +175,7 @@ msgstr "fejl meddelelse:"
 msgid "None returned from source"
 msgstr ""
 
-#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:548
+#: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:567
 #: /widgets/element/doc_elements/source/rendered_source.py:18
 #: /widgets/element/doc_elements/source/rendered_source.py:23
 #: /widgets/element/doc_elements/source/render.pt:8
