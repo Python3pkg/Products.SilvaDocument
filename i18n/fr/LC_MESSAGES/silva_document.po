@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silva-fr\n"
 "Report-Msgid-Bugs-To:  \n"
-"POT-Creation-Date: Tue Jul 29 11:22:06 2008\n"
-"PO-Revision-Date: 2008-03-17 15:41+0000\n"
-"Last-Translator: Yves MATHIEU <ymathieu@moulins-vichy.cci.fr>\n"
+"POT-Creation-Date: Tue Jul 29 11:53:32 2008\n"
+"PO-Revision-Date: 2008-07-14 08:56+0000\n"
+"Last-Translator: Jean Migisha <Unknown>\n"
 "Language-Team: jpombar <pombar.joaquin@wanadoo.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-05-07 12:56+0000\n"
+"X-Launchpad-Export-Date: 2008-07-29 09:28+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 "Language-code: fr\n"
 "Domain: silva\n"
@@ -21,7 +21,7 @@ msgstr ""
 
 #: /Document.py:165
 msgid "No version to store to!"
-msgstr ""
+msgstr "Aucune version pour sauver les changements !"
 
 #: /Document.py:55
 msgid ""
@@ -79,7 +79,7 @@ msgstr "liste"
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 msgid "preformatted"
-msgstr ""
+msgstr "Pré-formaté"
 
 #: /install.py:167
 msgid "table of contents"
@@ -103,7 +103,7 @@ msgstr "liste complexe"
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 msgid "definition list"
-msgstr ""
+msgstr "liste de définition"
 
 #: /install.py:172
 msgid "code element"
@@ -136,7 +136,7 @@ msgstr "Image"
 
 #: /install.py:237 /install.py:262 /install.py:305
 msgid "Complex list"
-msgstr ""
+msgstr "Liste complexe"
 
 #: /install.py:263
 msgid "List item"
@@ -144,7 +144,7 @@ msgstr "Élément de liste"
 
 #: /install.py:264
 msgid "List title"
-msgstr ""
+msgstr "Titre de liste"
 
 #: /install.py:306
 msgid "Preformatted"
@@ -169,7 +169,7 @@ msgstr ""
 
 #: /silvaxml/xmlexport.py:100
 msgid "no external source specified"
-msgstr ""
+msgstr "pas de source externe spécifiée"
 
 #: /silvaxml/xmlexport.py:123 /silvaxml/xmlexport.py:126
 #: /widgets/element/doc_elements/source/rendered_source.py:19
@@ -178,7 +178,7 @@ msgstr "message d'erreur&nbsp;:"
 
 #: /silvaxml/xmlexport.py:126
 msgid "None returned from source"
-msgstr ""
+msgstr "La source externe n'a rien retourné"
 
 #: /silvaxml/xmlexport.py:82 /transform/kupu/silva.py:567
 #: /widgets/element/doc_elements/source/rendered_source.py:18
@@ -191,6 +191,8 @@ msgstr "l'élément  de la source externe est cassé"
 msgid ""
 "external source element specified but silvaexternalsources not installed!"
 msgstr ""
+"Un élément de source externe est utilisé, mais SilvaExternalSources n'est "
+"pas installé !"
 
 #: /transform/Transformer.py:63
 msgid "Unknown Editor: ${editor}"
@@ -306,7 +308,7 @@ msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:56
 msgid "compact"
-msgstr ""
+msgstr "compacte"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:64
 msgid ""
@@ -318,7 +320,7 @@ msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Normal heading"
-msgstr ""
+msgstr "En-tête normale"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
 msgid "Sub heading"
@@ -330,11 +332,11 @@ msgstr ""
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:32
 msgid "Paragraph heading"
-msgstr ""
+msgstr "En-tête paragraphe"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:33
 msgid "Sub paragraph heading"
-msgstr ""
+msgstr "En-tête sous paragraphe"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:105
 msgid "float left"
@@ -617,7 +619,7 @@ msgstr "Notes"
 
 #: /widgets/macro_helpers.pt:34
 msgid "save"
-msgstr "enregistrer"
+msgstr "sauvegarder"
 
 #: /widgets/macro_helpers.pt:34
 msgid "access key: alt-s"
@@ -625,7 +627,7 @@ msgstr "touche d'accès: alt-s"
 
 #: /widgets/macro_helpers.pt:36
 msgid "save + exit"
-msgstr "enregistrer + quitter"
+msgstr "sauvegarder + quitter"
 
 #: /widgets/macro_helpers.pt:36
 msgid "access key: alt-e"
@@ -633,7 +635,7 @@ msgstr "touche d'accès: alt-e"
 
 #: /widgets/macro_helpers.pt:38
 msgid "save + insert"
-msgstr "enregistrer + insérer"
+msgstr "sauvegarder + insérer"
 
 #: /widgets/macro_helpers.pt:38
 msgid "access key: alt-i"
