@@ -24,8 +24,8 @@ class Transformer:
         """ provide a transformer from source to target 
             (and possibly back).
         """
-        self.source_spec = __import__(source, globals(), locals(), [], -1)
-        self.target_spec = __import__(target, globals(), locals(), [], -1)
+        self.source_spec = __import__(source, globals(), locals(), [])
+        self.target_spec = __import__(target, globals(), locals(), [])
         self.source_parser = self.ObjectParser(self.source_spec)
         self.target_parser = self.ObjectParser(self.target_spec)
 
