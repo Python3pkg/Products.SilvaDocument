@@ -818,24 +818,26 @@ class div(Element):
         elif self.attr.source_id:
             content = []
             params = {}
-            for child in self.find():
-                if child.name() == 'span':
-                    key = child.attr.key.content
-                    if child.find():
-                        value = child.content[0].content
-                    else:
-                        value = ''
-                    vtype = 'string' # default type
-                    if '__type__' in key:
-                        vtype = key.split('__type__')[1]
-                    if type(value) != unicode:
-                        value = unicode(value, 'UTF-8')
-                    if vtype == 'list':
-                        if not key in params:
-                            params[key] = []
-                        params[key].append(value)
-                    else:
-                        params[key] = value
+            for thing in self.find():
+                if thing.name() == 'div':
+                    for child in thing.find():
+                        if child.name() == 'span':
+                            key = child.attr.key.content
+                            if child.find():
+                                value = child.content[0].content
+                            else:
+                                value = ''
+                            vtype = 'string' # default type
+                            if '__type__' in key:
+                                vtype = key.split('__type__')[1]
+                            if type(value) != unicode:
+                                value = unicode(value, 'UTF-8')
+                            if vtype == 'list':
+                                if not key in params:
+                                    params[key] = []
+                                params[key].append(value)
+                            else:
+                                params[key] = value
             for key in params:
                 vkey = key
                 vtype = 'string'

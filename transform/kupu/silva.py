@@ -537,23 +537,26 @@ class source(SilvaElement):
                     else:
                         value = unicode(value, 'utf-8')
                     params[attrkey] = value
+            object = getSourceForId(context.model, str(id))
+            divpar = []
             for key in params:
-                display_key = key
+                display_key = object.form().get_field(key).title()
                 if '__type__' in key:
                     display_key = key.split('__type__')[0]
-                divcontent.append(
+                divpar.append(
                     html.strong("%s: " % display_key))
                 if '__type__list' in key:
                     for value in params[key]:
-                        divcontent.append(html.span(
+                        divpar.append(html.span(
                             Text(value), {'key': key}))
-                        divcontent.append(Text(', '))
-                    divcontent.pop()
+                        divpar.append(Text(', '))
+                    divpar.pop()
                 else:
-                    divcontent.append(html.span(
+                    divpar.append(html.span(
                         Text(params[key]), {'key': key}))
-                divcontent.append(html.br());
-            object = getSourceForId(context.model, str(id))
+                divpar.append(html.br());
+            par = html.div(Frag(divpar), {'class': 'parameters'})
+            divcontent.append(par)
             if object is not None:
                 meta_type = object.meta_type
                 source_title = object.get_title() or id
