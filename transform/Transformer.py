@@ -24,15 +24,8 @@ class Transformer:
         """ provide a transformer from source to target 
             (and possibly back).
         """
-        self.source = source
-        self.target = target
-
-        # Alex Martelli and other cowards would frown on me :-)
-        # XXX Guido: Not because I'm a coward or so, but can't this be done
-        # using __import__?
-        exec "import %s as s; import %s as t" % (source, target)
-        self.source_spec = s
-        self.target_spec = t
+        self.source_spec = __import__(source, globals(), locals(), [], -1)
+        self.target_spec = __import__(target, globals(), locals(), [], -1)
         self.source_parser = self.ObjectParser(self.source_spec)
         self.target_parser = self.ObjectParser(self.target_spec)
 
