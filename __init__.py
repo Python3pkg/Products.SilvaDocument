@@ -2,16 +2,12 @@
 # See also LICENSE.txt
 # $Id: __init__.py,v 1.12 2006/01/24 16:15:05 faassen Exp $
 
-from Products.Silva.ImporterRegistry import importer_registry
 import EditorSupportNested
 import ServiceCodeSourceCharset
 import install
 
 from Products.Silva.fssite import registerDirectory
 from Products.Silva.helpers import makeContainerFilter
-from Products.SilvaMetadata.Compatibility import registerTypeForMetadata
-
-from Products.SilvaDocument import Document
 
 def initialize(context):
     from Products.SilvaDocument.silvaxml import xmlexport, xmlimport
@@ -30,9 +26,6 @@ def initialize(context):
         icon = "www/editorservice.gif",
         container_filter = makeContainerFilter()
         )
-    # old XML importer
-    importer_registry.register_tag('silva_document', 	 
-                                   Document.xml_import_handler)
 
     registerDirectory('widgets', globals())
 

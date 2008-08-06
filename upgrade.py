@@ -1,7 +1,8 @@
-from zope.interface import implements
+# Copyright (c) 2002-2007 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
-# zope imports
-import zLOG
+from zope.interface import implements
 
 # silva imports
 from Products.Silva.interfaces import IUpgrader

@@ -1,14 +1,14 @@
 # Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.39 $
-# Zope
+# $Id$
 
+# Python
 from StringIO import StringIO
 import re
 import sys
 import traceback
-import urlparse
 
+# Zope
 from zope.interface import implements
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
@@ -16,24 +16,13 @@ from Globals import InitializeClass
 from Persistence import Persistent
 from zExceptions import InternalError
 
-from webdav.common import Conflict
-
-from Products.ParsedXML.ExtraDOM import writeStream
-from Products.ParsedXML.ParsedXML import createDOMDocument
-from Products.ParsedXML.PrettyPrinter import _translateCdata
 from Products.ParsedXML.ParsedXML import ParsedXML
 
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.helpers import add_and_edit, translateCdata
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva import mangle
-
-from Products.Silva.ImporterRegistry import importer_registry, xml_import_helper, get_xml_id, get_xml_title
-from Products.Silva.Metadata import export_metadata
-from Products.Silva.i18n import translate as _
-
 from Products.Silva.ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 
 # For XML-Conversions for editors
@@ -42,13 +31,10 @@ from transform.base import Context
 
 from Products.Silva.interfaces import IContainerPolicy
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
-from Products.Silva.Versioning import VersioningError
 from Products.SilvaDocument.i18n import translate as _
 
 from Products.SilvaDocument import externalsource
 
-from xml.sax import make_parser
-from xml.sax.handler import ContentHandler
 from Products.SilvaMetadata.Exceptions import BindingError
 
 class Document(CatalogedVersionedContent):
@@ -357,15 +343,8 @@ class DocumentVersion(CatalogedVersion):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = PageTemplateFile('www/documentVersionEdit', globals())
 
-    def to_xml(self, context):
-        f = context.f
-        f.write('<title>%s</title>' % translateCdata(self.get_title()))
-        self.get_xml_content(f)
-        export_metadata(self, context)
-
     def get_xml_content(self, f):
         self.content.documentElement.writeStream(f)
-
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fulltext')
@@ -414,27 +393,6 @@ def documentversion_cloned(documentversion, event):
     # XXX should be part of workflow system
     documentversion.clearEditorCache()
 
-def xml_import_handler(object, node):
-    id = get_xml_id(node)
-    title = get_xml_title(node)
-
-    id = str(mangle.Id(object, id).unique())
-    object.manage_addProduct['SilvaDocument'].manage_addDocument(id, title)
-
-    newdoc = getattr(object, id)
-    newdoc.sec_update_last_author_info()
-
-    for child in node.childNodes:
-        if child.nodeName == u'doc':
-            version = getattr(newdoc, '0')
-            childxml = writeStream(child).getvalue().encode('utf8')
-            version.content.manage_edit(childxml) # expects utf8
-        elif hasattr(newdoc, 'set_%s' % child.nodeName.encode('utf8')) \
-                and child.nodeValue:
-            getattr(newdoc, 'set_%s' % child.nodeName.encode('utf8'))(
-                child.nodeValue.encode('utf8'))
-
-    return newdoc
 
 class SilvaDocumentPolicy(Persistent):
 

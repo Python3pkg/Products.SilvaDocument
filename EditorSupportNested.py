@@ -1,6 +1,7 @@
 # Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.28 $
+# $Id$
+
 # python
 from __future__ import nested_scopes
 # Zope
@@ -10,11 +11,10 @@ from OFS.SimpleItem import SimpleItem
 from zope import interface
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva import mangle
 from Products.Silva.interfaces import IInvisibleService
+
 # SilvaDocument
 from Products.SilvaDocument import externalsource    
-from Products.SilvaDocument import interfaces
 from Products.SilvaDocument import mixedcontentsupport
 
 mixedContentSupportRegistry = mixedcontentsupport.SupportRegistry(

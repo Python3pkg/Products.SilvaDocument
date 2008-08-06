@@ -1,19 +1,20 @@
 # Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Revision: 1.13 $
+# $Id$
+
 # Python
 from __future__ import nested_scopes
 import re
-from xml.sax.saxutils import escape, unescape, quoteattr
 from urlparse import urlparse
 from types import UnicodeType
 
 from zope.interface import implements
+
 # Zope
 import Acquisition
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from OFS.SimpleItem import SimpleItem
+
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
