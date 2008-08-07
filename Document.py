@@ -23,6 +23,7 @@ from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva import mangle
+from Products.Silva.helpers import translateCdata
 from Products.Silva.ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 
 # For XML-Conversions for editors
@@ -367,6 +368,18 @@ class DocumentVersion(CatalogedVersion):
         value = s.getvalue()
         s.close()
         return value
+
+
+    def to_xml(self, context):
+        f = context.f
+        f.write('<title>%s</title>' % translateCdata(self.get_title()))
+        self.get_xml_content(f)
+        binding = self.service_metadata.getMetadata(self)
+        f.write(binding.renderXML())
+
+    def get_xml_content(self, f):
+        self.content.documentElement.writeStream(f)
+
 
     def _flattenxml(self, xmlinput):
         """Cuts out all the XML-tags, helper for fulltext (for
