@@ -70,20 +70,11 @@ def registerViews(reg):
     """
     # edit
     reg.register('edit', 'Silva Document', ['edit', 'VersionedContent', 'Document'])
-    # public
-    # XXX SilvaDocument needs an explicit public view (besides the ones on 
-    # its versions) to allow using '/public' as a view method explicitly.
-    # This is used e.g. in the subscription feature.
-    reg.register('public', 'Silva Document', ['public', 'Document'])
-    reg.register('public', 'Silva Document Version', ['public', 'Document', 'view'])
-    # preview
-    reg.register('preview', 'Silva Document Version', ['public', 'Document', 'preview'])
     
 def unregisterViews(reg):
-    for meta_type in ['Silva Document']:
-        reg.unregister('edit', meta_type)
-        reg.unregister('public', '%s Version' % meta_type)
-        reg.unregister('preview', '%s Version' % meta_type)
+    """Unregister core views.
+    """
+    reg.unregister('edit', 'Silva Document')
 
 def configureXMLWidgets(root):
     """Configure XMLWidgets registries, editor, etc'

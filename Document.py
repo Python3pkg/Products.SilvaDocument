@@ -39,7 +39,8 @@ from Products.SilvaDocument import externalsource
 
 from Products.SilvaMetadata.Exceptions import BindingError
 
-from silva.core.views import z3cforms as z3cforms
+from silva.core.views import views as silvaviews
+from silva.core.views import z3cforms as silvaz3cforms
 from silva.core import conf as silvaconf
 
 from z3c.form import field
@@ -407,13 +408,30 @@ class Document(CatalogedVersionedContent):
 InitializeClass(Document)
 
 
-class DocumentAddForm(z3cforms.AddForm):
+class DocumentAddForm(silvaz3cforms.AddForm):
     """Add form for a document.
     """
 
     silvaconf.context(IDocument)
     silvaconf.name(u'Silva Document')
     fields = field.Fields(IDocumentVersion)
+
+class DocumentView(silvaviews.View):
+    """View on a document.
+    """
+
+    silvaconf.context(Document)
+
+    def render(self):
+        view_type = 'service_doc_viewer'
+        if self.is_preview:
+            view_type = 'service_doc_previewer'
+        
+        service_editor = self.context.service_editor
+        service_editor.setViewer(view_type)
+        # For service_editor
+        self.request['model'] = self.content
+        return service_editor.renderView(self.content.content.documentElement)
 
 
 @silvaconf.subscribe(IDocument, OFS.interfaces.IObjectWillBeRemovedEvent)
