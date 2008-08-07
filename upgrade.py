@@ -1,19 +1,16 @@
-# Copyright (c) 2002-2007 Infrae. All rights reserved.
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
 
+# Zope
 from zope.interface import implements
 
-# silva imports
-from Products.Silva.interfaces import IUpgrader
-from Products.Silva import upgrade
+# Silva
 from Products.Silva.helpers import SwitchClass
-
+from Products.Silva.upgrade import BaseUpgrader
 from Products.SilvaDocument.Document import Document, DocumentVersion
 
-class UpgradeDocumentXML:
-
-    implements(IUpgrader)
+class UpgradeDocumentXML(BaseUpgrader):
 
     def upgrade(self, obj):
         # <index name="foo">bar</index> to
@@ -34,11 +31,16 @@ class UpgradeDocumentXML:
             for child in node.childNodes:
                 self._upgrade_helper(child)
 
-def initialize():
-    upgrade.registry.registerUpgrader(SwitchClass(Document),
-        '0.9.3', Document.meta_type)
-    upgrade.registry.registerUpgrader(SwitchClass(DocumentVersion,
-        args=()), '0.9.3', DocumentVersion.meta_type)
-    upgrade.registry.registerUpgrader(UpgradeDocumentXML(), '0.9.3',
-        DocumentVersion.meta_type)
+upgradeDocumentXML = UpgradeDocumentXML('0.9.3', 'Silva Document')
+
+class SwitchClassUpgrader(BaseUpgrader, SwitchClass):
+
+    def __init__(self, version, meta_type, new_class):
+        BaseUpgrader.__init__(self, version, meta_type)
+        SwitchClass.__init__(self, new_class)
+        
+
+switchDocumentClass = SwitchClassUpgrader('0.9.3', 'Silva Document',  Document)
+switchDocumentVersionClass = SwitchClassUpgrader('0.9.3', 'Silva Document Version', DocumentVersion)
+
 

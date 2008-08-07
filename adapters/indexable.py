@@ -1,7 +1,17 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+from grokcore import component
+
+from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.Silva.adapters.indexable import IndexableAdapter
 from Products.Silva.adapters import interfaces
 
 class DocumentIndexableAdapter(IndexableAdapter):
+
+    component.context(IDocument)
+
     def getIndexes(self):
         version = self.context.get_viewable()
         if version:
@@ -9,6 +19,9 @@ class DocumentIndexableAdapter(IndexableAdapter):
         return []
 
 class DocumentVersionIndexableAdapter(IndexableAdapter):
+
+    component.context(IDocumentVersion)
+
     def getIndexes(self):
         version = self.context
         if version is None:

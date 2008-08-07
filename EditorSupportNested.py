@@ -2,20 +2,24 @@
 # See also LICENSE.txt
 # $Id$
 
-# python
+# Python
 from __future__ import nested_scopes
+
 # Zope
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
-from OFS.SimpleItem import SimpleItem
 from zope import interface
+
 # Silva
 from Products.Silva import SilvaPermissions
+from Products.Silva.BaseService import SilvaService
 from Products.Silva.interfaces import IInvisibleService
 
 # SilvaDocument
 from Products.SilvaDocument import externalsource    
 from Products.SilvaDocument import mixedcontentsupport
+
+from silva.core import conf as silvaconf
 
 mixedContentSupportRegistry = mixedcontentsupport.SupportRegistry(
     mixedcontentsupport.ParagraphSupport)
@@ -26,12 +30,16 @@ mixedContentSupportRegistry.registerElementDefault(
 mixedContentSupportRegistry.registerElementDefault(
     'pre', mixedcontentsupport.PreSupport)    
     
-class EditorSupport(SimpleItem):
-    """XML editor support. """
+class EditorSupport(SilvaService):
+    """XML editor support.
+    """
     
     security = ClassSecurityInfo()
     interface.implements(IInvisibleService)
     meta_type = 'Silva Editor Support Service'
+
+    silvaconf.icon('www/editorservice.gif')
+    silvaconf.factory('manage_addEditorSupport')
 
     def __init__(self, id):
         self.id = id

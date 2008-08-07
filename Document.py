@@ -15,6 +15,7 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from Globals import InitializeClass
 from Persistence import Persistent
 from zExceptions import InternalError
+import OFS.interfaces
 
 from Products.ParsedXML.ParsedXML import ParsedXML
 
@@ -38,6 +39,90 @@ from Products.SilvaDocument import externalsource
 
 from Products.SilvaMetadata.Exceptions import BindingError
 
+from silva.core.views import z3cforms as z3cforms
+from silva.core import conf as silvaconf
+
+from z3c.form import field
+
+
+class DocumentVersion(CatalogedVersion):
+    """Silva Document version.
+    """
+    meta_type = "Silva Document Version"
+    implements(IDocumentVersion)
+
+    security = ClassSecurityInfo()
+
+    manage_options = (
+        {'label':'Edit',       'action':'manage_main'},
+        ) + CatalogedVersion.manage_options
+
+    def __init__(self, id):
+        DocumentVersion.inheritedAttribute('__init__')(self, id)
+        self.content = ParsedXML('content', '<doc></doc>')
+
+    # display edit screen as main management screen
+    security.declareProtected('View management screens', 'manage_main')
+    manage_main = PageTemplateFile('www/documentVersionEdit', globals())
+
+    def get_xml_content(self, f):
+        self.content.documentElement.writeStream(f)
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'fulltext')
+    def fulltext(self):
+        """Return the content of this object without any xml"""
+        if self.version_status() == 'unapproved':
+            return ''
+        return [
+            self.object().id,
+            self.get_title(),
+            self._flattenxml(self.content_xml())]
+
+    security.declareProtected(SilvaPermissions.AccessContentsInformation,
+                              'content_xml')
+    def content_xml(self):
+        """Returns the documentElement of the content's XML
+        """
+        s = StringIO()
+        self.content.documentElement.writeStream(s)
+        value = s.getvalue()
+        s.close()
+        return value
+
+
+    def to_xml(self, context):
+        f = context.f
+        f.write('<title>%s</title>' % translateCdata(self.get_title()))
+        self.get_xml_content(f)
+        binding = self.service_metadata.getMetadata(self)
+        f.write(binding.renderXML())
+
+    def get_xml_content(self, f):
+        self.content.documentElement.writeStream(f)
+
+
+    def _flattenxml(self, xmlinput):
+        """Cuts out all the XML-tags, helper for fulltext (for
+        content-objects)
+        """
+        # XXX: remove code sources, since the parameters are
+        # potentially sensitive data.
+        matchstr = re.compile(
+            r'<source id=".*?">.*?</source>', re.DOTALL|re.MULTILINE)
+        xmlinput = matchstr.sub('', xmlinput)
+        return re.sub('<[^>]*>(?i)(?m)', ' ', xmlinput)
+
+    def clearEditorCache(self):
+        """ Clears editor cache for this version
+        """
+        editor_service = self.service_editor
+        document_element = self.content.documentElement
+        editor_service.clearCache(document_element)
+
+InitializeClass(DocumentVersion)
+
+
 class Document(CatalogedVersionedContent):
     __doc__ = _(
     """A Document is the basic unit of information in Silva. A document
@@ -52,6 +137,10 @@ class Document(CatalogedVersionedContent):
     meta_type = "Silva Document"
 
     implements(IDocument)
+
+    silvaconf.icon('www/silvadoc.gif')
+    silvaconf.priority(-6)
+    silvaconf.versionClass(DocumentVersion)
 
     # some scary DAV stuff...
     __dav_collection__ = False
@@ -317,6 +406,17 @@ class Document(CatalogedVersionedContent):
 
 InitializeClass(Document)
 
+
+class DocumentAddForm(z3cforms.AddForm):
+    """Add form for a document.
+    """
+
+    silvaconf.context(IDocument)
+    silvaconf.name(u'Silva Document')
+    fields = field.Fields(IDocumentVersion)
+
+
+@silvaconf.subscribe(IDocument, OFS.interfaces.IObjectWillBeRemovedEvent)
 def document_will_be_removed(document, event):
     # Does the widget cache needs be cleared for all versions - I think so...
     for version in document._get_indexable_versions():
@@ -324,83 +424,8 @@ def document_will_be_removed(document, event):
         if version_object:
             document.service_editor.clearCache(version_object.content)
 
-class DocumentVersion(CatalogedVersion):
-    """Silva Document version.
-    """
-    meta_type = "Silva Document Version"
-    implements(IDocumentVersion)
 
-    security = ClassSecurityInfo()
-
-    manage_options = (
-        {'label':'Edit',       'action':'manage_main'},
-        ) + CatalogedVersion.manage_options
-
-    def __init__(self, id):
-        DocumentVersion.inheritedAttribute('__init__')(self, id)
-        self.content = ParsedXML('content', '<doc></doc>')
-
-    # display edit screen as main management screen
-    security.declareProtected('View management screens', 'manage_main')
-    manage_main = PageTemplateFile('www/documentVersionEdit', globals())
-
-    def get_xml_content(self, f):
-        self.content.documentElement.writeStream(f)
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'fulltext')
-    def fulltext(self):
-        """Return the content of this object without any xml"""
-        if self.version_status() == 'unapproved':
-            return ''
-        return [
-            self.object().id,
-            self.get_title(),
-            self._flattenxml(self.content_xml())]
-
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'content_xml')
-    def content_xml(self):
-        """Returns the documentElement of the content's XML
-        """
-        s = StringIO()
-        self.content.documentElement.writeStream(s)
-        value = s.getvalue()
-        s.close()
-        return value
-
-
-    def to_xml(self, context):
-        f = context.f
-        f.write('<title>%s</title>' % translateCdata(self.get_title()))
-        self.get_xml_content(f)
-        binding = self.service_metadata.getMetadata(self)
-        f.write(binding.renderXML())
-
-    def get_xml_content(self, f):
-        self.content.documentElement.writeStream(f)
-
-
-    def _flattenxml(self, xmlinput):
-        """Cuts out all the XML-tags, helper for fulltext (for
-        content-objects)
-        """
-        # XXX: remove code sources, since the parameters are
-        # potentially sensitive data.
-        matchstr = re.compile(
-            r'<source id=".*?">.*?</source>', re.DOTALL|re.MULTILINE)
-        xmlinput = matchstr.sub('', xmlinput)
-        return re.sub('<[^>]*>(?i)(?m)', ' ', xmlinput)
-
-    def clearEditorCache(self):
-        """ Clears editor cache for this version
-        """
-        editor_service = self.service_editor
-        document_element = self.content.documentElement
-        editor_service.clearCache(document_element)
-
-InitializeClass(DocumentVersion)
-
+@silvaconf.subscribe(IDocumentVersion, OFS.interfaces.IObjectClonedEvent)
 def documentversion_cloned(documentversion, event):
     # if we're a copy, clear cache
     # XXX should be part of workflow system

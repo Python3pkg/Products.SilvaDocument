@@ -7,13 +7,9 @@
 from zope import interface
 
 from Products.Silva.install import add_fss_directory_view
+from Products.Silva.interfaces import IInvisibleService
 from Products.SilvaDocument import Document
 import EditorSupportNested
-
-try:
-    from Products.Silva.interfaces import IInvisibleService
-except ImportError:
-    IInvisibleService = None
 
 from Products.SilvaDocument import externalsource
 
@@ -80,8 +76,6 @@ def registerViews(reg):
     # This is used e.g. in the subscription feature.
     reg.register('public', 'Silva Document', ['public', 'Document'])
     reg.register('public', 'Silva Document Version', ['public', 'Document', 'view'])
-    # add
-    reg.register('add', 'Silva Document', ['add', 'Document'])
     # preview
     reg.register('preview', 'Silva Document Version', ['public', 'Document', 'preview'])
     
@@ -89,7 +83,6 @@ def unregisterViews(reg):
     for meta_type in ['Silva Document']:
         reg.unregister('edit', meta_type)
         reg.unregister('public', '%s Version' % meta_type)
-        reg.unregister('add', meta_type)
         reg.unregister('preview', '%s Version' % meta_type)
 
 def configureXMLWidgets(root):
@@ -111,11 +104,7 @@ def configureXMLWidgets(root):
                  'service_sub_viewer',
                  'service_table_editor', 'service_table_viewer']:
         root.manage_addProduct['XMLWidgets'].manage_addWidgetRegistry(name)
-        if IInvisibleService is not None:
-            interface.directlyProvides(
-                root[name],
-                IInvisibleService,
-                *interface.directlyProvidedBy(root[name]))
+        interface.alsoProvides(root[name], IInvisibleService)
 
     # now register all widgets
     # XXX not really necessary; the "install" should take case of this

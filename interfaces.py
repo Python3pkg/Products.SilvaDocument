@@ -1,6 +1,6 @@
 # Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: interfaces.py,v 1.9 2006/01/24 16:15:05 faassen Exp $
+# $Id$
 
 from zope.interface import Interface, Attribute
 from Products.Silva.interfaces import IVersionedContent, IVersion

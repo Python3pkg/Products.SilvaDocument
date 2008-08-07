@@ -1,25 +1,37 @@
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+# Zope
 import Globals
-from OFS.SimpleItem import SimpleItem
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 
+# Silva
+from Products.Silva.BaseService import SilvaService
 from Products.Silva.helpers import add_and_edit
 from Products.SilvaDocument.i18n import translate as _
 
+from silva.core import conf as silvaconf
+
 manage_permission = 'Manage CodeSource Charset Services'
 
-class CodeSourceCharsetService(SimpleItem):
+class CodeSourceCharsetService(SilvaService):
     
     security = ClassSecurityInfo()
     meta_type = 'Silva CodeSource Charset Service'
 
     manage_options = ({'label': 'Edit', 'action': 'edit_tab'},
-                        ) + SimpleItem.manage_options
+                        ) + SilvaService.manage_options
 
     security.declareProtected(manage_permission, 'edit_tab')
     security.declareProtected(manage_permission, 'manage_main')
     manage_main = edit_tab = PageTemplateFile('www/serviceCodeSourceCharsetEditTab',
-                                                globals(), __name__='edit_tab')
+                                              globals(), __name__='edit_tab')
+
+    silvaconf.icon("www/editorservice.gif")
+    silvaconf.factory('manage_addCodeSourceCharsetServiceForm')
+    silvaconf.factory('manage_addCodeSourceCharsetService')
 
     def __init__(self, id, title):
         self.id = id

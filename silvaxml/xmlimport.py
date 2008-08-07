@@ -1,16 +1,20 @@
-from Products.Silva.silvaxml.xmlimport import theXMLImporter, SilvaBaseHandler, NS_URI, generateUniqueId, updateVersionCount
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
+from Products.Silva.silvaxml.xmlimport import SilvaBaseHandler, NS_URI, generateUniqueId, updateVersionCount
 from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.Silva import mangle
 
-DOC_NS_URI = 'http://infrae.com/ns/silva_document'
+from silva.core import conf as silvaconf
 
-def initializeXMLImportRegistry():
-    """Initialize the global importer object.
-    """
-    importer = theXMLImporter
-    importer.registerHandler((NS_URI, 'document'), DocumentHandler)
+DOC_NS_URI = 'http://infrae.com/ns/silva_document'
+silvaconf.namespace(DOC_NS_URI)
 
 class DocumentHandler(SilvaBaseHandler):
+
+    silvaconf.name('document')
+
     def getOverrides(self):
         return {
             (NS_URI, 'content'): DocumentContentHandler

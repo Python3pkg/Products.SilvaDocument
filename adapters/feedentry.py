@@ -1,13 +1,19 @@
-import re
-from zope.interface import implements
-from Products.Silva.adapters import adapter
-from Products.Silva.adapters import interfaces
+# Copyright (c) 2002-2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
-class DocumentFeedEntryAdapter(adapter.Adapter):
+from grokcore import component
+
+import re
+from Products.Silva.adapters.interfaces import IFeedEntry
+from Products.SilvaDocument.interfaces import IDocument
+
+class DocumentFeedEntryAdapter(component.Adapter):
     """Adapter for Silva Documents to get an atom/rss feed entry 
     representation."""
 
-    implements(interfaces.IFeedEntry)
+    component.context(IDocument)
+    component.implements(IFeedEntry)
 
     def __init__(self, context):
         self.context = context
