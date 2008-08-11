@@ -867,7 +867,7 @@ class span(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
-        return silva.pre(extract_texts(self.content, context))
+        return Frag(extract_texts(self.content, context))
         
 class dl(Element):
     def convert(self, context):
