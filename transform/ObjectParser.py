@@ -52,14 +52,6 @@ class ObjectParser:
             tree = minidom.parseString(source)
         else:
             tree = source # try just using it as dom
-
-        #if fix:
-        #    # some dirty work needs to be done on the structure, and since
-        #    # the api of the object tree doesn't allow some things (requesting
-        #    # a node's parent, removing stuff from the node) we do that on the
-        #    # XML DOM instead
-        #    df = SilvaDOMFixer(tree)
-        #    tree = df.fixed_tree()
         
         self.unknown_tags = []
         self.unknown_types = []
