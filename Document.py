@@ -330,18 +330,13 @@ class Document(CatalogedVersionedContent):
         version.clearEditorCache()
 
     def transform_and_store(self, content_type, content):
-        ret = content
         try:
             if content_type.split(';')[0] in ['text/html', 'application/xhtml+xml']:
-                html = content
-                self.editor_storage(html, 'kupu')
+                self.editor_storage(content, 'kupu')
 
                 # invalidate Document cache
                 version = self.get_editable()
                 version.clearEditorCache()
-
-                # XXX This can be removed, right?
-                ret = self.editor_storage(editor='kupu', encoding="UTF-8")
             else:
                 # plain Silva document XML
                 self.get_editable().content.manage_edit(content)
@@ -356,7 +351,6 @@ class Document(CatalogedVersionedContent):
             # reraise the exception so the enduser at least sees something's
             # gone wrong
             raise
-        return ret
 
     # WebDAV API
     security.declareProtected(SilvaPermissions.ChangeSilvaContent,
@@ -374,7 +368,7 @@ class Document(CatalogedVersionedContent):
             raise InternalError, 'no editable version available'
         content = REQUEST['BODYFILE'].read()
         content_type = self._get_content_type_from_request(REQUEST, content)
-        ret = self.transform_and_store(content_type, content)
+        self.transform_and_store(content_type, content)
 
     def _get_content_type_from_request(self, request, content):
         """tries to figure out the content type of a PUT body from a request
