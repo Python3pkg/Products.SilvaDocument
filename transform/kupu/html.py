@@ -643,6 +643,12 @@ class a(Element):
         else:
             return Frag()
 
+
+class style(Element):
+
+    def convert(self, context):
+        return Frag()
+
 class img(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
