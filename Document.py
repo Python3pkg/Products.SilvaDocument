@@ -414,15 +414,11 @@ class DocumentView(silvaviews.View):
     """View on a document.
     """
 
-    silvaconf.context(Document)
+    silvaconf.context(IDocument)
 
     def render(self):
-        view_type = 'service_doc_viewer'
-        if self.is_preview:
-            view_type = 'service_doc_previewer'
-        
         service_editor = self.context.service_editor
-        service_editor.setViewer(view_type)
+        service_editor.setViewer('service_doc_viewer')
         # For service_editor
         self.request['model'] = self.content
         return service_editor.renderView(self.content.content.documentElement)

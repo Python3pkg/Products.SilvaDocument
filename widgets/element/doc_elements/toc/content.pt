@@ -3,8 +3,6 @@
     node request/node;
     model request/ghost_model | request/model;
     toc_depth python: int(test(node.hasAttribute('toc_depth'), node.getAttribute('toc_depth'), -1));
-    public options/public | nothing;
-    append_to_url options/append_to_url | string:/edit/tab_edit;
   ">
-<ul tal:replace="structure python:context.render_tree(model,toc_depth,public,append_to_url)" />
+<ul tal:replace="structure python:context.render_tree(model,toc_depth)" />
 </tal:def>

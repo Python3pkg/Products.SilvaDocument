@@ -86,7 +86,7 @@ def configureXMLWidgets(root):
     root.manage_addProduct['XMLWidgets'].manage_addEditorService(
         'service_editor')
     # create the services for XMLWidgets
-    for name in ['service_doc_editor', 'service_doc_previewer',
+    for name in ['service_doc_editor', 
                  'service_doc_viewer',
                  'service_field_editor', 'service_field_viewer',
                  'service_nlist_editor', 'service_nlist_previewer',
@@ -104,7 +104,7 @@ def configureXMLWidgets(root):
 def unconfigureXMLWidgets(root):
     root.manage_delObjects(['service_widgets', 'service_editor'])
     root.manage_delObjects([
-        'service_doc_editor', 'service_doc_previewer',
+        'service_doc_editor', 
         'service_doc_viewer',
         'service_field_editor', 'service_field_viewer',
         'service_nlist_editor', 'service_nlist_previewer',
@@ -118,7 +118,6 @@ def registerCoreWidgets(root):
     this function assumes the registries already exist.
     """
     registerDocEditor(root)
-    registerDocPreviewer(root)
     registerDocViewer(root)
     registerFieldEditor(root)
     registerFieldViewer(root)
@@ -183,25 +182,6 @@ def registerDocViewer(root):
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_view'))
 
-def registerDocPreviewer(root):
-    wr = root.service_doc_previewer
-    wr.clearWidgets()
-
-    wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
-
-    for name in ['p', 'list', 'heading', 'pre', 'image', 'nlist', 'table',
-                 'dlist', 'cite']:
-        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
-                                 name, 'mode_view'))
-
-    wr.addWidget('toc', ('service_widgets', 'element', 'doc_elements',
-                             'toc', 'mode_preview'))
-    wr.addWidget('code', ('service_widgets', 'element', 'doc_elements',
-                               'code', 'mode_preview'))
-
-    if externalsource.AVAILABLE:
-        wr.addWidget('source', (
-            'service_widgets', 'element', 'doc_elements', 'source', 'mode_preview'))
 
 def registerFieldEditor(root):
     wr = root.service_field_editor

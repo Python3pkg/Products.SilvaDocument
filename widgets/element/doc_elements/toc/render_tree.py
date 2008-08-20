@@ -1,6 +1,6 @@
-##parameters=model=None, toc_depth=-1, public=0, append_to_url=None
+##parameters=model=None, toc_depth=-1
 
 from Products.Silva.adapters import tocrendering
 
 adapter = tocrendering.getTOCRenderingAdapter(model)
-return adapter.render_tree(public, append_to_url, toc_depth)
+return adapter.render_tree(toc_depth)

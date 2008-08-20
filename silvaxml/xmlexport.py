@@ -282,14 +282,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
             ghost_model = getattr(request, 'ghost_model', None)
             if ghost_model is not None:
                 toc_context = ghost_model
-        public = self.context.version_status() == 'public'
 
         tocadapter = tocrendering.getTOCRenderingAdapter(toc_context)
-        if public:
-            append_to_url = None
-        else:
-            append_to_url = '/edit/tab_preview'
-        self.render_html(tocadapter.render_tree(public, append_to_url, depth))
+        self.render_html(tocadapter.render_tree(depth))
         self.endElementNS(SilvaDocumentNS, node.nodeName)
 
     def sax_img(self, node):
