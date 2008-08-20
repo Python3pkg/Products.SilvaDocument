@@ -7,5 +7,5 @@
 ##parameters=
 ##title=
 ##
-context.service_editor.setViewer("service_nlist_previewer")
+context.service_editor.setViewer("service_nlist_viewer")
 return context.service_editor.renderView(context.REQUEST.node)

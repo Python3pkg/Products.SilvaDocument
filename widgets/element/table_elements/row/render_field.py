@@ -44,7 +44,7 @@ if context.is_field_simple(node):
             info['align'], 
             supp.renderHTML(view_type=view_type))
 else:
-    context.service_editor.setViewer('service_sub_previewer')
+    context.service_editor.setViewer('service_sub_viewer')
     content = context.service_editor.renderView(node)
     width = info.get('html_width')
     if width:

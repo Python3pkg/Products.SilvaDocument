@@ -86,13 +86,10 @@ def configureXMLWidgets(root):
     root.manage_addProduct['XMLWidgets'].manage_addEditorService(
         'service_editor')
     # create the services for XMLWidgets
-    for name in ['service_doc_editor', 
-                 'service_doc_viewer',
+    for name in ['service_doc_editor', 'service_doc_viewer',
                  'service_field_editor', 'service_field_viewer',
-                 'service_nlist_editor', 'service_nlist_previewer',
-                 'service_nlist_viewer',
-                 'service_sub_editor', 'service_sub_previewer',
-                 'service_sub_viewer',
+                 'service_nlist_editor', 'service_nlist_viewer',
+                 'service_sub_editor', 'service_sub_viewer',
                  'service_table_editor', 'service_table_viewer']:
         root.manage_addProduct['XMLWidgets'].manage_addWidgetRegistry(name)
         interface.alsoProvides(root[name], IInvisibleService)
@@ -103,15 +100,11 @@ def configureXMLWidgets(root):
     
 def unconfigureXMLWidgets(root):
     root.manage_delObjects(['service_widgets', 'service_editor'])
-    root.manage_delObjects([
-        'service_doc_editor', 
-        'service_doc_viewer',
-        'service_field_editor', 'service_field_viewer',
-        'service_nlist_editor', 'service_nlist_previewer',
-        'service_nlist_viewer',
-        'service_sub_editor', 'service_sub_previewer',
-        'service_sub_viewer',
-        'service_table_editor', 'service_table_viewer'])
+    root.manage_delObjects(['service_doc_editor', 'service_doc_viewer',
+                            'service_field_editor', 'service_field_viewer',
+                            'service_nlist_editor', 'service_nlist_viewer',
+                            'service_sub_editor', 'service_sub_viewer',
+                            'service_table_editor', 'service_table_viewer'])
     
 def registerCoreWidgets(root):
     """ register the core widgets at the corresponding registries.
@@ -122,10 +115,8 @@ def registerCoreWidgets(root):
     registerFieldEditor(root)
     registerFieldViewer(root)
     registerNListEditor(root)
-    registerNListPreviewer(root)
     registerNListViewer(root)
     registerSubEditor(root)
-    registerSubPreviewer(root)
     registerSubViewer(root)
     registerTableEditor(root)
     registerTableViewer(root)
@@ -229,16 +220,6 @@ def registerNListEditor(root):
     
     wr.setAllowed('nlist', ['li'])
     
-def registerNListPreviewer(root):
-    wr = root.service_nlist_previewer
-    wr.clearWidgets()
-
-    wr.addWidget('nlist', ('service_widgets', 'top', 'nlist', 'mode_view'))
-    
-    for name in ['li']:
-        wr.addWidget(name, ('service_widgets', 'element', 'nlist_elements',
-                                name, 'mode_view'))
-
 def registerNListViewer(root):
     wr = root.service_nlist_viewer
     wr.clearWidgets()
@@ -273,24 +254,6 @@ def registerSubEditor(root):
     for nodeName in ('doc', 'li', 'field'):
         wr.setAllowed(nodeName,  ['p', 'heading', 'list', 'nlist', 'image',
                                      'pre', 'dlist'])
-
-def registerSubPreviewer(root):
-    wr = root.service_sub_previewer
-    wr.clearWidgets()
-    
-    wr.addWidget('doc', ('service_widgets', 'top', 'sub', 'mode_view'))
-    wr.addWidget('li', ('service_widgets', 'top', 'sub', 'mode_view'))
-    wr.addWidget('field', ('service_widgets', 'top', 'sub', 'mode_view'))
-    
-    for name in ['p', 'list', 'heading', 'nlist', 'pre', 'dlist']:
-        wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
-                                 name, 'mode_view'))
-        
-    # XX originally used mode_preview here, why?
-    #wr.addWidget('image', ('service_widgets', 'element', 'doc_elements',
-    #                           'image', 'mode_preview'))
-    wr.addWidget('image', ('service_widgets', 'element', 'doc_elements',
-                                'image', 'mode_view'))
 
 def registerSubViewer(root):
     wr = root.service_sub_viewer

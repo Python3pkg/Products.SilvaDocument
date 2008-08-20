@@ -39,7 +39,7 @@ for child in node.childNodes:
                     supp = editorsupport.getMixedContentSupport(model, p_node)
                     content = supp.renderHTML(view_type='public')
                 else:
-                    context.service_editor.setViewer('service_sub_previewer')
+                    context.service_editor.setViewer('service_sub_viewer')
                     content = context.service_editor.renderView(field)
                 # append field content
                 if content == '':

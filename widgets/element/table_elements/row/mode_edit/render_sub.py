@@ -7,5 +7,5 @@
 ##parameters=node
 ##title=
 ##
-context.service_editor.setViewer('service_sub_previewer')
+context.service_editor.setViewer('service_sub_viewer')
 return context.service_editor.renderView(node)
