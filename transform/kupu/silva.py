@@ -43,6 +43,14 @@ _attr_prefix=u'silva_'
 # special attribute used for heuristics when transforming
 # back to silva-xml
 
+def xml_unescape(input):
+    """de-entitize illegal chars in xml"""
+    input = input.replace('&amp;', '&')
+    input = input.replace('&lt;', '<')
+    input = input.replace('&gt;', '>')
+    return input
+
+
 class SilvaElement(Element):
     def backattr(self):
         """ return dictionary with back attributes
@@ -545,12 +553,12 @@ class source(SilvaElement):
                 if '__type__list' in key:
                     for value in params[key]:
                         divcontent.append(html.span(
-                            Text(value), {'key': key}))
+                            xml_unescape(Text(value)), {'key': key}))
                         divcontent.append(Text(', '))
                     divcontent.pop()
                 else:
                     divcontent.append(html.span(
-                        Text(params[key]), {'key': key}))
+                        Text(xml_unescape(params[key])), {'key': key}))
                 divcontent.append(html.br());
             object = getSourceForId(context.model, str(id))
             if object is not None:
