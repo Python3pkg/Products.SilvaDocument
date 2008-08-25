@@ -553,7 +553,7 @@ class source(SilvaElement):
                 if '__type__list' in key:
                     for value in params[key]:
                         divcontent.append(html.span(
-                            xml_unescape(Text(value)), {'key': key}))
+                            Text(xml_unescape(value)), {'key': key}))
                         divcontent.append(Text(', '))
                     divcontent.pop()
                 else:
