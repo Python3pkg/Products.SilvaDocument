@@ -548,9 +548,11 @@ class source(SilvaElement):
             object = getSourceForId(context.model, str(id))
             divpar = []
             for key in params:
-                display_key = object.form().get_field(key).title()
                 if '__type__' in key:
-                    display_key = key.split('__type__')[0]
+                    key_id = key.split('__type__')[0]
+                else:
+                    key_id = key
+                display_key = object.form().get_field(key_id).title()
                 divpar.append(
                     html.strong("%s: " % display_key))
                 if '__type__list' in key:

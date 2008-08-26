@@ -850,12 +850,14 @@ class div(Element):
                 if '__type__' in key:
                     vkey, vtype = key.split('__type__')
                 if vtype == 'list':
-                    utfvalue = str([x.encode('utf-8') for x in params[key]])
+                    value = unicode(
+                        str(([x.encode('utf-8') for x in params[key]])),
+                        'utf-8')
                 else:
-                    utfvalue = params[key].encode('utf-8')
+                    value = params[key]
                 content.append(
                     silva.parameter(
-                    utfvalue,
+                    value,
                     key=vkey, type=vtype))
 
             return silva.source(
