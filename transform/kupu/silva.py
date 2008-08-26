@@ -545,9 +545,11 @@ class source(SilvaElement):
                         value = unicode(value, 'utf-8')
                     params[attrkey] = value
             for key in params:
-                display_key = key
                 if '__type__' in key:
-                    display_key = key.split('__type__')[0]
+                    key_id = key.split('__type__')[0]
+                else:
+                    key_id = key
+                display_key = object.form().get_field(key_id).title()
                 divcontent.append(
                     html.strong("%s: " % display_key))
                 if '__type__list' in key:
