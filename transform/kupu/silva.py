@@ -544,6 +544,8 @@ class source(SilvaElement):
                     else:
                         value = unicode(value, 'utf-8')
                     params[attrkey] = value
+            object = getSourceForId(context.model, str(id))
+            divpar = []
             for key in params:
                 if '__type__' in key:
                     key_id = key.split('__type__')[0]
@@ -562,7 +564,7 @@ class source(SilvaElement):
                     divcontent.append(html.span(
                         Text(xml_unescape(params[key])), {'key': key}))
                 divcontent.append(html.br());
-            object = getSourceForId(context.model, str(id))
+
             if object is not None:
                 meta_type = object.meta_type
                 header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, id)))
