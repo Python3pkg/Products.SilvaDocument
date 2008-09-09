@@ -102,8 +102,12 @@ class DocumentVersionProducer(SilvaBaseProducer):
         source = getSourceForId(self.context.get_content(), id)
         parameters = {} 	 
         for child in node.childNodes: 	 
-            if child.nodeName == 'parameter': 	 
-                self.startElementNS(SilvaDocumentNS, 'parameter', {'key': child.attributes['key'].value}) 	 
+            if child.nodeName == 'parameter':
+                attributes = {'key': child.attributes['key'].value}
+                param_type = child.attributes.get('type')
+                if param_type:
+                    attributes['type'] = param_type.value
+                self.startElementNS(SilvaDocumentNS, 'parameter', attributes)
                 for grandChild in child.childNodes: 	 
                     text = '' 	 
                     if grandChild.nodeType == Node.TEXT_NODE: 	 
