@@ -301,14 +301,13 @@ class ParagraphSupport(MixedContentSupport):
         return ''.join(result)
 
     def _linkHelper(self, context, path):
-        #XXXX may need to fix this, too!
         # If path is empty (can it be?), just return it
         if path == '':
             return path
         # If it is a url already, return it:
         if _url_match.match(path):
             return path
-        # Is it a query of anchor fragment? If so, return it
+        # Is it simply a query or anchor fragment? If so, return it
         if path[0] in ['?', '#']:
             return path
         # It is not an URL, query or anchor, so treat it as a path.
@@ -362,6 +361,11 @@ class HeadingSupport(ParagraphSupport):
         while node.hasChildNodes():
             node.removeChild(node.firstChild)
         HEADING_SUBSET.filteredParse(inputstr, node)
+
+        # we have to convert absolute link href paths relative
+        # to the current virtual host root so they become relative to the
+        # Zope root 
+        self.convertPaths(node)
 
 InitializeClass(HeadingSupport)            
             
