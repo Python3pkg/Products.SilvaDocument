@@ -1,5 +1,3 @@
-<div tal:omit-tag="" tal:define="type here/get_type">
-<p class="p" tal:condition="python:type == 'normal'" tal:content="structure here/content">p</p>
-<p class="lead" tal:condition="python:type == 'lead'" tal:content="structure here/content">p</p>
-<p class="annotation" tal:condition="python:type == 'annotation'" tal:content="structure here/content">p</p>
-</div>                          
+<p tal:define="type here/get_type"
+   tal:content="structure here/content"
+   tal:attributes="class python:type=='normal' and 'p' or type" />
