@@ -597,7 +597,7 @@ class a(Element):
             if str(url).startswith('/'):
                 # convert to physical path before storing
                 pad = pathadapter.getPathAdapter(context.model.REQUEST)
-                url = pad.urlToPath(str(url))
+                url = Text(pad.urlToPath(str(url)))
             target = getattr(self.attr, 'target', '')
             #if target is None:
             #    target = ''
