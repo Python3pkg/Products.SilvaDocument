@@ -1,5 +1,6 @@
 
 SilvaDocument changes
 
-     For the time being, see the HISTORY file in Silva core.
+     - fix for kupu in html transform from lis.append(silva.li(el.convert(context))) to lis.append(silva.li(silva.br(), el.convert(context)))
+     
 
