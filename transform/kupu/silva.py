@@ -153,11 +153,27 @@ class list(SilvaElement):
         else:
             tag = html.ul
 
+        # find nested lists, convert them to children of ourselves rather than
+        # list items
+        converted = []
+        for child in self.find():
+            if child.name() == 'li':
+                sub = []
+                for subchild in child.find():
+                    if subchild.name() in ('list', 'nlist'):
+                        # nested list, move out of li
+                        child.content.remove(subchild)
+                        sub.append(subchild.convert(context))
+                    elif subchild.name() != 'br':
+                        sub.append(html.li(subchild.convert(context)))
+                converted += sub
+            else:
+                converted.append(child.convert(context))
         return tag(
-                    self.content.convert(context),
-                    attrs,
-                    type=listtype,
-                )
+            converted,
+            attrs,
+            type=listtype,
+        )
 
 class nlist(list):
     pass
