@@ -477,8 +477,14 @@ class ul(Element):
         for el in self.find():
             if el.name() == 'li':
                 lis.append(el.convert(context, 1))
-            # filter out non-li elements
             elif el.name() in ['ol', 'ul']:
+                # filter out non-li elements
+
+                # note that we need to treat nested lists a bit specially
+                # because of the way they get rendered - if we place them in a
+                # seperate li, they will get multiple dots, so they need to be
+                # attached to the parent list item instead (of course Kupu
+                # won't feed it to us like that - instead we get invalid XHTML)
                 if lis:
                     lis[-1] = silva.li(lis[-1].content, el.convert(context))
                 else:
