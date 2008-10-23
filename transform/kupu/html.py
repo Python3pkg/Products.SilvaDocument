@@ -51,8 +51,6 @@ except:
     Path = Path()
 
 import re
-
-
 # don't do 'from' import, to prevent namespace pollution..
 import Products.Silva.Image
 
