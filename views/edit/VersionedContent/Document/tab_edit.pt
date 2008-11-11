@@ -36,11 +36,11 @@
 </metal:block>
 
 <metal:block fill-slot="script">
-<script type="text/javascript" 
+<script type="text/javascript"
   tal:attributes="src here/reference.js/absolute_url">
 </script>
-<tal:block condition="python:editor == 'kupu' and hasattr(view, 'service_kupu') and is_editable">
-  <metal:macro use-macro="view/service_kupu_silva/kupumacros/macros/jsincludes" />
+<tal:block condition="python:editor == 'kupu' and hasattr(here, 'service_kupu') and is_editable">
+  <metal:macro use-macro="here/service_kupu_silva/kupumacros/macros/jsincludes" />
 </tal:block>
 </metal:block>
 
@@ -48,14 +48,14 @@
 <metal:block fill-slot="editor_refresher">
 <tal:condition condition="python: is_editable and editor != 'kupu' and refresh_time > 0">
 <noscript>
-<meta http-equiv="refresh" 
+<meta http-equiv="refresh"
   tal:attributes="content python:'%s, %s/edit/tab_preview' % (refresh_time, request['model'].absolute_url())" />
 </noscript>
 <script type="text/javascript"
   tal:define="destination_path string:${request/model/absolute_url}/edit/"
   tal:content="string:
 
-  document.timeout = '${refresh_time}'; 
+  document.timeout = '${refresh_time}';
   document.refresh_url = '${destination_path}tab_preview';
   document.prompt_url = '${destination_path}promptWindow';
 " />
@@ -97,7 +97,7 @@
 <metal:block fill-slot="editor_selection">
 <tal:block i18n:domain="silva_document"
   define="active python: editor == 'kupu'"
-  condition="python:hasattr(view, 'service_kupu')">
+  condition="python:hasattr(here, 'service_kupu')">
   <a title="edit with the Kupu Editor: alt-("
     accesskey="("
     tal:content="python: here.kupu_display(active)"
@@ -120,12 +120,12 @@
 
 <metal:block fill-slot="editor_content">
 <span tal:replace="nothing"> ______ forms editor ______ </span>
-<tal:block condition="python:editor != 'kupu' or not hasattr(view, 'service_kupu')">
-  <tal:block tal:replace="structure view/edit">Content</tal:block>
+<tal:block condition="python:editor != 'kupu' or not hasattr(here, 'service_kupu')">
+  <tal:block tal:replace="structure here/edit">Content</tal:block>
 </tal:block>
 <span tal:replace="nothing"> ______ kupu ______ </span>
-<tal:block condition="python:editor == 'kupu' and hasattr(view, 'service_kupu')" >
-  <metal:macro use-macro="view/service_kupu_silva/kupumacros/macros/body" />
+<tal:block condition="python:editor == 'kupu' and hasattr(here, 'service_kupu')" >
+  <metal:macro use-macro="here/service_kupu_silva/kupumacros/macros/body" />
 </tal:block>
 </metal:block>
 
