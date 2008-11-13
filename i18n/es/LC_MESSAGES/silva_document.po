@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: Thu Nov 13 15:08:19 2008\n"
-"PO-Revision-Date: 2008-07-06 12:56+0000\n"
-"Last-Translator: Juan Alfredo Salas Santillana <Unknown>\n"
+"POT-Creation-Date: 2008-11-13 15:59+0000\n"
+"PO-Revision-Date: 2008-11-03 20:32+0000\n"
+"Last-Translator: Michael Castielli <michael.castielli@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2008-07-29 09:28+0000\n"
+"X-Launchpad-Export-Date: 2008-11-13 16:01+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: /Document.py:128
@@ -45,20 +45,19 @@ msgid "No version to store to!"
 msgstr "Ninguna versión que almacenar en!"
 
 #: /ServiceCodeSourceCharset.py:55
-#, fuzzy
 msgid "No charset entered"
-msgstr "No se ha incorporado ningún conjuto de caracteres"
+msgstr "No se ha introducido ningún conjunto de caracteres"
 
 #: /ServiceCodeSourceCharset.py:57
-#, fuzzy
 msgid "Charset set"
-msgstr "Ajuste del conjunto de caracteres"
+msgstr "Configuración del conjunto de caracteres"
 
 #: /install.py:136
 msgid "title"
 msgstr "titulo"
 
-#: /install.py:137 /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
+#: /install.py:137
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:20
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
@@ -66,7 +65,8 @@ msgstr "titulo"
 msgid "paragraph"
 msgstr "párrafo"
 
-#: /install.py:138 /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
+#: /install.py:138
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:21
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:37
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
@@ -74,7 +74,8 @@ msgstr "párrafo"
 msgid "heading"
 msgstr "encabezado"
 
-#: /install.py:139 /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
+#: /install.py:139
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:22
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:38
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
@@ -82,7 +83,8 @@ msgstr "encabezado"
 msgid "list"
 msgstr "lista"
 
-#: /install.py:140 /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
+#: /install.py:140
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:23
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
@@ -106,7 +108,8 @@ msgstr "tabla"
 msgid "complex list"
 msgstr "lista compleja"
 
-#: /install.py:145 /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
+#: /install.py:145
+#: /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:25
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:40
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
@@ -118,7 +121,8 @@ msgstr "Lista de definición"
 msgid "code element"
 msgstr "código  de elemento"
 
-#: /install.py:147 /widgets/element/doc_elements/cite/mode_edit/render.pt:9
+#: /install.py:147
+#: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
 msgstr "citación"
 
@@ -126,23 +130,29 @@ msgstr "citación"
 msgid "external source"
 msgstr "fuente externa"
 
-#: /install.py:188 /install.py:246
+#: /install.py:188
+#: /install.py:246
 msgid "Paragraph"
 msgstr "Párrafo..."
 
-#: /install.py:189 /install.py:247
+#: /install.py:189
+#: /install.py:247
 msgid "Heading"
 msgstr "Cabecera"
 
-#: /install.py:190 /install.py:248
+#: /install.py:190
+#: /install.py:248
 msgid "List"
 msgstr "Lista"
 
-#: /install.py:191 /install.py:249
+#: /install.py:191
+#: /install.py:249
 msgid "Image"
 msgstr "Imagen"
 
-#: /install.py:192 /install.py:217 /install.py:250
+#: /install.py:192
+#: /install.py:217
+#: /install.py:250
 msgid "Complex list"
 msgstr "Lista compleja"
 
@@ -178,7 +188,8 @@ msgstr "Título de la fila"
 msgid "no external source specified"
 msgstr "no se ha especificado fuente externa"
 
-#: /silvaxml/xmlexport.py:131 /silvaxml/xmlexport.py:134
+#: /silvaxml/xmlexport.py:131
+#: /silvaxml/xmlexport.py:134
 #: /widgets/element/doc_elements/source/rendered_source.py:19
 msgid "error message:"
 msgstr "mensaje de error:"
@@ -187,13 +198,13 @@ msgstr "mensaje de error:"
 msgid "None returned from source"
 msgstr "Desde la fuente se ha retornado nada"
 
-#: /silvaxml/xmlexport.py:86 /transform/kupu/silva.py:596
+#: /silvaxml/xmlexport.py:86
+#: /transform/kupu/silva.py:596
 #: /widgets/element/doc_elements/source/rendered_source.py:18
 #: /widgets/element/doc_elements/source/rendered_source.py:23
 #: /widgets/element/doc_elements/source/render.pt:8
-#, fuzzy
 msgid "external source element is broken"
-msgstr "el elemento de la fuente externa se ha roto."
+msgstr "el elemento de la fuente externa está roto."
 
 #: /silvaxml/xmlexport.py:99
 msgid ""
@@ -203,9 +214,8 @@ msgstr ""
 "silvaexternalsources no esta instalado!"
 
 #: /transform/Transformer.py:63
-#, fuzzy
 msgid "Unknown Editor: ${editor}"
-msgstr "Editor Desconocido: ${editor}"
+msgstr "Editor desconocido: ${editor}"
 
 #: /transform/base.py:107
 msgid "no ${path} element"
@@ -276,26 +286,22 @@ msgid "source"
 msgstr "Fuente"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:41
-#, fuzzy
 msgid ""
 "The citation may contain multiple paragraphs. Separate them with an empty "
 "line."
 msgstr ""
-"La cita puede contener párafos multiples. Sepárelos con una línea vacía."
+"La cita puede contener párrafos múultiples. Sepárelos con una línea vacía."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
-#, fuzzy
 msgid "Code element is broken"
-msgstr "El elemento de código está roto"
+msgstr ""
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
-#, fuzzy
 msgid "Code element: ${title_or_id} at ${path}"
-msgstr "Código de elemento: ${title_or_id} está ${path}"
+msgstr "Elemento de código: ${title_or_id} en ${path}"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
-#, fuzzy
 msgid ""
 "They should be located in a (non-Silva) folder in the ZMI named "
 "${code_source}."
@@ -308,10 +314,8 @@ msgid "Available code objects:"
 msgstr "Objetos disponibles del código:"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:35
-#, fuzzy
 msgid "Select the code to be executed when document is displayed."
-msgstr ""
-"Seleccione el código a ser ejecutado cuando el documento está desplegado."
+msgstr "Seleccione el código a ser ejecutado cuando el documento se muestre."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:9
 msgid ""
@@ -324,9 +328,8 @@ msgstr ""
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:11
-#, fuzzy
 msgid "get link reference..."
-msgstr "obtener referencia de enlace..."
+msgstr ""
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
@@ -379,7 +382,8 @@ msgstr "elemento"
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:43
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:50
-#: /widgets/top/table/render.pt:47 /widgets/top/nlist/render.pt:31
+#: /widgets/top/table/render.pt:47
+#: /widgets/top/nlist/render.pt:31
 msgid "type"
 msgstr "tipo"
 
@@ -428,22 +432,16 @@ msgid "align right"
 msgstr "alinear en la derecha"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:144
-#, fuzzy
 msgid ""
 "Use &#8220;get image reference...&#8221; (alt-g) to locate an image, or type "
 "in the full path."
 msgstr ""
-"Utilice &#8220;obtenga la referencia de imagen...&#8221; (alt-g) para "
-"localizar imagen, o teclee la ruta completa."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:146
-#, fuzzy
 msgid ""
 "Set a URL to make this image a link (alt-l). To link to other sites, prepend "
 "&#8216;http://&#8217; to the address."
 msgstr ""
-"Defina un URL para hacer esta imagen un enlace (alt-l). Para enlazar a otros "
-"sitios, anteponga &#8216;http://&#8217; a la dirección."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:149
 msgid ""
@@ -454,13 +452,10 @@ msgstr ""
 "nueva&#8221; insertar &#8216;_blank&#8217; despues de salvar."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:152
-#, fuzzy
 msgid ""
 "It&#8217;s good practice to give the link of an image a title, which will "
 "appear as a tooltip."
 msgstr ""
-"Es&#8217; una buena práctica darle un título al enlace de una imagen, el "
-"cual aparecerá como herramienta de nota."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:155
 msgid ""
@@ -680,13 +675,16 @@ msgid "The stored xml is invalid."
 msgstr "El xml almacenado es inválido."
 
 #: /widgets/macro_helpers.pt:106
+#: /widgets/macro_helpers.pt:106
 msgid "delete element"
 msgstr "elemento eliminado"
 
 #: /widgets/macro_helpers.pt:107
+#: /widgets/macro_helpers.pt:107
 msgid "move down"
 msgstr "hacia abajo"
 
+#: /widgets/macro_helpers.pt:108
 #: /widgets/macro_helpers.pt:108
 msgid "move up"
 msgstr "hacia arriba"
@@ -723,11 +721,15 @@ msgstr "guardar + insertar"
 msgid "access key: alt-i"
 msgstr "tecla de acceso: alt-i"
 
-#: /widgets/macro_helpers.pt:49 /widgets/macro_helpers.pt:50
-#: /widgets/macro_helpers.pt:51 /widgets/macro_helpers.pt:63
+#: /widgets/macro_helpers.pt:49
+#: /widgets/macro_helpers.pt:50
+#: /widgets/macro_helpers.pt:51
+#: /widgets/macro_helpers.pt:63
+#: /widgets/macro_helpers.pt:63
 msgid "insert element"
 msgstr "insertar elemento"
 
+#: /widgets/macro_helpers.pt:66
 #: /widgets/macro_helpers.pt:66
 msgid "insert item"
 msgstr "insertar artículo"
@@ -758,7 +760,8 @@ msgstr "subrayado"
 msgid "superscript"
 msgstr "superíndice"
 
-#: /widgets/macro_notes.pt:11 /widgets/macro_notes.pt:12
+#: /widgets/macro_notes.pt:11
+#: /widgets/macro_notes.pt:12
 msgid "text"
 msgstr "texto"
 
@@ -782,7 +785,8 @@ msgstr "nombreancla"
 msgid "abbreviation"
 msgstr "abreviatura"
 
-#: /widgets/macro_notes.pt:14 /widgets/macro_notes.pt:15
+#: /widgets/macro_notes.pt:14
+#: /widgets/macro_notes.pt:15
 msgid "full name"
 msgstr "nombre completo"
 
@@ -802,20 +806,25 @@ msgstr ""
 "El texto puede estar formateado &#8211; en ${italic}, ${bold}, etc. &#8211; "
 "con ${silva_markup}:"
 
-#: /widgets/macro_notes.pt:8 /widgets/macro_notes.pt:10
+#: /widgets/macro_notes.pt:8
+#: /widgets/macro_notes.pt:10
 msgid "italic"
 msgstr "itálica"
 
-#: /widgets/macro_notes.pt:8 /widgets/macro_notes.pt:10
+#: /widgets/macro_notes.pt:8
+#: /widgets/macro_notes.pt:10
 msgid "bold"
 msgstr "negrita"
 
-#: /widgets/top/field/render.pt:14 /widgets/top/field/render.pt:20
-#: /widgets/top/sub/render.pt:14 /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:14
+#: /widgets/top/field/render.pt:20
+#: /widgets/top/sub/render.pt:14
+#: /widgets/top/sub/render.pt:20
 msgid "edit parent"
 msgstr "editar parientes"
 
-#: /widgets/top/field/render.pt:14 /widgets/top/sub/render.pt:14
+#: /widgets/top/field/render.pt:14
+#: /widgets/top/sub/render.pt:14
 msgid "Up to parent: alt-u"
 msgstr "Hasta el parentesis: alt-u"
 
@@ -823,14 +832,14 @@ msgstr "Hasta el parentesis: alt-u"
 msgid "subeditor"
 msgstr "sub editor"
 
-#: /widgets/top/field/render.pt:20 /widgets/top/sub/render.pt:20
+#: /widgets/top/field/render.pt:20
+#: /widgets/top/sub/render.pt:20
 msgid "Up to parent"
 msgstr "Hasta el parentesis"
 
 #: /widgets/top/sub/render.pt:17
-#, fuzzy
 msgid "Nested element editor"
-msgstr "Editor de elemento ennidado"
+msgstr ""
 
 #: /widgets/top/table/render.pt:14
 msgid "column settings"

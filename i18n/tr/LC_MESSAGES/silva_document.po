@@ -1,16 +1,16 @@
-# Italian translation for silvadocument
-# Copyright (c) 2006 Rosetta Contributors and Canonical Ltd 2006
+# Turkish translation for silvadocument
+# Copyright (c) 2008 Rosetta Contributors and Canonical Ltd 2008
 # This file is distributed under the same license as the silvadocument package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2006.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: silvadocument\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2008-11-13 15:59+0000\n"
-"PO-Revision-Date: 2007-06-24 13:53+0000\n"
-"Last-Translator: Luca Livraghi <luca.91@hotmail.it>\n"
-"Language-Team: Italian <it@li.org>\n"
+"PO-Revision-Date: 2008-08-02 20:35+0000\n"
+"Last-Translator: Furkan KARA <kingofthepixels@gmail.com>\n"
+"Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -32,19 +32,19 @@ msgstr ""
 
 #: /Document.py:242
 msgid "No version to store to!"
-msgstr ""
+msgstr "Depolamak için versiyon yok!"
 
 #: /ServiceCodeSourceCharset.py:55
 msgid "No charset entered"
-msgstr "Nessun charset in entrata"
+msgstr "karakter seti girilmedi"
 
 #: /ServiceCodeSourceCharset.py:57
 msgid "Charset set"
-msgstr "Impostare il charset"
+msgstr "Karakter seti"
 
 #: /install.py:136
 msgid "title"
-msgstr "titolo"
+msgstr "başlık"
 
 #: /install.py:137
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:38
@@ -53,7 +53,7 @@ msgstr "titolo"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:14
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:36
 msgid "paragraph"
-msgstr "paragrafo"
+msgstr "paragraf"
 
 #: /install.py:138
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:40
@@ -62,7 +62,7 @@ msgstr "paragrafo"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:16
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:37
 msgid "heading"
-msgstr "intestazione"
+msgstr "başlık"
 
 #: /install.py:139
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:41
@@ -71,7 +71,7 @@ msgstr "intestazione"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:38
 msgid "list"
-msgstr "lista"
+msgstr "liste"
 
 #: /install.py:140
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:39
@@ -80,23 +80,23 @@ msgstr "lista"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:15
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:39
 msgid "preformatted"
-msgstr ""
+msgstr "sergilenen"
 
 #: /install.py:141
 msgid "table of contents"
-msgstr "tabella dei contenuti"
+msgstr "içerik tablosu"
 
 #: /install.py:142
 msgid "image"
-msgstr "immagine"
+msgstr "görüntü"
 
 #: /install.py:143
 msgid "table"
-msgstr "tabella"
+msgstr "tablo"
 
 #: /install.py:144
 msgid "complex list"
-msgstr "lista complessa"
+msgstr "birleşik liste"
 
 #: /install.py:145
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:42
@@ -105,88 +105,88 @@ msgstr "lista complessa"
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:18
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:41
 msgid "definition list"
-msgstr "lista di definizione"
+msgstr "tanım listesi"
 
 #: /install.py:146
 msgid "code element"
-msgstr "elemento codice"
+msgstr "öğe kodu"
 
 #: /install.py:147
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:9
 msgid "citation"
-msgstr "citazione"
+msgstr "alıntı"
 
 #: /install.py:156
 msgid "external source"
-msgstr "sorgente esterno"
+msgstr "dış kaynak"
 
 #: /install.py:188
 #: /install.py:246
 msgid "Paragraph"
-msgstr "Paragrafo"
+msgstr "Paragraf"
 
 #: /install.py:189
 #: /install.py:247
 msgid "Heading"
-msgstr "Intestazione"
+msgstr "Başlık"
 
 #: /install.py:190
 #: /install.py:248
 msgid "List"
-msgstr "Lista"
+msgstr "Liste"
 
 #: /install.py:191
 #: /install.py:249
 msgid "Image"
-msgstr "Immagine"
+msgstr "Görüntü"
 
 #: /install.py:192
 #: /install.py:217
 #: /install.py:250
 msgid "Complex list"
-msgstr "Lista complessa"
+msgstr "Karışık liste"
 
 #: /install.py:218
 msgid "List item"
-msgstr "Lista unità"
+msgstr "Öğeleri listele"
 
 #: /install.py:219
 msgid "List title"
-msgstr "Lista titolo"
+msgstr "Başlıkları listele"
 
 #: /install.py:251
 msgid "Preformatted"
-msgstr ""
+msgstr "Gösterilmiş"
 
 #: /install.py:252
 msgid "Definition list"
-msgstr "Lista di definizione"
+msgstr "Tanım listesi"
 
 #: /install.py:284
 msgid "Table"
-msgstr "Tabella"
+msgstr "Tablo"
 
 #: /install.py:285
 msgid "row"
-msgstr "fila"
+msgstr "satır"
 
 #: /install.py:286
 msgid "row heading"
-msgstr "fila d'intestazione"
+msgstr "satır başlığı"
 
 #: /silvaxml/xmlexport.py:104
 msgid "no external source specified"
-msgstr ""
+msgstr "herhangi bir dış kaynak belirtilmedi"
 
 #: /silvaxml/xmlexport.py:131
 #: /silvaxml/xmlexport.py:134
 #: /widgets/element/doc_elements/source/rendered_source.py:19
 msgid "error message:"
-msgstr "messaggio d'errore:"
+msgstr "hata mesajı:"
 
 #: /silvaxml/xmlexport.py:134
 msgid "None returned from source"
-msgstr ""
+msgstr "Kaynaktan hiçbi şey dönmedi"
 
 #: /silvaxml/xmlexport.py:86
 #: /transform/kupu/silva.py:596
@@ -194,154 +194,149 @@ msgstr ""
 #: /widgets/element/doc_elements/source/rendered_source.py:23
 #: /widgets/element/doc_elements/source/render.pt:8
 msgid "external source element is broken"
-msgstr "l'elemento sorgente esterno è corrotto"
+msgstr "dış kaynak öğesi bozuk"
 
 #: /silvaxml/xmlexport.py:99
 msgid ""
 "external source element specified but silvaexternalsources not installed!"
 msgstr ""
+"dış kaynak öğesi seçildi ama silva dış kaynaklar (silvaexternalsources) "
+"yüklenmedi!"
 
 #: /transform/Transformer.py:63
 msgid "Unknown Editor: ${editor}"
-msgstr "Editor Sconosciuto: ${editor}"
+msgstr "Bilinmeyen Editör: ${editor}"
 
 #: /transform/base.py:107
 msgid "no ${path} element"
-msgstr "nessun ${percorso} elemento"
+msgstr "${path} öğesi yok"
 
 #: /transform/base.py:112
 msgid "more than one ${path} element"
-msgstr ""
+msgstr "birden fazla ${path} öğesi"
 
 #: /transform/base.py:142
 msgid "intermingling * is not allowed ${i}"
-msgstr ""
+msgstr "intermingling * isin verilmiyor ${i}"
 
 #: /transform/base.py:96
 msgid "name"
-msgstr ""
+msgstr "isim"
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor"
-msgstr "editor di forme"
+msgstr "form düzenleyici"
 
 #: /views/edit/VersionedContent/Document/forms_editor_display.py:12
 msgid "forms editor..."
-msgstr "editor di forme ..."
+msgstr "form düzenleyici..."
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:17
 msgid "editor"
-msgstr "editor"
+msgstr "düzenleyici"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:18
 msgid "preview"
-msgstr "anteprima"
+msgstr "önizleme"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:19
 msgid "properties"
-msgstr "proprietà"
+msgstr "özellikler"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:20
 msgid "access"
-msgstr "accesso"
+msgstr "erişim"
 
 #: /views/edit/VersionedContent/Document/get_tabs.py:21
 msgid "publish"
-msgstr "pubblicare"
+msgstr "yayınla"
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor..."
-msgstr "editor kupu..."
+msgstr "kupu düzenleyici..."
 
 #: /views/edit/VersionedContent/Document/kupu_display.py:12
 msgid "kupu editor"
-msgstr "editor kupu"
+msgstr "kupu düzenleyici"
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:101
 msgid "edit with the Kupu Editor: alt-("
-msgstr "modificare con l'editor Kupu: alt-("
+msgstr "Kupu Düzenleyici ile devam etmek için: alt-("
 
 #: /views/edit/VersionedContent/Document/tab_edit.pt:109
 msgid "edit with the forms editor: alt-)"
-msgstr "modificare con l'editor di forme: alt-("
+msgstr "form düzenleyici ile devam etmek için: alt-)"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:18
 msgid "author"
-msgstr "autore"
+msgstr "yazar"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:27
 msgid "source"
-msgstr "sorgente"
+msgstr "kaynak"
 
 #: /widgets/element/doc_elements/cite/mode_edit/render.pt:41
 msgid ""
 "The citation may contain multiple paragraphs. Separate them with an empty "
 "line."
 msgstr ""
-"La citazione contiene paragrafi multipli. Separarli con una linea vuota."
 
 #: /widgets/element/doc_elements/code/get_code_data.py:15
 #: /widgets/element/doc_elements/code/get_rendered_code.py:6
 msgid "Code element is broken"
-msgstr "L'elemento di codice è corrotto"
+msgstr "Kod öğesi bozuk"
 
 #: /widgets/element/doc_elements/code/get_code_data.py:21
 msgid "Code element: ${title_or_id} at ${path}"
-msgstr "L'elemento di codice: ${titolo_oppure_id} al ${percorso}"
+msgstr "Kod öğesi: ${title_or_id} at ${path}"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:11
 msgid ""
 "They should be located in a (non-Silva) folder in the ZMI named "
 "${code_source}."
 msgstr ""
-"Loro vorrebbero essere posizionati in una (non-Silva) cartella nel nome ZMI "
-"${codice_sorgente}."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:15
 msgid "Available code objects:"
-msgstr "Oggetto codice disponibile:"
+msgstr "Erişilebilir kod öğeleri:"
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:35
 msgid "Select the code to be executed when document is displayed."
-msgstr ""
-"Selezionare il codice per essere eseguito quando il documento è mostrato"
+msgstr "döküman gösterildiğinde çalıştırılacak öğeleri seç."
 
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:9
 msgid ""
 "No code objects (Python Scripts, Page Templates, DTML Methods) are available."
 msgstr ""
-"Nessun oggetto di codice ((Python Scripts, Pagine Templates, DTML Metodi) "
-"sono disponibili."
+"Erişilebilir (Python Scripts, Sayfa Şablonları, DTML Methods) kod öğesi yok."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "get link reference..."
-msgstr "prendere il link di riferimento ..."
+msgstr "link için referans al..."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:11
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:10
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:11
 msgid "create a hyperlink: alt-g"
-msgstr "creare un hyperlink: alt-g"
+msgstr "bir hiperlink oluştur: alt-g"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:54
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:45
 msgid "normal"
-msgstr "normale"
+msgstr "normal"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:56
 msgid "compact"
-msgstr "compatto"
+msgstr "yoğun"
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:64
 msgid ""
 "Add term on first line, definition on second line. Separate items with an "
 "empty line space."
 msgstr ""
-"Aggiungere il termine sulla prima linea, la descrizione sulla seconda linea. "
-"Separare i termini con uno spazio linea vuoto."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
@@ -350,7 +345,7 @@ msgstr ""
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
 msgid "${tip} tab to the exit button or use alt-e."
-msgstr "${tip} tab per il bottone exit oppure usare alt-e"
+msgstr "${tip} çıkış tuşu için tab yada alt-e tuş kombinasyonunu kullanın."
 
 #: /widgets/element/doc_elements/dlist/mode_edit/render.pt:65
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:10
@@ -359,14 +354,14 @@ msgstr "${tip} tab per il bottone exit oppure usare alt-e"
 #: /widgets/element/doc_elements/code/mode_edit/render.pt:36
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:79
 msgid "Tip:"
-msgstr "Suggerimento:"
+msgstr "Öneri:"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:17
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:34
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:12
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:33
 msgid "element"
-msgstr "Elemento"
+msgstr "öğe"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:27
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:43
@@ -374,51 +369,51 @@ msgstr "Elemento"
 #: /widgets/top/table/render.pt:47
 #: /widgets/top/nlist/render.pt:31
 msgid "type"
-msgstr ""
+msgstr "tür"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:29
 msgid "Normal heading"
-msgstr "Intestazione normale"
+msgstr "Normal başlık"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:30
 msgid "Sub heading"
-msgstr "Intestazione secondaria"
+msgstr "Alt başlık"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:31
 msgid "Sub sub heading"
-msgstr "Intestazione sotto secondaria(K)"
+msgstr "Alt alt başlık"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:32
 msgid "Paragraph heading"
-msgstr "Paragrafo d'intestazione"
+msgstr "Paragraf başlığı"
 
 #: /widgets/element/doc_elements/heading/mode_edit/render.pt:33
 msgid "Sub paragraph heading"
-msgstr "Paragrafo d'intestazione secondario"
+msgstr "Alt paragraf başlığı"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:105
 msgid "float left"
-msgstr "float sinistro"
+msgstr "sol dalgalanma"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:110
 msgid "align left"
-msgstr "allineamento sinistro"
+msgstr "sol düz"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:117
 msgid "default"
-msgstr "predefinito"
+msgstr "öntanımlı"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:122
 msgid "align center"
-msgstr "allineamento centrale"
+msgstr "düzgün merkez"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:129
 msgid "float right"
-msgstr "float destro"
+msgstr "sağ dalgalanan"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:134
 msgid "align right"
-msgstr "allineamento destro"
+msgstr "sağ düz"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:144
 msgid ""
@@ -452,62 +447,62 @@ msgstr ""
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:16
 msgid "get image reference..."
-msgstr "prendere l'immagine di riferimento"
+msgstr "görüntü için referans al..."
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:16
 msgid "access key: alt-g"
-msgstr "chiave d'accesso: alt-g"
+msgstr "giriş anahtarı: alt-g"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:31
 msgid "edit image"
-msgstr "modifica immagine"
+msgstr "görüntü düzenle"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:39
 msgid "create a hyperlink: alt-l"
-msgstr "creare un hyperlink: alt-l"
+msgstr "bir hiper link oluştur: alt-l"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:65
 msgid "High resolution version of image"
-msgstr "Versione della risoluzione dell'immagine alta"
+msgstr "Görüntünün yüksek çözünürlüklü versiyonu"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:70
 msgid "target frame"
-msgstr ""
+msgstr "hedef çerçeve"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:83
 msgid "new window"
-msgstr "nuova finestra"
+msgstr "yeni pencere"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:88
 msgid "tooltip for link"
-msgstr "tooltip per collegamento"
+msgstr "link için araç önerisi"
 
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:97
 msgid "image alignment"
-msgstr "immagine d'allineamento"
+msgstr "görüntü sırası"
 
 #: /widgets/element/doc_elements/image/render.pt:10
 msgid "image element is broken"
-msgstr "l'elemento immagine è corrotto"
+msgstr "görüntü öğesi bozuk"
 
 #: /widgets/element/doc_elements/image/tag.py:18
 msgid "image reference is broken"
-msgstr "l'immagine di riferimento è corrotta"
+msgstr "görüntü referansı bozuk"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:54
 #: /widgets/top/nlist/render.pt:35
 msgid "disc bullets"
-msgstr ""
+msgstr "disk kovanı"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:56
 #: /widgets/top/nlist/render.pt:37
 msgid "square bullets"
-msgstr ""
+msgstr "köşe kovanı"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:58
 #: /widgets/top/nlist/render.pt:39
 msgid "circle bullets"
-msgstr ""
+msgstr "daire kovanı"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:60
 #: /widgets/top/nlist/render.pt:41
@@ -537,30 +532,28 @@ msgstr "a, b, c,.."
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:70
 #: /widgets/top/nlist/render.pt:51
 msgid "no bullet"
-msgstr ""
+msgstr "kovan yok"
 
 #: /widgets/element/doc_elements/list/mode_edit/render.pt:78
 msgid "Add list items separated by an empty line."
-msgstr "Aggiungere una lista di termini separata da una linea vuota."
+msgstr "boş satırlar tarafından listelere dosya serpiştir"
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:46
 msgid "lead"
-msgstr "condurre"
+msgstr "önder"
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:47
 msgid "annotation"
-msgstr "annotazione"
+msgstr "bilgi notu"
 
 #: /widgets/element/doc_elements/p/mode_edit/render.pt:53
 msgid ""
 "Multiple paragraphs can be entered in one step by adding an empty line space."
 msgstr ""
-"I paragrafi multipli possono essere entrati in una fase dall'aggiunta di uno "
-"spazio linea vuoto."
 
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:24
 msgid "none"
-msgstr "niente"
+msgstr "hiçbiri"
 
 #: /widgets/element/doc_elements/pre/mode_edit/render.pt:29
 msgid ""
@@ -570,138 +563,138 @@ msgstr ""
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:101
 msgid "Source description:"
-msgstr "Descrizione del sorgente:"
+msgstr "Kaynak tanımı:"
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:15
 msgid "source id"
-msgstr "sorgente id"
+msgstr "kaynak kimliği"
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:16
 msgid "Select an External Source..."
-msgstr "Selezionare un Sorgente Esterno..."
+msgstr "bir Dış kaynak seçin..."
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:32
 msgid "update"
-msgstr ""
+msgstr "güncelle"
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:32
 msgid "access key: alt-u"
-msgstr "chiave d'accesso: alt-u"
+msgstr "Giriş Anahtarı: alt-u"
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:90
 msgid "Select a source from the pulldown list."
-msgstr "Selezionare un sorgente dalla lista critica."
+msgstr "Aşağıdaki listeden bir kaynak seçin."
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:94
 msgid "Hit \"update\" to refresh the reference."
-msgstr ""
+msgstr "Referansı yenilemek için \"güncelle\" ye basın."
 
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:96
 msgid "Fill in the parameters (if necessary)."
-msgstr "Riempire nei parametri (se necessario)"
+msgstr "Parametreleri doldurun (gerekli ise)."
 
 #: /widgets/element/doc_elements/source/mode_edit/save_helper.py:49
 msgid "Source is a NoneType - is it not available anymore?"
-msgstr "Il sorgente è un NoneType - non è piu' disponibile?"
+msgstr "Kaynak tipi bilinmiyor - kaynak artık erişilebilir değil mi?"
 
 #: /widgets/element/doc_elements/source/render.pt:14
 msgid "id:"
-msgstr "id:"
+msgstr "kimlik:"
 
 #: /widgets/element/doc_elements/source/render.pt:16
 msgid "title:"
-msgstr "titolo:"
+msgstr "başlık:"
 
 #: /widgets/element/doc_elements/source/render.pt:19
 msgid "description:"
-msgstr "descrizione:"
+msgstr "tanımlama:"
 
 #: /widgets/element/doc_elements/source/render.pt:32
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:44
 msgid "No parameters to be filled for this source."
-msgstr "Nessuno dei parametri può essere riempito per questo sorgente."
+msgstr ""
 
 #: /widgets/element/doc_elements/source/render.pt:41
 #: /widgets/element/doc_elements/source/mode_edit/render.pt:53
 msgid "Source parameters"
-msgstr "Parametri dei sorgenti"
+msgstr "Kaynak parametreleri"
 
 #: /widgets/element/doc_elements/source/rendered_source.py:24
 msgid "Unfortunately however, there no error message available..."
-msgstr "Sfortunatamente però, li nessun messaggio d'errore disponibile"
+msgstr "Malesef, her ne kadar bir hata mesajı olmasada..."
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:15
 msgid "Table of contents depth:"
-msgstr "Tabella dei contenuti di profondità:"
+msgstr "İçerik derinliği tablosu:"
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:18
 msgid "1 level"
-msgstr "1 livello"
+msgstr "1 seviye"
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:29
 msgid "${n} levels"
-msgstr "${n} livelli"
+msgstr "${n} seviye"
 
 #: /widgets/element/doc_elements/toc/mode_edit/render.pt:33
 msgid "unlimited"
-msgstr "illimitato"
+msgstr "sınırsız"
 
 #: /widgets/element/table_elements/nest_element.pt:4
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:9
 #: /widgets/element/table_elements/row/mode_edit/render_editable_field.pt:10
 msgid "nest element"
-msgstr "prossimo elemento"
+msgstr "yuva öğesi"
 
 #: /widgets/element/table_elements/row/mode_edit/save_helper.py:31
 msgid "The stored xml is invalid."
-msgstr "L'xml conservato non è valido."
+msgstr "Depolanmış xml geçersiz."
 
 #: /widgets/macro_helpers.pt:106
 #: /widgets/macro_helpers.pt:106
 msgid "delete element"
-msgstr "cancella elemento"
+msgstr "öğeyi sil"
 
 #: /widgets/macro_helpers.pt:107
 #: /widgets/macro_helpers.pt:107
 msgid "move down"
-msgstr "muovere giù"
+msgstr "aşağı hareket et"
 
 #: /widgets/macro_helpers.pt:108
 #: /widgets/macro_helpers.pt:108
 msgid "move up"
-msgstr "muovere su"
+msgstr "yukarı hareket et"
 
 #: /widgets/macro_helpers.pt:17
 msgid "up to top of page"
-msgstr "sopra o in cima alla pagina"
+msgstr "sayfanın en üstüne git"
 
 #: /widgets/macro_helpers.pt:19
 msgid "Notes"
-msgstr "Note"
+msgstr "Notlar"
 
 #: /widgets/macro_helpers.pt:34
 msgid "save"
-msgstr "salva"
+msgstr "kaydet"
 
 #: /widgets/macro_helpers.pt:34
 msgid "access key: alt-s"
-msgstr "chiave d'accesso: alt-s"
+msgstr "giriş anahtarı: alt-s"
 
 #: /widgets/macro_helpers.pt:36
 msgid "save + exit"
-msgstr "salva + esci"
+msgstr "kaydet + çık"
 
 #: /widgets/macro_helpers.pt:36
 msgid "access key: alt-e"
-msgstr "chiave d'accesso: alt-e"
+msgstr "giriş anahtarı: alt-e"
 
 #: /widgets/macro_helpers.pt:38
 msgid "save + insert"
-msgstr "salva + inserisci"
+msgstr "kaydet + ekle"
 
 #: /widgets/macro_helpers.pt:38
 msgid "access key: alt-i"
-msgstr "chiave d'accesso: alt-i"
+msgstr "giriş anahtarı: alt-i"
 
 #: /widgets/macro_helpers.pt:49
 #: /widgets/macro_helpers.pt:50
@@ -709,139 +702,137 @@ msgstr "chiave d'accesso: alt-i"
 #: /widgets/macro_helpers.pt:63
 #: /widgets/macro_helpers.pt:63
 msgid "insert element"
-msgstr "inserire elemento"
+msgstr "öğe ekle"
 
 #: /widgets/macro_helpers.pt:66
 #: /widgets/macro_helpers.pt:66
 msgid "insert item"
-msgstr "inserire termine"
+msgstr "nesne ekle"
 
 #: /widgets/macro_helpers.pt:79
 msgid "add element&nbsp;"
-msgstr "aggiungi elemento&nbsp:"
+msgstr "öğe ekle&nbsp;"
 
 #: /widgets/macro_helpers.pt:87
 msgid "insert"
-msgstr "inserire"
+msgstr "ekle"
 
 #: /widgets/macro_normal_view.pt:41
 #: /widgets/element/doc_elements/image/mode_edit/render.pt:33
 #: /widgets/element/table_elements/nest_element.pt:4
 msgid "edit element"
-msgstr "modifica elemento"
+msgstr "öğe düzenle"
 
 #: /widgets/macro_notes.pt:10
 msgid "subscript"
-msgstr "sottoscript"
+msgstr "altscript"
 
 #: /widgets/macro_notes.pt:10
 msgid "underlined"
-msgstr "sottolineare"
+msgstr "altıçizilmiş"
 
 #: /widgets/macro_notes.pt:10
 msgid "superscript"
-msgstr "superscripts"
+msgstr "süperscript"
 
 #: /widgets/macro_notes.pt:11
 #: /widgets/macro_notes.pt:12
 msgid "text"
-msgstr "testo"
+msgstr "metin"
 
 #: /widgets/macro_notes.pt:12
 msgid "if ${target} is empty a new window opens"
-msgstr "se ${target} è vuoto apre una nuova finestra"
+msgstr "eğer ${target} boşsa yeni pencere açar"
 
 #: /widgets/macro_notes.pt:12
 msgid "target"
-msgstr "target"
+msgstr "hedef"
 
 #: /widgets/macro_notes.pt:13
 msgid "title of the index item"
-msgstr ""
+msgstr "İndeks nesnesi başlığı"
 
 #: /widgets/macro_notes.pt:13
 msgid "anchorname"
-msgstr ""
+msgstr "çapaadı"
 
 #: /widgets/macro_notes.pt:14
 msgid "abbreviation"
-msgstr "abbreviazione"
+msgstr "kısaltma"
 
 #: /widgets/macro_notes.pt:14
 #: /widgets/macro_notes.pt:15
 msgid "full name"
-msgstr "nome pieno"
+msgstr "tam isim"
 
 #: /widgets/macro_notes.pt:15
 msgid "acronym"
-msgstr "acronimo"
+msgstr "kısaltma"
 
 #: /widgets/macro_notes.pt:8
 msgid "Silva markup"
-msgstr "Margine di guadagno Silva"
+msgstr "Silva deyimler"
 
 #: /widgets/macro_notes.pt:8
 msgid ""
 "Text can be formatted &#8211; in ${italic}, ${bold}, etc. &#8211; with "
 "${silva_markup}:"
 msgstr ""
-"Il testo può essere formattato &#8211; in ${italic}, ${bold}, etc. &#8211; "
-"con ${silva_markup}:"
 
 #: /widgets/macro_notes.pt:8
 #: /widgets/macro_notes.pt:10
 msgid "italic"
-msgstr "italic"
+msgstr "eğik"
 
 #: /widgets/macro_notes.pt:8
 #: /widgets/macro_notes.pt:10
 msgid "bold"
-msgstr "bold"
+msgstr "kalın"
 
 #: /widgets/top/field/render.pt:14
 #: /widgets/top/field/render.pt:20
 #: /widgets/top/sub/render.pt:14
 #: /widgets/top/sub/render.pt:20
 msgid "edit parent"
-msgstr "modifica parente"
+msgstr "ana düzenleme"
 
 #: /widgets/top/field/render.pt:14
 #: /widgets/top/sub/render.pt:14
 msgid "Up to parent: alt-u"
-msgstr "Fino al parente: alt-u"
+msgstr "Üst dizine git: alt-u"
 
 #: /widgets/top/field/render.pt:17
 msgid "subeditor"
-msgstr "sottoeditor"
+msgstr "altdüzenleyici"
 
 #: /widgets/top/field/render.pt:20
 #: /widgets/top/sub/render.pt:20
 msgid "Up to parent"
-msgstr "Fino al parente"
+msgstr "Üst dizine git"
 
 #: /widgets/top/sub/render.pt:17
 msgid "Nested element editor"
-msgstr ""
+msgstr "Yuva öğesi düzenleyici"
 
 #: /widgets/top/table/render.pt:14
 msgid "column settings"
-msgstr "Colonna settaggi"
+msgstr "sütun ayarları"
 
 #: /widgets/top/table/render.pt:18
 msgid "accesskey: alt-a"
-msgstr "chiave d'accesso: alt-a"
+msgstr "girişanahtarı: alt-a"
 
 #: /widgets/top/table/render.pt:18
 msgid "add column"
-msgstr "aggiungere colonna"
+msgstr "sütun ekle"
 
 #: /widgets/top/table/render.pt:19
 msgid "delete column"
-msgstr "cancellare colonna"
+msgstr "sütun sil"
 
 #: /widgets/top/table/render.pt:19
 msgid "accesskey: alt-d"
-msgstr "chiave d'accesso: alt-d"
+msgstr "girişanahtarı: alt-d"
 
 #: /widgets/top/table/render.pt:29
 msgid "l"
@@ -857,11 +848,11 @@ msgstr "r"
 
 #: /widgets/top/table/render.pt:35
 msgid "relative width"
-msgstr "larghezza relativa"
+msgstr "benzer genişlik"
 
 #: /widgets/top/table/render.pt:50
 msgid "Plain table (bold heading, no borders)"
-msgstr ""
+msgstr "Basit tablo (kalın başlık"
 
 #: /widgets/top/table/render.pt:54
 msgid "List table (bold underlined heading, borderless rows)"
@@ -874,34 +865,3 @@ msgstr ""
 #: /widgets/top/table/render.pt:62
 msgid "Data grid table (bold borderless heading, bordered rows)"
 msgstr ""
-
-#~ msgid "${name} attribute not found on tag ${self}"
-#~ msgstr "${nome} attributo non trovato sul tag ${self}"
-
-#~ msgid "id"
-#~ msgstr "id"
-
-#~ msgid ""
-#~ "No spaces or special characters besides &#8216;_&#8217; or &#8216;-&#8217; "
-#~ "or &#8216;.&#8217;"
-#~ msgstr ""
-#~ "Nessuni spazi o caratteri speciali oltre a &#8216;_&#8217; or &#8216;-"
-#~ "&#8217; or &#8216;.&#8217;"
-
-#~ msgid "${tip} Tab to the exit button or alt-e."
-#~ msgstr "${tip} ab per il bottone exit oppure usare alt-e"
-
-#~ msgid "${tip} tab to the exit button or alt-e."
-#~ msgstr "${tip} tab per il bottone exit oppure alt-e"
-
-#~ msgid " update "
-#~ msgstr " aggiornamento "
-
-#~ msgid "nest elements"
-#~ msgstr "prossimi elementi"
-
-#~ msgid "insert line item"
-#~ msgstr "inserire linea di termine"
-
-#~ msgid "Type:"
-#~ msgstr "Tipo:"
