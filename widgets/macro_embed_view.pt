@@ -4,7 +4,7 @@
 
 <div metal:define-macro="embed_view" tal:omit-tag="">
 <init tal:omit-tag=""
-  tal:define="global silva_root here/silva_root;
+  tal:define="global silva_root here/silva_root_url;
     global node request/node;
     global wr_name request/wr_name;
     global mode here/get_mode;

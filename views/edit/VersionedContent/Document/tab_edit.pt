@@ -94,30 +94,6 @@
  </tal:condition>
 </metal:block>
 
-<metal:block fill-slot="editor_selection">
-<tal:block i18n:domain="silva_document"
-  define="active python: editor == 'kupu'"
-  condition="python:hasattr(here, 'service_kupu')">
-  <a title="edit with the Kupu Editor: alt-("
-    accesskey="("
-    tal:content="python: here.kupu_display(active)"
-    tal:attributes="
-      class python: test(active, 'selected', None);
-      href python: '%s/edit?editor=kupu' % model.absolute_url()"
-    i18n:attributes="title"
-    i18n:translate="">
-  </a><a title="edit with the forms editor: alt-)"
-    accesskey=")"
-    tal:content="python: here.forms_editor_display(not active)"
-    tal:attributes="
-      class python: test(active, None, 'selected');
-      href python: '%s/edit?editor=forms_editor' % model.absolute_url()"
-    i18n:attributes="title"
-    i18n:translate="">
-  </a>
-</tal:block>
-</metal:block>
-
 <metal:block fill-slot="editor_content">
 <span tal:replace="nothing"> ______ forms editor ______ </span>
 <tal:block condition="python:editor != 'kupu' or not hasattr(here, 'service_kupu')">

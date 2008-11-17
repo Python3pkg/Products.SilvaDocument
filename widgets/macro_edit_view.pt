@@ -4,7 +4,7 @@
 
 <metal:block define-macro="edit_view">
 <tal:block
-  define="global silva_root here/silva_root;
+  define="global silva_root here/get_root_url;
     global node request/node;
     global wr_name request/wr_name;
     global node_path python:node.getNodePath('widget');

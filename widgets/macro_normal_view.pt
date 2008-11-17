@@ -5,7 +5,7 @@
 <div metal:define-macro="normal_view" tal:omit-tag="">
 <init tal:omit-tag=""
   tal:define="
-    global silva_root here/get_root;
+    global silva_root here/get_root_url;
     global node request/node;
     global node_path python:node.getNodePath('widget');
     global wr_name request/wr_name;
