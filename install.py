@@ -148,7 +148,7 @@ def registerDocEditor(root):
 
     wr.setAllowed('doc', [
         'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image', 
-        'table', 'nlist', 'toc'])
+        'table', 'nlist'])
 
     if externalsource.AVAILABLE:
         wr.addWidget('source', (
