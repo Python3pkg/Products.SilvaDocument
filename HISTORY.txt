@@ -1,4 +1,6 @@
 
 SilvaDocument changes
+=====================
 
-    For the time being, see the HISTORY file in Silva core.
+For the time being, see the changes in Products.Silva.
+
