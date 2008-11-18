@@ -16,7 +16,7 @@ xml_url = (model.absolute_url() + '/' +
            model.get_unapproved_version() + '/content')
 request.set('xml_url', xml_url)
 request.set('xml_rel_url', '/%s/%s/content' % (
-    model.absolute_url(1), model.get_unapproved_version()))
+    model.virtual_url_path(), model.get_unapproved_version()))
 
 service_editor = context.service_editor
 service_editor.setDocumentEditor(
