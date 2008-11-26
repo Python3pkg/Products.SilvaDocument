@@ -598,6 +598,7 @@ class source(SilvaElement):
             content = Frag(header, divcontent);
             return html.div(content,
                         source_id=id,
+                        source_title = source_title,
                         class_='externalsource',
                         **attrparams)
 
