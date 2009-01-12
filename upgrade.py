@@ -38,7 +38,7 @@ class SwitchClassUpgrader(BaseUpgrader, SwitchClass):
     def __init__(self, version, meta_type, new_class):
         BaseUpgrader.__init__(self, version, meta_type)
         SwitchClass.__init__(self, new_class)
-        
+
 
 switchDocumentClass = SwitchClassUpgrader('0.9.3', 'Silva Document',  Document)
 switchDocumentVersionClass = SwitchClassUpgrader('0.9.3', 'Silva Document Version', DocumentVersion)

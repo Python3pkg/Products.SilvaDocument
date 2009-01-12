@@ -1,3 +1,7 @@
+# Copyright (c) 2002-2007 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 import unittest
 from StringIO import StringIO
 
@@ -24,7 +28,7 @@ class TransformTestCase(unittest.TestCase):
         node = t.to_target(sourceobj=ret, context=ctx)
         roundtrip = node.asBytes('utf-8')
         assert roundtrip == html
- 
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(TransformTestCase))

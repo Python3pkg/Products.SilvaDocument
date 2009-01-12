@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
-import os, sys
-import xml.sax
-from xml.sax.handler import feature_namespaces
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
+# Copyright (c) 2002-2008 Infrae. All rights reserverd.
+# See also LICENSE.txt
+# $Id$
 
-from Testing import ZopeTestCase
-
+import os
 import unittest
-    
+
 from Products.Silva.tests import SilvaTestCase
-from Products.ParsedXML.ParsedXML import ParsedXML
-from Products.Silva.silvaxml import xmlimport 
+from Products.Silva.silvaxml import xmlimport
 
 def testopen(path, rw):
     directory = os.path.dirname(__file__)
@@ -47,12 +43,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         doc = document_version.content.documentElement.__str__()
         self.assertEquals(doc,
         u'<doc>\n            <p>\n            <em>\u627f\u8afe\u5e83\u544a\uff0a\u65e2\u306b\u3001\uff12\u5104\u3001\uff13\u5104\u3001\uff15\u5104\uff19\u5343\u4e07\u5186\u53ce\u5165\u8005\u304c\u7d9a\u51fa<strong>boo</strong>\n              baz</em>\n            </p>\n          </doc>')
-        
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(SetTestCase))
-        return suite    
+
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(SetTestCase))
+    return suite

@@ -1,21 +1,14 @@
 # -*- coding: utf-8 -*-
-import os, sys, re
-from os.path import join
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
+# Copyright (c) 2002-2008 Infrae. All rights reserverd.
+# See also LICENSE.txt
+# $Id$
 
-from Testing import ZopeTestCase
-
+import os, re
 import unittest
-    
+
 from Products.Silva.tests import SilvaTestCase
-from Products.SilvaDocument.Document import manage_addDocument
-from Products.Silva.Ghost import manage_addGhost
-from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport
-from Products.Silva.Link import manage_addLink
 from Products.ParsedXML.ParsedXML import ParsedXML
-from DateTime import DateTime
 
 def testopen(path, rw):
     directory = os.path.dirname(__file__)
@@ -28,7 +21,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'testfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Silva AutoTOC')
-        manage_addDocument(
+        self.add_document(
             testfolder, 'test_document', 'This is (surprise!) a document')
         doc = testfolder.test_document
         doc_edit = doc.get_editable()
@@ -80,9 +73,9 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         )
         # edit its contents
         s = testfolder.testcodesource.script
-        s.ZPythonScript_edit(s._params, 
+        s.ZPythonScript_edit(s._params,
                                 'return "<ul><li>foo</li><li>bar</li></ul>"')
-        manage_addDocument(
+        self.add_document(
             testfolder, 'test_document', 'This is (surprise!) a document')
         doc = testfolder.test_document
         doc_edit = doc.get_editable()
@@ -93,8 +86,8 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             <cite>
             <author>Shakespeare</author>
             <source>Global Theatre</source>
-            <p type="normal">This is the text of the citation. Only this 
-            text appears in the editing area, however the author and/or 
+            <p type="normal">This is the text of the citation. Only this
+            text appears in the editing area, however the author and/or
             source will be shown in the preview and published version of the
             document.</p>
             </cite>
@@ -106,14 +99,11 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         exportRoot = xmlexport.SilvaExportRoot(testfolder)
         xml1, xml2 = exporter.exportToString(exportRoot, settings).split('<doc:doc>')
         xml_expected = '\n<doc:sourceid="testcodesource"><doc:rendered_html><ul><li>foo</li><li>bar</li></ul></doc:rendered_html></doc:source>\n<doc:cite>\n<doc:author>Shakespeare</doc:author>\n<doc:source>GlobalTheatre</doc:source>\n<doc:ptype="normal">Thisisthetextofthecitation.Onlythis\ntextappearsintheeditingarea,howevertheauthorand/or\nsourcewillbeshowninthepreviewandpublishedversionofthe\ndocument.</doc:p>\n</doc:cite>\n</doc:doc></content></document></content></folder></silva>'
-        self.assertEquals(xml_expected.replace(' ','').replace('\n', ''), 
+        self.assertEquals(xml_expected.replace(' ','').replace('\n', ''),
                             xml2.replace(' ','').replace('\n', ''))
-            
-if __name__ == '__main__':
-    framework()
-else:
-    import unittest
-    def test_suite():
-        suite = unittest.TestSuite()
-        suite.addTest(unittest.makeSuite(SetTestCase))
-        return suite
+
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(SetTestCase))
+    return suite

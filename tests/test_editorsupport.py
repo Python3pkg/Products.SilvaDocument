@@ -1,12 +1,6 @@
 # Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id: test_editorsupport.py,v 1.20 2006/01/24 16:15:05 faassen Exp $
-
-import os, sys
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
-from Testing import ZopeTestCase
+# $Id$
 
 import unittest
 from xml.dom.minidom import parseString
@@ -16,7 +10,7 @@ from Products.SilvaDocument.EditorSupportNested import EditorSupport
 class EditableTest(unittest.TestCase):
 
     def test_escape(self):
-        
+
         cases = [
             ('foobar', 'foobar'),
             ('<em>foobar</em>', '<i>foobar</i>'),
@@ -29,9 +23,9 @@ class EditableTest(unittest.TestCase):
             ('<link url="http://slashdot.org" target="_blank">slashdot</link>',
                 '<a href="http://slashdot.org" target="_blank">slashdot</a>'),
         ]
-        
+
         es = EditorSupport('')
-        
+
         for xml_text, expected_editable in cases:
             dom = parseString('<p>%s</p>' % xml_text)
             # This tests the old style API in EditorSupport
@@ -46,7 +40,7 @@ class EditableTest(unittest.TestCase):
             ('&amp;&lt;&gt;&quot;', '&<>"'),
             ('foo  bar', 'foo  bar'),
         ]
-        
+
         es = EditorSupport('')
         for xml_text, expected_editable in cases:
             dom = parseString('<pre>%s</pre>' % xml_text)
@@ -55,19 +49,11 @@ class EditableTest(unittest.TestCase):
             self.assertEquals(expected_editable, editable,
                 '%s was converted to %s, instead of %s' % (xml_text,
                     editable, expected_editable))
-    
+
 
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(EditableTest))
     return suite
 
-if __name__ == '__main__':
-    try:
-        # if we have hotshot just profile everyting.
-        from hotshot import Profile
-        p = Profile('editorsupport.hotshot')
-        p.runcall(framework)
-    except ImportError:
-        framework()
-    
+

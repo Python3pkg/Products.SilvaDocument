@@ -1,7 +1,6 @@
-# Copyright (c) 2008 Infrae. All rights reserverd.
+# Copyright (c) 2002-2007 Infrae. All rights reserved.
 # See also LICENSE.txt
-# SilvaDocument
-# Python
+# $Id$
 
 import unittest
 from Products.Silva.tests.SilvaTestCase import SilvaTestCase
