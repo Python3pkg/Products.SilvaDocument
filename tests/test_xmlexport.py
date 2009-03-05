@@ -9,11 +9,9 @@ from Testing import ZopeTestCase
 import unittest
     
 from Products.Silva.tests import SilvaTestCase
-from Products.SilvaDocument.Document import manage_addDocument
 from Products.Silva.Ghost import manage_addGhost
 from Products.Silva.GhostFolder import manage_addGhostFolder
 from Products.Silva.silvaxml import xmlexport
-from Products.Silva.Link import manage_addLink
 from Products.ParsedXML.ParsedXML import ParsedXML
 from DateTime import DateTime
 
@@ -28,7 +26,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
             'testfolder',
             'This is <boo>a</boo> testfolder',
             policy_name='Silva AutoTOC')
-        manage_addDocument(
+        self.add_document(
             testfolder, 'test_document', 'This is (surprise!) a document')
         doc = testfolder.test_document
         doc_edit = doc.get_editable()
@@ -82,7 +80,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         s = testfolder.testcodesource.script
         s.ZPythonScript_edit(s._params, 
                                 'return "<ul><li>foo</li><li>bar</li></ul>"')
-        manage_addDocument(
+        self.add_document(
             testfolder, 'test_document', 'This is (surprise!) a document')
         doc = testfolder.test_document
         doc_edit = doc.get_editable()
