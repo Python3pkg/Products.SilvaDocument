@@ -35,7 +35,17 @@ class IMixedContentSupport(Interface):
         pass
 
 class IDocument(IVersionedContent):
-    pass
+    def kupu_editor_supported():
+        """ returns true if the kupu editor is
+            supported for this type of document.
+            To support disabling the kupu smi button
+            in the middleground"""
+        
+    def forms_editor_supported():
+        """ returns true if the forms-based editor
+            is supported for this type of document
+            To support disabling the forms editor
+            smi button in the middleground"""
 
 class IDocumentVersion(IVersion):
     pass

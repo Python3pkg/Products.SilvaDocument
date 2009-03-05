@@ -155,6 +155,16 @@ class Document(CatalogedVersionedContent):
         inherited_manage_options[1:]
         )
 
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'kupu_editor_supported')
+    def kupu_editor_supported(self):
+        return True
+    
+    security.declareProtected(SilvaPermissions.ReadSilvaContent,
+                              'forms_editor_supported')
+    def forms_editor_supported(self):
+        return True
+    
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
     def is_cacheable(self):
