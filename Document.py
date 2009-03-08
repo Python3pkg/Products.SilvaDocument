@@ -39,6 +39,7 @@ from Products.SilvaDocument import externalsource
 
 from Products.SilvaMetadata.Exceptions import BindingError
 
+from silva.core.smi.interfaces import IFormsEditorSupport, IKupuEditorSupport
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
 from silva.core import conf as silvaconf
@@ -114,6 +115,15 @@ class DocumentVersion(CatalogedVersion):
         xmlinput = matchstr.sub('', xmlinput)
         return re.sub('<[^>]*>(?i)(?m)', ' ', xmlinput)
 
+    def _get_document_element(self):
+        """returns the document element of this
+           version's ParsedXML object.
+           This is abstracted so that objects which
+           extend Document (e.g. News Items) can
+           have a different xml implementation
+           (i.e. silvaxmlattribute)"""
+        return self.content.documentElement
+           
     def clearEditorCache(self):
         """ Clears editor cache for this version
         """
@@ -137,7 +147,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    implements(IDocument)
+    implements(IDocument,IKupuEditorSupport, IFormsEditorSupport)
 
     silvaconf.icon('www/silvadoc.gif')
     silvaconf.priority(-6)
@@ -155,16 +165,6 @@ class Document(CatalogedVersionedContent):
         inherited_manage_options[1:]
         )
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'kupu_editor_supported')
-    def kupu_editor_supported(self):
-        return True
-    
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'forms_editor_supported')
-    def forms_editor_supported(self):
-        return True
-    
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
     def is_cacheable(self):
@@ -180,7 +180,7 @@ class Document(CatalogedVersionedContent):
 
         # It should suffice to test the children of the root element only,
         # since currently the only non-cacheable elements are root elements
-        for node in viewable.content.documentElement.childNodes:
+        for node in viewable._get_document_element().childNodes:
             node_name = node.nodeName
             if node_name in non_cacheable_elements:
                 return 0
