@@ -20,7 +20,7 @@ class MixedContentSupport(SilvaTestCase.SilvaTestCase):
     def afterSetUp(self):
         self.mcr = mixedcontentsupport.SupportRegistry(
             mixedcontentsupport.ParagraphSupport)
-        
+    
     def test_defaultMixedContentSupport(self):
         metatype = 'foo'
         nodename = 'bar'
@@ -89,9 +89,22 @@ class MixedContentSupport(SilvaTestCase.SilvaTestCase):
         supp = self.mcr.lookupByName('waku', 'baz')
         self.assertEquals(supp, mixedcontentsupport.ParagraphSupport)
 
+class ParagraphSupport(SilvaTestCase.SilvaTestCase):
+
+    def test_linkHelper(self):
+        # Make a url that is known to cause a faulty return path:
+        # 'http://nohost/root/http:localhost:8080/something'
+        url1 = 'http://localhost:8080/something'
+        # Get the ParagraphSupport object. Pass it an arbitrary html
+        # snippet to satisfy the MixedContent object.
+        p_support = mixedcontentsupport.ParagraphSupport('<p></p>')
+        path1 = p_support._linkHelper(self.root, url1)
+        self.assertEquals(path1, url1)
+
 def test_suite():
     suite = unittest.TestSuite()
     suite.addTest(unittest.makeSuite(MixedContentSupport))
+    suite.addTest(unittest.makeSuite(ParagraphSupport))
     return suite
 
 def main():
@@ -99,8 +112,4 @@ def main():
 
 if __name__ == '__main__':
     framework()
-#else:
-#    # While framework.py provides its own test_suite()
-#    # method the testrunner utility does not.
-#    main()
     
