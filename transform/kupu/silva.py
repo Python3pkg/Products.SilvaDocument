@@ -164,7 +164,14 @@ class list(SilvaElement):
                         child.content.remove(subchild)
                         sub.append(subchild.convert(context))
                     elif subchild.name() != 'br':
-                        sub.append(html.li(subchild.convert(context)))
+                        if sub and sub[-1].name() == 'li':
+                            # additional subchild can contain other tags..
+                            # add these to the previously added li 
+                            # (f.e. a listitem with bold and linked words)
+                            sub[-1].content.append(subchild.convert(context))
+                        else:
+                            # add *first* subchild content in li
+                            sub.append(html.li(subchild.convert(context)))
                 converted += sub
             else:
                 converted.append(child.convert(context))
