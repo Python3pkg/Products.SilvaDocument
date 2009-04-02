@@ -8,6 +8,5 @@
 ##title=
 ##
 from Products.SilvaDocument.i18n import translate as _
-
 display = test(active, _('kupu editor'), _('kupu editor...'))
 return display

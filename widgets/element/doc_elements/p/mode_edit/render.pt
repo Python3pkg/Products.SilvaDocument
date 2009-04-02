@@ -7,7 +7,7 @@
   </script>
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')"></script>
 <div align="right">
-  <input type="button" class="button transport" name="" 
+  <input type="button" class="button transporter" name="" 
     value="get link reference..." title="create a hyperlink: alt-g" 
     accesskey="g"
     tal:define="container python: node.get_container()"
