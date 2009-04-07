@@ -488,7 +488,7 @@ class ul(Element):
                 if lis:
                     lis[-1] = silva.li(lis[-1].content, el.convert(context))
                 else:
-                    lis.append(silva.li(silva.br(), el.convert(context)))
+                    lis.append(silva.li(el.convert(context)))
 
         return silva.nlist(
             lis,
