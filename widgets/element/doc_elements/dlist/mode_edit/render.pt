@@ -3,9 +3,6 @@
   i18n:domain="silva_document">
 
 <div metal:fill-slot="edit_input" tal:omit-tag="">
-<script type="text/javascript" 
-    tal:attributes="src python:request.model.get_container().absolute_url()+'/edit/reference.js'">
-</script>
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')"></script>
 <div align="right">
   <input type="button" 

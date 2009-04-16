@@ -2,9 +2,6 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva_document">
 <metal:block fill-slot="edit_input">
-  <script type="text/javascript" 
-    tal:attributes="src python:request.model.get_container().absolute_url()+'/edit/reference.js'">
-  </script>
   <tal:block define="alignment python:node.getAttribute('alignment');
                       getPathAdapter nocall:modules/Products/Silva/adapters/path/getPathAdapter;
                       pad python:getPathAdapter(request);">

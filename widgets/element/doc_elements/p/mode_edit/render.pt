@@ -2,9 +2,6 @@
   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
   i18n:domain="silva_document">
 <metal:block fill-slot="edit_input">
-  <script type="text/javascript" 
-    tal:attributes="src python:request.model.get_container().absolute_url()+'/edit/reference.js'">
-  </script>
 <script type="text/javascript" tal:content="structure python:here.focus_editor('data')"></script>
 <div align="right">
   <input type="button" class="button transporter" name="" 

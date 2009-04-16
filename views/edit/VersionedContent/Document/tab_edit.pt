@@ -37,9 +37,6 @@
 </metal:block>
 
 <metal:block fill-slot="script">
-<script type="text/javascript"
-  tal:attributes="src here/reference.js/absolute_url">
-</script>
 <tal:block condition="python:editor == 'kupu' and hasattr(here, 'service_kupu') and is_editable">
   <metal:macro use-macro="here/service_kupu_silva/kupumacros/macros/jsincludes" />
 </tal:block>
@@ -98,7 +95,7 @@
 <metal:block fill-slot="editor_content">
 <span tal:replace="nothing"> ______ forms editor ______ </span>
 <tal:block condition="python:editor != 'kupu' or not hasattr(here, 'service_kupu')">
-  <tal:block tal:replace="structure here/edit">Content</tal:block>
+  <tal:block tal:replace="structure here/forms_editor">Content</tal:block>
 </tal:block>
 <span tal:replace="nothing"> ______ kupu ______ </span>
 <tal:block condition="python:editor == 'kupu' and hasattr(here, 'service_kupu')" >
