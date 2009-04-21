@@ -31,7 +31,7 @@ from Products.Silva.ContentObjectFactoryRegistry import contentObjectFactoryRegi
 from transform.Transformer import EditorTransformer
 from transform.base import Context
 
-from Products.Silva.interfaces import IContainerPolicy
+from silva.core.interfaces import IContainerPolicy
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.SilvaDocument.i18n import translate as _
 

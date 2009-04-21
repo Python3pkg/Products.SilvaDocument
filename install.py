@@ -7,7 +7,7 @@
 from zope import interface
 
 from Products.Silva.install import add_fss_directory_view
-from Products.Silva.interfaces import IInvisibleService
+from silva.core.interfaces import IInvisibleService
 from Products.SilvaDocument import Document
 import EditorSupportNested
 

@@ -9,7 +9,7 @@ from sprout.saxext.html2sax import saxify
 from Products.ParsedXML.DOM.Core import Node
 from Products.Silva.adapters.path import getPathAdapter
 from Products.Silva.adapters import tocrendering
-from Products.Silva.interfaces import IImage
+from silva.core.interfaces import IImage
 from Products.SilvaDocument.i18n import translate as _
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'

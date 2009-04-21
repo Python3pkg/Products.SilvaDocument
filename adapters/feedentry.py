@@ -5,7 +5,7 @@
 from grokcore import component
 
 import re
-from Products.Silva.adapters.interfaces import IFeedEntry
+from silva.core.interfaces.adapters import IFeedEntry
 from Products.SilvaDocument.interfaces import IDocument
 
 class DocumentFeedEntryAdapter(component.Adapter):

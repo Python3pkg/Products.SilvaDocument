@@ -3,7 +3,7 @@
 # $Id$
 
 from zope.interface import Interface, Attribute
-from Products.Silva.interfaces import IVersionedContent, IVersion
+from silva.core.interfaces import IVersionedContent, IVersion
 
 class IMixedContentSupport(Interface):
     """ Support of editing and rendering mixed content XML (i.e.

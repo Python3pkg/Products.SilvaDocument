@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Silva.interfaces import ISilvaObject
+from silva.core.interfaces import ISilvaObject
 
 from silva.core.views import views as silvaviews
 from silva.core import conf as silvaconf
