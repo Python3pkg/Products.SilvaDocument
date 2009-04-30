@@ -11,8 +11,9 @@
   tal:define="
     global vein string:editor;
     member python:here.service_members.get_member(user.getUserName());
-    editor python:request.get('editor') or (member and member.editor()) or 'kupu';
     dummy  python: here.REQUEST.set('edit_mode', 1);
+    dummy  python: getattr(request, 'editor', None) and request.SESSION.set('editor', request.editor) or None;
+    editor python:request.SESSION.get('editor') or (member and member.editor()) or 'kupu';
     refresh_time python:19 * 60;
     model request/model;
     is_editable model/get_unapproved_version;

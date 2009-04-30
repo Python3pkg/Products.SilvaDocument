@@ -13,7 +13,7 @@
   <tbody>
     <tr valign="top">
       <td class="invisible align-right" width="20%">
-        <input type="button" class="transport" name="" value="get image reference..." title="access key: alt-g" accesskey="g"
+        <input type="button" class="button transporter" name="" value="get image reference..." title="access key: alt-g" accesskey="g"
           tal:define="asset_context python:here.get_start_container();"
           tal:attributes="onclick string: reference.getReference(
                                     function(path, id, title) {
@@ -36,7 +36,7 @@
     </tr>
     <tr>
       <td class="invisible align-right" style="background:#d7e4f0;">
-        <input type="button" class="transport" name="" value="get link reference..." title="create a hyperlink: alt-l" accesskey="l"
+        <input type="button" class="button transporter" name="" value="get link reference..." title="create a hyperlink: alt-l" accesskey="l"
           tal:define="container python:node.get_container()"
           tal:attributes="onclick string: reference.getReference(
                                     function(path, id, title) {

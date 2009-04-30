@@ -365,7 +365,7 @@ class HeadingSupport(ParagraphSupport):
         # we have to convert absolute link href paths relative
         # to the current virtual host root so they become relative to the
         # Zope root 
-        self.convertPaths(node)
+        self._convertPaths(node)
 
 InitializeClass(HeadingSupport)            
             
