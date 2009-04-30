@@ -5,7 +5,7 @@
     tal:define="
       source here/get_source | nothing;
       source_id source/id | nothing;
-      es_enabled python:'SilvaExternalSources' in here.service_extensions.get_installed_names()"
+      es_enabled python: here.service_extensions.is_installed('SilvaExternalSources')"
     >
   <div tal:condition="python:not es_enabled and not source_id">
    <p>The External Sources product is not installed.  Unable to create new External Source elements.</p>

@@ -10,18 +10,18 @@
   i18n:domain="silva_document">
 <div metal:fill-slot="embed_controls" tal:omit-tag="">
 <table border="0" width="100%" cellspacing="0">
-<tr class="controls">
+<tr>
   <td i18n:translate="">
     column settings
   </td>
   <td class="align-right">
     <input class="button" type="submit" tal:attributes="name string:${rel_url_start}/add_column:method" value="add column" title="accesskey: alt-a" accesskey="a" i18n:attributes="value;title" />
-    <input class="warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="delete column" title="accesskey: alt-d" accesskey="d" onclick="return confirm('Really delete column?')" i18n:attributes="value;title" />
+    <input class="button warning" type="submit" tal:attributes="name string:${rel_url_start}/remove_column:method" value="delete column" title="accesskey: alt-d" accesskey="d" onclick="return confirm('Really delete column?')" i18n:attributes="value;title" />
   </td>
 </tr>
 </table>
 <table border="0" width="100%" cellspacing="0">
-<tr class="inter-controls">
+<tr>
   <td align="center" tal:repeat="info columns_info" tal:attributes="class string:align-${info/align}; width python: info.get('html_width', '*')">
      <div tal:omit-tag="" tal:define="align_name string:column_align_${repeat/info/index};
                                       width_name string:column_width_${repeat/info/index};

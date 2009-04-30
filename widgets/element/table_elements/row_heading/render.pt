@@ -10,7 +10,7 @@
 <enable tal:omit-tag="" tal:replace="nothing">
       <td valign="top">
         <input type="checkbox" name="prefixed nodepath?" /><br />
-        <img tal:attributes="src string:${here/silva_root_url}/globals/pixel.gif" width="25" height="1" />
+        <img tal:attributes="src string:${here/get_root_url}/globals/pixel.gif" width="25" height="1" />
       </td>
 </enable>
       <td width="100%" class="focus" align="left" tal:content="structure here/content"></td></tr>
