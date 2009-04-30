@@ -2,19 +2,15 @@
 # See also LICENSE.txt
 # $Id$
 
-import re
-from urlparse import urlparse
 from Products.Silva.silvaxml.xmlexport import theXMLExporter, VersionedContentProducer, SilvaBaseProducer
 from sprout.saxext.html2sax import saxify
 from Products.ParsedXML.DOM.Core import Node
-from Products.Silva.adapters.path import getPathAdapter
 from Products.Silva.adapters import tocrendering
 from silva.core.interfaces import IImage
+from silva.core.interfaces.adapters import IPath
 from Products.SilvaDocument.i18n import translate as _
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
-URL_PATTERN = r'(http://|https://|ftp://|news://|mailto:)+'
-_url_match = re.compile(URL_PATTERN)
 
 def initializeXMLExportRegistry():
     """Here the actual content types are registered. Non-Silva-Core content
@@ -63,7 +59,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             self.sax_img(node)
         else:
             if node.nodeName == 'link':
-                attributes['rewritten_url'] = self.rewriteUrl(attributes['url'])
+                attributes['rewritten_url'] = IPath(self.context.get_content()).pathToUrlPath(attributes['url'])
             self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
             if node.hasChildNodes():
                 self.sax_children(node)
@@ -301,15 +297,14 @@ class DocumentVersionProducer(SilvaBaseProducer):
             attributes = get_dict(node.attributes)
         image_object = self.context.get_silva_object().unrestrictedTraverse(
             attributes['path'].split('/'), None)
-        attributes['rewritten_path'] = self.rewriteUrl(attributes['path'])
+        attributes['rewritten_path'] = IPath(self.context.get_content()).pathToUrlPath(attributes['path'])
         if attributes.get('link_to_hires', '0') == '1':
             attributes[
                 'rewritten_link'] = attributes[
                 'rewritten_path'] + '?hires'
         elif attributes.has_key('link'):
             if attributes['link']:
-                attributes['rewritten_link'] = self.rewriteUrl(
-                    attributes['link'])
+                attributes['rewritten_link'] = IPath(self.context.get_content()).pathToUrlPath(attributes['link'])
         if image_object is not None:
             if IImage.providedBy(image_object):
                 image = image_object.image
@@ -330,45 +325,6 @@ class DocumentVersionProducer(SilvaBaseProducer):
         saxify(html, self.handler)
         self.endElementNS(SilvaDocumentNS, 'rendered_html')
        
-    def rewriteUrl(self, path):
-        # XXX: copied verbatim from widgetrenderer
-        # If path is empty (can it be?), just return it
-        if path == '':
-            return path
-        # If it is a url already, return it:
-        if _url_match.match(path):
-            return path
-        # Is it a query of anchor fragment? If so, return it
-        if path[0] in ['?', '#']:
-            return self.context.object().absolute_url() + path
-        # It is not an URL, query or anchor, so treat it as a path.
-        # If it is a relative path, treat is as such:
-        if not path.startswith('/'):
-            container = self.context.get_container()
-            return self.convertPath(container.absolute_url() + '/' + path)
-        # If it is an absolute path, try to traverse it to
-        # a Zope/Silva object and get the URL for that.
-        splitpath = [p.encode('ascii','ignore') for p in path.split('/') ]
-        obj = self.context.restrictedTraverse(splitpath, None)
-        if obj is None:
-            # Was not found, maybe the link is broken, but maybe it's just 
-            # due to virtual hosting situations or whatever.
-            return self.convertPath(path)
-        if hasattr(obj.aq_base, 'absolute_url'):
-            # There are some cases where the object we find 
-            # does not have the absolute_url method.
-            return self.convertPath(obj.absolute_url())
-        # In all other cases:
-        return self.convertPath(path)
-    
-    def convertPath(self, path):
-        """convert URL paths to absolute physical ones"""
-        if urlparse(path)[0]:
-            return path
-        # we have a path
-        pad = getPathAdapter(self.context.REQUEST)
-        return pad.urlToPath(path)
-    
 def get_dict(attributes):
     result = {}
     for key in attributes.keys():

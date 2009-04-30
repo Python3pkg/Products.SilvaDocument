@@ -19,10 +19,7 @@ from Globals import InitializeClass
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.SilvaDocument import interfaces
-from Products.Silva.adapters.path import getPathAdapter
-
-URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+))'
-_url_match = re.compile(URL_PATTERN)
+from silva.core.interfaces.adapters import IPath
 
 def ustr(inputstr,encoding):
     if not isinstance(inputstr, UnicodeType):
@@ -179,7 +176,7 @@ class ParagraphSupport(MixedContentSupport):
                 result.append('</acronym>')
             elif child.nodeName == 'link':
                 path = child.getAttribute('url')
-                url = self._linkHelper(node, path)                
+                url = IPath(self.aq_parent.get_content()).pathToUrlPath(path)
                 result.append('<a href="%s"' %  mangle.entities(url))
                 if child.hasAttribute('target'):
                     target = child.getAttribute('target')
@@ -252,9 +249,11 @@ class ParagraphSupport(MixedContentSupport):
                 result.append('</abbr>')
             elif child.nodeName == 'link':
                 url = mangle.entities(child.getAttribute('url'))
+                #pad = IPath(self.aq_parent)
+                #url = pad.decodeUrlPath(url)
                 if not urlparse(url)[0]:
                     # we have a path, convert
-                    pad = getPathAdapter(child.REQUEST)
+                    pad = IPath(child.REQUEST)
                     url = pad.pathToUrlPath(url)
                 if child.hasAttribute('target'):
                     target = child.getAttribute('target')
@@ -300,46 +299,22 @@ class ParagraphSupport(MixedContentSupport):
                     'ERROR %s ERROR ' % self._renderEditableHelper(child))
         return ''.join(result)
 
-    def _linkHelper(self, context, path):
-        # If path is empty (can it be?), just return it
-        if path == '':
-            return path
-        # If it is a url already, return it:
-        if _url_match.match(path):
-            return path
-        # Is it simply a query or anchor fragment? If so, return it
-        if path[0] in ['?', '#']:
-            return path
-        # It is not an URL, query or anchor, so treat it as a path.
-        # If it is a relative path, treat is as such:
-        if not path.startswith('/'):
-            container = context.get_container()
-            return container.absolute_url() + '/' + path
-        # If it is an absolute path, try to traverse it to
-        # a Zope/Silva object and get the URL for that.
-        splitpath = [p.encode('ascii','ignore') for p in path.split('/') ]
-        obj = context.restrictedTraverse(splitpath, None)
-        if obj is None:
-            # Was not found, maybe the link is broken, but maybe it's just 
-            # due to virtual hosting situations or whatever.
-            return path
-        if hasattr(obj.aq_base, 'absolute_url'):
-            # There are some cases where the object we find 
-            # does not have the absolute_url method.
-            return obj.absolute_url()
-        # In all other cases:
-        return path
-
     def _convertPaths(self, node):
         """convert URL paths to absolute physical ones"""
+        """parent should be an ISilvaObject"""
         links = node.getElementsByTagName('link')
+        #pad = IPath(self.aq_parent)
+        #for link in links:
+        #    url = link.getAttribute('url')
+        #    link.setAttribute('url',pad.encodeUrlPath(url))
+        pad = IPath(node.REQUEST)
         for link in links:
             url = link.getAttribute('url')
             if not urlparse(url)[0]:
                 # we have a path
-                pad = getPathAdapter(node.REQUEST)
                 path = pad.urlToPath(url)
                 link.setAttribute('url', path)
+
 
 InitializeClass(ParagraphSupport)
 
