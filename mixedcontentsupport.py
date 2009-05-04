@@ -19,6 +19,7 @@ from Globals import InitializeClass
 from Products.Silva import SilvaPermissions
 from Products.Silva import mangle
 from Products.SilvaDocument import interfaces
+from silva.core.interfaces import IContainer
 from silva.core.interfaces.adapters import IPath
 
 def ustr(inputstr,encoding):
@@ -176,7 +177,10 @@ class ParagraphSupport(MixedContentSupport):
                 result.append('</acronym>')
             elif child.nodeName == 'link':
                 path = child.getAttribute('url')
-                url = IPath(self.aq_parent.get_content()).pathToUrlPath(path)
+                if IContainer.providedBy(self.aq_parent):
+                    url = IPath(self.aq_parent.get_default()).pathToUrlPath(path)
+                else:
+                    url = IPath(self.aq_parent.get_content()).pathToUrlPath(path)
                 result.append('<a href="%s"' %  mangle.entities(url))
                 if child.hasAttribute('target'):
                     target = child.getAttribute('target')
