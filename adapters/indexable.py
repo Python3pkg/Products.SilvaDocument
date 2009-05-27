@@ -6,7 +6,7 @@ from grokcore import component
 
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.Silva.adapters.indexable import IndexableAdapter
-from silva.core.conf.interfaces.adapters import IIndexable
+from silva.core.interfaces.adapters import IIndexable
 
 class DocumentIndexableAdapter(IndexableAdapter):
 
