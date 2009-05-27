@@ -6,7 +6,7 @@ from grokcore import component
 
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.Silva.adapters.indexable import IndexableAdapter
-from Products.Silva.adapters import interfaces
+from silva.core.conf.interfaces.adapters import IIndexable
 
 class DocumentIndexableAdapter(IndexableAdapter):
 
@@ -15,7 +15,7 @@ class DocumentIndexableAdapter(IndexableAdapter):
     def getIndexes(self):
         version = self.context.get_viewable()
         if version:
-            return interfaces.IIndexable(version).getIndexes()
+            return IIndexable(version).getIndexes()
         return []
 
 class DocumentVersionIndexableAdapter(IndexableAdapter):
