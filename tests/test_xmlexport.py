@@ -7,6 +7,7 @@ import os, re
 import unittest
 
 from Products.Silva.tests import SilvaTestCase
+from Products.Silva.tests.test_xmlexport import XMLExportMixin
 from Products.Silva.silvaxml import xmlexport
 from Products.ParsedXML.ParsedXML import ParsedXML
 
@@ -14,7 +15,7 @@ def testopen(path, rw):
     directory = os.path.dirname(__file__)
     return open(os.path.join(directory, path), rw)
 
-class SetTestCase(SilvaTestCase.SilvaTestCase):
+class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
     def test_xml_document_export(self):
         testfolder = self.add_folder(
             self.root,
@@ -40,7 +41,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase):
         exporter = xmlexport.theXMLExporter
         exportRoot = xmlexport.SilvaExportRoot(testfolder)
         part1, part2, part3, part4, part5, part6, part7, part8 = splittor.split(exporter.exportToString(exportRoot, settings))
-        self.assertEquals(part1, '<?xml version="1.0" encoding="utf-8"?>\n<silva xmlns="http://infrae.com/ns/silva" xmlns:doc="http://infrae.com/ns/silva_document" xmlns:silva-content="http://infrae.com/namespaces/metadata/silva" xmlns:silva-extra="http://infrae.com/namespaces/metadata/silva-extra" datetime="')
+        self.assertEquals(part1, '<?xml version="1.0" encoding="utf-8"?>\n<silva xmlns="http://infrae.com/ns/silva" %s datetime="'%self.get_namespaces())
         self.assertEquals(part2, '" path="/root/testfolder" silva_version="%s" url="http://nohost/root/testfolder"><folder id="testfolder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>' % exportRoot.getSilvaProductVersion())
         self.assertEquals(part3, '</silva-extra:creationtime><silva-extra:creator>test_user_1_</silva-extra:creator><silva-extra:expirationtime/><silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords/><silva-extra:language/><silva-extra:lastauthor>unknown</silva-extra:lastauthor><silva-extra:location>http://nohost/root/testfolder</silva-extra:location><silva-extra:modificationtime>')
         self.assertEquals(part4, '</silva-extra:modificationtime><silva-extra:publicationtime/><silva-extra:subject/></set></metadata><content><default><auto_toc depth="-1" display_desc_flag="False" id="index" show_icon="False" sort_order="silva" types="Silva Document,Silva Publication,Silva Folder"><metadata><set id="silva-content"><silva-content:maintitle>This is &lt;boo&gt;a&lt;/boo&gt; testfolder</silva-content:maintitle><silva-content:shorttitle/></set><set id="silva-extra"><silva-extra:comment/><silva-extra:contactemail/><silva-extra:contactname/><silva-extra:content_description/><silva-extra:creationtime>')
