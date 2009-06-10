@@ -75,7 +75,7 @@
   </select>
   &nbsp;
   <input class="button" type="submit" value=" Move " 
-    notal:attributes="name string:${rel_url_start}/save:method" i18n:attributes="value" />
+    tal:attributes="name string:${rel_url_start}/save:method" i18n:attributes="value" />
 &nbsp;&nbsp;&nbsp;
 </enable>
 </td>
