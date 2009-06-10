@@ -10,7 +10,7 @@ from silva.core.interfaces import IImage
 from silva.core.interfaces.adapters import IPath
 from Products.SilvaDocument.i18n import translate as _
 
-SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
+SilvaDocumentNS = 'http://infrae.com/namespace/silva-document'
 
 def initializeXMLExportRegistry():
     """Here the actual content types are registered. Non-Silva-Core content

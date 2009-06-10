@@ -8,7 +8,7 @@ from Products.Silva import mangle
 
 from silva.core import conf as silvaconf
 
-DOC_NS_URI = 'http://infrae.com/ns/silva_document'
+DOC_NS_URI = 'http://infrae.com/namespace/silva-document'
 silvaconf.namespace(NS_URI)
 
 class DocumentHandler(SilvaBaseHandler):
