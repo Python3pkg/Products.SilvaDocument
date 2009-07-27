@@ -568,14 +568,19 @@ class source(SilvaElement):
                     else:
                         value = unicode(value, 'utf-8')
                     params[attrkey] = value
-            object = getSourceForId(context.model, str(id))
+            source = getSourceForId(context.model, str(id))
             divpar = []
+            form = source.form()
             for key in params:
                 if '__type__' in key:
                     key_id = key.split('__type__')[0]
                 else:
                     key_id = key
-                display_key = object.form().get_field(key_id).title()
+                try:
+                    field = form.get_field(key_id)
+                except AttributeError:
+                    continue
+                display_key = field.title()
                 divpar.append(
                     html.strong("%s: " % display_key))
                 if '__type__list' in key:
@@ -590,12 +595,12 @@ class source(SilvaElement):
                 divpar.append(html.br());
             par = html.div(Frag(divpar), {'class': 'parameters'})
             divcontent.append(par)
-            if object is not None:
-                meta_type = object.meta_type
-                source_title = object.get_title() or id
+            if source is not None:
+                meta_type = source.meta_type
+                source_title = source.get_title() or id
                 header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
                                  title=u'source id: %s'%id)
-                desc = object.description()
+                desc = source.description()
                 if desc:
                     divcontent.append(html.p(desc,class_="externalsource-description"))
             else:
