@@ -600,10 +600,10 @@ class a(Element):
             url = self.getattr('silva_href', None)
             if url is None:
                 url = self.getattr('href', 'http://www.infrae.com')
-            if str(url).startswith('/'):
+            if unicode(url).startswith('/'):
                 # convert to physical path before storing
                 pad = pathadapter.getPathAdapter(context.model.REQUEST)
-                url = Text(pad.urlToPath(str(url)))
+                url = Text(pad.urlToPath(unicode(url)))
             target = getattr(self.attr, 'target', '')
             #if target is None:
             #    target = ''

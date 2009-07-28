@@ -254,10 +254,10 @@ class link(SilvaElement):
             img = self.query_one('image')
         except ValueError:
             path = self.attr.url
-            if not urlparse(str(path))[0]:
+            if not urlparse(unicode(path))[0]:
                 # path, not a full URL
                 pad = pathadapter.getPathAdapter(context.model.REQUEST)
-                path = pad.pathToUrlPath(str(path))
+                path = pad.pathToUrlPath(unicode(path))
             return html.a(
                 self.content.convert(context),
                 href=path,
@@ -268,7 +268,7 @@ class link(SilvaElement):
             path = img.getattr('path')
             pad = pathadapter.getPathAdapter(context.model.REQUEST)
             if path:
-                path = pad.pathToUrlPath(str(path))
+                path = pad.pathToUrlPath(unicode(path))
             url = str(self.attr.url).strip()
             if url:
                 if not urlparse(str(url))[0]:
@@ -347,7 +347,7 @@ class image(SilvaElement):
         if obj and isinstance(obj, Image):
             width, height = obj.getDimensions(obj.image)
 
-        if ((not self.hasattr('link') or str(
+        if ((not self.hasattr('link') or unicode(
             self.getattr('link')).strip() == '') and (
                 not self.hasattr('link_to_hires')
                 or self.getattr('link_to_hires') == '0')):
@@ -361,7 +361,8 @@ class image(SilvaElement):
                         alignment=self.getattr('alignment', 'default'),
                         title = self.getattr('title', ''),
                   )
-        elif not self.hasattr('link') or str(self.getattr('link')).strip() == '':
+        elif not self.hasattr('link') or unicode(
+            self.getattr('link')).strip() == '':
             return html.img(
                         self.content.convert(context),
                         src=src,
