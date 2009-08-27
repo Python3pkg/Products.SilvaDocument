@@ -177,7 +177,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
         self.endElementNS(SilvaDocumentNS, 'row')
         
     def sax_field(self, node, col_info):
-        child_attrs = {'class': 'align-' + col_info['align']}
+        child_attrs = {'class': 'align-' + col_info['align'],
+                       'fieldtype': node.getAttribute('fieldtype') or 'td'}
+        if node.hasAttribute('colspan'):
+            child_attrs['colspan'] = node.getAttribute('colspan')
         self.startElementNS(SilvaDocumentNS, 'field', child_attrs)
         if node.hasChildNodes():
             for child in node.childNodes:
