@@ -13,10 +13,10 @@ def getSourceParameters(context, node):
               and child.nodeName == 'parameter']:
         child.normalize()
         name = child.getAttribute('key').encode('ascii')
+        type = child.getAttribute('type') or 'string'
         value = [child.nodeValue for child in child.childNodes 
                  if child.nodeType == child.TEXT_NODE]
         value = ' '.join(value)
-        type = child.getAttribute('type') or 'string'
         # XXX currently we only treat type="list" in a different manner, 
         # non-string values are ignored (not sure if they should be dealt with 
         # too, actually)

@@ -25,10 +25,10 @@
 <div metal:use-macro="container/macro_helpers/macros/edit_top" />
 <tr class="even" valign="top">
   <td class="invisible"></td>
-  <td style="border-left:1px solid #617681;width:50%"
-    colspan="2"
+  <td tal:define="width python:disable_notes and '100%' or '50%'"
     tal:attributes="colspan python:test(disable_notes, 2, nothing);
-      class content_cell_class">
+      class content_cell_class;
+      style string:border-left:1px solid #617681;;width:$width">
     <div metal:define-slot="edit_input">_______ local input/textarea gets slotted in _______</div>
   </td>
   <td tal:condition="not:disable_notes">

@@ -14,7 +14,7 @@ editorsupport = model.service_editorsupport
 columns_info = context.get_columns_info()
 
 # FIXME: Using CSS this hairball is slightly less hairy
-# than is used to be
+# than it used to be
 caption = ""
 nr_of_columns = len(columns_info)
 type = node.getAttribute('type')
@@ -44,11 +44,18 @@ for child in node.childNodes:
                 # append field content
                 if content == '':
                     content = '&nbsp;'
-                row_data.append(
-                    """<td class="align-%s">\n  %s\n</td>""" % (
-                    columns_info[col]['align'], content))
+                fieldtype = field.getAttribute('fieldtype') or 'td'
+                d = ['<%s class="align-%s"'%(fieldtype, columns_info[col]['align'])]
+                if field.hasAttribute('colspan'):
+                    d.append(' colspan="%s"'%field.getAttribute('colspan'))
+                d.append('>\n  %s\n</%s>'%(content,fieldtype))
+                     
+                #row_data.append(
+                #    """<%s class="align-%s">\n  %s\n</%s>""" % (
+                #    fieldtype, columns_info[col]['align'], content, fieldtype))
                     # this align thingy should not be needed if mozilla would
                     # consider the alignment as specified in the <col />
+                row_data.extend(d)
                 col += 1
         css_class = row % 2 and "odd" or "even"
         row += 1

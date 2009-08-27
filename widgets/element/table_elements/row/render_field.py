@@ -10,48 +10,40 @@
 request = context.REQUEST
 model = request.model
 
+fieldType = node.getAttribute('fieldtype') or 'td'
+colspan = node.getAttribute('colspan') or '1'
+if colspan == '1':
+    width = info.get('html_width') and ' width="%s"'%info.get('html_width') or ''
+    colspan = ''
+else:
+    width = ''
+    colspan = ' colspan="%s"'%colspan
+middle = width+colspan
+align = info['align']
+
+
 if context.is_field_simple(node):
     # find p first (FIXME: inefficient)
     for child in node.childNodes:
         if child.nodeType == node.ELEMENT_NODE:
             break
     node = child
-    if len(node.childNodes) == 0:
-        width = info.get('html_width')
-        if width:
-            return '<td class="align-%s" width="%s">&nbsp;</td>' % (
-                info['align'], width)
-        return '<td class="align-%s">&nbsp;</td>' % (info['align'])
-    if (len(node.childNodes) == 1 and
+    if len(node.childNodes) == 0 or \
+       (len(node.childNodes) == 1 and
         hasattr(node.childNodes[0].aq_explicit, 'data') and 
         len(node.childNodes[0].data.strip()) == 0):
-        width = info.get('html_width')
-        if width:
-            return '<td class="align-%s" width="%s">&nbsp;</td>' % (
-                info['align'], width)
-        return '<td class="align-%s">&nbsp;</td>' % (info['align'])
+        content ='&nbsp;'
     else:
         editorsupport = model.service_editorsupport
         supp = editorsupport.getMixedContentSupport(model, node)
         view_type = (context.id == 'mode_view') and 'public' or 'edit'
-        width = info.get('html_width')
-        if width:
-            return '<td class="align-%s" width="%s">%s</td>' % (
-                info['align'], 
-                width, 
-                supp.renderHTML(view_type=view_type))
-        return '<td class="align-%s">%s</td>' % (
-            info['align'], 
-            supp.renderHTML(view_type=view_type))
+        content = supp.renderHTML(view_type=view_type)
 else:
     context.service_editor.setViewer('service_sub_viewer')
     content = context.service_editor.renderView(node)
-    width = info.get('html_width')
-    if width:
-        return '<td class="align-%s" width="%s">%s</td>' % (
-            info['align'],
-            width, 
-            content)
-    return '<td class="align-%s">%s</td>' % (
-        info['align'],
-        content)
+return '<%s class="align-%s"%s>%s</%s>' % (fieldType,
+                                                    align,
+                                                    middle,
+                                                    content,
+                                                    fieldType)
+

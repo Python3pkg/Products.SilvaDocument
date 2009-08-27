@@ -57,7 +57,7 @@ import Products.Silva.Image
 DEBUG=0
 
 TOPLEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'pre', 'table', 'img', 'ul', 'ol', 'dl', 'div']
-CONTAINERS = ['body', 'td', 'li'] # XXX should only contain li's that are descendant of nlist
+CONTAINERS = ['body', 'td', 'li', 'th'] # XXX should only contain li's that are descendant of nlist
 
 def fix_image_links(el, context):
     """finds all links and sees if they contain an image
@@ -738,7 +738,7 @@ class table(Element):
         highest = 0
         if len(rows)>0:
             for r in rows:
-                cols = len(r.find('td'))
+                cols = len(r.find(('td','th')))
                 if cols > highest:
                     highest = cols
         # create the column info
@@ -748,7 +748,7 @@ class table(Element):
         else:
             colinfo = []
             for row in rows:
-                cells = row.find('td')
+                cells = row.find(('td','th'))
                 if len(cells):
                     for cell in cells:
                         align = 'left'
@@ -780,19 +780,21 @@ class tr(Element):
     def convert(self, context, parentistable=0):
         if not parentistable:
             return Frag()
-        tableheadings = self.content.find('th')
+        #tableheadings = self.content.find('th')
         # is it non-header row? 
-        if not tableheadings:
-            cells = [e.convert(context, 1) for e in self.find('td')]
+        uc_cells = self.find(('td','th'))
+        #if there is only one cell and it is a th, assume
+        #it is a silva row_heading
+        if len(uc_cells) == 1 and uc_cells[0].__class__.__name__=='th':
+            texts = extract_texts(self, context, 1)
+            return silva.row_heading(
+                texts
+            )
+        else: #it is a normal table row
+            cells = [e.convert(context, 1) for e in self.find(('td','th'))]
             return silva.row(
                 cells
             )
-
-        texts = extract_texts(self, context, 1)
-
-        return silva.row_heading(
-            texts
-        )
 
 class td(Element):
     def convert(self, context, parentisrow=0):
@@ -800,13 +802,37 @@ class td(Element):
             return Frag()
         rest = self.find()
         fixedrest = fix_structure(rest, context)
-        return silva.field(
-            fixedrest
-        )
+        colspan = getattr(self.attr,'colspan',None)
+        if colspan:
+            return silva.field(
+                fixedrest,
+                fieldtype='td',
+                colspan=colspan
+            )
+        else:
+            return silva.field(
+                fixedrest,
+                fieldtype='td'
+            )
 
 class th(Element):
     def convert(self, context, parentisrow=0):
-        raise ValueError, "<th> elements should be extracted by the containing row"
+        if not parentisrow:
+            return Frag()
+        rest = self.find()
+        fixedrest = fix_structure(rest, context)
+        colspan = getattr(self.attr,'colspan',None)
+        if colspan:
+            return silva.field(
+                fixedrest,
+                fieldtype='th',
+                colspan=colspan
+            )
+        else:
+            return silva.field(
+                fixedrest,
+                fieldtype='th'
+            )
 
 class div(Element):
     def convert(self, context):

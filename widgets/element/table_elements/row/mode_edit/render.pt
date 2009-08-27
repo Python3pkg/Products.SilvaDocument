@@ -6,6 +6,31 @@
   <table width="100%" cellspacing="0"  border="0">
     <tr valign="top"><content tal:replace="structure here/editable_content" /></tr>
   </table>
+
 </div>
-<div metal:fill-slot="element_controls">&nbsp;</div>
+<div metal:fill-slot="element_controls">
+<table width="100%">
+ <tr class="inter-controls">
+  <td tal:repeat="field python:[child for child in node.childNodes if child.nodeType == node.ELEMENT_NODE]" class="align-right">
+   <span tal:define="num python:repeat['field'].number()">
+    <label tal:attributes="for string:rowFieldType${num}"
+           tal:content="string:field ${num} type:" />
+    <select tal:attributes="name string:rowFieldType:list;
+                            id string:rowFieldType${num};"
+           size="1">
+      <option value="td" tal:attributes="selected python:field.getAttribute('fieldtype') in ('td',None) and 'selected'">TD</option>
+      <option value="th" tal:attributes="selected python:field.getAttribute('fieldtype')=='th' and 'selected'">TH</option>
+    </select><br />
+    <label tal:attributes="for string:colspans${num}"
+           tal:content="string:field ${num} colspan:" />
+    <input type="text" size="2"
+      tal:attributes="name string:colspans:list;
+                      id string:colspans${num};
+                      value python:field.getAttribute('colspan') or '1'" />    
+   </span>
+  </td>
+ </tr>
+</table>
+
+</div>
 </div>

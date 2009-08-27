@@ -498,11 +498,16 @@ class row_heading(SilvaElement):
 
 class field(SilvaElement):
     def convert(self, context):
-        return html.td(
-            self.content.convert(context),
-            align=self.attr.align,
-            class_='align-%s' % self.attr.align,
-            width=self.attr.width
+        ft = getattr(self.attr,'fieldtype','td')
+        c = ft=='td' and html.td or html.th
+        kw = {'align':self.attr.align,
+              'class_':'align-%s' % self.attr.align,
+              'width':self.attr.width}
+        colspan = getattr(self.attr,'colspan',None)
+        if colspan:
+            kw['colspan'] = colspan
+        return c(
+            self.content.convert(context), **kw
         )
 
 class toc(SilvaElement):

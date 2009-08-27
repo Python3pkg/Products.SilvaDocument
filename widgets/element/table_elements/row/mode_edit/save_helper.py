@@ -1,3 +1,4 @@
+
 ## Script (Python) "save_helper"
 ##bind container=container
 ##bind context=context
@@ -14,13 +15,25 @@ row = request.node
 editorsupport = context.service_editorsupport
 node = row.firstChild
 
+fieldTypes = request.get('rowFieldType',[])
+colspans = request.get('colspans',[])
+
 model = node.get_content()
 
+fieldNum = -1
 while node is not None:
     field = node
     node = node.nextSibling
     if field.nodeName != 'field':
         continue
+    fieldNum += 1
+    if fieldNum + 1 <= len(fieldTypes):
+        field.setAttribute('fieldtype',fieldTypes[fieldNum]=='th' and 'th' or 'td')
+        try:
+            cs = int(colspans[fieldNum])
+        except:
+            cs = 1
+        field.setAttribute('colspan',str(cs))
     if not context.is_field_simple(field):
         continue
     p_node = field.firstChild
@@ -32,3 +45,4 @@ while node is not None:
     data = request[p_node.getNodePath('widget')]
     supp = editorsupport.getMixedContentSupport(model, p_node)
     supp.parse(data)
+
