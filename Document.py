@@ -379,6 +379,7 @@ class Document(CatalogedVersionedContent):
         content = REQUEST['BODYFILE'].read()
         content_type = self._get_content_type_from_request(REQUEST, content)
         self.transform_and_store(content_type, content)
+        self.sec_update_last_author_info()
 
     def _get_content_type_from_request(self, request, content):
         """tries to figure out the content type of a PUT body from a request
