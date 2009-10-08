@@ -8,10 +8,10 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from AccessControl import ClassSecurityInfo
 
 # Silva
-from Products.Silva.BaseService import SilvaService
 from Products.Silva.helpers import add_and_edit
 from Products.SilvaDocument.i18n import translate as _
 
+from silva.core.services.base import SilvaService
 from silva.core import conf as silvaconf
 
 manage_permission = 'Manage CodeSource Charset Services'

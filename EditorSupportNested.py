@@ -12,7 +12,7 @@ from zope import interface
 
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva.BaseService import SilvaService
+from silva.core.services.base import SilvaService
 from silva.core.interfaces import IInvisibleService
 
 # SilvaDocument
