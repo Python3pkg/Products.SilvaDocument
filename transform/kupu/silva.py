@@ -564,35 +564,31 @@ class source(SilvaElement):
             divcontent = []
             for child in self.find():
                 if child.name() == 'parameter':
-                    vtype = child.getattr('type', 'string')
+                    vtype = child.getattr('type', 'string').convert(context).extract_text()
                     value = child.content.convert(context).asBytes('utf-8')
                     key = child.attr.key.convert(context).extract_text()
-                    attrkey = key 
+                    attrkey = '%s__type__%s' % (key,vtype)
                     if vtype == 'list':
-                        attrkey = '%s__type__list' % key
                         value = [unicode(x, 'utf-8') for x in eval(value)]
                     else:
                         value = unicode(value, 'utf-8')
-                    params[attrkey] = value
+                    params[key] = (value,attrkey)
             object = getSourceForId(context.model, str(id))
             divpar = []
             for key in params:
-                if '__type__' in key:
-                    key_id = key.split('__type__')[0]
-                else:
-                    key_id = key
-                display_key = object.form().get_field(key_id).title()
+                value,attrkey = params[key]
+                display_key = object.form().get_field(key).title()
                 divpar.append(
                     html.strong("%s: " % display_key))
-                if '__type__list' in key:
-                    for value in params[key]:
+                if '__type__list' in attrkey:
+                    for v in value:
                         divpar.append(html.span(
-                            Text(xml_unescape(value)), {'key': key}))
+                            Text(xml_unescape(v)), {'key': attrkey}))
                         divpar.append(Text(', '))
                     divpar.pop()
                 else:
                     divpar.append(html.span(
-                        Text(xml_unescape(params[key])), {'key': key}))
+                        Text(xml_unescape(value)), {'key': attrkey}))
                 divpar.append(html.br());
             par = html.div(Frag(divpar), {'class': 'parameters'})
             divcontent.append(par)
