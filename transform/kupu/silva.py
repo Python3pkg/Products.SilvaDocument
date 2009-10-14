@@ -562,6 +562,18 @@ class source(SilvaElement):
             params = {}
             attrparams = {}
             divcontent = []
+            object = getSourceForId(context.model, str(id))
+            if object is not None:
+                meta_type = object.meta_type
+                source_title = object.get_title() or id
+                header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
+                                 title=u'source id: %s'%id)
+                desc = object.description()
+                if desc:
+                    divcontent.append(html.p(desc,class_="externalsource-description"))
+            else:
+                source_title = ''
+                header = html.h4(Text('[%s]' % _('external source element is broken')))
             for child in self.find():
                 if child.name() == 'parameter':
                     vtype = child.getattr('type', 'string').convert(context).extract_text()
@@ -573,7 +585,6 @@ class source(SilvaElement):
                     else:
                         value = unicode(value, 'utf-8')
                     params[key] = (value,attrkey)
-            object = getSourceForId(context.model, str(id))
             divpar = []
             for key in params:
                 value,attrkey = params[key]
@@ -592,17 +603,6 @@ class source(SilvaElement):
                 divpar.append(html.br());
             par = html.div(Frag(divpar), {'class': 'parameters'})
             divcontent.append(par)
-            if object is not None:
-                meta_type = object.meta_type
-                source_title = object.get_title() or id
-                header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
-                                 title=u'source id: %s'%id)
-                desc = object.description()
-                if desc:
-                    divcontent.append(html.p(desc,class_="externalsource-description"))
-            else:
-                source_title = ''
-                header = html.h4(Text('[%s]' % _('external source element is broken')))
 
             content = Frag(header, divcontent);
             return html.div(content,
