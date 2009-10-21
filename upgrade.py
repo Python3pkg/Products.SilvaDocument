@@ -7,7 +7,7 @@ from zope.interface import implements
 
 # Silva
 from Products.Silva.helpers import SwitchClass
-from Products.Silva.upgrade import BaseUpgrader
+from silva.core.upgrade.upgrade import BaseUpgrader
 from Products.SilvaDocument.Document import Document, DocumentVersion
 
 class UpgradeDocumentXML(BaseUpgrader):
