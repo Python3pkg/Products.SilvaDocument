@@ -8,6 +8,7 @@ from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.Silva.adapters.indexable import IndexableAdapter
 from silva.core.interfaces.adapters import IIndexable
 
+
 class DocumentIndexableAdapter(IndexableAdapter):
 
     component.context(IDocument)
@@ -18,16 +19,14 @@ class DocumentIndexableAdapter(IndexableAdapter):
             return IIndexable(version).getIndexes()
         return []
 
+
 class DocumentVersionIndexableAdapter(IndexableAdapter):
 
     component.context(IDocumentVersion)
 
     def getIndexes(self):
-        version = self.context
-        if version is None:
-            return []
         indexes = []
-        docElement = version.content.firstChild
+        docElement = self.context.content.firstChild
         nodes = docElement.getElementsByTagName('index')
         for node in nodes:
             indexTitle = node.getAttribute('title')

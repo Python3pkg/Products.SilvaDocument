@@ -8,7 +8,9 @@ from StringIO import StringIO
 from Products.SilvaDocument.transform.Transformer import EditorTransformer
 from Products.SilvaDocument.transform.base import Context
 
+
 class TransformTestCase(unittest.TestCase):
+
     def test_nested_list_round_trip(self):
         # expected behaviour is that nested lists are always a child of a p
         # in silva, but are displayed as direct children in html because
@@ -23,11 +25,16 @@ class TransformTestCase(unittest.TestCase):
                       model=None)
         node = t.to_source(targetobj=html, context=ctx)
         ret = node.asBytes('utf-8')
-        assert ret == ('<nlist type="disc"><li><p type="normal">foo</p>'
-                       '<list type="disc"><li>bar</li></list></li></nlist>')
+        self.assertEqual(
+            ret,
+            '<nlist type="disc"><li><p type="normal">foo</p>'
+            '<list type="disc"><li>bar</li></list></li></nlist>')
+
         node = t.to_target(sourceobj=ret, context=ctx)
         roundtrip = node.asBytes('utf-8')
-        assert roundtrip == html
+
+        self.assertEqual(roundtrip, html)
+
 
 def test_suite():
     suite = unittest.TestSuite()

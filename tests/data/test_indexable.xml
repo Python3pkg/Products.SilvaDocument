@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:doc="http://infrae.com/namespace/silva-document" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" xmlns:silvanews="http://infrae.com/namespace/silva-news-network" datetime="2009-10-22T13:39:26Z" path="/crash4/silva_docs_trunk/author_basic/content_types" silva_version="Silva 2.2b1dev" url="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/content_types">
+    <document id="content_types">
+        <workflow>
+            <version id="3">
+                <status>unapproved</status><publication_datetime/>
+                <expiration_datetime/>
+            </version>
+            <version id="2">
+                <status>closed</status><publication_datetime>2008-11-18T07:20:13Z</publication_datetime><expiration_datetime/>
+            </version>
+        </workflow>
+        <content version_id="3">
+            <metadata>
+                <set id="silva-content">
+                    <silva-content:maintitle>Content Types</silva-content:maintitle><silva-content:shorttitle/>
+                </set>
+                <set id="silva-extra">
+                    <silva-extra:comment/><silva-extra:contactemail>docs@example.com</silva-extra:contactemail><silva-extra:contactname>Jan Smith</silva-extra:contactname><silva-extra:content_description>Documentation of the Silva CMS for Authors, Editors, Chief Editors, and Managers. Includes QuickStart guides to get up and running quickly, with references to extensive explanations of concepts and workings.</silva-extra:content_description><silva-extra:creationtime>2008-10-31T09:37:18Z</silva-extra:creationtime><silva-extra:creator>wim</silva-extra:creator><silva-extra:expirationtime/>
+                    <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs><silva-extra:keywords>Silva, documentation, docs, Infrae, Content Management System, CMS, QuickStart, authors, editors</silva-extra:keywords><silva-extra:language>en</silva-extra:language><silva-extra:lastauthor>kitblake</silva-extra:lastauthor><silva-extra:location>http://infrae.com/st/silva_docs_trunk/author_basic/content_types</silva-extra:location><silva-extra:modificationtime>2008-11-18T06:48:14Z</silva-extra:modificationtime><silva-extra:publicationtime/>
+                    <silva-extra:subject>User documentation for the Silva content management system</silva-extra:subject>
+                </set>
+            </metadata>
+            <doc:doc>
+                <doc:p type="normal">
+                     Following are explanations of Silva’s default (out of the box) content types. Other content types might be available, depending on what extensions are installed and activated. <doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Silva Document <doc:index name="Document" title="Document"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvadoc.gif" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvadoc.gif" target="_self" title="Silva Document icon" width="16"/>
+                <doc:p type="normal">
+                     A Document is the basic unit of information in Silva. A document can – much like word processor documents – contain text, lists, tables, headers, subheads, images, etc. Documents can have two versions, one online for the public, another in process (editable or approved/published). Older versions can be rolled forward and made editable.<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Silva Folder <doc:index name="Folder" title="Folder"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvafolder.gif" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvafolder.gif" target="_self" title="icon" width="16"/>
+                <doc:p type="normal">
+                     The presentation of the information within a publication is structured with folders. They determine the visual hierarchy that a Visitor sees. Folders on the top level define sections of a publication, subfolders define chapters, etc. Note that unlike publications, folders are transparent, meaning you can see through them in the sidebar tree navigation and the Publish screen.<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Publication <doc:index name="Publication" title="Publication"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvapublication.gif" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvapublication.gif" target="_self" title="icon" width="16"/>
+                <doc:p type="normal">
+                     Publications are special folders. They function as the major organizing blocks of a Silva site. They are comparable to binders, and can contain folders, documents, and assets. Publications are opaque. They instill a threshold of view, showing only the contents of the current publication. This keeps the overview screens manageable. Publications have configuration settings that determine which core and pluggable objects are available. For complex sites, sub-publications can be nested.<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Image <doc:index name="Image" title="Image"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvaimage.gif" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvaimage.gif" target="_self" title="icon" width="16"/>
+                <doc:p type="normal"> Web graphics (gif, jpg, png) can be uploaded and inserted in documents, or used as viewable assets.</doc:p>
+                <doc:heading type="sub">
+                    File <doc:index name="File" title="File"/>
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvafile.png" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvafile.png" target="_self" title="icon" width="16"/>
+                <doc:p type="normal">
+                     Any digital file can be uploaded as Silva content. For instance large files such as pdf docs or mpegs can be placed in a site. File objects have metadata as well.<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Find <doc:index name="Find" title="Find"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="find.png" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/find.png" target="_self" title="Silva Find icon" width="16"/>
+                <doc:p type="normal">
+                     Silva Find is a powerful search feature that allows easy creation of search forms and result pages. Users can add a Find anywhere and define which fields to make searchable by site visitors and/or which fields to limit to a preset value. Users also can determine which fields should be displayed in the search results. All metadata sets/fields are supported.<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Ghost <doc:index name="Ghost" title="Ghost"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvaghost.gif" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvaghost.gif" target="_self" title="icon" width="16"/>
+                <doc:p type="normal">
+                     Ghosts are special documents that function as a placeholder for an item in another location (like an alias, symbolic link, shortcut). Unlike a hyperlink, which takes the Visitor to another location, a ghost object keeps the Visitor in the current publication, and presents the content of the ghosted item. The ghost inherits properties from its location (e.g. layout and stylesheets).<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Ghost Folder or Ghost Publication <doc:index name="Ghost_Folder" title="Ghost Folder"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvaghostfolder.gif" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvaghostfolder.gif" target="_self" title="icon" width="16"/>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvaghostpublication.gif" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvaghostpublication.gif" target="_self" title="icon" width="16"/>
+                <doc:p type="normal">
+                      Ghost Folders are similar to Ghosts, but instead of being a placeholder for a document, they create placeholders and/or copies of all the contents of the ‘original’ folder. The advantage of Ghost Folders is the contents stay in sync with the original, by manual or automatic resyncing. Note that when a folder is ghosted, assets – such as Images and Files – are copied (physically duplicated) while documents are ghosted.<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Indexer <doc:index name="Indexer" title="Indexer"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="silvaindexer.png" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/silvaindexer.png" target="_self" title="icon" width="16"/>
+                <doc:p type="normal">
+                     Indexes can be created that function like an index in the back of a book. References must first be marked by placing index codes in text (these codes will also export to print formats). Indexers cascade downwards, indexing all index items in the current and underlying folders and publications (note that it only indexes documents that are published).<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Link <doc:index name="Link" title="Link"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="link.png" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/link.png" target="_self" title="icon" width="16"/>
+                <doc:p type="normal">
+                     A Silva Link makes it possible to include links to external sites – outside of Silva – in a Table of Contents. The content of a Link is simply a hyperlink, beginning with “http://....”, or https, ftp, news, and mailto.<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    Automatic Table of Contents <doc:index name="Automatic_Table_of_Contents" title="Automatic Table of Contents"/> <doc:index name="AutoTOC" title="AutoTOC"/>
+                     
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="autotoc.png" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/autotoc.png" target="_self" title="Automatic Table of Contents icon" width="16"/>
+                <doc:p type="normal">
+                     This is a special document type that automatically generates a Table of Contents. Usually it’s used as the ‘index’ document of a folder. Then the parent folder displays a TOC when accessed (e.g. http://www.x.yz/silva/myFolder/). The AutoTOC can display any selection of Silva content types including assets.<doc:br/>
+                </doc:p>
+                <doc:heading type="sub">
+                    CSV Source <doc:index name="CSV_Source" title="CSV Source"/> 
+                </doc:heading>
+                <doc:image alignment="float-left" height="16" image_title="" link="" link_to_hires="0" path="csvsource.png" rewritten_path="http://localhost:8080/crash4/++preview++/silva_docs_trunk/author_basic/csvsource.png" target="_self" title="CSV Source icon" width="16"/>
+                <doc:p type="normal">
+                     CSV Source is an asset that displays tabular data from a spreadsheet or database. The format of the uploaded text file should be ‘comma separated values’. The asset can be linked directly, or inserted in a document with the External Source element. If necessary, all aspects of the display can be customized in the rendering templates of the CSV Source.<doc:br/>
+                </doc:p>
+            </doc:doc>
+        </content>
+    </document>
+</silva>
