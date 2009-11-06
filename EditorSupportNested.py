@@ -7,7 +7,11 @@ from __future__ import nested_scopes
 
 # Zope
 from AccessControl import ClassSecurityInfo
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from zope import interface
 
 # Silva

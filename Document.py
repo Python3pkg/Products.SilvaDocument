@@ -12,7 +12,11 @@ import traceback
 from zope.interface import implements
 from AccessControl import ClassSecurityInfo
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-from Globals import InitializeClass
+try:
+    from App.class_init import InitializeClass # Zope 2.12
+except ImportError:
+    from Globals import InitializeClass # Zope < 2.12
+
 from Persistence import Persistent
 from zExceptions import InternalError
 import OFS.interfaces
