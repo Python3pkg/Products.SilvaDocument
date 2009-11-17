@@ -10,12 +10,18 @@
 node = context.REQUEST.node
 render_field = context.render_editable_field
 
-child_nodes = [child for child in node.childNodes 
-               if child.nodeType == node.ELEMENT_NODE]
+childnodes = [child for child in node.childNodes
+              if child.nodeType == node.ELEMENT_NODE]
 
-if not child_nodes:
+if not childnodes:
     return ''
 
-cellwidth = '%s%%' % int(1.0/len(child_nodes) * 100)
-texts = [render_field(node=child, cellwidth=cellwidth) for child in child_nodes]
+countnodes = sum(
+    [int(child.getAttribute('colspan') or 1) for child in childnodes])
+
+texts = []
+for child in childnodes:
+    cellwidthperc = (
+        int(child.getAttribute('colspan') or 1) * 1.0 / countnodes * 100)
+    texts.append(render_field(node=child, cellwidth='%d%%' % (cellwidthperc,)))
 return ''.join(texts)
