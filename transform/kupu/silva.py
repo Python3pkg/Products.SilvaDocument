@@ -447,7 +447,7 @@ class table(SilvaElement):
         infos = str(self.attr.column_info).split(' ')
         aligns = [(self.alignmapping.has_key(i[0]) and
                         self.alignmapping[i[0]] or 'left')
-                    for i in infos]
+                    for i in infos if i]
         try:
             relwidths = [int(i[2:]) for i in infos]
         except ValueError:
