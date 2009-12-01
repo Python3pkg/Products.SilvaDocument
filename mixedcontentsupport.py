@@ -20,7 +20,12 @@ from Products.Silva import mangle
 from Products.SilvaDocument import interfaces
 from Products.Silva.adapters.path import getPathAdapter
 
-URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9_\-\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)|(http|https|ftp|news)://localhost(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?))'
+#for the mailto: pattern see the description of the email addressing
+#format in the RFC 2822: http://tools.ietf.org/html/rfc2822#section-3.4.1
+# so much more is allowed everywhere in the email address.  The RE currently
+# only searches the full list of chars for the LHS of the address.  It does
+# not support "quoted strings".
+URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9!#\$%\&\'\*\+\-\/=\?\^_`\{\}\|~\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)|(http|https|ftp|news)://localhost(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?))'
 
 _url_match = re.compile(URL_PATTERN)
 
