@@ -25,7 +25,7 @@ from Products.Silva.adapters.path import getPathAdapter
 # so much more is allowed everywhere in the email address.  The RE currently
 # only searches the full list of chars for the LHS of the address.  It does
 # not support "quoted strings".
-URL_PATTERN = r'(((http|https|ftp|news)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9!#\$%\&\'\*\+\-\/=\?\^_`\{\}\|~\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)|(http|https|ftp|news)://localhost(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?))'
+URL_PATTERN = r'(((http|https|ftp|news|itms|webcal)://([A-Za-z0-9%\-_]+(:[A-Za-z0-9%\-_]+)?@)?([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?)?|(mailto:[A-Za-z0-9!#\$%\&\'\*\+\-\/=\?\^_`\{\}\|~\.]+@([A-Za-z0-9\-]+\.)+[A-Za-z0-9]+)|(http|https|ftp|news)://localhost(:[0-9]+)?(/([A-Za-z0-9\-_\?!@#$%^&*/=\.]+[^\.\),;\|])?))'
 
 _url_match = re.compile(URL_PATTERN)
 
@@ -309,8 +309,10 @@ class ParagraphSupport(MixedContentSupport):
         # If path is empty (can it be?), just return it
         if path == '':
             return path
+        
+        scheme, netloc, upath, parameters, query, fragment = urlparse(path)
         # If it is a url already, return it:
-        if _url_match.match(path):
+        if scheme and netloc:
             return path
         # Is it simply a query or anchor fragment? If so, return it
         if path[0] in ['?', '#']:
