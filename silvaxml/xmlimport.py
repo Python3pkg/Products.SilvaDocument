@@ -7,6 +7,7 @@ from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.Silva import mangle
 
 from silva.core import conf as silvaconf
+from silva.core.services.interfaces import ICataloging
 
 DOC_NS_URI = 'http://infrae.com/namespace/silva-document'
 silvaconf.namespace(NS_URI)
@@ -30,8 +31,9 @@ class DocumentHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'document'):
-            self.result().indexVersions()
-        
+            ICataloging(self.result()).reindex()
+
+
 class DocumentContentHandler(SilvaBaseHandler):
     def getOverrides(self):
         return{
@@ -47,13 +49,13 @@ class DocumentContentHandler(SilvaBaseHandler):
             self.parent()._setObject(id, version)
             self.setResult(getattr(self._parent, id))
             updateVersionCount(self)
-            
+
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
             self.setMaintitle()
             self.storeMetadata()
             self.storeWorkflow()
-        
+
 class DocElementHandler(SilvaBaseHandler):
     def startElementNS(self, name, qname, attrs):
         if name == (DOC_NS_URI, 'doc'):
@@ -65,7 +67,7 @@ class DocElementHandler(SilvaBaseHandler):
             self._node = child
         for ns, attr in attrs.keys():
             self._node.setAttribute(attr, attrs[(ns, attr)])
-            
+
     def characters(self, chrs):
         textNode = self._tree.createTextNode(chrs)
         self._node.appendChild(textNode)
@@ -86,4 +88,4 @@ def generateUniqueId(org_id, context):
             if i > 1:
                 add = str(i)
             id = 'import%s_of_%s' % (add, org_id)
-        return id            
+        return id

@@ -442,10 +442,16 @@ class DocumentView(silvaviews.View):
 @silvaconf.subscribe(IDocument, OFS.interfaces.IObjectWillBeRemovedEvent)
 def document_will_be_removed(document, event):
     # Does the widget cache needs be cleared for all versions - I think so...
-    for version in document._get_indexable_versions():
-        version_object = getattr(document, str(version), None)
-        if version_object:
-            document.service_editor.clearCache(version_object.content)
+    # XXX reply to comment: that's not all the version you used (me neither)!
+    version_ids = [
+        document.get_next_version(),
+        document.get_public_version(),]
+    for version_id in version_ids:
+        if version_id is None:
+            continue
+        if hasattr(document.aq_base, version_id):
+            version = getattr(document, version_id)
+            document.service_editor.clearCache(version.content)
 
 
 @silvaconf.subscribe(IDocumentVersion, OFS.interfaces.IObjectClonedEvent)
