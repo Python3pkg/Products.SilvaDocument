@@ -9,8 +9,6 @@ from Products.Silva.interfaces import IImage
 from Products.SilvaDocument.i18n import translate as _
 
 SilvaDocumentNS = 'http://infrae.com/ns/silva_document'
-URL_PATTERN = r'(http://|https://|ftp://|news://|mailto:)+'
-_url_match = re.compile(URL_PATTERN)
 
 def initializeXMLExportRegistry():
     """Here the actual content types are registered. Non-Silva-Core content
@@ -336,8 +334,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
         # If path is empty (can it be?), just return it
         if path == '':
             return path
+        scheme, netloc, upath, parameters, query, fragment = urlparse(path)
         # If it is a url already, return it:
-        if _url_match.match(path):
+        if scheme:
             return path
         # Is it a query of anchor fragment? If so, return it
         if path[0] in ['?', '#']:
