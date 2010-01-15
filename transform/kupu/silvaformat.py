@@ -13,29 +13,23 @@ doesn't allow python2.2.1
 __author__='holger krekel <hpk@trillke.net>'
 __version__='$Revision: 1.26 $'
 
-try:
-    from transform.base import Element, Frag, Text, CharacterData
-except ImportError:
-    from Products.SilvaDocument.transform.base import Element, Frag, Text, CharacterData
-    from Products.SilvaDocument.externalsource import getSourceForId
-    from Products.Silva.adapters import path as pathadapter
-else:
-    def getSourceForId(context, id):
-        class FakeObj:
-            def __init__(self, id):
-                self.title = id
-                self.meta_type = 'Silva Code Source'
-            def get_title(self):
-                return self.id
-        return FakeObj(id)
+from Products.SilvaDocument.transform.base import Element, Frag, Text, \
+    CharacterData
 
-import html
+from Products.SilvaDocument.externalsource import getSourceForId
+from Products.Silva.adapters import path as pathadapter
+from Products.Silva.Image import Image
+
 import operator
 import types
 from urlparse import urlparse
 
-from Products.Silva.i18n import translate as _
-from Products.Silva.Image import Image
+import htmlformat
+html = htmlformat
+
+from silva.translations import translate as _
+
+
 _attr_origin=u'silva_origin'
 _attr_prefix=u'silva_'
 

@@ -1,16 +1,16 @@
 """
-module for conversion from current 
+module for conversion from current
 
    kupu - (cvs version)
-   
+
        to
 
-   silva (1.2) 
+   silva (1.2)
 
 This transformation tries to stay close to
-how silva maps its xml to html. 
+how silva maps its xml to html.
 
-There are tests for this transformation in 
+There are tests for this transformation in
 
     Silva/tests/test_kuputransformation.py
 
@@ -18,8 +18,8 @@ please make sure to run them if you change anything here.
 
 the notation used for the transformation roughly
 follows the ideas used with XIST (but has a simpler implementation).
-Note that we can't use XIST itself as long as 
-silva is running on a Zope version that 
+Note that we can't use XIST itself as long as
+silva is running on a Zope version that
 doesn't allow python2.2
 
 """
@@ -29,30 +29,15 @@ __version__='$Revision: 1.39 $'
 
 from zExceptions import NotFound
 
-try:
-    from transform.base import Element, Text, Frag
-except ImportError:
-    from Products.SilvaDocument.transform.base import Element, Text, Frag
-    # XXX no dummy replacement for this, so it won't work in test situations
-    from Products.Silva.adapters import path as pathadapter
-
-try:
-    import silva
-except ImportError:
-    from transform.kupu import silva
-
-try:
-    from Products.Silva.mangle import Path
-except:
-    class Path:
-        def __call__(self, path1, path2):
-            return path2
-
-    Path = Path()
+from Products.SilvaDocument.transform.base import Element, Text, Frag
+from Products.Silva.adapters import path as pathadapter
+from Products.Silva.mangle import Path
+import Products.Silva.Image
 
 import re
-# don't do 'from' import, to prevent namespace pollution..
-import Products.Silva.Image
+
+import silvaformat
+silva = silvaformat
 
 DEBUG=0
 
@@ -61,8 +46,8 @@ CONTAINERS = ['body', 'td', 'li', 'th'] # XXX should only contain li's that are 
 
 def fix_image_links(el, context):
     """finds all links and sees if they contain an image
-    
-        if an image inside a link is found the link attr of the image will be 
+
+        if an image inside a link is found the link attr of the image will be
         set to the href of the link
     """
     if not hasattr(context, 'href'):
@@ -99,10 +84,10 @@ def fix_tables_and_divs(el, context, tables=None):
     else:
         foundtables = tables
     for child in el.find():
-        if (child.name() == 'table' or 
-                (child.name() == 'div' and 
-                    (child.getattr('is_citation', None) or 
-                        child.getattr('toc_depth', None) or 
+        if (child.name() == 'table' or
+                (child.name() == 'div' and
+                    (child.getattr('is_citation', None) or
+                        child.getattr('toc_depth', None) or
                         child.getattr('source_id', None) or
                         child.getattr('source_title', None)
                     )
@@ -118,7 +103,7 @@ def fix_toplevel(el, context):
     if el.name() == 'Text':
         return silva.p(el.convert(context))
     elif el.name() in CONTAINERS:
-        # actually this shouldn't happen, so perhaps we should return 
+        # actually this shouldn't happen, so perhaps we should return
         # an empty list here...
         return el.convert(context)
     elif el.name() in TOPLEVEL:
@@ -127,7 +112,7 @@ def fix_toplevel(el, context):
         return silva.p(el.convert(context))
 
 def find_and_convert_toplevel(el, context, els=None):
-    if (el.name() == 'Text' or el.name() in CONTAINERS or 
+    if (el.name() == 'Text' or el.name() in CONTAINERS or
             (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content()) or
             hasattr(el, 'should_be_removed')):
         return []
@@ -171,7 +156,7 @@ def fix_structure(inputels, context, allowtables=0):
     textbuf = []
     ptype = 'normal'
     for el in inputels:
-        # flatten p's by ignoring the element itself and walking through it as 
+        # flatten p's by ignoring the element itself and walking through it as
         # if it's contents are part of the current element's contents
         if el.name() == 'p' and allowtables:
             ptype = str(el.getattr('class', 'normal'))
@@ -180,7 +165,7 @@ def fix_structure(inputels, context, allowtables=0):
             for child in el.find():
                 foundtables = fix_tables_and_divs(child, context)
                 foundtoplevel = find_and_convert_toplevel(el, context)
-                if (child.name() not in CONTAINERS and 
+                if (child.name() not in CONTAINERS and
                         child.name() not in TOPLEVEL):
                     textbuf.append(child.convert(context))
                 else:
@@ -261,7 +246,7 @@ class body(Element):
     """html-body element"""
     def convert(self, context):
         """ contruct a silva_document with id and title
-            either from information found in the html-nodes 
+            either from information found in the html-nodes
             or from the context (where silva should have
             filled in title and id as key/value pairs)
         """
@@ -272,8 +257,8 @@ class body(Element):
         else:
             h2_tag=h2_tag[0]
             title = h2_tag.extract_text()
-            rest = self.find(ignore=h2_tag.__eq__) 
-        
+            rest = self.find(ignore=h2_tag.__eq__)
+
         # fix images contained in links: the fix_structure call
         # may shuffle them well and place them outside of links, losing
         # the href
@@ -281,7 +266,7 @@ class body(Element):
 
         # add <p> nodes around elements that aren't allowed top-level
         fixedrest = fix_structure(rest, context, 1)
-        
+
         return silva.silva_document(
                 silva.title(title),
                 silva.doc(
@@ -339,7 +324,7 @@ class h5(h3):
     """ List heading """
     def convert(self, context):
         """ return a normal heading. note that the h5-to-title
-            conversion is done by the html list-tags themselves. 
+            conversion is done by the html list-tags themselves.
             Thus h5.convert is only called if there is no
             list context and therefore converted to a subheading.
         """
@@ -355,13 +340,13 @@ class h5(h3):
 class h6(h3):
     def convert(self, context):
         """ this only gets called if the user erroronaously
-            used h6 somewhere 
+            used h6 somewhere
         """
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         fixedcontent = fix_allowed_items_in_heading(self.find(), context)
         eltype = 'paragraph'
-        if (hasattr(self, 'attr') and hasattr(self.attr, 'silva_type') 
+        if (hasattr(self, 'attr') and hasattr(self.attr, 'silva_type')
                     and self.attr.silva_type == 'sub'):
             eltype = 'subparagraph'
         result = silva.heading(
@@ -369,11 +354,11 @@ class h6(h3):
             type=eltype,
             )
         return result
-    
+
 class h7(h3):
     def convert(self, context):
         """ this only gets called if the user erroronaously
-            used h6 somewhere 
+            used h6 somewhere
         """
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
@@ -386,12 +371,12 @@ class h7(h3):
 
 class p(Element):
     """ the html p element can contain nodes which are "standalone"
-        in silva-xml. 
+        in silva-xml.
     """
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
-        # return a p, but only if there's any content besides whitespace 
+        # return a p, but only if there's any content besides whitespace
         # and <br>s
         for child in self.find():
             if child.name() != 'br':
@@ -408,9 +393,9 @@ class ul(Element):
 
         note that the html list constructs are heavily
         overloaded with respect to their silva source nodes.
-        they may come from nlist,list, their title 
+        they may come from nlist,list, their title
         may be outside the ul/ol tag, there are lots of different
-        types and the silva and html type names are different. 
+        types and the silva and html type names are different.
 
         this implementation currently is a bit hackish.
     """
@@ -445,7 +430,7 @@ class ul(Element):
                 # this should get appended to the previous list element content
                 # to get a similar result
                 return 1
-        if (self.query('**/img') or self.query('**/p') or 
+        if (self.query('**/img') or self.query('**/p') or
             self.query('**/table') or self.query('**/ul') or
             self.query('**/h3') or self.query('**/h4') or
             self.query('**/h5') or self.query('**/h6') or
@@ -471,7 +456,7 @@ class ul(Element):
     def convert_nlist(self, context):
 
         type = self.get_type()
-        
+
         # only allow list items in here
         lis = []
         for el in self.find():
@@ -503,7 +488,7 @@ class ul(Element):
         else:
             curtype = self.default_types.get(curtype, self.default_type)
         return curtype
-        
+
 class ol(ul):
     default_types = ('1', 'a', 'A', 'i', 'I')
     default_type = '1'
@@ -522,7 +507,7 @@ class li(Element):
                     children.append(cchild)
             else:
                 children.append(child)
-            
+
         if context.listtype == 'nlist':
             content = fix_structure(self.find(), context)
             return silva.li(
@@ -571,7 +556,7 @@ class sub(Element):
         return silva.sub(
             self.content.convert(context),
             )
-            
+
 class a(Element):
     def convert(self, context):
         # XXX needs to become empty, but there's a bug in the attr code
@@ -582,7 +567,7 @@ class a(Element):
                 self.attr.href == '#' or self.attr.href is None)):
             if self.getattr('class', None) == 'index':
                 # index item
-                text = ''.join([t.convert(context).asBytes('UTF-8') for 
+                text = ''.join([t.convert(context).asBytes('UTF-8') for
                                     t in extract_texts(self, context)])
                 textnode = Frag()
                 if text and (text[0] != '[' or text[-1] != ']'):
@@ -626,7 +611,7 @@ class a(Element):
                 if alignment == 'default' or alignment is None:
                     alignment = ''
                 image.attr.alignment = alignment
-                # XXX this is nonsense, the image *has* an attr attribute, 
+                # XXX this is nonsense, the image *has* an attr attribute,
                 # since we just added that... Wanted to remove but don't have
                 # time to examine in detail, check later
                 if not hasattr(image, 'attr'):
@@ -772,7 +757,7 @@ class table(Element):
         return silva.table(
                 rows,
                 columns=str(highest),
-                column_info = colinfo, 
+                column_info = colinfo,
                 type = self.getattr('class', 'plain'),
             )
 
@@ -781,7 +766,7 @@ class tr(Element):
         if not parentistable:
             return Frag()
         #tableheadings = self.content.find('th')
-        # is it non-header row? 
+        # is it non-header row?
         uc_cells = self.find(('td','th'))
         #if there is only one cell and it is a th, assume
         #it is a silva row_heading
@@ -849,7 +834,7 @@ class div(Element):
         elif self.getattr('is_citation', None):
             content = fix_structure(self.content, context)
             return silva.cite(
-                [silva.author(self.attr.author), 
+                [silva.author(self.attr.author),
                 silva.source(self.attr.source),
                 Frag(content)]
             )
@@ -893,7 +878,7 @@ class div(Element):
                     key=vkey, type=vtype))
 
             return silva.source(
-                        Frag(content), 
+                        Frag(content),
                         id=self.attr.source_id,
                         class_=self.attr.class_,
                     )
@@ -908,7 +893,7 @@ class span(Element):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         return Frag(extract_texts(self.content, context))
-        
+
 class dl(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:

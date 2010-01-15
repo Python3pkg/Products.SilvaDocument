@@ -3,7 +3,7 @@ Basic API for transforming Silva-XML to other formats.
 
 currently only transformation to and from
 
-    eopro2_11 (aka RealObjects EditOnPro) 
+    eopro2_11 (aka RealObjects EditOnPro)
 
 is supported.
 
@@ -12,16 +12,16 @@ is supported.
 __author__='Holger P. Krekel <hpk@trillke.net>'
 __version__='$Revision: 1.4 $'
 
-from Products.Silva.i18n import translate as _
+from silva.translations import translate as _
 
 class Transformer:
     """ Transform xml trees using pythonic xist-like
-        specifications.  
+        specifications.
     """
     from ObjectParser import ObjectParser
 
-    def __init__(self, source='kupu.silva', target='kupu.html'):
-        """ provide a transformer from source to target 
+    def __init__(self, source='kupu.silvaformat', target='kupu.htmlformat'):
+        """ provide a transformer from source to target
             (and possibly back).
         """
         self.source = source
@@ -56,9 +56,9 @@ class Transformer:
 class EditorTransformer(Transformer):
     def __init__(self, editor='kupu'):
         if editor == 'kupu':
-            Transformer.__init__(self, 
-                                 source='kupu.silva', 
-                                 target='kupu.html')
+            Transformer.__init__(self,
+                                 source='kupu.silvaformat',
+                                 target='kupu.htmlformat')
         else:
             message = _("Unknown Editor: ${editor}",
                         mapping={'editor': editor})

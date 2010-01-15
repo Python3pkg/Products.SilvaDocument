@@ -4,10 +4,10 @@ module for providing base xml element/attribute classes.
 a namespace (silva and html currently) uses the default
 behaviour of the elements contained here.
 
-Note: 
+Note:
    There is no xml-namespace support up to now.
 
-   The actual transformations are in separate 
+   The actual transformations are in separate
    module and don't depend on Zope or Silva. They do
    depend on a DOM-parser (and thus share the
    dependcy on PyXML).
@@ -15,7 +15,7 @@ Note:
 the scheme used for the transformation roughly
 follows the ideas used with XIST.  Note that we
 can't use XIST itself (which is the upgrade idea)
-as long as silva is running on a Zope version that 
+as long as silva is running on a Zope version that
 doesn't allow python2.2 or better.
 
 """
@@ -23,12 +23,11 @@ doesn't allow python2.2 or better.
 __author__='Holger P. Krekel <hpk@trillke.net>'
 __version__='$Revision: 1.4 $'
 
-# we only have these dependencies so it runs with python-2.2
-
-import re 
+import re
 from UserList import UserList as List
 from UserDict import UserDict as Dict
-from Products.Silva.i18n import translate as _
+
+from silva.translations import translate as _
 
 class Context:
     def __init__(self, **kw):
@@ -80,10 +79,10 @@ class Node:
         return self.attr.__dict__.has_key(name)
 
     def getattr(self, name, default=_dummy):
-        """ return xml attribute value or a given default. 
+        """ return xml attribute value or a given default.
 
         if no default value is set and there is no attribute
-        raise an AttributeError. 
+        raise an AttributeError.
         """
         if default is not _dummy:
             ret = getattr(self.attr, name, default)
@@ -114,21 +113,21 @@ class Node:
             raise ValueError, message
 
     def query(self, querypath):
-        """ return a dictionary with path -> node mappings matching the querypath. 
+        """ return a dictionary with path -> node mappings matching the querypath.
 
-        querypath has the syntax 
+        querypath has the syntax
 
-            name1/name2/... 
+            name1/name2/...
 
-        and each name can be 
+        and each name can be
 
-            *   for any children tag or 
+            *   for any children tag or
             **  for any children tag in the complete subtree
 
         and it can look like "one|or|theother"  which would match
-        tags named eitehr 'one', 'or' or 'theother'. 
+        tags named eitehr 'one', 'or' or 'theother'.
 
-        The implementation uses the regular expression module. 
+        The implementation uses the regular expression module.
         """
 
         # compile regular expression match-string
@@ -151,7 +150,7 @@ class Node:
         searchstring = "/".join(l) + '$'
         rex = re.compile(searchstring)
 
-        # apply regex to all pathes 
+        # apply regex to all pathes
         dic = {}
         for path, tag in build_pathmap(self):
             line = "/".join(path)
@@ -195,7 +194,7 @@ class Frag(Node, List):
         while post:
             node = post.pop(0)
             l.append(node.convert(context))
-        return context.resultstack.pop() 
+        return context.resultstack.pop()
 
     def extract_text(self):
         l = []
@@ -276,7 +275,7 @@ class Element(Node):
         for child in content:
             try:
                 # if child is 'dictish' assume it contains attrs-bindings
-                for name, value in child.items(): 
+                for name, value in child.items():
                     setattr(self.attr, name, value)
             except AttributeError:
                 if type(child) in (type(''),type(u'')):
@@ -353,12 +352,12 @@ class Element(Node):
         attrlist = " ".join(attrlist)
 
         name = self.name().encode(encoding)
-        
+
         if attrlist:
             start = '<%(name)s %(attrlist)s' % locals()
         else:
             start = '<' + name.encode(encoding)
-        if subnodes or name not in self.singletons: 
+        if subnodes or name not in self.singletons:
                 return '%(start)s>%(subnodes)s</%(name)s>' % locals()
         else:
             return '%(start)s/>' % locals()
@@ -385,7 +384,7 @@ class _escape_chars:
             except TypeError:
                 continue
         self.charef_rex = re.compile(u"|".join(self.escape_chars.keys()))
-            
+
     def _replacer(self, match):
         return self.escape_chars[match.group(0)]
 
@@ -414,7 +413,7 @@ class CharacterData(Node):
             return s == other or s == other.asBytes('utf8')
         except AttributeError:
             pass
-    
+
     def __ne__(self, other):
         return not self==other
 
