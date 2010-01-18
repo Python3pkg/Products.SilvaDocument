@@ -557,13 +557,13 @@ class source(SilvaElement):
             params = {}
             attrparams = {}
             divcontent = []
-            object = getSourceForId(context.model, str(id))
-            if object is not None:
-                meta_type = object.meta_type
-                source_title = object.get_title() or id
+            source = getSourceForId(context.model, str(id))
+            if source is not None:
+                meta_type = source.meta_type
+                source_title = source.get_title() or id
                 header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
                                  title=u'source id: %s'%id)
-                desc = object.description()
+                desc = source.description()
                 if desc:
                     divcontent.append(html.p(desc,class_="externalsource-description"))
             else:
@@ -583,7 +583,10 @@ class source(SilvaElement):
             divpar = []
             for key in params:
                 value,attrkey = params[key]
-                display_key = object.form().get_field(key).title()
+                if source is not None:
+                    display_key = source.form().get_field(key).title()
+                else:
+                    display_key = key
                 divpar.append(
                     html.strong("%s: " % display_key))
                 if '__type__list' in attrkey:
