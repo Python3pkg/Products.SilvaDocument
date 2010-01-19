@@ -271,7 +271,7 @@ class Document(CatalogedVersionedContent):
             ctx = Context(url=self.absolute_url(),
                             browser=browser,
                             model=self,
-                            request=self.REQUEST)
+                            request=getattr(self, 'REQUEST', None))
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
             title = silvanode.find('title')[0].extract_text()
             docnode = silvanode.find('doc')[0]
