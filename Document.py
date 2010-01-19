@@ -235,7 +235,8 @@ class Document(CatalogedVersionedContent):
         # what html to produce, unfortunately Mozilla uses different tags in
         # some cases (b instead of strong, i instead of em)
         browser = 'Mozilla'
-        if self.REQUEST['HTTP_USER_AGENT'].find('MSIE') > -1:
+        if (hasattr(self, 'REQUEST') and
+            self.REQUEST['HTTP_USER_AGENT'].find('MSIE') > -1):
             browser = 'IE'
 
         if string is None:
