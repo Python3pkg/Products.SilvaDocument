@@ -127,13 +127,17 @@ class DocumentVersion(CatalogedVersion):
            have a different xml implementation
            (i.e. silvaxmlattribute)"""
         return self.content.documentElement
-           
+
     def clearEditorCache(self):
         """ Clears editor cache for this version
         """
         editor_service = self.service_editor
         document_element = self.content.documentElement
-        editor_service.clearCache(document_element)
+        try:
+            editor_service.clearCache(document_element)
+        except AttributeError:
+            # This fail when you don't have a self.REQUEST. However
+            # it's not a big deal, the entry will expire.
 
 InitializeClass(DocumentVersion)
 
@@ -144,7 +148,7 @@ class Document(CatalogedVersionedContent):
         can &#8211; much like word processor documents &#8211; contain text,
         lists, tables, headers, subheads, images, etc. Documents can have
         two accessible versions, one online for the public, another in
-        process (editable or approved/published). Older versions can be rolled 
+        process (editable or approved/published). Older versions can be rolled
         forward and made editable.
     """)
     security = ClassSecurityInfo()
@@ -281,13 +285,13 @@ class Document(CatalogedVersionedContent):
 
     def _set_metadata_from_html(self, html, version):
         """Rip the metadata out of the HTML (meta tags), set it on version"""
-        # XXX obviously it would make sense if the transformations could 
+        # XXX obviously it would make sense if the transformations could
         # tackle this instead of doing it seperately, however, they are messy
         # enough as they are now (and not capable of such a thing yet)
-        
+
         # XXX SAX took about 2 seconds (!) to get the meta values,
         # so I decided to try re instead... this made sense, parsing now takes
-        # less than one hundreth of a second (usually even less than one 
+        # less than one hundreth of a second (usually even less than one
         # thousandth!)
         metamapping = {}
         import re
@@ -307,7 +311,7 @@ class Document(CatalogedVersionedContent):
                 tag = tag.replace(match.group(0), '')
                 if match.group(1) in ['name', 'content', 'scheme']:
                     found[match.group(1)] = self._deentitize(match.group(2))
-                if (found.has_key('name') and found.has_key('content') and 
+                if (found.has_key('name') and found.has_key('content') and
                         found.has_key('scheme')):
                     if not metamapping.has_key(found['scheme']):
                         metamapping[found['scheme']] = {}
@@ -327,7 +331,7 @@ class Document(CatalogedVersionedContent):
             if ret:
                 errors.update(ret)
         return errors
-    
+
     def _deentitize(self, xml):
         return xml.replace('&lt;', '<').replace('&gt;', '>').\
                 replace('&quot;', '"').replace('&amp;', '&')
