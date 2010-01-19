@@ -138,6 +138,7 @@ class DocumentVersion(CatalogedVersion):
         except AttributeError:
             # This fail when you don't have a self.REQUEST. However
             # it's not a big deal, the entry will expire.
+            pass
 
 InitializeClass(DocumentVersion)
 
