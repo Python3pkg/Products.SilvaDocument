@@ -241,10 +241,9 @@ class Document(CatalogedVersionedContent):
 
         if string is None:
             ctx = Context(f=StringIO(),
-                            last_version=1,
-                            url=self.absolute_url(),
-                            browser=browser,
-                            model=self)
+                          last_version=1,
+                          browser=browser,
+                          model=self)
             self.to_xml(ctx)
             htmlnode = transformer.to_target(sourceobj=ctx.f.getvalue(), context=ctx)
             if encoding is not None:
@@ -269,10 +268,7 @@ class Document(CatalogedVersionedContent):
             if errors:
                 raise BindingError, errors
 
-            ctx = Context(url=self.absolute_url(),
-                            browser=browser,
-                            model=self,
-                            request=getattr(self, 'REQUEST', None))
+            ctx = Context(browser=browser, model=self)
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
             title = silvanode.find('title')[0].extract_text()
             docnode = silvanode.find('doc')[0]
