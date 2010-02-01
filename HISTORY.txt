@@ -1,6 +1,6 @@
 
-SilvaDocument changes
-=====================
+ChangeLog
+=========
 
 For the time being, see the changes in Products.Silva.
 
