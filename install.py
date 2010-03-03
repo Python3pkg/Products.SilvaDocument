@@ -2,15 +2,14 @@
 # See also LICENSE.txt
 # $Id$
 
-"""Install for Silva Document
-"""
+# Zope
 from zope import interface
 
+# Silva
 from Products.Silva.install import add_fss_directory_view
 from silva.core.interfaces import IInvisibleService
-from Products.SilvaDocument import Document
-import EditorSupportNested
 
+from Products.SilvaDocument import Document, EditorSupportNested
 from Products.SilvaDocument import externalsource
 
 _ = lambda x: x
