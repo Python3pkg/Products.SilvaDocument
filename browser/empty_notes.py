@@ -3,16 +3,14 @@
 # $Id$
 
 from silva.core.interfaces import ISilvaObject
-
-from silva.core.views import views as silvaviews
-from silva.core import conf as silvaconf
+from five import grok
 
 
-class EmptyNotes(silvaviews.View):
+class EmptyNotes(grok.View):
 
-    silvaconf.context(ISilvaObject)
-    silvaconf.name(u'markupnotes')
-    silvaconf.require('silva.ReadSilvaContent')
+    grok.context(ISilvaObject)
+    grok.name(u'markupnotes')
+    grok.require('silva.ReadSilvaContent')
 
     def render(self):
         return u''
