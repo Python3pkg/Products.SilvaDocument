@@ -31,12 +31,27 @@ from silva.translations import translate as _
 from silva.core.references.interfaces import IReferenceService
 from zope import component
 
-class Context(object):
+def determine_browser_from_request(request):
+    """Return browser name
+    """
+    if (request is not None and request['HTTP_USER_AGENT'].find('MSIE') > -1):
+        return 'IE'
+    return 'Mozilla'
 
-    def __init__(self, model, **kw):
-        self.model = model
+
+class Context(object):
+    """Transformation context.
+    """
+
+    def __init__(self, context, request, **kw):
+        """Transformation context takes a context of transformation,
+        which is a version of a versioned content, and a request.
+        """
+        self.model = context.object()
+        self.version = context
+        self.request = request
+        self.browser = determine_browser_from_request(request)
         self.references = component.getUtility(IReferenceService)
-        self.__dict__.update(kw)
         self.resultstack = []
         self.tablestack = []
 

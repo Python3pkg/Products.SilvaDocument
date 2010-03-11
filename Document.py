@@ -45,6 +45,16 @@ from silva.core.views import z3cforms as silvaz3cforms
 from z3c.form import field
 
 
+def remove_source_xml(xml):
+    """Remove code source source tag from the given XML as they may
+    contain parameters with sensitive data, like password.
+    """
+    match = re.compile(
+        r'<source id=".*?">.*?</source>', re.DOTALL|re.MULTILINE)
+    xml = match.sub('', xml)
+    return re.sub('<[^>]*>(?i)(?m)', ' ', xml)
+
+
 class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
@@ -65,48 +75,132 @@ class DocumentVersion(CatalogedVersion):
     security.declareProtected('View management screens', 'manage_main')
     manage_main = PageTemplateFile('www/documentVersionEdit', globals())
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'fulltext')
+    security.declareProtected(
+        SilvaPermissions.AccessContentsInformation, 'fulltext')
     def fulltext(self):
         """Return the content of this object without any xml"""
         if self.version_status() == 'unapproved':
             return ''
         return [
-            self.object().id,
+            self.object().getId(),
             self.get_title(),
-            self._flattenxml(self.content_xml())]
+            remove_source_xml(self.get_document_xml(text_only=True))]
 
-    security.declareProtected(SilvaPermissions.AccessContentsInformation,
-                              'content_xml')
-    def content_xml(self):
-        """Returns the documentElement of the content's XML
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'get_document_xml')
+    def get_document_xml(self, text_only=False):
+        """Generate a version of the document XML. You can restrict to
+        only the text XML.
         """
-        s = StringIO()
-        self.content.documentElement.writeStream(s)
-        value = s.getvalue()
-        s.close()
-        return value
+        stream = StringIO()
+        if not text_only:
+            stream.write('<silva_document id="%s">' % self.object().getId())
+            # Write Title
+            stream.write('<title>%s</title>' % translateCdata(self.get_title()))
 
-    def to_xml(self, context):
-        f = context.f
-        f.write('<title>%s</title>' % translateCdata(self.get_title()))
-        self.get_xml_content(f)
+        # Write Document
+        document = self._get_document_element()
+        document.writeStream(stream)
+
+        if not text_only:
+            # Write Metadata
+            binding = self.service_metadata.getMetadata(self)
+            stream.write(binding.renderXML())
+            # End of document
+            stream.write('</silva_document>')
+
+        return stream.getvalue()
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'get_document_xml_as')
+    def get_document_xml_as(self, format='kupu', request=None):
+        """Render the Document XML on a different format.
+        """
+        transformer = EditorTransformer(editor=format)
+        context = Context(self, request)
+
+        rendered_document = transformer.to_target(
+            sourceobj=self.get_document_xml(), context=context)
+
+        result = unicode(rendered_document.asBytes('utf8'), 'utf8')
+        result = result.replace(u'\xa0', u'&nbsp;')
+        return result
+
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'set_document_xml_from')
+    def set_document_xml_from(self, content, format='kupu', request=None):
+        """Set the document xml of the version from the given content
+        in the given format.
+        """
+        errors = self._set_metadata_from_content(content)
+        if errors:
+            raise ValueError(errors)
+
+        transformer = EditorTransformer(editor=format)
+        context = Context(self, request)
+
+        document = transformer.to_source(targetobj=content, context=context)[0]
+        title = document.find('title')[0].extract_text()
+        content = document.find('doc')[0].asBytes(encoding="UTF8")
+        self.content.manage_edit(content)
+        self.set_title(title)
+
+        # Should be on event
+        self.sec_update_last_author_info()
+        self.clear_editor_cache()
+
+    def _set_metadata_from_content(self, html):
+        """Rip the metadata out of the HTML (meta tags), set it on version"""
+        # XXX obviously it would make sense if the transformations could
+        # tackle this instead of doing it seperately, however, they are messy
+        # enough as they are now (and not capable of such a thing yet)
+
+        # XXX SAX took about 2 seconds (!) to get the meta values,
+        # so I decided to try re instead... this made sense, parsing now takes
+        # less than one hundreth of a second (usually even less than one
+        # thousandth!)
+
+        def _deentitize(xml):
+            return xml.replace('&lt;', '<').replace('&gt;', '>').\
+                replace('&quot;', '"').replace('&amp;', '&')
+
+        mapping = {}
+        reg = re.compile(r'\<meta[^\>]+\/\>')
+        while 1:
+            match = reg.search(html)
+            if not match:
+                break
+            tag = match.group(0)
+            html = html.replace(tag, '')
+            reg_props = re.compile(r'([a-zA-Z_]+)="([^"]+)"')
+            found = {}
+            while 1:
+                match = reg_props.search(tag)
+                if not match:
+                    break
+                tag = tag.replace(match.group(0), '')
+                if match.group(1) in ['name', 'content', 'scheme']:
+                    found[match.group(1)] = _deentitize(match.group(2))
+                if (found.has_key('name') and found.has_key('content') and
+                        found.has_key('scheme')):
+                    if not mapping.has_key(found['scheme']):
+                        mapping[found['scheme']] = {}
+                    mapping[found['scheme']][found['name']] = found['content']
+
+        errors = {}
         binding = self.service_metadata.getMetadata(self)
-        f.write(binding.renderXML())
-
-    def get_xml_content(self, f):
-        self.content.documentElement.writeStream(f)
-
-    def _flattenxml(self, xmlinput):
-        """Cuts out all the XML-tags, helper for fulltext (for
-        content-objects)
-        """
-        # XXX: remove code sources, since the parameters are
-        # potentially sensitive data.
-        matchstr = re.compile(
-            r'<source id=".*?">.*?</source>', re.DOTALL|re.MULTILINE)
-        xmlinput = matchstr.sub('', xmlinput)
-        return re.sub('<[^>]*>(?i)(?m)', ' ', xmlinput)
+        for namespace, values in mapping.items():
+            # %!#$%# metadata system expects UTF-8 :(
+            for key, value in values.items():
+                del values[key]
+                if value is None:
+                    continue
+                values[key.encode('UTF-8')] = value.encode('UTF-8')
+            set = self.service_metadata.getMetadataSetFor(namespace)
+            ret = binding.setValues(set.id, values, reindex=1)
+            if ret:
+                errors.update(ret)
+        return errors
 
     def _get_document_element(self):
         """returns the document element of this
@@ -117,13 +211,11 @@ class DocumentVersion(CatalogedVersion):
            (i.e. silvaxmlattribute)"""
         return self.content.documentElement
 
-    def clearEditorCache(self):
+    def clear_editor_cache(self):
         """ Clears editor cache for this version
         """
-        editor_service = self.service_editor
-        document_element = self.content.documentElement
         try:
-            editor_service.clearCache(document_element)
+            self.editor_service.clearCache(self._get_document_element())
         except AttributeError:
             # This fail when you don't have a self.REQUEST. However
             # it's not a big deal, the entry will expire.
@@ -179,139 +271,6 @@ class Document(CatalogedVersionedContent):
                     return 0
         return 1
 
-    security.declareProtected(SilvaPermissions.ReadSilvaContent,
-                              'to_xml')
-    def to_xml(self, context):
-        """Render object to XML.
-        """
-        f = context.f
-
-        if context.last_version == 1:
-            version_id = self.get_next_version()
-            if version_id is None:
-                version_id = self.get_public_version()
-        else:
-            version_id = self.get_public_version()
-
-        if version_id is None:
-            return
-        f.write('<silva_document id="%s">' % self.id)
-        version = getattr(self, version_id)
-        version.to_xml(context)
-        f.write('</silva_document>')
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                              'editor_storage')
-    def editor_storage(self, string=None, editor='kupu', encoding=None):
-        """provide xml/xhtml/html (GET requests) and (heuristic)
-           back-transforming to xml/xhtml/html (POST requests)
-        """
-        transformer = EditorTransformer(editor=editor)
-
-        # we need to know what browser we are dealing with in order to know
-        # what html to produce, unfortunately Mozilla uses different tags in
-        # some cases (b instead of strong, i instead of em)
-        browser = 'Mozilla'
-        if (hasattr(self, 'REQUEST') and
-            self.REQUEST['HTTP_USER_AGENT'].find('MSIE') > -1):
-            browser = 'IE'
-
-        if string is None:
-            ctx = Context(self,
-                          f=StringIO(),
-                          last_version=1,
-                          browser=browser)
-            self.to_xml(ctx)
-            htmlnode = transformer.to_target(
-                sourceobj=ctx.f.getvalue(), context=ctx)
-            if encoding is not None:
-                ret = htmlnode.asBytes(encoding=encoding)
-                ret = ret.replace('\xa0', '&nbsp;')
-            else:
-                ret = unicode(htmlnode.asBytes('utf8'),'utf8')
-                ret = ret.replace(u'\xa0', u'&nbsp;')
-            #print 'returning:', repr(ret)
-            return ret
-        else:
-            #print 'incoming', repr(string)
-            version = self.get_editable()
-            if version is None:
-                raise _("No version to store to!")
-
-            # get any metadata elements saved to the metadata
-            # XXX currently uses a completely different machinery to parse
-            # the XML, perhaps we want to move that to the transformations
-            # at some point (but would require too much hacking for now)
-            errors = self._set_metadata_from_html(string, version)
-            if errors:
-                raise BindingError, errors
-
-            ctx = Context(self, browser=browser)
-            silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
-            title = silvanode.find('title')[0].extract_text()
-            docnode = silvanode.find('doc')[0]
-            content = docnode.asBytes(encoding="UTF8")
-            version.content.manage_edit(content) # needs utf8-encoded string
-            version.set_title(title) # needs unicode
-            version.sec_update_last_author_info()
-
-            # Clear widget cache for this version.
-            version.clearEditorCache()
-            #print 'storing:', repr(content)
-
-    def _set_metadata_from_html(self, html, version):
-        """Rip the metadata out of the HTML (meta tags), set it on version"""
-        # XXX obviously it would make sense if the transformations could
-        # tackle this instead of doing it seperately, however, they are messy
-        # enough as they are now (and not capable of such a thing yet)
-
-        # XXX SAX took about 2 seconds (!) to get the meta values,
-        # so I decided to try re instead... this made sense, parsing now takes
-        # less than one hundreth of a second (usually even less than one
-        # thousandth!)
-        metamapping = {}
-        import re
-        reg = re.compile(r'\<meta[^\>]+\/\>')
-        while 1:
-            match = reg.search(html)
-            if not match:
-                break
-            tag = match.group(0)
-            html = html.replace(tag, '')
-            reg_props = re.compile(r'([a-zA-Z_]+)="([^"]+)"')
-            found = {}
-            while 1:
-                match = reg_props.search(tag)
-                if not match:
-                    break
-                tag = tag.replace(match.group(0), '')
-                if match.group(1) in ['name', 'content', 'scheme']:
-                    found[match.group(1)] = self._deentitize(match.group(2))
-                if (found.has_key('name') and found.has_key('content') and
-                        found.has_key('scheme')):
-                    if not metamapping.has_key(found['scheme']):
-                        metamapping[found['scheme']] = {}
-                    metamapping[found['scheme']][found['name']] = found['content']
-
-        errors = {}
-        binding = self.service_metadata.getMetadata(self.get_editable())
-        for namespace, values in metamapping.items():
-            # %!#$%# metadata system expects UTF-8 :(
-            for key, value in values.items():
-                del values[key]
-                if value is None:
-                    continue
-                values[key.encode('UTF-8')] = value.encode('UTF-8')
-            set = self.service_metadata.getMetadataSetFor(namespace)
-            ret = binding.setValues(set.id, values, reindex=1)
-            if ret:
-                errors.update(ret)
-        return errors
-
-    def _deentitize(self, xml):
-        return xml.replace('&lt;', '<').replace('&gt;', '>').\
-                replace('&quot;', '"').replace('&amp;', '&')
-
     def revert_to_previous(self):
         """ Create a new version of public version, throw away the
         current one.
@@ -319,36 +278,13 @@ class Document(CatalogedVersionedContent):
         Overrides Versioning.revert_to_previous() to be able to clear
         the widget cache too.
         """
-        Document.inheritedAttribute('revert_to_previous')(self)
+        super(Document, self).revert_to_previous()
         version = self.get_editable()
-        version.clearEditorCache()
+        version.clear_editor_cache()
 
-    def transform_and_store(self, content_type, content):
-        try:
-            if content_type.split(';')[0] in ['text/html', 'application/xhtml+xml']:
-                self.editor_storage(content, 'kupu')
-
-                # invalidate Document cache
-                version = self.get_editable()
-                version.clearEditorCache()
-            else:
-                # plain Silva document XML
-                self.get_editable().content.manage_edit(content)
-        except:
-            # a tad ugly, but for debug purposes it would be nice to see
-            # what's actually gone wrong
-            exc, e, tb = sys.exc_info()
-            # XXX should store to zLog instead
-            print '%s: %s' % (exc, e)
-            print '\n%s' % '\n'.join(traceback.format_tb(tb))
-            print
-            # reraise the exception so the enduser at least sees something's
-            # gone wrong
-            raise
-
-    # WebDAV API
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'PUT')
+    # Kupu save doing a PUT
+    security.declareProtected(
+        SilvaPermissions.ChangeSilvaContent, 'PUT')
     def PUT(self, REQUEST=None, RESPONSE=None):
         """PUT support"""
         # XXX we may want to make this more modular/pluggable at some point
@@ -359,11 +295,12 @@ class Document(CatalogedVersionedContent):
             RESPONSE = REQUEST.RESPONSE
         editable = self.get_editable()
         if editable is None:
-            raise InternalError, 'no editable version available'
+            raise InternalError('No editable version available')
         content = REQUEST['BODYFILE'].read()
         content_type = self._get_content_type_from_request(REQUEST, content)
-        self.transform_and_store(content_type, content)
-        self.sec_update_last_author_info()
+        if content_type not in ['text/html', 'application/xhtml+xml']:
+            raise InternalError('Input format not supported')
+        editable.set_document_xml_from(content, request=REQUEST)
 
     def _get_content_type_from_request(self, request, content):
         """tries to figure out the content type of a PUT body from a request
@@ -371,9 +308,9 @@ class Document(CatalogedVersionedContent):
             the request may not have a content-type header available, if so
             we should use the contents itself to determine the content type
         """
-        ct = request.get_header('content-type')
-        if ct is not None:
-            return ct
+        content_type = request.get_header('content-type')
+        if content_type is not None:
+            return content_type.split(';')[0]
         content = re.sub('<?.*?>', '', content).strip()
         if content.startswith('<html') or content.startswith('<!DOCTYPE html'):
             return 'text/html'
@@ -425,7 +362,7 @@ def document_will_be_removed(document, event):
 def documentversion_cloned(documentversion, event):
     # if we're a copy, clear cache
     # XXX should be part of workflow system
-    documentversion.clearEditorCache()
+    documentversion.clear_editor_cache()
 
 
 class SilvaDocumentPolicy(Persistent):
