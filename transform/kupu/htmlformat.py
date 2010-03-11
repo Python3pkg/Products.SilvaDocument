@@ -581,7 +581,7 @@ class a(Element):
             reference_name = self.getattr('silva_reference')
             if reference_name == 'new':
                 reference = context.references.new_reference(
-                    context.model, u'document link')
+                    context.version, u'document link')
                 reference_name = reference.__name__
             else:
                 reference = context.references.references.get(
