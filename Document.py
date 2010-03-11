@@ -9,7 +9,10 @@ import sys
 import traceback
 
 # Zope
+from zope import lifecycleevent
+from zope.event import notify
 from zope.interface import implements
+
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
 from Persistence import Persistent
@@ -145,8 +148,8 @@ class DocumentVersion(CatalogedVersion):
         self.content.manage_edit(content)
         self.set_title(title)
 
+        notify(lifecycleevent.ObjectModifiedEvent(self))
         # Should be on event
-        self.sec_update_last_author_info()
         self.clear_editor_cache()
 
     def _set_metadata_from_content(self, html):
