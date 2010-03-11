@@ -11,13 +11,9 @@ import traceback
 # Zope
 from zope.interface import implements
 from AccessControl import ClassSecurityInfo
-from Products.PageTemplates.PageTemplateFile import PageTemplateFile
-try:
-    from App.class_init import InitializeClass # Zope 2.12
-except ImportError:
-    from Globals import InitializeClass # Zope < 2.12
-
+from App.class_init import InitializeClass
 from Persistence import Persistent
+from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zExceptions import InternalError
 import OFS.interfaces
 
@@ -31,22 +27,20 @@ from Products.Silva import mangle
 from Products.Silva.helpers import translateCdata
 from Products.Silva.ContentObjectFactoryRegistry import contentObjectFactoryRegistry
 
-# For XML-Conversions for editors
-from transform.Transformer import EditorTransformer
-from transform.base import Context
-
-from silva.core.interfaces import IContainerPolicy
+# Silva Document
+from Products.SilvaDocument.transform.Transformer import EditorTransformer
+from Products.SilvaDocument.transform.base import Context
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.SilvaDocument.i18n import translate as _
-
 from Products.SilvaDocument import externalsource
 
 from Products.SilvaMetadata.Exceptions import BindingError
 
+from silva.core import conf as silvaconf
+from silva.core.interfaces import IContainerPolicy
 from silva.core.smi.interfaces import IFormsEditorSupport, IKupuEditorSupport
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
-from silva.core import conf as silvaconf
 
 from z3c.form import field
 
@@ -64,15 +58,12 @@ class DocumentVersion(CatalogedVersion):
         ) + CatalogedVersion.manage_options
 
     def __init__(self, id):
-        DocumentVersion.inheritedAttribute('__init__')(self, id)
+        super(DocumentVersion, self).__init__(id)
         self.content = ParsedXML('content', '<doc></doc>')
 
     # display edit screen as main management screen
     security.declareProtected('View management screens', 'manage_main')
     manage_main = PageTemplateFile('www/documentVersionEdit', globals())
-
-    def get_xml_content(self, f):
-        self.content.documentElement.writeStream(f)
 
     security.declareProtected(SilvaPermissions.AccessContentsInformation,
                               'fulltext')
@@ -96,7 +87,6 @@ class DocumentVersion(CatalogedVersion):
         s.close()
         return value
 
-
     def to_xml(self, context):
         f = context.f
         f.write('<title>%s</title>' % translateCdata(self.get_title()))
@@ -106,7 +96,6 @@ class DocumentVersion(CatalogedVersion):
 
     def get_xml_content(self, f):
         self.content.documentElement.writeStream(f)
-
 
     def _flattenxml(self, xmlinput):
         """Cuts out all the XML-tags, helper for fulltext (for
@@ -156,23 +145,11 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    implements(IDocument,IKupuEditorSupport, IFormsEditorSupport)
+    implements(IDocument, IKupuEditorSupport, IFormsEditorSupport)
 
     silvaconf.icon('www/silvadoc.gif')
     silvaconf.priority(-6)
     silvaconf.versionClass(DocumentVersion)
-
-    # some scary DAV stuff...
-    __dav_collection__ = False
-    isAnObjectManager = False
-
-    # A hackish way, to get a Silva tab in between the standard ZMI tabs
-    inherited_manage_options = CatalogedVersionedContent.manage_options
-    manage_options=(
-        (inherited_manage_options[0],)+
-        ({'label':'Silva /edit...', 'action':'edit'},)+
-        inherited_manage_options[1:]
-        )
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')
@@ -181,7 +158,7 @@ class Document(CatalogedVersionedContent):
         That means the document contains no dynamic elements like
         code, datasource or toc.
         """
-        non_cacheable_elements = ['toc', 'code',]
+        non_cacheable_elements = ['code',]
 
         viewable = self.get_viewable()
         if viewable is None:
