@@ -245,6 +245,19 @@ class sub(SilvaElement):
 
 class link(SilvaElement):
     def convert(self, context):
+        if self.hasattr('reference'):
+            # We have a reference
+            reference_name = self.getattr('reference')
+            reference = context.references.references.get(
+                str(reference_name), None)
+            assert reference is not None, "Invalid reference"
+            return html.a(
+                self.content.convert(context),
+                href='reference',
+                target=getattr(self.attr,'target', None),
+                silva_target=reference.target_id,
+                silva_reference=reference.__name__)
+
         try:
             img = self.query_one('image')
         except ValueError:
@@ -257,8 +270,7 @@ class link(SilvaElement):
                 self.content.convert(context),
                 href=path,
                 silva_href=path,
-                target=getattr(self.attr,'target', None),
-            )
+                target=getattr(self.attr,'target', None))
         else:
             path = img.getattr('path')
             pad = pathadapter.getPathAdapter(context.model.REQUEST)

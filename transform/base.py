@@ -28,16 +28,21 @@ from UserList import UserList as List
 from UserDict import UserDict as Dict
 
 from silva.translations import translate as _
+from silva.core.references.interfaces import IReferenceService
+from zope import component
 
-class Context:
-    def __init__(self, **kw):
+class Context(object):
+
+    def __init__(self, model, **kw):
+        self.model = model
+        self.references = component.getUtility(IReferenceService)
         self.__dict__.update(kw)
         self.resultstack = []
         self.tablestack = []
 
-class _dummy:
-    """ for marking no-values """
-    pass
+
+_marker = object()
+
 
 def build_pathmap(node):
     """ return a list of path-node tuples.
@@ -54,7 +59,9 @@ def build_pathmap(node):
             l.append((path, subtag))
     return l
 
-class Node:
+
+class Node(object):
+
     def _matches(self, tag):
         if type(tag) == type(()):
             for i in tag:
@@ -68,23 +75,26 @@ class Node:
             return issubclass(self.__class__, tag)
 
     def __eq__(self, other):
-        raise NotImplementedError, "not implemented, override in inheriting class"
+        raise NotImplementedError
 
     def name(self):
-        """ return name of tag """
+        """Return name of tag
+        """
         return getattr(self, 'xmlname', self.__class__.__name__)
 
     def hasattr(self, name):
-        """ return true if the attribute 'name' is an attribute name of this tag """
+        """Return true if the attribute 'name' is an attribute name
+        of this tag
+        """
         return self.attr.__dict__.has_key(name)
 
-    def getattr(self, name, default=_dummy):
-        """ return xml attribute value or a given default.
+    def getattr(self, name, default=_marker):
+        """Return xml attribute value or a given default.
 
         if no default value is set and there is no attribute
         raise an AttributeError.
         """
-        if default is not _dummy:
+        if default is not _marker:
             ret = getattr(self.attr, name, default)
             if ret is None:
                 return default
@@ -100,7 +110,9 @@ class Node:
         return self.convert(Context())
 
     def query_one(self, path):
-        """ return exactly one tag pointed to by a simple 'path' or raise a ValueError"""
+        """Return exactly one tag pointed to by a simple 'path' or
+        raise a ValueError.
+        """
         dic = self.query(path)
         if len(dic) == 0:
             message = _("no ${path} element", mapping={'path': path})
@@ -113,7 +125,8 @@ class Node:
             raise ValueError, message
 
     def query(self, querypath):
-        """ return a dictionary with path -> node mappings matching the querypath.
+        """Return a dictionary with path -> node mappings matching
+        the querypath.
 
         querypath has the syntax
 
@@ -150,13 +163,14 @@ class Node:
         searchstring = "/".join(l) + '$'
         rex = re.compile(searchstring)
 
-        # apply regex to all pathes
+        # apply regex to all paths
         dic = {}
         for path, tag in build_pathmap(self):
             line = "/".join(path)
             if rex.match(line):
                 dic.setdefault(line, []).append(tag)
         return dic
+
 
 class Frag(Node, List):
     """ Fragment of Nodes (basically list of Nodes)"""
@@ -252,8 +266,9 @@ html_unmangle_map = {
         'class_': 'class',
         }
 
-class Attr:
-    """ an instance of Attr provides a namespace for tag-attributes"""
+class Attr(object):
+    """An instance of Attr provides a namespace for tag-attributes.
+    """
     def __init__(self, **kw):
         self.__dict__.update(kw)
 

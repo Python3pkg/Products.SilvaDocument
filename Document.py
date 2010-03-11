@@ -240,12 +240,13 @@ class Document(CatalogedVersionedContent):
             browser = 'IE'
 
         if string is None:
-            ctx = Context(f=StringIO(),
+            ctx = Context(self,
+                          f=StringIO(),
                           last_version=1,
-                          browser=browser,
-                          model=self)
+                          browser=browser)
             self.to_xml(ctx)
-            htmlnode = transformer.to_target(sourceobj=ctx.f.getvalue(), context=ctx)
+            htmlnode = transformer.to_target(
+                sourceobj=ctx.f.getvalue(), context=ctx)
             if encoding is not None:
                 ret = htmlnode.asBytes(encoding=encoding)
                 ret = ret.replace('\xa0', '&nbsp;')
@@ -268,7 +269,7 @@ class Document(CatalogedVersionedContent):
             if errors:
                 raise BindingError, errors
 
-            ctx = Context(browser=browser, model=self)
+            ctx = Context(self, browser=browser)
             silvanode = transformer.to_source(targetobj=string, context=ctx)[0]
             title = silvanode.find('title')[0].extract_text()
             docnode = silvanode.find('doc')[0]
@@ -401,20 +402,6 @@ class Document(CatalogedVersionedContent):
             return 'text/html'
         return 'application/x-silva-document-xml'
 
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'manage_FTPget')
-    def manage_FTPget(self):
-        """return the raw XML-contents of this document"""
-        editable = self.get_previewable()
-        if editable is None:
-            raise InternalError, 'no viewable version available'
-        f = StringIO()
-        editable.get_xml_content(f)
-        return f.getvalue()
-
-    security.declareProtected(SilvaPermissions.ChangeSilvaContent,
-                                'manage_DAVget')
-    manage_DAVget = manage_FTPget
 
 InitializeClass(Document)
 
@@ -426,6 +413,7 @@ class DocumentAddForm(silvaz3cforms.AddForm):
     silvaconf.context(IDocument)
     silvaconf.name(u'Silva Document')
     fields = field.Fields(IDocumentVersion)
+
 
 class DocumentView(silvaviews.View):
     """View on a document.

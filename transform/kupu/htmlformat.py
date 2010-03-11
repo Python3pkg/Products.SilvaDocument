@@ -559,29 +559,48 @@ class sub(Element):
 
 class a(Element):
     def convert(self, context):
-        # XXX needs to become empty, but there's a bug in the attr code
-        title = getattr(self.attr, 'title', '')
-        if title is None:
-            title = ''
-        if (hasattr(self.attr, 'name') and (not hasattr(self.attr, 'href') or
-                self.attr.href == '#' or self.attr.href is None)):
+        title = self.getattr('title', default='')
+        name = self.getattr('name', default=None)
+        href = self.getattr('href', default='#')
+        if name is not None and href == '#':
             if self.getattr('class', None) == 'index':
                 # index item
                 text = ''.join([t.convert(context).asBytes('UTF-8') for
-                                    t in extract_texts(self, context)])
+                                t in extract_texts(self, context)])
                 textnode = Frag()
                 if text and (text[0] != '[' or text[-1] != ']'):
                     textnode = Text(text)
-                return Frag(textnode,
-                            silva.index(
-                                    name=self.attr.name,
-                                    title=title,
-                                    )
-                                )
+                return Frag(
+                    textnode,
+                    silva.index(name=name, title=title))
             else:
                 # named anchor, probably pasted from some other page
                 return Frag(self.content.convert(context))
-        elif hasattr(self.attr, 'href') and self.attr.href is not None:
+        elif self.hasattr('silva_reference'):
+            # Case of a Silva reference used
+            reference_name = self.getattr('silva_reference')
+            if reference_name == 'new':
+                reference = context.references.new_reference(
+                    context.model, u'document link')
+                reference_name = reference.__name__
+            else:
+                reference = context.references.references.get(
+                    str(reference_name), None)
+                assert reference is not None, "Invalid reference"
+            target_id = self.getattr('silva_target', '0')
+            try:
+                target_id = int(str(target_id))
+            except ValueError:
+                raise AssertionError("Invalid reference target id")
+            # The target changed, update it
+            if target_id != reference.target_id:
+                reference.set_target_id(target_id)
+            window_target = self.getattr('target', default='')
+            content = self.content.convert(context)
+            return silva.link(
+                content, target=window_target, reference=reference.__name__)
+        elif self.hasattr('href'):
+            # Old school links
             url = self.getattr('silva_href', None)
             if url is None:
                 url = self.getattr('href', 'http://www.infrae.com')
