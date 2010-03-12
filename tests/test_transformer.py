@@ -19,7 +19,9 @@ TEST_LINK_HTML = '<a silva_target="%d" href="reference" target="_blank" ' \
 
 
 class KupuTransformerTest(SilvaTestCase):
-    """Test HTML-Kupu transformer.
+    """Test Silva<->Kupu transformer. Transformer are not anymore
+    content-agnostic, because of reference management. Transforming
+    Kupu->Silva do change the version it is transformed for.
     """
 
     def afterSetUp(self):
@@ -108,14 +110,20 @@ class KupuTransformerTest(SilvaTestCase):
 
     def test_new_link_round_trip(self):
         """We create a new link which is a reference to a content in
-        Silva.
+        Silva, by transforming Kupu->Silva, and verify we get back our
+        link in Kupu by transforming Silva->Kupu.
         """
-        target_id = component.getUtility(IIntIds).getId(self.root.folder)
         service = component.getUtility(IReferenceService)
+        target_id = component.getUtility(IIntIds).getId(self.root.folder)
+        version = self.root.document.get_editable()
+
+        # At first there is no references
+        self.assertEqual(list(service.get_references_from(version)), [])
         self.assertEqual(list(service.get_references_to(self.root.folder)), [])
 
         html = TEST_LINK_HTML % (target_id, 'new')
 
+        # We convert our HTML with a new reference to Kupu
         node = self.transformer.to_source(targetobj=html, context=self.context)
         link = node.query_one('link')
         self.assertEqual(link.name(), 'link')
@@ -130,11 +138,14 @@ class KupuTransformerTest(SilvaTestCase):
         # We verify that the reference has been created.
         self.failUnless(reference_name in service.references.keys())
         reference = service.references[reference_name]
-        self.assertEqual(reference.source, self.root.document.get_editable())
+        self.assertEqual(reference.source, version)
         self.assertEqual(reference.target, self.root.folder)
         self.assertEqual(reference.tags, [u"document link"])
         self.assertEqual(
             list(service.get_references_to(self.root.folder)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
             [reference])
 
         # We can get back the HTML with a reference name
@@ -144,15 +155,30 @@ class KupuTransformerTest(SilvaTestCase):
             roundtrip,
             TEST_LINK_HTML % (target_id, reference_name))
 
-    def test_existing_link_round_trip(self):
-        """In that case a link already exist and is edited.
-        """
-        service = component.getUtility(IReferenceService)
-        reference = service.new_reference(
-            self.root.document.get_editable(), name=u"document link")
-        reference.set_target(self.root.folder)
+        # Our new reference has been kept
         self.assertEqual(
             list(service.get_references_to(self.root.folder)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
+
+    def test_existing_link_round_trip(self):
+        """We have an existing link in Kupu, that we keep by
+        transforming Kupu->Silva, and see again in Kupu by
+        transforming Silva->Kupu.
+        """
+        service = component.getUtility(IReferenceService)
+        version = self.root.document.get_editable()
+        reference = service.new_reference(version, name=u"document link")
+        reference.set_target(self.root.folder)
+
+        # We have a reference
+        self.assertEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
             [reference])
 
         html = TEST_LINK_HTML % (reference.target_id, reference.__name__)
@@ -167,12 +193,59 @@ class KupuTransformerTest(SilvaTestCase):
         self.assertEqual(
             list(service.get_references_to(self.root.folder)),
             [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
 
         # We can get back the HTML we started from
         roundtrip = self.transformer.to_target(
             sourceobj=result, context=self.context).asBytes('utf-8')
         self.assertEqual(roundtrip, html)
 
+        # Our new reference has been kept
+        self.assertEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
+
+    def test_delete_link_round_trip(self):
+        """We have an existing link that we removed in Kupu, so when
+        we transform Kupu->Silva it is removed from the version we
+        edit as well.
+        """
+        service = component.getUtility(IReferenceService)
+        version = self.root.document.get_editable()
+        reference = service.new_reference(version, name=u"document link")
+        reference.set_target(self.root.folder)
+
+        # We have a reference
+        self.assertEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
+
+        # Reference have been removed in favor of an anchor
+        html = '<a title="Anchor" class="index" name="anchor">'\
+            '[#anchor: Anchor]</a>'
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+
+        # The reference should be gone
+        self.assertEqual(list(service.get_references_from(version)), [])
+        self.assertEqual(list(service.get_references_to(self.root.folder)), [])
+
+        # (and we get back our anchor)
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+        self.assertEqual(roundtrip, html)
+
+        # (and still no references)
+        self.assertEqual(list(service.get_references_from(version)), [])
+        self.assertEqual(list(service.get_references_to(self.root.folder)), [])
 
 
 def test_suite():

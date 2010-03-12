@@ -41,10 +41,11 @@ def determine_browser_from_request(request):
 
 
 class Context(object):
-    """Transformation context.
+    """Transformation context, passed to all the node during
+    transformation. It contains methods to manage references.
     """
 
-    def __init__(self, context, request, **kw):
+    def __init__(self, context, request):
         """Transformation context takes a context of transformation,
         which is a version of a versioned content, and a request.
         """
@@ -52,9 +53,48 @@ class Context(object):
         self.version = context
         self.request = request
         self.browser = determine_browser_from_request(request)
-        self.references = component.getUtility(IReferenceService)
+        self.__reference_service = component.getUtility(IReferenceService)
+        self.__references_used = set()
+        self.__references = {}
         self.resultstack = []
         self.tablestack = []
+
+    def get_reference(self, reference_name):
+        """Retrieve an existing reference used in the XML.
+        """
+        reference = self.__references.get(reference_name, None)
+        if reference is not None:
+            self.__references_used.add(reference_name)
+        return reference
+
+    def new_reference(self):
+        """Create a new reference to be used in the XML.
+        """
+        reference = self.__reference_service.new_reference(
+            self.version, u'document link')
+        self.__references[reference.__name__] = reference
+        self.__references_used.add(reference.__name__)
+        return reference
+
+    def begin_transform(self):
+        """This method should be called by the Transformer before
+        starting the transformation process. It should not be called
+        by any node.
+        """
+        self.__references_used = set()
+        self.__references = dict(map(
+                lambda r: (r.__name__, r),
+                self.__reference_service.get_references_from(self.version)))
+
+    def finish_transform(self):
+        """This method should be called by the Transformer after the
+        transformation process is done. It should not be called by any
+        node.
+        """
+        for reference_name, reference in self.__references.items():
+            if reference_name not in self.__references_used:
+                # Reference has not been used, remove it.
+                del self.__reference_service.references[reference.__name__]
 
 
 _marker = object()

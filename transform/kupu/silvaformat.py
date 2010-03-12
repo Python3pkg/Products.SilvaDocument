@@ -245,9 +245,8 @@ class link(SilvaElement):
     def convert(self, context):
         if self.hasattr('reference'):
             # We have a reference
-            reference_name = self.getattr('reference')
-            reference = context.references.references.get(
-                str(reference_name), None)
+            reference_name = str(self.getattr('reference'))
+            reference = context.get_reference(reference_name)
             assert reference is not None, "Invalid reference"
             return html.a(
                 self.content.convert(context),

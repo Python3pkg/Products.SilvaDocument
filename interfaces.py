@@ -50,8 +50,8 @@ class IDocumentVersion(IVersion):
         format. By default it will be HTML that can be edited by Kupu.
         """
 
-    def set_document_xml_from(context, format='kupu', request=None):
-        """This change the document XML to content. Content is
-        converted to the document XML from the input format, which is
-        Kupu by default.
+    def set_document_xml_from(data, format='kupu', request=None):
+        """This change the document XML to data. Data is converted to
+        the document XML from the input format, which is Kupu by
+        default.
         """

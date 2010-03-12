@@ -578,14 +578,12 @@ class a(Element):
                 return Frag(self.content.convert(context))
         elif self.hasattr('silva_reference'):
             # Case of a Silva reference used
-            reference_name = self.getattr('silva_reference')
+            reference_name = str(self.getattr('silva_reference'))
             if reference_name == 'new':
-                reference = context.references.new_reference(
-                    context.version, u'document link')
+                reference = context.new_reference()
                 reference_name = reference.__name__
             else:
-                reference = context.references.references.get(
-                    str(reference_name), None)
+                reference = context.get_reference(reference_name)
                 assert reference is not None, "Invalid reference"
             target_id = self.getattr('silva_target', '0')
             try:

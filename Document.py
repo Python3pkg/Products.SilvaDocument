@@ -131,18 +131,18 @@ class DocumentVersion(CatalogedVersion):
 
     security.declareProtected(
         SilvaPermissions.ChangeSilvaContent, 'set_document_xml_from')
-    def set_document_xml_from(self, content, format='kupu', request=None):
-        """Set the document xml of the version from the given content
+    def set_document_xml_from(self, data, format='kupu', request=None):
+        """Set the document xml of the version from the given data
         in the given format.
         """
-        errors = self._set_metadata_from_content(content)
+        errors = self._set_metadata_from_content(data)
         if errors:
             raise ValueError(errors)
 
         transformer = EditorTransformer(editor=format)
         context = Context(self, request)
 
-        document = transformer.to_source(targetobj=content, context=context)[0]
+        document = transformer.to_source(targetobj=data, context=context)[0]
         title = document.find('title')[0].extract_text()
         content = document.find('doc')[0].asBytes(encoding="UTF8")
         self.content.manage_edit(content)

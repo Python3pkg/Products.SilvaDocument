@@ -8,58 +8,57 @@ currently only transformation to and from
 is supported.
 
 """
-
 __author__='Holger P. Krekel <hpk@trillke.net>'
 __version__='$Revision: 1.4 $'
 
-from silva.translations import translate as _
+from Products.SilvaDocument.transform.ObjectParser import ObjectParser
+from Products.SilvaDocument.transform.kupu import silvaformat, htmlformat
 
-class Transformer:
+EDITORS = {'kupu': (silvaformat, htmlformat)}
+
+
+class Transformer(object):
     """ Transform xml trees using pythonic xist-like
         specifications.
     """
-    from ObjectParser import ObjectParser
 
-    def __init__(self, source='kupu.silvaformat', target='kupu.htmlformat'):
+    def __init__(self, source=silvaformat, target=htmlformat):
         """ provide a transformer from source to target
             (and possibly back).
         """
-        self.source = source
-        self.target = target
+        self.source_parser = ObjectParser(source)
+        self.target_parser = ObjectParser(target)
 
-        # Alex Martelli and other cowards would frown on me :-)
-        # XXX Guido: Not because I'm a coward or so, but can't this be done
-        # using __import__?
-        exec "import %s as s; import %s as t" % (source, target)
-        self.source_spec = s
-        self.target_spec = t
-        self.source_parser = self.ObjectParser(self.source_spec)
-        self.target_parser = self.ObjectParser(self.target_spec)
-
-    def to_target(self, sourceobj, context=None, compacting=1):
-        context = context or {}
+    def to_target(self, sourceobj, context, compacting=True):
+        context.begin_transform()
         node = self.source_parser.parse(sourceobj)
         if compacting:
             node = node.compact()
-        return node.convert(context=context)
+        result = node.convert(context=context)
+        context.finish_transform()
+        return result
 
-    def to_source(self, targetobj, context=None, compacting=1, cleaner=None):
-        context = context or {}
+    def to_source(self, targetobj, context, compacting=True, cleaner=None):
+        context.begin_transform()
         node = self.target_parser.parse(targetobj)
         if compacting:
             node = node.compact()
-        ret = node.convert(context=context)
+        result = node.convert(context=context)
         if cleaner is not None:
-            cleaner(ret)
-        return ret
+            cleaner(result)
+        context.finish_transform()
+        return result
+
 
 class EditorTransformer(Transformer):
+    """Transformer that transform differently depending the selected
+    editor.
+    """
+
     def __init__(self, editor='kupu'):
-        if editor == 'kupu':
-            Transformer.__init__(self,
-                                 source='kupu.silvaformat',
-                                 target='kupu.htmlformat')
+        if editor in EDITORS:
+            super(EditorTransformer, self).__init__(
+                source=EDITORS[editor][0],
+                target=EDITORS[editor][1])
         else:
-            message = _("Unknown Editor: ${editor}",
-                        mapping={'editor': editor})
-            raise message
+            raise ValueError("Unknown Editor: %s" % editor)
