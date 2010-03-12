@@ -36,7 +36,7 @@ def install(root):
 
     # set up/refresh some mandatory services
     configureMiscServices(root)
-    
+
     root.service_metadata.addTypesMapping(
         ('Silva Document Version', ), ('silva-content', 'silva-extra'))
     root.service_metadata.initializeMetadata()
@@ -51,7 +51,7 @@ def install(root):
         root.manage_addProduct[
             'SilvaDocument'].manage_addCodeSourceCharsetService(
             'service_old_codesource_charset', 'Service Charset for Codesources')
-        
+
 def uninstall(root):
     unregisterViews(root.service_view_registry)
     unconfigureXMLWidgets(root)
@@ -61,7 +61,7 @@ def uninstall(root):
     root.service_containerpolicy.unregister('Silva Document')
     if hasattr(root, 'service_old_codesource_charset'):
         root.manage_delObjects(['service_old_codesource_charset'])
-    
+
 def is_installed(root):
     return hasattr(root.service_views, 'SilvaDocument')
 
@@ -70,7 +70,7 @@ def registerViews(reg):
     """
     # edit
     reg.register('edit', 'Silva Document', ['edit', 'VersionedContent', 'Document'])
-    
+
 def unregisterViews(reg):
     """Unregister core views.
     """
@@ -97,7 +97,7 @@ def configureXMLWidgets(root):
     # now register all widgets
     # XXX not really necessary; the "install" should take case of this
     registerCoreWidgets(root)
-    
+
 def unconfigureXMLWidgets(root):
     root.manage_delObjects(['service_widgets', 'service_editor'])
     root.manage_delObjects(['service_doc_editor', 'service_doc_viewer',
@@ -105,7 +105,7 @@ def unconfigureXMLWidgets(root):
                             'service_nlist_editor', 'service_nlist_viewer',
                             'service_sub_editor', 'service_sub_viewer',
                             'service_table_editor', 'service_table_viewer'])
-    
+
 def registerCoreWidgets(root):
     """ register the core widgets at the corresponding registries.
     this function assumes the registries already exist.
@@ -127,8 +127,8 @@ def registerDocEditor(root):
 
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_normal'))
 
-    for nodeName in ['p', 'heading', 'list', 'pre', 'toc', 'image', 'table',
-                     'nlist', 'dlist', 'code', 'cite']:
+    for nodeName in ['p', 'heading', 'list', 'pre', 'image', 'table',
+                     'nlist', 'dlist', 'code', ]:
         wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
@@ -138,17 +138,14 @@ def registerDocEditor(root):
     wr.setDisplayName('heading', _('heading'))
     wr.setDisplayName('list', _('list'))
     wr.setDisplayName('pre', _('preformatted'))
-    wr.setDisplayName('toc', _('table of contents'))
     wr.setDisplayName('image', _('image'))
     wr.setDisplayName('table', _('table'))
     wr.setDisplayName('nlist', _('complex list'))
     wr.setDisplayName('dlist', _('definition list'))
     wr.setDisplayName('code', _('code element'))
-    wr.setDisplayName('cite', _('citation'))
 
     wr.setAllowed('doc', [
-        'p', 'heading', 'list', 'dlist', 'pre', 'cite', 'image', 
-        'table', 'nlist'])
+        'p', 'heading', 'list', 'dlist', 'pre', 'image', 'table', 'nlist'])
 
     if externalsource.AVAILABLE:
         wr.addWidget('source', (
@@ -164,11 +161,11 @@ def registerDocViewer(root):
 
     wr.addWidget('doc', ('service_widgets', 'top', 'doc', 'mode_view'))
 
-    for name in ['p', 'list', 'heading', 'pre', 'toc', 'image', 'nlist',
-                 'table', 'dlist', 'code', 'cite']:
+    for name in ['p', 'list', 'heading', 'pre', 'image', 'nlist',
+                 'table', 'dlist', 'code']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
-     
+
     if externalsource.AVAILABLE:
         wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_view'))
@@ -208,24 +205,24 @@ def registerNListEditor(root):
     wr.clearWidgets()
 
     wr.addWidget('nlist', ('service_widgets', 'top', 'nlist', 'mode_normal'))
-    
+
     for nodeName in ['li']:
-        wr.addWidget(nodeName, 
+        wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'nlist_elements',
                            nodeName, 'mode_normal'))
-        
+
     wr.setDisplayName('nlist', _('Complex list'))
     wr.setDisplayName('li', _('List item'))
     wr.setDisplayName('title', _('List title'))
-    
+
     wr.setAllowed('nlist', ['li'])
-    
+
 def registerNListViewer(root):
     wr = root.service_nlist_viewer
     wr.clearWidgets()
-    
+
     wr.addWidget('nlist', ('service_widgets', 'top', 'nlist', 'mode_view'))
-    
+
     for name in ['li']:
         wr.addWidget(name, ('service_widgets', 'element', 'nlist_elements',
                                  name, 'mode_view'))
@@ -237,12 +234,12 @@ def registerSubEditor(root):
     wr.addWidget('doc', ('service_widgets', 'top', 'sub', 'mode_normal'))
     wr.addWidget('li', ('service_widgets', 'top', 'sub', 'mode_normal'))
     wr.addWidget('field', ('service_widgets', 'top', 'sub', 'mode_normal'))
-    
+
     for nodeName in ['p', 'heading', 'list', 'image', 'nlist', 'pre', 'dlist']:
-        wr.addWidget(nodeName, 
+        wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'doc_elements',
                            nodeName, 'mode_normal'))
-        
+
     wr.setDisplayName('p', _('Paragraph'))
     wr.setDisplayName('heading', _('Heading'))
     wr.setDisplayName('list', _('List'))
@@ -258,11 +255,11 @@ def registerSubEditor(root):
 def registerSubViewer(root):
     wr = root.service_sub_viewer
     wr.clearWidgets()
-    
+
     wr.addWidget('doc', ('service_widgets', 'top', 'sub', 'mode_view'))
     wr.addWidget('li', ('service_widgets', 'top', 'sub', 'mode_view'))
     wr.addWidget('field', ('service_widgets', 'top', 'sub', 'mode_view'))
-    
+
     for name in ['p', 'list', 'heading', 'image', 'nlist', 'pre', 'dlist']:
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
@@ -270,11 +267,11 @@ def registerSubViewer(root):
 def registerTableEditor(root):
     wr = root.service_table_editor
     wr.clearWidgets()
-    
+
     wr.addWidget('table', ('service_widgets', 'top', 'table', 'mode_normal'))
-    
+
     for nodeName in ['row', 'row_heading']:
-        wr.addWidget(nodeName, 
+        wr.addWidget(nodeName,
                      ('service_widgets', 'element', 'table_elements',
                            nodeName, 'mode_normal'))
 
@@ -284,15 +281,15 @@ def registerTableEditor(root):
     wr.setDisplayName('table', _('Table'))
     wr.setDisplayName('row', _('row'))
     wr.setDisplayName('row_heading', _('row heading'))
-    
+
     wr.setAllowed('table', ['row', 'row_heading'])
 
 def registerTableViewer(root):
     wr = root.service_table_viewer
     wr.clearWidgets()
-    
+
     wr.addWidget('table', ('service_widgets', 'top', 'table', 'mode_view'))
-    
+
     for name in ['row', 'row_heading']:
         wr.addWidget(name, ('service_widgets', 'element', 'table_elements',
                                  name, 'mode_view'))
