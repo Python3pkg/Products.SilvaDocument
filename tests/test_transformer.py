@@ -11,6 +11,7 @@ from zope.publisher.browser import TestRequest
 from silva.core.references.interfaces import IReferenceService
 
 from Products.Silva.tests.SilvaTestCase import SilvaTestCase
+from Products.Silva.tests.helpers import publish_object
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
@@ -27,6 +28,7 @@ class KupuTransformerTest(SilvaTestCase):
     def afterSetUp(self):
         self.add_document(self.root, 'document', 'Document')
         self.add_folder(self.root, 'folder', 'Folder')
+        self.add_publication(self.root, 'publication', 'Publication')
         self.transformer = Transformer.EditorTransformer(editor='kupu')
         # Context need the a document version in order to determine
         # references, and REQUEST to compute link URLs
@@ -136,11 +138,10 @@ class KupuTransformerTest(SilvaTestCase):
                 reference_name))
 
         # We verify that the reference has been created.
-        self.failUnless(reference_name in service.references.keys())
-        reference = service.references[reference_name]
+        reference = service.get_reference(version, reference_name)
         self.assertEqual(reference.source, version)
         self.assertEqual(reference.target, self.root.folder)
-        self.assertEqual(reference.tags, [u"document link"])
+        self.assertEqual(reference.tags, [u"document link", reference_name])
         self.assertEqual(
             list(service.get_references_to(self.root.folder)),
             [reference])
@@ -172,6 +173,8 @@ class KupuTransformerTest(SilvaTestCase):
         version = self.root.document.get_editable()
         reference = service.new_reference(version, name=u"document link")
         reference.set_target(self.root.folder)
+        reference_name = u"existing-link-id"
+        reference.add_tag(reference_name)
 
         # We have a reference
         self.assertEqual(
@@ -181,14 +184,14 @@ class KupuTransformerTest(SilvaTestCase):
             list(service.get_references_from(version)),
             [reference])
 
-        html = TEST_LINK_HTML % (reference.target_id, reference.__name__)
+        html = TEST_LINK_HTML % (reference.target_id, reference_name)
 
         result = self.transformer.to_source(
             targetobj=html, context=self.context).asBytes('utf-8')
         self.assertEqual(
             result,
             '<link target="_blank" reference="%s">My link</link>' % (
-                reference.__name__))
+                reference_name))
         # We still only have one reference to the folder
         self.assertEqual(
             list(service.get_references_to(self.root.folder)),
@@ -210,6 +213,88 @@ class KupuTransformerTest(SilvaTestCase):
             list(service.get_references_from(version)),
             [reference])
 
+    def test_existing_link_round_trip_on_copy(self):
+        """We edit a existing link that have been created on a
+        previous version of the document.
+        """
+        # Step one, create a link
+        service = component.getUtility(IReferenceService)
+        version = self.root.document.get_editable()
+        reference = service.new_reference(version, name=u"document link")
+        reference.set_target(self.root.folder)
+        reference_name = u"existing-link-id"
+        reference.add_tag(reference_name)
+
+        # Step two, make a new copy
+        publish_object(self.root.document)
+        self.root.document.create_copy()
+        new_version = self.root.document.get_editable()
+        self.failIfEqual(version, new_version)
+        new_reference = service.get_reference(new_version, name=reference_name)
+        self.failIfEqual(reference, new_reference)
+
+        # Now, the target is point by two relations, one for each version
+        self.assertEqual(
+            list(service.get_references_to(self.root.publication)),
+            [])
+        self.assertListEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference, new_reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(new_version)),
+            [new_reference])
+
+        # To spice up the situation, we are going to modify the
+        # reference on the new version to the publication
+        new_target_id = component.getUtility(IIntIds).getId(
+            self.root.publication)
+
+        html = TEST_LINK_HTML % (new_target_id, reference_name)
+
+        context = Context(new_version, TestRequest())
+        result = self.transformer.to_source(
+            targetobj=html, context=context).asBytes('utf-8')
+        self.assertEqual(
+            result,
+            '<link target="_blank" reference="%s">My link</link>' % (
+                reference_name))
+
+        # Now, things are changed correctly
+        self.assertEqual(
+            list(service.get_references_to(self.root.publication)),
+            [new_reference])
+        self.assertEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(new_version)),
+            [new_reference])
+
+        # We can get back the HTML we started from for the new version
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=context).asBytes('utf-8')
+        self.assertEqual(roundtrip, html)
+
+        # And things stays the same
+        self.assertEqual(
+            list(service.get_references_to(self.root.publication)),
+            [new_reference])
+        self.assertEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(new_version)),
+            [new_reference])
+
     def test_delete_link_round_trip(self):
         """We have an existing link that we removed in Kupu, so when
         we transform Kupu->Silva it is removed from the version we
@@ -219,6 +304,8 @@ class KupuTransformerTest(SilvaTestCase):
         version = self.root.document.get_editable()
         reference = service.new_reference(version, name=u"document link")
         reference.set_target(self.root.folder)
+        reference_name = u"existing-link-id"
+        reference.add_tag(reference_name)
 
         # We have a reference
         self.assertEqual(

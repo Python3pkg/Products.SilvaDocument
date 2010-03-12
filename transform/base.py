@@ -30,6 +30,8 @@ from UserDict import UserDict as Dict
 from silva.translations import translate as _
 from silva.core.references.interfaces import IReferenceService
 from zope import component
+import uuid
+
 
 def determine_browser_from_request(request):
     """Return browser name
@@ -45,36 +47,44 @@ class Context(object):
     transformation. It contains methods to manage references.
     """
 
-    def __init__(self, context, request):
-        """Transformation context takes a context of transformation,
-        which is a version of a versioned content, and a request.
+    def __init__(self, context, request, reference_names=u"document link"):
+        """A Transformation Context is built from a context of
+        transformation, which is a version of a versioned content on
+        which the transformed XML data is stored, and the request from
+        which the transformation is triggered.
+
+        reference_names is used to identify which relations of the
+        version are related to the processed XML data.
         """
         self.model = context.object()
         self.version = context
         self.request = request
         self.browser = determine_browser_from_request(request)
+        self.__reference_names = reference_names
         self.__reference_service = component.getUtility(IReferenceService)
         self.__references_used = set()
         self.__references = {}
         self.resultstack = []
         self.tablestack = []
 
-    def get_reference(self, reference_name):
+    def get_reference(self, link_name):
         """Retrieve an existing reference used in the XML.
         """
-        reference = self.__references.get(reference_name, None)
+        reference = self.__references.get(link_name, None)
         if reference is not None:
-            self.__references_used.add(reference_name)
+            self.__references_used.add(link_name)
         return reference
 
     def new_reference(self):
         """Create a new reference to be used in the XML.
         """
         reference = self.__reference_service.new_reference(
-            self.version, u'document link')
-        self.__references[reference.__name__] = reference
-        self.__references_used.add(reference.__name__)
-        return reference
+            self.version, self.__reference_names)
+        link_name = unicode(uuid.uuid1())
+        reference.add_tag(link_name)
+        self.__references[link_name] = reference
+        self.__references_used.add(link_name)
+        return link_name, reference
 
     def begin_transform(self):
         """This method should be called by the Transformer before
@@ -83,16 +93,19 @@ class Context(object):
         """
         self.__references_used = set()
         self.__references = dict(map(
-                lambda r: (r.__name__, r),
-                self.__reference_service.get_references_from(self.version)))
+                lambda r: (r.tags[1], r),
+                filter(
+                    lambda r: r.tags[0] == self.__reference_names,
+                    self.__reference_service.get_references_from(
+                        self.version))))
 
     def finish_transform(self):
         """This method should be called by the Transformer after the
         transformation process is done. It should not be called by any
         node.
         """
-        for reference_name, reference in self.__references.items():
-            if reference_name not in self.__references_used:
+        for link_name, reference in self.__references.items():
+            if link_name not in self.__references_used:
                 # Reference has not been used, remove it.
                 del self.__reference_service.references[reference.__name__]
 

@@ -253,7 +253,7 @@ class link(SilvaElement):
                 href='reference',
                 target=getattr(self.attr,'target', None),
                 silva_target=reference.target_id,
-                silva_reference=reference.__name__)
+                silva_reference=reference_name)
 
         try:
             img = self.query_one('image')

@@ -580,8 +580,7 @@ class a(Element):
             # Case of a Silva reference used
             reference_name = str(self.getattr('silva_reference'))
             if reference_name == 'new':
-                reference = context.new_reference()
-                reference_name = reference.__name__
+                reference_name, reference = context.new_reference()
             else:
                 reference = context.get_reference(reference_name)
                 assert reference is not None, "Invalid reference"
@@ -596,7 +595,7 @@ class a(Element):
             window_target = self.getattr('target', default='')
             content = self.content.convert(context)
             return silva.link(
-                content, target=window_target, reference=reference.__name__)
+                content, target=window_target, reference=reference_name)
         elif self.hasattr('href'):
             # Old school links
             url = self.getattr('silva_href', None)
