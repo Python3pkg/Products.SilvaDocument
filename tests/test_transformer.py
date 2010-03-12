@@ -14,6 +14,9 @@ from Products.Silva.tests.SilvaTestCase import SilvaTestCase
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
+TEST_LINK_HTML = '<a silva_target="%d" href="reference" target="_blank" ' \
+    'silva_reference="%s">My link</a>'
+
 
 class KupuTransformerTest(SilvaTestCase):
     """Test HTML-Kupu transformer.
@@ -108,9 +111,10 @@ class KupuTransformerTest(SilvaTestCase):
         Silva.
         """
         target_id = component.getUtility(IIntIds).getId(self.root.folder)
-        base_html = '<a silva_target="%d" href="reference" target="_blank" ' \
-            'silva_reference="%s">My link</a>'
-        html = base_html % (target_id, 'new')
+        service = component.getUtility(IReferenceService)
+        self.assertEqual(list(service.get_references_to(self.root.folder)), [])
+
+        html = TEST_LINK_HTML % (target_id, 'new')
 
         node = self.transformer.to_source(targetobj=html, context=self.context)
         link = node.query_one('link')
@@ -123,18 +127,51 @@ class KupuTransformerTest(SilvaTestCase):
             '<link target="_blank" reference="%s">My link</link>' % (
                 reference_name))
 
-        service = component.getUtility(IReferenceService)
+        # We verify that the reference has been created.
         self.failUnless(reference_name in service.references.keys())
         reference = service.references[reference_name]
         self.assertEqual(reference.source, self.root.document.get_editable())
         self.assertEqual(reference.target, self.root.folder)
         self.assertEqual(reference.tags, [u"document link"])
+        self.assertEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference])
 
+        # We can get back the HTML with a reference name
         roundtrip = self.transformer.to_target(
             sourceobj=result, context=self.context).asBytes('utf-8')
-        self.assertEqual(roundtrip, base_html % (target_id, reference_name))
+        self.assertEqual(
+            roundtrip,
+            TEST_LINK_HTML % (target_id, reference_name))
 
+    def test_existing_link_round_trip(self):
+        """In that case a link already exist and is edited.
+        """
+        service = component.getUtility(IReferenceService)
+        reference = service.new_reference(
+            self.root.document.get_editable(), name=u"document link")
+        reference.set_target(self.root.folder)
+        self.assertEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference])
 
+        html = TEST_LINK_HTML % (reference.target_id, reference.__name__)
+
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+        self.assertEqual(
+            result,
+            '<link target="_blank" reference="%s">My link</link>' % (
+                reference.__name__))
+        # We still only have one reference to the folder
+        self.assertEqual(
+            list(service.get_references_to(self.root.folder)),
+            [reference])
+
+        # We can get back the HTML we started from
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+        self.assertEqual(roundtrip, html)
 
 
 
