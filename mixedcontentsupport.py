@@ -181,17 +181,19 @@ class ParagraphSupport(MixedContentSupport):
                 result.append(self._renderHtmlHelper(child, view_type))
                 result.append('</acronym>')
             elif child.nodeName == 'link':
+                version = self.aq_parent
                 if child.hasAttribute('reference'):
                     reference_name = child.getAttribute('reference')
                     service = component.getUtility(IReferenceService)
-                    reference = service.references[reference_name]
+                    reference = service.get_reference(
+                        version, name=reference_name)
                     url = reference.target.absolute_url()
                 else:
                     path = child.getAttribute('url')
                     if IContainer.providedBy(self.aq_parent):
-                        url = IPath(self.aq_parent.get_default()).pathToUrlPath(path)
+                        url = IPath(version.get_default()).pathToUrlPath(path)
                     else:
-                        url = IPath(self.aq_parent.get_content()).pathToUrlPath(path)
+                        url = IPath(version.get_content()).pathToUrlPath(path)
                 result.append('<a href="%s"' %  mangle.entities(url))
                 if child.hasAttribute('target'):
                     target = child.getAttribute('target')
