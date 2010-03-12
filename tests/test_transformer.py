@@ -3,10 +3,16 @@
 # $Id$
 
 import unittest
+from xml.parsers.expat import ExpatError
+
+from zope import component
+from zope.intid.interfaces import IIntIds
+from zope.publisher.browser import TestRequest
+from silva.core.references.interfaces import IReferenceService
+
 from Products.Silva.tests.SilvaTestCase import SilvaTestCase
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
-from xml.parsers.expat import ExpatError
 
 
 class KupuTransformerTest(SilvaTestCase):
@@ -15,10 +21,12 @@ class KupuTransformerTest(SilvaTestCase):
 
     def afterSetUp(self):
         self.add_document(self.root, 'document', 'Document')
+        self.add_folder(self.root, 'folder', 'Folder')
         self.transformer = Transformer.EditorTransformer(editor='kupu')
         # Context need the a document version in order to determine
         # references, and REQUEST to compute link URLs
-        self.context = Context(self.root.document.1, self.REQUEST)
+        request = TestRequest()
+        self.context = Context(self.root.document.get_editable(), request)
 
     def test_to_source(self):
         """Test conversion Kupu-format to Silva-format.
@@ -84,17 +92,50 @@ class KupuTransformerTest(SilvaTestCase):
         html = '<ul type="disc"><li><p class="normal">foo</p></li>' \
             '<ul type="disc"><li>bar</li></ul></ul>'
 
-        node = self.transformer.to_source(targetobj=html, context=self.context)
-        result = node.asBytes('utf-8')
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
         self.assertEqual(
             result,
             '<nlist type="disc"><li><p type="normal">foo</p>'
             '<list type="disc"><li>bar</li></list></li></nlist>')
 
-        node = self.transformer.to_target(sourceobj=ret, context=self.context)
-        roundtrip = node.asBytes('utf-8')
-
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
         self.assertEqual(roundtrip, html)
+
+    def test_new_link_round_trip(self):
+        """We create a new link which is a reference to a content in
+        Silva.
+        """
+        target_id = component.getUtility(IIntIds).getId(self.root.folder)
+        base_html = '<a silva_target="%d" href="reference" target="_blank" ' \
+            'silva_reference="%s">My link</a>'
+        html = base_html % (target_id, 'new')
+
+        node = self.transformer.to_source(targetobj=html, context=self.context)
+        link = node.query_one('link')
+        self.assertEqual(link.name(), 'link')
+        self.failUnless(link.hasattr('reference'))
+        reference_name = link.getattr('reference')
+        result = node.asBytes('utf-8')
+        self.assertEqual(
+            result,
+            '<link target="_blank" reference="%s">My link</link>' % (
+                reference_name))
+
+        service = component.getUtility(IReferenceService)
+        self.failUnless(reference_name in service.references.keys())
+        reference = service.references[reference_name]
+        self.assertEqual(reference.source, self.root.document.get_editable())
+        self.assertEqual(reference.target, self.root.folder)
+        self.assertEqual(reference.tags, [u"document link"])
+
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+        self.assertEqual(roundtrip, base_html % (target_id, reference_name))
+
+
+
 
 
 def test_suite():
