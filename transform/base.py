@@ -34,7 +34,8 @@ from zope import component
 def determine_browser_from_request(request):
     """Return browser name
     """
-    if (request is not None and request['HTTP_USER_AGENT'].find('MSIE') > -1):
+    if (request is not None and
+        request.get('HTTP_USER_AGENT', '').find('MSIE') > -1):
         return 'IE'
     return 'Mozilla'
 

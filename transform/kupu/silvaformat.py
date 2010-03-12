@@ -77,12 +77,10 @@ class silva_document(SilvaElement):
         body = html.body(
             html.h2(node_title.convert(context),
                     silva_origin='silva_document',
-                    silva_id=self.attr.id,
-                    ),
+                    silva_id=self.attr.id,),
             node_body.convert(context),
             self.backattr(),
-	      class_='editor',
-            )
+            class_='editor')
         return body
 
     def asBytes(self, *args, **kwargs):
