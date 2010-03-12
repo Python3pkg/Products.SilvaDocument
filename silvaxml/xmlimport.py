@@ -2,7 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Silva.silvaxml.xmlimport import SilvaBaseHandler, NS_URI, generateUniqueId, updateVersionCount
+from Products.Silva.silvaxml.xmlimport import (
+    SilvaBaseHandler, NS_URI, updateVersionCount)
 from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.Silva import mangle
 
@@ -12,14 +13,12 @@ from silva.core.services.interfaces import ICataloging
 DOC_NS_URI = 'http://infrae.com/namespace/silva-document'
 silvaconf.namespace(NS_URI)
 
-class DocumentHandler(SilvaBaseHandler):
 
+class DocumentHandler(SilvaBaseHandler):
     silvaconf.name('document')
 
     def getOverrides(self):
-        return {
-            (NS_URI, 'content'): DocumentContentHandler
-            }
+        return {(NS_URI, 'content'): DocumentContentHandler}
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'document'):
@@ -35,10 +34,9 @@ class DocumentHandler(SilvaBaseHandler):
 
 
 class DocumentContentHandler(SilvaBaseHandler):
+
     def getOverrides(self):
-        return{
-            (DOC_NS_URI, 'doc'): DocElementHandler,
-            }
+        return {(DOC_NS_URI, 'doc'): DocElementHandler, }
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'content'):
@@ -56,7 +54,9 @@ class DocumentContentHandler(SilvaBaseHandler):
             self.storeMetadata()
             self.storeWorkflow()
 
+
 class DocElementHandler(SilvaBaseHandler):
+
     def startElementNS(self, name, qname, attrs):
         if name == (DOC_NS_URI, 'doc'):
             self._node = self._parent.content.documentElement
@@ -77,15 +77,3 @@ class DocElementHandler(SilvaBaseHandler):
             self._node = None
         else:
             self._node = self._node.parentNode
-
-def generateUniqueId(org_id, context):
-        i = 0
-        id = org_id
-        ids = context.objectIds()
-        while id in ids:
-            i += 1
-            add = ''
-            if i > 1:
-                add = str(i)
-            id = 'import%s_of_%s' % (add, org_id)
-        return id

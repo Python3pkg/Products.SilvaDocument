@@ -2,22 +2,25 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Silva.silvaxml.xmlexport import theXMLExporter, VersionedContentProducer, SilvaBaseProducer
+from Products.SilvaExternalSources.ExternalSource import getSourceForId
+from Products.Silva.silvaxml.xmlexport import (
+    theXMLExporter, VersionedContentProducer, SilvaBaseProducer)
 from sprout.saxext.html2sax import saxify
 from Products.ParsedXML.DOM.Core import Node
-from Products.Silva.adapters import tocrendering
+from Products.SilvaDocument.i18n import translate as _
+from Products.SilvaDocument.Document import Document, DocumentVersion
+
 from silva.core.interfaces import IImage
 from silva.core.interfaces.adapters import IPath
-from Products.SilvaDocument.i18n import translate as _
 
 SilvaDocumentNS = 'http://infrae.com/namespace/silva-document'
+
 
 def initializeXMLExportRegistry():
     """Here the actual content types are registered. Non-Silva-Core content
     types probably need to register themselves in in their product
     __init__.pies
     """
-    from Products.SilvaDocument.Document import Document, DocumentVersion
     exporter = theXMLExporter
     exporter.registerNamespace('doc', SilvaDocumentNS)
     exporter.registerProducer(Document, DocumentProducer)
@@ -32,6 +35,7 @@ class DocumentProducer(VersionedContentProducer):
         self.workflow()
         self.versions()
         self.endElement('document')
+
 
 class DocumentVersionProducer(SilvaBaseProducer):
     """Export a version of a Silva Document object to XML.
@@ -49,10 +53,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
         attributes = {}
         if node.attributes:
             attributes = get_dict(node.attributes)
-        if node.nodeName == 'source' and node.parentNode.nodeName != 'cite': 	        
+        if node.nodeName == 'source':
             self.sax_source(node)
-        elif node.nodeName == 'toc' and self.getSettings().externalRendering():
-            self.sax_toc(node)
         elif node.nodeName == 'table':
             self.sax_table(node)
         elif node.nodeName == 'image':
@@ -74,47 +76,45 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     self.handler.characters(child.nodeValue)
             elif child.nodeType == Node.ELEMENT_NODE:
                 self.sax_node(child)
-        
+
     def sax_source(self, node):
-        #simple output reporting to emulate behavior of widgets renderer
+        # simple output reporting to emulate behavior of widgets renderer
         def source_error(thiserror):
             html = ['<div class="warning"><strong>[',
                     unicode(_("external source element is broken")),
                     ']</strong><br />',
-                    thiserror,
+                    unicode(thiserror),
                     '</div>']
             self.render_html("".join(html))
             self.endElementNS(SilvaDocumentNS, node.nodeName)
+
         attributes = {}
         if node.attributes:
             attributes = get_dict(node.attributes)
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
         try:
-            from Products.SilvaExternalSources.ExternalSource import getSourceForId 	 
-        except ImportError:
-            source_error(unicode(_("external source element specified but silvaexternalsources not installed!")))
-            return
-        try: #this can happen if no source was specified when the element was added
+            # this can happen if no source was specified when the
+            # element was added
             id = attributes['id']
         except KeyError:
-            source_error(unicode(_("no external source specified")))
+            source_error(_("no external source specified"))
             return
         source = getSourceForId(self.context.get_content(), id)
-        parameters = {} 	 
-        for child in node.childNodes: 	 
+        parameters = {}
+        for child in node.childNodes:
             if child.nodeName == 'parameter':
                 attributes = {'key': child.attributes['key'].value}
                 param_type = child.attributes.get('type')
                 if param_type:
                     attributes['type'] = param_type.value
                 self.startElementNS(SilvaDocumentNS, 'parameter', attributes)
-                for grandChild in child.childNodes: 	 
-                    text = '' 	 
-                    if grandChild.nodeType == Node.TEXT_NODE: 	 
-                        if grandChild.nodeValue: 	 
+                for grandChild in child.childNodes:
+                    text = ''
+                    if grandChild.nodeType == Node.TEXT_NODE:
+                        if grandChild.nodeValue:
                             self.handler.characters(grandChild.nodeValue)
                             text = text + grandChild.nodeValue
-                    parameters[str(child.attributes['key'].value)] = text 	 
+                    parameters[str(child.attributes['key'].value)] = text
                 self.endElementNS(SilvaDocumentNS, 'parameter')
         if self.getSettings().externalRendering():
             request = self.context.REQUEST
@@ -122,7 +122,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             try:
                 html = source.to_html(request, **parameters)
             except Exception, err:
-                if source and hasattr(source.aq_explicit,'log_traceback'):
+                if source and hasattr(source.aq_explicit, 'log_traceback'):
                     source.log_traceback()
                 source_error(unicode(_("error message:")) + " " + str(err))
                 return
@@ -133,7 +133,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 request.set('model', None)
             self.render_html(html)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
-             
+
     def sax_table(self, node):
         attributes = {}
         if node.attributes:
@@ -146,7 +146,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             width = column.get('html_width')
             if width:
                 col_attributes['width'] = width
-            self.startElementNS(SilvaDocumentNS, 'col' , col_attributes)
+            self.startElementNS(SilvaDocumentNS, 'col', col_attributes)
             self.endElementNS(SilvaDocumentNS, 'col')
         if node.hasChildNodes():
             row = 0
@@ -164,7 +164,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if node.hasChildNodes():
             self.sax_children(node)
         self.endElementNS(SilvaDocumentNS, 'row_heading')
-        
+
     def sax_row(self, node, row, columns_info):
         child_attrs = {'class': row % 2 and "odd" or "even"}
         self.startElementNS(SilvaDocumentNS, 'row', child_attrs)
@@ -175,7 +175,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     self.sax_field(child, columns_info[col])
                     col += 1
         self.endElementNS(SilvaDocumentNS, 'row')
-        
+
     def sax_field(self, node, col_info):
         child_attrs = {'class': 'align-' + col_info['align'],
                        'fieldtype': node.getAttribute('fieldtype') or 'td'}
@@ -188,7 +188,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     if child.nodeValue:
                         self.handler.characters(child.nodeValue)
                 else:
-                    # XXX UGLY EVIL HACK to make this behave the same as 
+                    # XXX UGLY EVIL HACK to make this behave the same as
                     # the widget renderer, i.e. remove the tags of the
                     # first child if it is a <p>
                     if child is node.firstChild and child.nodeName == 'p':
@@ -206,7 +206,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                         else:
                             self.sax_node(child)
         self.endElementNS(SilvaDocumentNS, 'field')
-        
+
     def get_columns_info(self, node):
         columns = int(node.getAttribute('columns'))
         if node.hasAttribute('column_info'):
@@ -214,12 +214,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
         else:
             result = []
             for i in range(columns):
-                result.append({'align': 'left', 'width': 1, 'html_width':'%s%%' % (100/columns) })
+                result.append({'align': 'left', 'width': 1,
+                               'html_width': '%s%%' % (100 / columns)})
             node.REQUEST.set('columns_info', result)
             return result
 
-        lookup = { 'L':'left', 'C':'center', 'R': 'right' }
-        
+        lookup = {'L': 'left', 'C': 'center', 'R': 'right'}
+
         result = []
         for info in column_info.split():
             info = info.split(':')
@@ -255,7 +256,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             average = total / len(result)
             if average > 0:
                 for i in range(columns - len(result)):
-                    result.append({'align': 'left', 'width': average })
+                    result.append({'align': 'left', 'width': average})
 
         # calculate percentages
         total = 0
@@ -263,35 +264,12 @@ class DocumentVersionProducer(SilvaBaseProducer):
             total += info.get('width', 0)
         for info in result:
             if info.get('width'):
-                percentage = int((float(info['width'])/total) * 100)
+                percentage = int((float(info['width']) / total) * 100)
                 info['html_width'] = '%s%%' % percentage
         return result
-        
-    def sax_toc(self, node):
-        attributes = {}
-        if node.attributes:
-            attributes = get_dict(node.attributes)
-        self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
-        # default depth of -1
-        depth = attributes.get('toc_depth',-1)
-        toc_context = self.context
-        depth = int(depth)
-
-        # hack to get the right context for the toc, in case we're
-        # rendering a ghost. The toc in a ghosted document actually
-        # renders a table of contents for the context of the ghost
-        request = getattr(self.context, 'REQUEST', None)
-        if request is not None:
-            ghost_model = getattr(request, 'ghost_model', None)
-            if ghost_model is not None:
-                toc_context = ghost_model
-
-        tocadapter = tocrendering.getTOCRenderingAdapter(toc_context)
-        self.render_html(tocadapter.render_tree(depth))
-        self.endElementNS(SilvaDocumentNS, node.nodeName)
 
     def sax_img(self, node):
-        """Unfortunately <image> is a special case, since height and width 
+        """Unfortunately <image> is a special case, since height and width
         are not stored in the document but in the Image object itself, and
         need to be retrieved here.
         """
@@ -322,12 +300,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
             attributes['alignment'] = 'default'
         self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
         self.endElementNS(SilvaDocumentNS, node.nodeName)
-        
+
     def render_html(self, html):
         self.startElementNS(SilvaDocumentNS, 'rendered_html')
         saxify(html, self.handler)
         self.endElementNS(SilvaDocumentNS, 'rendered_html')
-       
+
+
 def get_dict(attributes):
     result = {}
     for key in attributes.keys():
