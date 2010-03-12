@@ -843,21 +843,7 @@ class div(Element):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         self.should_be_removed = 1
-        if self.attr.toc_depth:
-            toc_depth = int(str(self.attr.toc_depth))
-            if toc_depth > 0:
-                toc_depth -= 1
-            return silva.toc(
-                toc_depth=toc_depth
-            )
-        elif self.getattr('is_citation', None):
-            content = fix_structure(self.content, context)
-            return silva.cite(
-                [silva.author(self.attr.author),
-                silva.source(self.attr.source),
-                Frag(content)]
-            )
-        elif self.attr.source_id:
+        if self.attr.source_id:
             content = []
             params = {}
             for thing in self.find():

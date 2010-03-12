@@ -327,8 +327,8 @@ class index(SilvaElement):
             text,
             name=name,
             title=title,
-            class_='index',
-        )
+            class_='index',)
+
 
 class image(SilvaElement):
     def convert(self, context):
@@ -413,8 +413,8 @@ class pre(SilvaElement):
 
     def convert(self, context):
         return html.pre(
-            self.content.convert(context),
-        )
+            self.content.convert(context),)
+
 
 class table(SilvaElement):
     alignmapping = {'L': 'left',
@@ -459,6 +459,7 @@ class table(SilvaElement):
             return ([], [])
         return aligns, relwidths
 
+
 class row(SilvaElement):
     def convert(self, context):
         relwidths = context.tablestack[-1].relwidths
@@ -496,10 +497,9 @@ class row_heading(SilvaElement):
         cols = context.tablestack[-1].cols
         return html.tr(
             html.th(
-               self.content.convert(context),
-               colspan = str(cols)
-            )
-        )
+                self.content.convert(context),
+                colspan = str(cols)))
+
 
 class field(SilvaElement):
     def convert(self, context):
@@ -512,130 +512,88 @@ class field(SilvaElement):
         if colspan:
             kw['colspan'] = colspan
         return c(
-            self.content.convert(context), **kw
-        )
+            self.content.convert(context), **kw)
 
-class toc(SilvaElement):
-    def convert(self, context):
-        depth = self.attr.toc_depth
-        if not depth:
-            depth = "-1"
-        else:
-            depth = str(depth)
-        multiple_s = 's'
-        if int(depth) == 0:
-            depth_string = '1'
-            multiple_s = ''
-        if int(depth) == -1:
-            depth_string = 'unlimited'
-        else:
-            depth = int(depth) + 1
-            depth_string = depth
-        return html.div(
-            Text('Table of Contents (%s level%s)' % (depth_string, multiple_s)),
-            toc_depth = depth,
-            class_ = 'toc',
-            is_toc = '1'
-        )
-
-class cite(SilvaElement):
-    def convert(self, context):
-        author = self.find('author')[0].convert(context)
-        source = self.find('source')[0].convert(context)
-        content = [p.convert(context) for p in self.find('p')]
-
-        return html.div(
-            content,
-            author=author,
-            source=source,
-            class_='citation',
-            is_citation='1',
-        )
-
-class author(SilvaElement):
-    def convert(self, context):
-        return self.content.convert(context)
 
 class source(SilvaElement):
     def convert(self, context):
-        if not self.hasattr('id'):
-            # source element of a citation element
-            return self.content.convert(context)
+        # external source element
+        id = self.attr.id
+        params = {}
+        attrparams = {}
+        divcontent = []
+        source = getSourceForId(context.model, str(id))
+        if source is not None:
+            meta_type = source.meta_type
+            source_title = source.get_title() or id
+            header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
+                             title=u'source id: %s'%id)
+            desc = source.description()
+            if desc:
+                divcontent.append(
+                    html.p(desc, class_="externalsource-description"))
         else:
-            # external source element
-            id = self.attr.id
-            params = {}
-            attrparams = {}
-            divcontent = []
-            source = getSourceForId(context.model, str(id))
+            source_title = ''
+            header = html.h4(
+                Text('[%s]' % _('external source element is broken')))
+        for child in self.find():
+            if child.name() == 'parameter':
+                vtype = child.getattr('type', 'string').convert(context).extract_text()
+                value = child.content.convert(context).asBytes('utf-8')
+                key = child.attr.key.convert(context).extract_text()
+                attrkey = '%s__type__%s' % (key,vtype)
+                if vtype == 'list':
+                    value = [unicode(x, 'utf-8') for x in eval(value)]
+                else:
+                    value = unicode(value, 'utf-8')
+                params[key] = (value,attrkey)
+        divpar = []
+        for key in params:
+            value,attrkey = params[key]
             if source is not None:
-                meta_type = source.meta_type
-                source_title = source.get_title() or id
-                header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
-                                 title=u'source id: %s'%id)
-                desc = source.description()
-                if desc:
-                    divcontent.append(html.p(desc,class_="externalsource-description"))
+                display_key = source.form().get_field(key).title()
             else:
-                source_title = ''
-                header = html.h4(Text('[%s]' % _('external source element is broken')))
-            for child in self.find():
-                if child.name() == 'parameter':
-                    vtype = child.getattr('type', 'string').convert(context).extract_text()
-                    value = child.content.convert(context).asBytes('utf-8')
-                    key = child.attr.key.convert(context).extract_text()
-                    attrkey = '%s__type__%s' % (key,vtype)
-                    if vtype == 'list':
-                        value = [unicode(x, 'utf-8') for x in eval(value)]
-                    else:
-                        value = unicode(value, 'utf-8')
-                    params[key] = (value,attrkey)
-            divpar = []
-            for key in params:
-                value,attrkey = params[key]
-                if source is not None:
-                    display_key = source.form().get_field(key).title()
-                else:
-                    display_key = key
-                divpar.append(
-                    html.strong("%s: " % display_key))
-                if '__type__list' in attrkey:
-                    for v in value:
-                        divpar.append(html.span(
-                            Text(xml_unescape(v)), {'key': attrkey}))
-                        divpar.append(Text(', '))
-                    divpar.pop()
-                else:
+                display_key = key
+            divpar.append(html.strong("%s: " % display_key))
+            if '__type__list' in attrkey:
+                for v in value:
                     divpar.append(html.span(
+                            Text(xml_unescape(v)), {'key': attrkey}))
+                    divpar.append(Text(', '))
+                divpar.pop()
+            else:
+                divpar.append(html.span(
                         Text(xml_unescape(value)), {'key': attrkey}))
-                divpar.append(html.br());
-            par = html.div(Frag(divpar), {'class': 'parameters'})
-            divcontent.append(par)
+            divpar.append(html.br());
+        par = html.div(Frag(divpar), {'class': 'parameters'})
+        divcontent.append(par)
 
-            content = Frag(header, divcontent);
-            return html.div(content,
+        content = Frag(header, divcontent);
+        return html.div(content,
                         source_id=id,
                         source_title = source_title,
                         class_='externalsource',
                         **attrparams)
 
+
 class parameter(SilvaElement):
     def convert(self):
         return Frag()
 
+
 class abbr(SilvaElement):
     def convert(self, context):
         return html.abbr(
-                self.content.convert(context),
-                title=self.attr.title
-            )
+            self.content.convert(context),
+            title=self.attr.title)
+
 
 class acronym(SilvaElement):
     def convert(self, context):
         return html.acronym(
-                self.content.convert(context),
-                title=self.attr.title
-            )
+            self.content.convert(context),
+            title=self.attr.title)
+
 
 def mixin_paragraphs(container):
     """ wrap silva.p node around text"""
