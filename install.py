@@ -19,12 +19,23 @@ def configureMiscServices(root):
     # add editor support service
     EditorSupportNested.manage_addEditorSupport(root)
 
+
+def configureAddables(root):
+    addables = ['Silva Document']
+    new_addables = root.get_silva_addables_allowed_in_container()
+    for a in addables:
+        if a not in new_addables:
+            new_addables.append(a)
+    root.set_silva_addables_allowed_in_container(new_addables)
+
+
 def install(root):
     # create the core views from filesystem
     add_fss_directory_view(root.service_views,
                            'SilvaDocument', __file__, 'views')
     # also register views
     registerViews(root.service_view_registry)
+    configureAddables(root)
 
     # configure XML widgets
     configureXMLWidgets(root)
@@ -44,10 +55,10 @@ def install(root):
     root.service_containerpolicy.register(
         'Silva Document', Document.SilvaDocumentPolicy, -1)
 
-    if hasattr(root, 'service_codesource_charset'):
+    if hasattr(root.aq_explicit, 'service_codesource_charset'):
         root.manage_renameObject(
             'service_codesource_charset', 'service_old_codesource_charset')
-    elif not hasattr(root, 'service_old_codesource_charset'):
+    elif not hasattr(root.aq_explicit, 'service_old_codesource_charset'):
         root.manage_addProduct[
             'SilvaDocument'].manage_addCodeSourceCharsetService(
             'service_old_codesource_charset', 'Service Charset for Codesources')
