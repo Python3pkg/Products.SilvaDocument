@@ -2,30 +2,48 @@
 # See also LICENSE.txt
 # $Id$
 
-# This module contains code to integrate the SilvaExternalSources extension
-# with the SilvaDocument extension. The Document and its widgets make use
-# of this module instead of directly using the SilvaExternalSources code.
-try:
-    from Products.SilvaExternalSources import ExternalSource
-    AVAILABLE = 1
-except ImportError:
-    AVAILABLE = 0
-    
-    def availableSources(context):
-        return []
-    
-    def getSourceForId(context, id):
-        return None
-    
-    def isSourceCacheable(context, node):
-        return 1
-    
-    def getSourceParameters(context, node):
-        return {}
-else:
-    from _externalsource import getSourceParameters, isSourceCacheable
-    
-    availableSources = ExternalSource.availableSources
+from Products.SilvaExternalSources.ExternalSource import availableSources
+from Products.SilvaExternalSources.ExternalSource import getSourceForId
 
-    getSourceForId = ExternalSource.getSourceForId
+def getSourceParameters(context, node):
+    """ Extract parameter values for the external source from
+    the Document's XML node.
+    """
+    parameters = {}
+    for child in [child for child in node.childNodes
+              if child.nodeType == child.ELEMENT_NODE
+              and child.nodeName == 'parameter']:
+        child.normalize()
+        name = child.getAttribute('key').encode('ascii')
+        type = child.getAttribute('type') or 'string'
+        value = [child.nodeValue for child in child.childNodes
+                 if child.nodeType == child.TEXT_NODE]
+        value = ' '.join(value)
+        # XXX currently we only treat type="list" in a different manner,
+        # non-string values are ignored (not sure if they should be dealt with
+        # too, actually)
+        if type == 'list':
+            # XXX evil eval, same in Formulator, though
+            value = eval(value)
+        elif type == 'boolean':
+            try:
+                value = int(value)
+            except ValueError: #if it's not a number, assume false
+                value = 0
+        parameters[name] = value
+    return parameters
+
+
+def isSourceCacheable(context, node):
+    """ Helps to see if the Document using an external source
+    defined in the XML node is cacheable.
+    """
+    id = node.getAttribute('id').encode('ascii')
+    source = getSourceForId(context, id)
+    if source is None:
+        return 1
+    parameters = getSourceParameters(context, node)
+    is_cacheable = source.is_cacheable(**parameters)
+    return is_cacheable
+
 

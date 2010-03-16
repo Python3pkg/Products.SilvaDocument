@@ -11,8 +11,6 @@ from silva.core.interfaces import IInvisibleService
 from Products.SilvaDocument import Document
 import EditorSupportNested
 
-from Products.SilvaDocument import externalsource
-
 _ = lambda x: x
 
 def configureMiscServices(root):
@@ -158,13 +156,12 @@ def registerDocEditor(root):
     wr.setAllowed('doc', [
         'p', 'heading', 'list', 'dlist', 'pre', 'image', 'table', 'nlist'])
 
-    if externalsource.AVAILABLE:
-        wr.addWidget('source', (
+    wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_normal'))
-        wr.setDisplayName('source', _('external source'))
-        allowed = wr.getAllowed('doc')
-        allowed.append('source')
-        wr.setAllowed('doc', allowed)
+    wr.setDisplayName('source', _('external source'))
+    allowed = wr.getAllowed('doc')
+    allowed.append('source')
+    wr.setAllowed('doc', allowed)
 
 def registerDocViewer(root):
     wr = root.service_doc_viewer
@@ -177,8 +174,7 @@ def registerDocViewer(root):
         wr.addWidget(name, ('service_widgets', 'element', 'doc_elements',
                                  name, 'mode_view'))
 
-    if externalsource.AVAILABLE:
-        wr.addWidget('source', (
+    wr.addWidget('source', (
             'service_widgets', 'element', 'doc_elements', 'source', 'mode_view'))
 
 
