@@ -8,6 +8,7 @@ from silva.core import conf as silvaconf
 
 silvaconf.extensionName('SilvaDocument')
 silvaconf.extensionTitle('Silva Document')
+silvaconf.extensionDepends('SilvaExternalSources')
 
 def initialize(context):
     from Products.SilvaDocument.silvaxml import xmlexport
