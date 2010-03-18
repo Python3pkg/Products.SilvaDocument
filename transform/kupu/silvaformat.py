@@ -242,15 +242,17 @@ class sub(SilvaElement):
             )
 
 class link(SilvaElement):
+
     def convert(self, context):
         if self.hasattr('reference'):
             # We have a reference
             reference_name = str(self.getattr('reference'))
-            reference = context.get_reference(reference_name)
+            reference_name, reference = context.get_reference(reference_name)
             assert reference is not None, "Invalid reference"
             return html.a(
                 self.content.convert(context),
                 href='reference',
+                title=getattr(self.attr, 'title', None),
                 target=getattr(self.attr,'target', None),
                 silva_target=reference.target_id,
                 silva_reference=reference_name)
@@ -267,7 +269,8 @@ class link(SilvaElement):
                 self.content.convert(context),
                 href=path,
                 silva_href=path,
-                target=getattr(self.attr,'target', None))
+                title=getattr(self.attr, 'title', None),
+                target=getattr(self.attr, 'target', None))
         else:
             path = img.getattr('path')
             pad = pathadapter.getPathAdapter(context.model.REQUEST)

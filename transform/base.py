@@ -70,10 +70,12 @@ class Context(object):
     def get_reference(self, link_name):
         """Retrieve an existing reference used in the XML.
         """
+        if link_name == 'new':
+            return self.new_reference()
         reference = self.__references.get(link_name, None)
         if reference is not None:
             self.__references_used.add(link_name)
-        return reference
+        return link_name, reference
 
     def new_reference(self):
         """Create a new reference to be used in the XML.

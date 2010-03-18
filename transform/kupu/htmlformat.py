@@ -225,25 +225,40 @@ def fix_allowed_items_in_heading(items, context):
             fixedrest.append(item.convert(context))
     return fixedrest
 
+
+# Element to ignore
+class head(Element):
+
+    def convert(self, context):
+        return Frag()
+
+
+class script(Element):
+
+    def convert(self, context):
+        return Frag()
+
+
+class style(Element):
+
+    def convert(self, context):
+        return Frag()
+
+
+# Document elements
 class html(Element):
+
     def convert(self, context):
         """ forward to the body element ... """
         context.title = ''
         bodytag = self.find('body')[0]
         return bodytag.convert(context)
 
-class head(Element):
-    def convert(self, context):
-        """ ignore """
-        return Frag()
-
-class script(Element):
-    def convert(self, context):
-        """ignore"""
-        return Frag()
 
 class body(Element):
-    """html-body element"""
+    """html-body element
+    """
+
     def convert(self, context):
         """ contruct a silva_document with id and title
             either from information found in the html-nodes
@@ -269,105 +284,69 @@ class body(Element):
 
         return silva.silva_document(
                 silva.title(title),
-                silva.doc(
-                    fixedrest
-                ),
-            )
+                silva.doc(fixedrest))
+
 
 class h1(Element):
-    def convert(self, context):
-        if hasattr(self, 'should_be_removed') and self.should_be_removed:
-            return Frag()
-        fixedcontent = fix_allowed_items_in_heading(self.find(), context)
-        result = silva.heading(
-            fixedcontent,
-            type='normal'
-        )
-        return result
+    """Headers h1 are rendered as normal Silva headers.
+    """
+    header_type = 'normal'
 
-class h2(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         fixedcontent = fix_allowed_items_in_heading(self.find(), context)
-        result = silva.heading(
-            fixedcontent,
-            type="normal"
-            )
-        return result
+        return silva.heading(fixedcontent, type=self.header_type)
 
-class h3(Element):
-    ""
-    def convert(self, context):
-        if hasattr(self, 'should_be_removed') and self.should_be_removed:
-            return Frag()
-        fixedcontent = fix_allowed_items_in_heading(self.find(), context)
-        result = silva.heading(
-            fixedcontent,
-            type="normal"
-            )
-        return result
 
-class h4(h3):
-    ""
-    def convert(self, context):
-        if hasattr(self, 'should_be_removed') and self.should_be_removed:
-            return Frag()
-        fixedcontent = fix_allowed_items_in_heading(self.find(), context)
-        result = silva.heading(
-            fixedcontent,
-            type="sub"
-            )
-        return result
+class h2(h1):
+    """Headers h2 are rendered as normal Silva headers.
+    """
+    pass
+
+
+class h3(h1):
+    """Headers h3 are rendered as normal Silva headers.
+    """
+    pass
+
+
+class h4(h1):
+    """Header h4 are rendered as sub Silva headers.
+    """
+    header_type = 'sub'
+
 
 class h5(h3):
-    """ List heading """
-    def convert(self, context):
-        """ return a normal heading. note that the h5-to-title
-            conversion is done by the html list-tags themselves.
-            Thus h5.convert is only called if there is no
-            list context and therefore converted to a subheading.
-        """
-        if hasattr(self, 'should_be_removed') and self.should_be_removed:
-            return Frag()
-        fixedcontent = fix_allowed_items_in_heading(self.find(), context)
-        result = silva.heading(
-            fixedcontent,
-            type="subsub",
-            )
-        return result
+    """Header h4 are rendered as subsub Silva headers.
+    """
+    header_type = 'subsub'
 
-class h6(h3):
+
+class h6(h1):
+    header_type = 'paragraph'
+
     def convert(self, context):
-        """ this only gets called if the user erroronaously
-            used h6 somewhere
+        """This only gets called if the user erroneously
+        used h6 somewhere.
         """
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         fixedcontent = fix_allowed_items_in_heading(self.find(), context)
-        eltype = 'paragraph'
         if (hasattr(self, 'attr') and hasattr(self.attr, 'silva_type')
-                    and self.attr.silva_type == 'sub'):
-            eltype = 'subparagraph'
+            and self.attr.silva_type == 'sub'):
+            self.header_type = 'subparagraph'
         result = silva.heading(
-            fixedcontent,
-            type=eltype,
-            )
+            fixedcontent, type=self.header_type)
         return result
 
-class h7(h3):
-    def convert(self, context):
-        """ this only gets called if the user erroronaously
-            used h6 somewhere
-        """
-        if hasattr(self, 'should_be_removed') and self.should_be_removed:
-            return Frag()
-        fixedcontent = fix_allowed_items_in_heading(self.find(), context)
-        result = silva.heading(
-            fixedcontent,
-            type="subparagraph",
-            )
-        return result
+
+class h7(h1):
+    """Header h7 (is it HTML ?) are rendered as subparagraph Silva headers.
+    """
+    header_type = 'subparagraph'
+
+
 
 class p(Element):
     """ the html p element can contain nodes which are "standalone"
@@ -383,10 +362,9 @@ class p(Element):
                 type = self.getattr('silva_type', 'normal')
                 if type not in ['normal', 'lead', 'annotation']:
                     type = 'normal'
-                return silva.p(self.content.convert(context),
-                                    type=type)
-        return Frag(
-        )
+                return silva.p(self.content.convert(context), type=type)
+        return Frag()
+
 
 class ul(Element):
     """ difficult list conversions.
@@ -448,10 +426,7 @@ class ul(Element):
             if el.name() == 'li':
                 lis.append(el.convert(context, 1))
 
-        return silva.list(
-            lis,
-            type=type
-        )
+        return silva.list(lis, type=type)
 
     def convert_nlist(self, context):
 
@@ -475,9 +450,7 @@ class ul(Element):
                 else:
                     lis.append(silva.li(el.convert(context)))
 
-        return silva.nlist(
-            lis,
-            type=type)
+        return silva.nlist(lis, type=type)
 
     def get_type(self):
         curtype = getattr(self.attr, 'type', None)
@@ -489,9 +462,11 @@ class ul(Element):
             curtype = self.default_types.get(curtype, self.default_type)
         return curtype
 
+
 class ol(ul):
     default_types = ('1', 'a', 'A', 'i', 'I')
     default_type = '1'
+
 
 class li(Element):
     def convert(self, context, parentislist=0):
@@ -510,54 +485,62 @@ class li(Element):
 
         if context.listtype == 'nlist':
             content = fix_structure(self.find(), context)
-            return silva.li(
-                        Frag(content)
-                    )
+            return silva.li(Frag(content))
         else:
             content = []
             for child in children:
                 content.append(child.convert(context))
-            return silva.li(
-                content
-            )
+            return silva.li(content)
 
+
+# Text formatting elements
 class strong(Element):
+
     def convert(self, context):
-        return silva.strong(
-            self.content.convert(context),
-            )
+        return silva.strong(self.content.convert(context))
+
 
 class b(strong):
     pass
 
+
 class em(Element):
+
     def convert(self, context):
-        return silva.em(
-            self.content.convert(context),
-            )
+        return silva.em(self.content.convert(context))
+
 
 class i(em):
     pass
 
+
 class u(Element):
+
     def convert(self, context):
-        return silva.underline(
-            self.content.convert(context),
-            )
+        return silva.underline(self.content.convert(context))
+
 
 class sup(Element):
+
     def convert(self, context):
-        return silva.super(
-            self.content.convert(context),
-            )
+        return silva.super(self.content.convert(context),)
+
 
 class sub(Element):
-    def convert(self, context):
-        return silva.sub(
-            self.content.convert(context),
-            )
 
+    def convert(self, context):
+        return silva.sub(self.content.convert(context))
+
+
+class br(Element):
+
+    def convert(self, context):
+        return silva.br()
+
+
+# Link and images
 class a(Element):
+
     def convert(self, context):
         title = self.getattr('title', default='')
         name = self.getattr('name', default=None)
@@ -579,11 +562,8 @@ class a(Element):
         elif self.hasattr('silva_reference'):
             # Case of a Silva reference used
             reference_name = str(self.getattr('silva_reference'))
-            if reference_name == 'new':
-                reference_name, reference = context.new_reference()
-            else:
-                reference = context.get_reference(reference_name)
-                assert reference is not None, "Invalid reference"
+            reference_name, reference = context.get_reference(reference_name)
+            assert reference is not None, "Invalid reference"
             target_id = self.getattr('silva_target', '0')
             try:
                 target_id = int(str(target_id))
@@ -595,7 +575,10 @@ class a(Element):
             window_target = self.getattr('target', default='')
             content = self.content.convert(context)
             return silva.link(
-                content, target=window_target, reference=reference_name)
+                content,
+                target=window_target,
+                title=title,
+                reference=reference_name)
         elif self.hasattr('href'):
             # Old school links
             url = self.getattr('silva_href', None)
@@ -606,8 +589,6 @@ class a(Element):
                 pad = pathadapter.getPathAdapter(context.model.REQUEST)
                 url = Text(pad.urlToPath(unicode(url)))
             target = getattr(self.attr, 'target', '')
-            #if target is None:
-            #    target = ''
 
             try:
                 img = self.query_one('img')
@@ -617,8 +598,7 @@ class a(Element):
                     content,
                     url=url,
                     target=target,
-                    title=title,
-                    )
+                    title=title)
             else:
                 image = img.convert(context)
                 if not image:
@@ -649,13 +629,9 @@ class a(Element):
             return Frag()
 
 
-class style(Element):
-
-    def convert(self, context):
-        return Frag()
-
 class img(Element):
-    def convert(self, context):
+ 
+   def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         from urlparse import urlparse
@@ -699,8 +675,7 @@ class img(Element):
                         alignment = alignment,
                         target = self.getattr('target', '_self'),
                         link_to_hires = '1',
-                        title = self.getattr('title', ''),
-                    )
+                        title = self.getattr('title', ''))
         else:
             return silva.image(
                         self.content.convert(context),
@@ -709,23 +684,21 @@ class img(Element):
                         alignment = alignment,
                         target = self.getattr('target', '_self'),
                         link_to_hires = '0',
-                        title = self.getattr('title', ''),
-                    )
+                        title = self.getattr('title', ''))
 
-class br(Element):
-    def convert(self, context):
-        return silva.br()
 
 class pre(Element):
+
     def compact(self):
+        """Don't remove any spaces
+        """
         return self
 
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
-        return silva.pre(
-            extract_texts(self.content, context)
-        )
+        return silva.pre(extract_texts(self.content, context))
+
 
 class table(Element):
     alignmapping = {'left': 'L',
@@ -789,13 +762,11 @@ class tr(Element):
         if len(uc_cells) == 1 and uc_cells[0].__class__.__name__=='th':
             texts = extract_texts(self, context, 1)
             return silva.row_heading(
-                texts
-            )
+                texts)
         else: #it is a normal table row
             cells = [e.convert(context, 1) for e in self.find(('td','th'))]
             return silva.row(
-                cells
-            )
+                cells)
 
 class td(Element):
     def convert(self, context, parentisrow=0):
@@ -808,13 +779,11 @@ class td(Element):
             return silva.field(
                 fixedrest,
                 fieldtype='td',
-                colspan=colspan
-            )
+                colspan=colspan)
         else:
             return silva.field(
                 fixedrest,
-                fieldtype='td'
-            )
+                fieldtype='td')
 
 class th(Element):
     def convert(self, context, parentisrow=0):
@@ -827,13 +796,11 @@ class th(Element):
             return silva.field(
                 fixedrest,
                 fieldtype='th',
-                colspan=colspan
-            )
+                colspan=colspan)
         else:
             return silva.field(
                 fixedrest,
-                fieldtype='th'
-            )
+                fieldtype='th')
 
 class div(Element):
     def convert(self, context):
@@ -890,13 +857,17 @@ class div(Element):
     def do_not_fix_content(self):
         return 1
 
+
 class span(Element):
+
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         return Frag(extract_texts(self.content, context))
 
+
 class dl(Element):
+
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
@@ -919,47 +890,26 @@ class dl(Element):
         return silva.dlist(Frag(children))
 
 class dt(Element):
+
     def convert(self, context):
         return silva.dt(self.content.convert(context))
 
 class dd(Element):
+
     def convert(self, context):
         return silva.dd(self.content.convert(context))
 
 class abbr(Element):
+
     def convert(self, context):
         return silva.abbr(
-                self.content.convert(context),
-                title=self.attr.title
-            )
+            self.content.convert(context),
+            title=self.attr.title)
 
 class acronym(Element):
+
     def convert(self, context):
         return silva.acronym(
                 self.content.convert(context),
-                title=self.attr.title
-            )
+                title=self.attr.title)
 
-"""
-current mapping of tags with silva
-h1  :  not in use, reserved for (future) Silva publication
-       sections and custom templates
-h2  :  title
-h3  :  heading
-h4  :  subhead
-h5  :  list title
-"""
-
-def debug_hook():
-    from transform.Transformer import EditorTransformer
-    from transform.base import Context
-    data = '<html><head><title>Foo</title></head><body><p><ol><li>foo<ol><li>bar</li></ol></li></ol></p></body></html>'
-    data = '<html><head><title>Whatever</title></head><body><h2>foo</h2><ol type="1"><li>dfsfd</li><li>sdfdfs</li><ol><li>dsklfsdfjsfldk</li></ol><li>fsdsdf</li></ol></body></html>'
-    ctx = Context(url='http://debris.demon.nl/foo.html')
-    transformer = EditorTransformer(editor='kupu')
-    node = transformer.to_source(targetobj=data, context=ctx)[0]
-    output = node.asBytes(encoding='UTF-8')
-    print output
-
-if __name__ == '__main__':
-    debug_hook()
