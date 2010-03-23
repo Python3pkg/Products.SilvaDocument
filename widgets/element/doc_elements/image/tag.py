@@ -14,20 +14,13 @@ from Products.SilvaDocument.i18n import translate as _
 node = context.REQUEST.node
 image = context.content()
 
-if not image:
+if image is None:
     return '<div class="error">[' + unicode(_('image reference is broken')) + ']</div>'
 
 alignment = node.getAttribute('alignment')
-link = node.getAttribute('link')
-link_title = node.getAttribute('title')
-target = node.getAttribute('target')
-link_to_hires = node.getAttribute('link_to_hires')
 
 if not alignment:
     alignment = 'default'
-
-if not link_title:
-    link_title = image.get_title()
 
 tag_template = '%s'
 if alignment.startswith('image-'):
@@ -37,15 +30,5 @@ if alignment.startswith('image-'):
     # Are there better ways? "display: block;" maybe?
     tag_template = '<div class="%s">%%s</div>' % alignment
 
-params = {
-    'class': alignment, 'title': link_title
-    }    
-tag = tag_template % image.tag(**params)
-
-if link:
-    if link_to_hires=="1" and not link.endswith("?hires"):
-        link += "?hires"
-    tag = '<a class="image" href="%s" title="%s" target="%s">%s</a>' % (
-        entities(link), link_title, target, tag)
-
-return tag
+params = {'class': alignment}
+return tag_template % image.tag(**params)

@@ -30,9 +30,8 @@ __version__='$Revision: 1.39 $'
 from zExceptions import NotFound
 
 from Products.SilvaDocument.transform.base import Element, Text, Frag
-from Products.Silva.adapters import path as pathadapter
+from silva.core.interfaces import IPath, IImage
 from Products.Silva.mangle import Path
-import Products.Silva.Image
 
 import re
 
@@ -44,186 +43,175 @@ DEBUG=0
 TOPLEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'pre', 'table', 'img', 'ul', 'ol', 'dl', 'div']
 CONTAINERS = ['body', 'td', 'li', 'th'] # XXX should only contain li's that are descendant of nlist
 
-def fix_image_links(el, context):
-    """finds all links and sees if they contain an image
 
-        if an image inside a link is found the link attr of the image will be
-        set to the href of the link
+def is_table_or_source(node):
+    """tell you if the node is a table or a code source.
     """
-    if not hasattr(context, 'href'):
-        context.href = None
-    if hasattr(context, 'silva_href'):
-        oldhref = context.silva_href
-    else:
-        oldhref = context.href
-    if el.name() == 'a':
-        href = None
-        if hasattr(el.attr, 'silva_href'):
-            context.href = el.attr.href
-        elif hasattr(el.attr, 'href'):
-            context.href = el.attr.href
-    elif el.name() == 'img':
-        if hasattr(context, 'silva_href'):
-            img.link = context.silva_href
-        else:
-            img.link = context.href
-    elif el.name() == 'Text':
-        return
-    for child in el.find():
-        fix_image_links(child, context)
-    context.href = oldhref
+    return (node.name() == 'table' or
+            (node.name() == 'div' and
+             (node.getattr('source_id', None) or
+              node.getattr('source_title', None))))
 
-def fix_tables_and_divs(el, context, tables=None):
-    """get all tables and move them to the current position"""
-    # XXX I'd rather use el.query for this but that doesn't retain order
-    # so I guess I'm going to have to browse the full tree myself
-    if el.name() == 'Text':
+
+def retrieve_tables_and_sources(node, context, tables=None):
+    """find and convert all tables and code sources, and remove them
+    this get call by table and list content as wellfrom the document
+    follow
+    """
+    if (node.name() == 'Text' or
+        hasattr(node, 'should_be_removed')):
         return []
     if tables is None:
-        foundtables = []
-    else:
-        foundtables = tables
-    for child in el.find():
-        if (child.name() == 'table' or
-                (child.name() == 'div' and
-                    (child.getattr('is_citation', None) or
-                        child.getattr('toc_depth', None) or
-                        child.getattr('source_id', None) or
-                        child.getattr('source_title', None)
-                    )
-                )
-            ):
-            foundtables.append(child.convert(context))
-            child.should_be_removed = 1
-        fix_tables_and_divs(child, context, foundtables)
-    return foundtables
+        tables = []
 
-def fix_toplevel(el, context):
-    """place p's around elements that require that"""
-    if el.name() == 'Text':
-        return silva.p(el.convert(context))
-    elif el.name() in CONTAINERS:
-        # actually this shouldn't happen, so perhaps we should return
-        # an empty list here...
-        return el.convert(context)
-    elif el.name() in TOPLEVEL:
-        return el.convert(context)
-    else:
-        return silva.p(el.convert(context))
+    if is_table_or_source(node):
+        tables.append(node.convert(context))
+        node.should_be_removed = 1
 
-def find_and_convert_toplevel(el, context, els=None):
-    if (el.name() == 'Text' or el.name() in CONTAINERS or
-            (hasattr(el, 'do_not_fix_content') and el.do_not_fix_content()) or
-            hasattr(el, 'should_be_removed')):
+    for child in node.find():
+        retrieve_tables_and_sources(child, context, tables)
+    return tables
+
+
+def is_toplevel_element(node):
+    """tell you if the node is something that should be a top level
+    element.
+    """
+    # this is the case you have an image with a link
+    if node.name() == 'a':
+        children = node.find()
+        if len(children) == 1:
+            child = children[0]
+            if child.name() == 'img':
+                # the next line prevent to consider the image as a top
+                # level element as well
+                child.do_not_fix_content = lambda: 1
+                return True
+
+    return (node.name() in TOPLEVEL and not is_table_or_source(node))
+
+
+def retrieve_toplevel_elements(node, context, elements=None):
+    """find and convert all toplevel element type, and remove them of
+    the document flow (in fact like retrieve_table does).
+    """
+    if (node.name() == 'Text' or node.name() in CONTAINERS or
+        (hasattr(node, 'do_not_fix_content') and node.do_not_fix_content()) or
+        hasattr(node, 'should_be_removed')):
         return []
-    if  els is None:
-        foundels = []
-    else:
-        foundels = els
-    children = el.find()
+    if  elements is None:
+        elements = []
+
+    if is_toplevel_element(node):
+        elements.append(node.convert(context))
+        node.should_be_removed = 1
+
+    children = node.find()
     for child in children:
         if hasattr(child, 'should_be_removed'):
             continue
-        if el.name() in ['ol', 'ul'] and child.name() in ['ol', 'ul']:
+        if node.name() in ['ol', 'ul'] and child.name() in ['ol', 'ul']:
             continue
-        find_and_convert_toplevel(child, context, foundels)
-        if child.name() in TOPLEVEL and child.name() != 'table' and child.name() != 'div':
-            foundels.append(child.convert(context))
-            child.should_be_removed = 1
-        elif child.name() in CONTAINERS:
-            continue
-    return foundels
+        retrieve_toplevel_elements(child, context, elements)
+
+    return elements
+
 
 reg_ignorable = re.compile('^([ \t\n]|<br[^>]*>)*$')
-def get_textbuf(textbuf, context, ptype):
+def build_paragraph(nodes, context, ptype):
     """given a list of elements this either returns a p element
-        if the list contains non-ignorable elements or it will
-        return an empty fragment if it doesn't
+    if the list contains non-ignorable elements or it will
+    return an empty fragment if it doesn't
     """
-    frag = Frag(textbuf)
+    frag = Frag(nodes)
     converted = frag.convert(context).asBytes('UTF-8').strip()
     if not reg_ignorable.search(converted):
-        return silva.p(textbuf, type=ptype)
+        return silva.p(nodes, type=ptype)
     return Frag()
 
-def fix_structure(inputels, context, allowtables=0):
-    """walk through all inputels recursively
 
-        if the current element is a container, place p's around all non-toplevel
-        elements, if it's not, move all toplevel elements to the nearest container
+def fix_structure(nodes, context, allowtables=0):
+    """this goes through the document and convert it, move some
+    components (table, top level elements) around in order to clean it.
+
+    this get call by table and list content as well.
     """
-    fixedrest = []
-    textbuf = []
+    result = []                 # Contain the converted document
+    paragraph_buffer = []       # Contain nodes to create a new paragraph
+
+    def get_paragraph_type(node):
+        ptype = str(node.getattr('class', 'normal'))
+        if ptype not in ['normal', 'lead', 'annotation']:
+            ptype = 'normal'
+        return ptype
+
+    def flush_paragraph(ptype='normal'):
+        # This finish the current paragraph, and add it to the result
+        if paragraph_buffer:
+            result.append(build_paragraph(paragraph_buffer, context, ptype))
+            del paragraph_buffer[:]
+
+    def convert_node(node, paragraph_type):
+        # This convert the given node to silva format. Tables and top
+        # level elements are extracted from the node and added
+        # afterward.
+        tables = []
+        if allowtables:
+            tables = retrieve_tables_and_sources(node, context)
+        toplevel = retrieve_toplevel_elements(node, context)
+        if not hasattr(node, 'should_be_removed'):
+            # Node have not been marked to be removed, so it is no table
+            # or top level element.
+            paragraph_buffer.append(node.convert(context))
+        else:
+            # It is a table or a top level element
+            flush_paragraph(paragraph_type)
+        result.extend(tables)
+        result.extend(toplevel)
+
     ptype = 'normal'
-    for el in inputels:
+    for node in nodes:
         # flatten p's by ignoring the element itself and walking through it as
         # if it's contents are part of the current element's contents
-        if el.name() == 'p' and allowtables:
-            ptype = str(el.getattr('class', 'normal'))
-            if ptype not in ['normal', 'lead', 'annotation']:
-                ptype = 'normal'
-            for child in el.find():
-                foundtables = fix_tables_and_divs(child, context)
-                foundtoplevel = find_and_convert_toplevel(el, context)
-                if (child.name() not in CONTAINERS and
-                        child.name() not in TOPLEVEL):
-                    textbuf.append(child.convert(context))
-                else:
-                    if textbuf:
-                        fixedrest.append(get_textbuf(textbuf, context, ptype))
-                        textbuf = []
-                    fixedrest.append(fix_toplevel(child, context))
-                fixedrest += foundtables
-                fixedrest += foundtoplevel
-            if textbuf:
-                fixedrest.append(get_textbuf(textbuf, context, ptype))
-                textbuf = []
+        if node.name() == 'p' and allowtables:
+            ptype = get_paragraph_type(node)
+            for child in node.find():
+                convert_node(child, ptype)
+            flush_paragraph(ptype)
         else:
-            if el.name() == 'p':
-                ptype = str(el.getattr('class', 'normal'))
-                if ptype not in ['normal', 'lead', 'annotation']:
-                    ptype = 'normal'
-            foundtables = []
-            if allowtables:
-                foundtables = fix_tables_and_divs(el, context)
-            foundtoplevel = find_and_convert_toplevel(el, context)
-            if el.name() not in CONTAINERS and el.name() not in TOPLEVEL:
-                textbuf.append(el.convert(context))
-            else:
-                if textbuf:
-                    fixedrest.append(get_textbuf(textbuf, context, ptype))
-                    textbuf = []
-                fixedrest.append(fix_toplevel(el, context))
-            fixedrest += foundtables
-            fixedrest += foundtoplevel
-    if textbuf:
-        fixedrest.append(get_textbuf(textbuf, context, ptype))
-        textbuf = []
-    return fixedrest
+            if node.name() == 'p':
+                ptype = get_paragraph_type(node)
+            convert_node(node, ptype)
+    flush_paragraph(ptype)
+    return result
 
-def extract_texts(item, context, allow_indexes=0):
-    """extract all text content from a tag"""
-    res = []
-    for i in item.find():
-        if i.name() == 'br':
-            res.append(Text(u'\n'))
-        elif allow_indexes and i.name() == 'a' and not i.getattr('href', None):
-            res.append(i.convert(context))
-        elif i.name() != 'Text':
-            res += extract_texts(i, context, allow_indexes)
+
+def extract_texts(node, context, allow_indexes=0):
+    """extract all text content from a tag
+    """
+    result = []
+    for child in node.find():
+        if child.name() == 'br':
+            result.append(Text(u'\n'))
+        elif (allow_indexes and child.name() == 'a' and
+              not child.getattr('href', None)):
+            result.append(child.convert(context))
+        elif child.name() != 'Text':
+            result += extract_texts(child, context, allow_indexes)
         else:
-            res.append(i.convert(context))
-    return res
+            result.append(child.convert(context))
+    return result
+
 
 def fix_allowed_items_in_heading(items, context):
     """remove all but allowed markup from headers"""
-    fixedrest = []
+    result = []
     for item in items:
         if item.name() in ['b', 'strong', 'br'] + TOPLEVEL + CONTAINERS:
-            fixedrest += extract_texts(item, context)
+            result += extract_texts(item, context)
         else:
-            fixedrest.append(item.convert(context))
-    return fixedrest
+            result.append(item.convert(context))
+    return result
 
 
 # Element to ignore
@@ -267,24 +255,19 @@ class body(Element):
         """
         h2_tag = self.find(tag=h2)
         if not h2_tag:
-            rest = self.find()
             title = context.title
+            document = self.find()
         else:
-            h2_tag=h2_tag[0]
+            h2_tag = h2_tag[0]
             title = h2_tag.extract_text()
-            rest = self.find(ignore=h2_tag.__eq__)
-
-        # fix images contained in links: the fix_structure call
-        # may shuffle them well and place them outside of links, losing
-        # the href
-        fix_image_links(self, context)
+            document = self.find(ignore=h2_tag.__eq__)
 
         # add <p> nodes around elements that aren't allowed top-level
-        fixedrest = fix_structure(rest, context, 1)
+        document = fix_structure(document, context, 1)
 
         return silva.silva_document(
                 silva.title(title),
-                silva.doc(fixedrest))
+                silva.doc(document))
 
 
 class h1(Element):
@@ -474,7 +457,7 @@ class li(Element):
             return Frag()
 
         # remove all top-level divs, IE seems to place them for some
-        # unknown reason and they screw stuff up in fix_toplevel
+        # unknown reason and they screw stuff up in add_paragraphes
         children = []
         for child in self.find():
             if child.name() == 'div':
@@ -545,6 +528,7 @@ class a(Element):
         title = self.getattr('title', default='')
         name = self.getattr('name', default=None)
         href = self.getattr('href', default='#')
+        window_target = self.getattr('target', default='')
         if name is not None and href == '#':
             if self.getattr('class', None) == 'index':
                 # index item
@@ -572,59 +556,24 @@ class a(Element):
             # The target changed, update it
             if target_id != reference.target_id:
                 reference.set_target_id(target_id)
-            window_target = self.getattr('target', default='')
-            content = self.content.convert(context)
             return silva.link(
-                content,
+                self.content.convert(context),
                 target=window_target,
                 title=title,
                 reference=reference_name)
         elif self.hasattr('href'):
-            # Old school links
+            # External links
             url = self.getattr('silva_href', None)
             if url is None:
                 url = self.getattr('href', 'http://www.infrae.com')
             if unicode(url).startswith('/'):
                 # convert to physical path before storing
-                pad = pathadapter.getPathAdapter(context.model.REQUEST)
-                url = Text(pad.urlToPath(unicode(url)))
-            target = getattr(self.attr, 'target', '')
-
-            try:
-                img = self.query_one('img')
-            except ValueError:
-                content = self.content.convert(context)
-                return silva.link(
-                    content,
-                    url=url,
-                    target=target,
-                    title=title)
-            else:
-                image = img.convert(context)
-                if not image:
-                    return Frag()
-                alignment = img.getattr('alignment')
-                if alignment == 'default' or alignment is None:
-                    alignment = ''
-                image.attr.alignment = alignment
-                # XXX this is nonsense, the image *has* an attr attribute,
-                # since we just added that... Wanted to remove but don't have
-                # time to examine in detail, check later
-                if not hasattr(image, 'attr'):
-                    # empty frag
-                    return image
-                src = img.attr.src
-                if str(src).startswith('/'):
-                    pad = pathadapter.getPathAdapter(context.model.REQUEST)
-                    src = pad.urlToPath(str(src))
-                if url == '%s?hires' % img.attr.src:
-                    image.attr.link_to_hires = '1'
-                else:
-                    image.attr.link_to_hires = '0'
-                    image.attr.link = url
-                image.attr.target = target
-                image.attr.title = title
-                return image
+                url = Text(IPath(context.request).urlToPath(unicode(url)))
+            return silva.link(
+                self.content.convert(context),
+                url=url,
+                target=window_target,
+                title=title)
         else:
             return Frag()
 
@@ -634,17 +583,40 @@ class img(Element):
    def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
+
+        title = self.getattr('alt', '')
+        alignment = self.getattr('alignment', 'default')
+        if alignment == 'default':
+            alignment = ''
+
+        if self.hasattr('silva_reference'):
+            reference_name = str(self.getattr('silva_reference'))
+            reference_name, reference = context.get_reference(reference_name)
+            assert reference is not None, "Invalid reference"
+            target_id = self.getattr('silva_target', '0')
+            try:
+                target_id = int(str(target_id))
+            except ValueError:
+                raise AssertionError("Invalid reference target id")
+            # The target changed, update it
+            if target_id != reference.target_id:
+                reference.set_target_id(target_id)
+
+            return silva.image(
+                self.content.convert(context),
+                reference=reference_name,
+                alignment=alignment,
+                title=title)
+
+        # This is an old url-based image link
         from urlparse import urlparse
-        src = getattr(self.attr, 'silva_src', None)
-        if src is None:
-            src = getattr(self.attr, 'src', None)
+        src = getattr(self.attr, 'src', None)
         if src is None:
             src = 'unknown'
         elif hasattr(src, 'content'):
             src = src.content
         src = urlparse(str(src))[2]
-        pad = pathadapter.getPathAdapter(context.model.REQUEST)
-        src = pad.urlToPath(str(src))
+        src = IPath(context.request).urlToPath(str(src))
         if src.endswith('/image'):
             src = src[:-len('/image')]
         # turn path into relative if possible, traverse to the object to
@@ -655,36 +627,19 @@ class img(Element):
             obj = context.model.unrestrictedTraverse(src.split('/'))
             # bail out if obj is not a Silva Image, otherwise the old
             # href value would be lost
-            if not isinstance(obj, Products.Silva.Image.Image):
-                raise NotFound
-        except KeyError:
-            pass
-        except NotFound:
+            if not IImage.providedBy(obj):
+                raise NotFound(src)
+        except (KeyError, NotFound):
             pass
         else:
             modelpath = context.model.aq_parent.getPhysicalPath()
             src = '/'.join(Path(modelpath, obj.getPhysicalPath()))
-        alignment = self.attr.alignment
-        if alignment == 'default' or alignment is None:
-            alignment = ''
-        if self.hasattr('link_to_hires') and self.getattr('link_to_hires') == '1':
-            return silva.image(
-                        self.content.convert(context),
-                        path = src,
-                        link = src,
-                        alignment = alignment,
-                        target = self.getattr('target', '_self'),
-                        link_to_hires = '1',
-                        title = self.getattr('title', ''))
-        else:
-            return silva.image(
-                        self.content.convert(context),
-                        path = src,
-                        link = self.getattr('link', ''),
-                        alignment = alignment,
-                        target = self.getattr('target', '_self'),
-                        link_to_hires = '0',
-                        title = self.getattr('title', ''))
+
+        return silva.image(
+            self.content.convert(context),
+            path=src,
+            alignment=alignment,
+            title=title)
 
 
 class pre(Element):
@@ -772,17 +727,16 @@ class td(Element):
     def convert(self, context, parentisrow=0):
         if not parentisrow:
             return Frag()
-        rest = self.find()
-        fixedrest = fix_structure(rest, context)
+        result = fix_structure(rest, context)
         colspan = getattr(self.attr,'colspan',None)
         if colspan:
             return silva.field(
-                fixedrest,
+                result,
                 fieldtype='td',
                 colspan=colspan)
         else:
             return silva.field(
-                fixedrest,
+                result,
                 fieldtype='td')
 
 class th(Element):
@@ -790,16 +744,16 @@ class th(Element):
         if not parentisrow:
             return Frag()
         rest = self.find()
-        fixedrest = fix_structure(rest, context)
+        result = fix_structure(self.find(), context)
         colspan = getattr(self.attr,'colspan',None)
         if colspan:
             return silva.field(
-                fixedrest,
+                result,
                 fieldtype='th',
                 colspan=colspan)
         else:
             return silva.field(
-                fixedrest,
+                result,
                 fieldtype='th')
 
 class div(Element):

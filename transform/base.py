@@ -177,9 +177,6 @@ class Node(object):
                     mapping={'name': name, 'self': self})
         raise AttributeError,  message
 
-    def conv(self):
-        return self.convert(Context())
-
     def query_one(self, path):
         """Return exactly one tag pointed to by a simple 'path' or
         raise a ValueError.
@@ -270,9 +267,6 @@ class Frag(Node, List):
                 List.append(self, other)
 
     def convert(self, context):
-        try: context = Context(**context)
-        except TypeError: pass
-
         l = Frag()
         context.resultstack.append(l)
         post = self[:]

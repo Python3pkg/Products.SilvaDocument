@@ -16,9 +16,9 @@ __version__='$Revision: 1.26 $'
 from Products.SilvaDocument.transform.base import Element, Frag, Text, \
     CharacterData
 
+from zope.traversing.browser import absoluteURL
 from Products.SilvaDocument.externalsource import getSourceForId
-from Products.Silva.adapters import path as pathadapter
-from Products.Silva.Image import Image
+from silva.core.interfaces import IPath, IImage
 
 import operator
 import types
@@ -244,6 +244,9 @@ class sub(SilvaElement):
 class link(SilvaElement):
 
     def convert(self, context):
+        title = self.getattr('title', None)
+        target = self.getattr('target', None)
+
         if self.hasattr('reference'):
             # We have a reference
             reference_name = str(self.getattr('reference'))
@@ -252,66 +255,22 @@ class link(SilvaElement):
             return html.a(
                 self.content.convert(context),
                 href='reference',
-                title=getattr(self.attr, 'title', None),
-                target=getattr(self.attr,'target', None),
+                title=title,
+                target=target,
                 silva_target=reference.target_id,
                 silva_reference=reference_name)
 
-        try:
-            img = self.query_one('image')
-        except ValueError:
-            path = self.attr.url
-            if not urlparse(unicode(path))[0]:
-                # path, not a full URL
-                pad = pathadapter.getPathAdapter(context.model.REQUEST)
-                path = pad.pathToUrlPath(unicode(path))
-            return html.a(
-                self.content.convert(context),
-                href=path,
-                silva_href=path,
-                title=getattr(self.attr, 'title', None),
-                target=getattr(self.attr, 'target', None))
-        else:
-            path = img.getattr('path')
-            pad = pathadapter.getPathAdapter(context.model.REQUEST)
-            if path:
-                path = pad.pathToUrlPath(unicode(path))
-            url = str(self.attr.url).strip()
-            if url:
-                if not urlparse(str(url))[0]:
-                    # path, not a full URL
-                    url = pad.pathToUrlPath(str(url))
-                return html.img(
-                        img.content.convert(context),
-                        src=path,
-                        silva_src=path,
-                        link=url,
-                        target=img.getattr('target', '_self'),
-                        alignment=img.getattr('alignment', 'default'),
-                )
-            else:
-                if (img.hasattr('link_to_hires') and
-                        img.getattr('link_to_hires') == '1'):
+        path = self.getattr('url')
+        if not urlparse(unicode(path))[0]:
+            # path, not a full URL
+            path = IPath(context.request).pathToUrlPath(unicode(path))
+        return html.a(
+            self.content.convert(context),
+            href=path,
+            silva_href=path,
+            title=title,
+            target=target)
 
-                    return html.img(
-                            img.content.convert(context),
-                            src=path,
-                            silva_src=path,
-                            link_to_hires='1',
-                            link='%s?hires' % path,
-                            target=img.getattr('target', '_self'),
-                            alignment=img.getattr('alignment', 'default'),
-                    )
-                else:
-                    return html.img(
-                            img.content.convert(context),
-                            src=path,
-                            silva_src=path,
-                            link_to_hires='0',
-                            link=img.getattr('link', ''),
-                            target=img.getattr('target', '_self'),
-                            alignment=img.getattr('alignment', 'default'),
-                    )
 
 class index(SilvaElement):
     def convert(self, context):
@@ -333,81 +292,38 @@ class index(SilvaElement):
 
 
 class image(SilvaElement):
+
     def convert(self, context):
-        src = self.attr.path
-        pad = pathadapter.getPathAdapter(context.model.REQUEST)
-        src = pad.pathToUrlPath(str(src))
-        try:
-            obj = context.model.unrestrictedTraverse(src.split('/'))
-        except:
-            obj = None
+        image = None
+        attributes = {'alignment': self.getattr('alignment', 'default'),
+                      'alt': self.getattr('title', '')}
 
-        try:
-            src = src.content
-        except AttributeError:
-            pass
-        if not src:
-            src = ''
-
-        width = ''
-        height = ''
-        if obj and isinstance(obj, Image):
-            width, height = obj.getDimensions(obj.image)
-
-        if ((not self.hasattr('link') or unicode(
-            self.getattr('link')).strip() == '') and (
-                not self.hasattr('link_to_hires')
-                or self.getattr('link_to_hires') == '0')):
-            return html.img(
-                        self.content.convert(context),
-                        src=src,
-                        silva_src=src,
-                        width=width,
-                        height=height,
-                        target=self.getattr('target', '_self'),
-                        alignment=self.getattr('alignment', 'default'),
-                        title = self.getattr('title', ''),
-                  )
-        elif not self.hasattr('link') or unicode(
-            self.getattr('link')).strip() == '':
-            return html.img(
-                        self.content.convert(context),
-                        src=src,
-                        silva_src=src,
-                        width=width,
-                        height=height,
-                        link_to_hires='1',
-                        target=self.getattr('target', '_self'),
-                        alignment=self.getattr('alignment', 'default'),
-                        title = self.getattr('title', ''),
-                    ),
-        basesrcpath = src
-        link = self.getattr('link')
-        if link == '%s?hires' % src:
-            return html.img(
-                        self.content.convert(context),
-                        src=src,
-                        silva_src=src,
-                        width=width,
-                        height=height,
-                        link_to_hires = '1',
-                        target = self.getattr('target', '_self'),
-                        alignment = self.getattr('alignment', 'default'),
-                        title = self.getattr('title', ''),
-                    )
+        if self.hasattr('reference'):
+            # We have a reference
+            reference_name = str(self.getattr('reference'))
+            reference_name, reference = context.get_reference(reference_name)
+            assert reference is not None, "Invalid reference"
+            attributes['silva_target'] = reference.target_id
+            attributes['silva_reference'] = reference_name
+            image = reference.target
+            attributes['src'] = absoluteURL(image, context.request)
+        elif self.hasattr('path'):
+            src = self.getattr('path')
+            src = IPath(context.request).pathToUrlPath(str(src))
+            attributes['src'] = src
+            try:
+                image = context.model.unrestrictedTraverse(src.split('/'))
+            except:
+                pass
         else:
-            return html.img(
-                        self.content.convert(context),
-                        src=src,
-                        silva_src=src,
-                        width=width,
-                        height=height,
-                        link_to_hires=self.attr.link_to_hires,
-                        link=self.getattr('link', ''),
-                        target=self.getattr('target', '_self'),
-                        alignment=self.getattr('alignment', 'default'),
-                        title = self.getattr('title', ''),
-                )
+            raise ValueError('Invalid silva image tag')
+
+        if image and IImage.providedBy(image):
+            attributes['width'], attributes['height'] = \
+                image.getDimensions(image.image)
+
+        return html.img(self.content.convert(context), **attributes)
+
 
 class pre(SilvaElement):
     def compact(self):
