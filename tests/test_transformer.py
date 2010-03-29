@@ -16,7 +16,7 @@ from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
 TEST_LINK_HTML = '<a silva_target="%d" href="reference" target="_blank" ' \
-    'silva_reference="%s">My link</a>'
+    'silva_reference="%s" title="">My link</a>'
 
 
 class KupuTransformerTest(SilvaTestCase):
@@ -134,7 +134,7 @@ class KupuTransformerTest(SilvaTestCase):
         result = node.asBytes('utf-8')
         self.assertEqual(
             result,
-            '<link target="_blank" reference="%s">My link</link>' % (
+            '<link target="_blank" reference="%s" title="">My link</link>' % (
                 reference_name))
 
         # We verify that the reference has been created.
@@ -190,7 +190,7 @@ class KupuTransformerTest(SilvaTestCase):
             targetobj=html, context=self.context).asBytes('utf-8')
         self.assertEqual(
             result,
-            '<link target="_blank" reference="%s">My link</link>' % (
+            '<link target="_blank" reference="%s" title="">My link</link>' % (
                 reference_name))
         # We still only have one reference to the folder
         self.assertEqual(
@@ -259,7 +259,7 @@ class KupuTransformerTest(SilvaTestCase):
             targetobj=html, context=context).asBytes('utf-8')
         self.assertEqual(
             result,
-            '<link target="_blank" reference="%s">My link</link>' % (
+            '<link target="_blank" reference="%s" title="">My link</link>' % (
                 reference_name))
 
         # Now, things are changed correctly
