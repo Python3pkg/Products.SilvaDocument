@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.SilvaExternalSources.ExternalSource import availableSources
 from Products.SilvaExternalSources.ExternalSource import getSourceForId
 
 def getSourceParameters(context, node):

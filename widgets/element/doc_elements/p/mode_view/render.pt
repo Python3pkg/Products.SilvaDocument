@@ -1,3 +1,0 @@
-<p tal:define="type here/get_type"
-   tal:content="structure here/content"
-   tal:attributes="class python:type=='normal' and 'p' or type" />

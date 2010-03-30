@@ -1,8 +1,0 @@
-<tal:def 
-  define="
-    node request/node;
-    model request/ghost_model | request/model;
-    toc_depth python: int(test(node.hasAttribute('toc_depth'), node.getAttribute('toc_depth'), -1));
-  ">
-<ul tal:replace="structure python:context.render_tree(model,toc_depth)" />
-</tal:def>

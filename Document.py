@@ -5,8 +5,6 @@
 # Python
 from StringIO import StringIO
 import re
-import sys
-import traceback
 
 # Zope
 from zope import lifecycleevent
@@ -18,7 +16,6 @@ from App.class_init import InitializeClass
 from Persistence import Persistent
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zExceptions import InternalError
-import OFS.interfaces
 
 from Products.ParsedXML.ParsedXML import ParsedXML
 
@@ -37,11 +34,8 @@ from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument import externalsource
 
-from Products.SilvaMetadata.Exceptions import BindingError
-
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerPolicy
-from silva.core.smi.interfaces import IFormsEditorSupport, IKupuEditorSupport
 from silva.core.views import views as silvaviews
 from silva.core.views import z3cforms as silvaz3cforms
 
@@ -149,8 +143,6 @@ class DocumentVersion(CatalogedVersion):
         self.set_title(title)
 
         notify(lifecycleevent.ObjectModifiedEvent(self))
-        # Should be on event
-        self.clear_editor_cache()
 
     def _set_metadata_from_content(self, html):
         """Rip the metadata out of the HTML (meta tags), set it on version"""
@@ -214,15 +206,6 @@ class DocumentVersion(CatalogedVersion):
            (i.e. silvaxmlattribute)"""
         return self.content.documentElement
 
-    def clear_editor_cache(self):
-        """ Clears editor cache for this version
-        """
-        try:
-            self.editor_service.clearCache(self._get_document_element())
-        except AttributeError:
-            # This fail when you don't have a self.REQUEST. However
-            # it's not a big deal, the entry will expire.
-            pass
 
 InitializeClass(DocumentVersion)
 
@@ -240,7 +223,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    implements(IDocument, IKupuEditorSupport, IFormsEditorSupport)
+    implements(IDocument)
 
     silvaconf.icon('www/silvadoc.gif')
     silvaconf.priority(-6)
@@ -273,17 +256,6 @@ class Document(CatalogedVersionedContent):
                 if not is_cacheable:
                     return 0
         return 1
-
-    def revert_to_previous(self):
-        """ Create a new version of public version, throw away the
-        current one.
-
-        Overrides Versioning.revert_to_previous() to be able to clear
-        the widget cache too.
-        """
-        super(Document, self).revert_to_previous()
-        version = self.get_editable()
-        version.clear_editor_cache()
 
     # Kupu save doing a PUT
     security.declareProtected(
@@ -339,33 +311,7 @@ class DocumentView(silvaviews.View):
     silvaconf.context(IDocument)
 
     def render(self):
-        service_editor = self.context.service_editor
-        service_editor.setViewer('service_doc_viewer')
-        # For service_editor
-        self.request['model'] = self.content
-        return service_editor.renderView(self.content.content.documentElement)
-
-
-@silvaconf.subscribe(IDocument, OFS.interfaces.IObjectWillBeRemovedEvent)
-def document_will_be_removed(document, event):
-    # Does the widget cache needs be cleared for all versions - I think so...
-    # XXX reply to comment: that's not all the version you used (me neither)!
-    version_ids = [
-        document.get_next_version(),
-        document.get_public_version(),]
-    for version_id in version_ids:
-        if version_id is None:
-            continue
-        if hasattr(document.aq_base, version_id):
-            version = getattr(document, version_id)
-            document.service_editor.clearCache(version.content)
-
-
-@silvaconf.subscribe(IDocumentVersion, OFS.interfaces.IObjectClonedEvent)
-def documentversion_cloned(documentversion, event):
-    # if we're a copy, clear cache
-    # XXX should be part of workflow system
-    documentversion.clear_editor_cache()
+        return u''
 
 
 class SilvaDocumentPolicy(Persistent):
@@ -373,9 +319,9 @@ class SilvaDocumentPolicy(Persistent):
     implements(IContainerPolicy)
 
     def createDefaultDocument(self, container, title):
-        container.manage_addProduct['SilvaDocument'].manage_addDocument(
-            'index', title)
-        container.index.sec_update_last_author_info()
+        factory = container.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('index', title)
+
 
 def document_factory(self, id, title, body):
     """Add a Document."""

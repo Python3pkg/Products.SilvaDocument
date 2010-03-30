@@ -2,7 +2,7 @@
 # See also LICENSE.txt
 # $Id$
 
-from grokcore import component
+from five import grok
 
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.Silva.adapters.indexable import IndexableAdapter
@@ -11,7 +11,7 @@ from silva.core.interfaces.adapters import IIndexable
 
 class DocumentIndexableAdapter(IndexableAdapter):
 
-    component.context(IDocument)
+    grok.context(IDocument)
 
     def getIndexes(self):
         version = self.context.get_viewable()
@@ -22,7 +22,7 @@ class DocumentIndexableAdapter(IndexableAdapter):
 
 class DocumentVersionIndexableAdapter(IndexableAdapter):
 
-    component.context(IDocumentVersion)
+    grok.context(IDocumentVersion)
 
     def getIndexes(self):
         indexes = []
