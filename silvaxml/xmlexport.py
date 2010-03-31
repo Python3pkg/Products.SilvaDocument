@@ -10,8 +10,11 @@ from Products.ParsedXML.DOM.Core import Node
 from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument.Document import Document, DocumentVersion
 
+from zope import component
+
 from silva.core.interfaces import IImage
 from silva.core.interfaces.adapters import IPath
+from silva.core.references.interfaces import IReferenceService
 
 SilvaDocumentNS = 'http://infrae.com/namespace/silva-document'
 
@@ -61,7 +64,20 @@ class DocumentVersionProducer(SilvaBaseProducer):
             self.sax_img(node)
         else:
             if node.nodeName == 'link':
-                attributes['rewritten_url'] = IPath(self.context.get_content()).pathToUrlPath(attributes['url'])
+                if self.getSettings().externalRendering():
+                    document = self.context.object()
+                    rewritten_url = None
+                    if 'reference' in attributes:
+                        service = component.getUtility(IReferenceService)
+                        reference = service.get_reference(
+                            self.context, name=attributes['reference'])
+                        # XXX: replace to absoluteURL
+                        rewritten_url = reference.target.absolute_url()
+                    else:
+                        rewritten_url = IPath(document).pathToUrlPath(
+                            attributes['url'])
+                    attributes['rewritten_url'] = rewritten_url
+
             self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
             if node.hasChildNodes():
                 self.sax_children(node)
@@ -237,12 +253,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
             if width:
                 info_dict = {
                     'align': lookup.get(align, 'L'),
-                    'width': width,
-                    }
+                    'width': width}
             else:
                 info_dict = {
-                    'align': lookup.get(align, 'L'),
-                    }
+                    'align': lookup.get(align, 'L')}
             result.append(info_dict)
 
         # too much info, ignore it
@@ -276,25 +290,32 @@ class DocumentVersionProducer(SilvaBaseProducer):
         attributes = {}
         if node.attributes:
             attributes = get_dict(node.attributes)
-        image_object = self.context.get_silva_object().unrestrictedTraverse(
-            attributes['path'].split('/'), None)
-        attributes['rewritten_path'] = IPath(self.context.get_content()).pathToUrlPath(attributes['path'])
-        if attributes.get('link_to_hires', '0') == '1':
-            attributes[
-                'rewritten_link'] = attributes[
-                'rewritten_path'] + '?hires'
-        elif attributes.has_key('link'):
-            if attributes['link']:
-                attributes['rewritten_link'] = IPath(self.context.get_content()).pathToUrlPath(attributes['link'])
-        if image_object is not None:
-            if IImage.providedBy(image_object):
-                image = image_object.image
-                attributes['image_title'] = image_object.get_title()
-                width, height = image_object.getDimensions(image)
-                attributes['width'] = str(width)
-                attributes['height'] = str(height)
+
+        if self.getSettings().externalRendering():
+            document = self.context.object()
+            rewritten_path = None
+            if 'reference' in attributes:
+                service = component.getUtility(IReferenceService)
+                reference = service.get_reference(
+                    self.context, name=attributes['reference'])
+                image = reference.target
+                rewritten_path = image.absolute_url()
+            else:
+                image = document.unrestrictedTraverse(
+                    attributes['path'].split('/'), None)
+                rewritten_path = IPath(document).pathToUrlPath(
+                    attributes['path'])
+            attributes['rewritten_path'] = rewritten_path
+
+            if image is not None:
+                if IImage.providedBy(image):
+                    attributes['image_title'] = image.get_title()
+                    width, height = image.getDimensions(image.image)
+                    attributes['width'] = str(width)
+                    attributes['height'] = str(height)
+
         if attributes.has_key('alignment'):
-            if not(attributes['alignment']):
+            if not attributes['alignment']:
                 attributes['alignment'] = 'default'
         else:
             attributes['alignment'] = 'default'

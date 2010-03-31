@@ -803,8 +803,7 @@ class div(Element):
             return silva.source(
                         Frag(content),
                         id=self.attr.source_id,
-                        class_=self.attr.class_,
-                    )
+                        class_=self.attr.class_)
         else:
             return Frag(fix_structure(self.content, context))
 
