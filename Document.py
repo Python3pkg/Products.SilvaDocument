@@ -26,6 +26,7 @@ from Products.Silva.Version import CatalogedVersion
 from Products.Silva import mangle
 from Products.Silva.helpers import translateCdata
 from Products.Silva.ContentObjectFactoryRegistry import contentObjectFactoryRegistry
+from Products.Silva.transform.rendererreg import getRendererRegistry
 
 # Silva Document
 from Products.SilvaDocument.transform.Transformer import EditorTransformer
@@ -311,7 +312,9 @@ class DocumentView(silvaviews.View):
     silvaconf.context(IDocument)
 
     def render(self):
-        return u''
+        registry = getRendererRegistry()
+        renderer = registry.getRenderersForMetaType()['Basic XSLT Renderer']
+        return renderer.render(self.context)
 
 
 class SilvaDocumentPolicy(Persistent):
