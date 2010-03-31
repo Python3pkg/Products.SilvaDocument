@@ -313,6 +313,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     width, height = image.getDimensions(image.image)
                     attributes['width'] = str(width)
                     attributes['height'] = str(height)
+                    attributes['rewritten_path'] += '?hires'
 
         if attributes.has_key('alignment'):
             if not attributes['alignment']:
