@@ -312,8 +312,10 @@ class DocumentView(silvaviews.View):
     silvaconf.context(IDocument)
 
     def render(self):
+        # XXX This should be improved
         registry = getRendererRegistry()
-        renderer = registry.getRenderersForMetaType()['Basic XSLT Renderer']
+        renderers = registry.getRenderersForMetaType('Silva Document')
+        renderer = renderers['Basic XSLT Renderer']
         return renderer.render(self.context)
 
 
