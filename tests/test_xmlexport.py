@@ -3,17 +3,14 @@
 # See also LICENSE.txt
 # $Id$
 
-import os, re
+import re
 import unittest
 
+from Products.ParsedXML.ParsedXML import ParsedXML
+from Products.Silva.silvaxml import xmlexport
 from Products.Silva.tests import SilvaTestCase
 from Products.Silva.tests.test_xmlexport import XMLExportMixin
-from Products.Silva.silvaxml import xmlexport
-from Products.ParsedXML.ParsedXML import ParsedXML
 
-def testopen(path, rw):
-    directory = os.path.dirname(__file__)
-    return open(os.path.join(directory, path), rw)
 
 class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
     def test_xml_document_export(self):

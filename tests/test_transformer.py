@@ -12,11 +12,15 @@ from silva.core.references.interfaces import IReferenceService
 
 from Products.Silva.tests.SilvaTestCase import SilvaTestCase
 from Products.Silva.tests.helpers import publish_object
+from Products.SilvaDocument.tests.data import testopen
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
 TEST_LINK_HTML = '<a silva_target="%d" href="reference" target="_blank" ' \
     'silva_reference="%s" title="">My link</a>'
+TEST_IMAGE_HTML = '<img src="http://localhost/root/chocobo" ' \
+    'silva_reference="%s" silva_target="%d" height="118" width="112" ' \
+    'alt="Chocobo" alignment=""></img>'
 
 
 class KupuTransformerTest(SilvaTestCase):
@@ -29,6 +33,8 @@ class KupuTransformerTest(SilvaTestCase):
         self.add_document(self.root, 'document', 'Document')
         self.add_folder(self.root, 'folder', 'Folder')
         self.add_publication(self.root, 'publication', 'Publication')
+        self.add_image(
+            self.root, 'chocobo', 'Chocobo', file=testopen('chocobo.jpg'))
         self.transformer = Transformer.EditorTransformer(editor='kupu')
         # Context need the a document version in order to determine
         # references, and REQUEST to compute link URLs
@@ -109,6 +115,64 @@ class KupuTransformerTest(SilvaTestCase):
         roundtrip = self.transformer.to_target(
             sourceobj=result, context=self.context).asBytes('utf-8')
         self.assertEqual(roundtrip, html)
+
+
+    def test_new_image_round_trip(self):
+        """We create a new image which is a reference to an image by
+        transforming Kupu->Silva, and we check the result by
+        transforming Silva->Kupu again.
+        """
+        service = component.getUtility(IReferenceService)
+        target_id = component.getUtility(IIntIds).getId(self.root.chocobo)
+        version = self.root.document.get_editable()
+
+        # At first there is no references
+        self.assertEqual(list(service.get_references_from(version)), [])
+        self.assertEqual(list(service.get_references_to(self.root.chocobo)), [])
+
+        html = TEST_IMAGE_HTML % ('new', target_id)
+
+        # We convert our HTML with a new reference to Kupu
+        node = self.transformer.to_source(targetobj=html, context=self.context)
+        image = node.query_one('image')
+        self.assertEqual(image.name(), 'image')
+        self.failUnless(image.hasattr('title'))
+        self.assertEqual(image.getattr('title'), 'Chocobo')
+        self.failUnless(image.hasattr('reference'))
+        reference_name = image.getattr('reference')
+        result = node.asBytes('utf-8')
+        self.assertEqual(
+            result,
+            '<image reference="%s" alignment="" title="Chocobo"></image>' % (
+                reference_name))
+
+        # We verify that the reference has been created.
+        reference = service.get_reference(version, reference_name)
+        self.assertEqual(reference.source, version)
+        self.assertEqual(reference.target, self.root.chocobo)
+        self.assertEqual(reference.tags, [u"document link", reference_name])
+        self.assertEqual(
+            list(service.get_references_to(self.root.chocobo)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
+
+        # We can get back the HTML with a reference name
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+        self.assertEqual(
+            roundtrip,
+            TEST_IMAGE_HTML % (reference_name, target_id))
+
+        # Our new reference has been kept
+        self.assertEqual(
+            list(service.get_references_to(self.root.chocobo)),
+            [reference])
+        self.assertEqual(
+            list(service.get_references_from(version)),
+            [reference])
+
 
     def test_new_link_round_trip(self):
         """We create a new link which is a reference to a content in

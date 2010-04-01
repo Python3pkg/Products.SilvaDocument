@@ -3,16 +3,11 @@
 # See also LICENSE.txt
 # $Id$
 
-import os
 import unittest
 
 from Products.Silva.tests import SilvaTestCase
 from Products.Silva.silvaxml import xmlimport
-
-
-def testopen(path, rw):
-    directory = os.path.dirname(__file__)
-    return open(os.path.join(directory, path), rw)
+from Products.SilvaDocument.tests.data import testopen
 
 
 class ImportTestCase(SilvaTestCase.SilvaTestCase):
@@ -26,7 +21,7 @@ class ImportTestCase(SilvaTestCase.SilvaTestCase):
             'This is <boo>a</boo> testfolder',
             policy_name='Silva AutoTOC')
         importer = xmlimport.theXMLImporter
-        source_file = testopen('data/test_document.xml', 'r')
+        source_file = testopen('test_document.xml', 'r')
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
         importer.importFromFile(
