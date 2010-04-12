@@ -66,7 +66,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             if node.nodeName == 'link':
                 if self.getSettings().externalRendering():
                     document = self.context.object()
-                    rewritten_url = None
+                    rewritten_url = ''
                     if 'reference' in attributes:
                         service = component.getUtility(IReferenceService)
                         reference = service.get_reference(
@@ -76,6 +76,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     else:
                         rewritten_url = IPath(document).pathToUrlPath(
                             attributes['url'])
+                    anchor = attributes.get('anchor', '')
+                    if anchor:
+                        rewritten_url += '#' + anchor
                     attributes['rewritten_url'] = rewritten_url
 
             self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
