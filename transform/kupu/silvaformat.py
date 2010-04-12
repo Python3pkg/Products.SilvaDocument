@@ -246,6 +246,7 @@ class link(SilvaElement):
     def convert(self, context):
         title = self.getattr('title', None)
         target = self.getattr('target', None)
+        anchor = self.getattr('anchor', None)
 
         if self.hasattr('reference'):
             # We have a reference
@@ -257,6 +258,7 @@ class link(SilvaElement):
                 href='reference',
                 title=title,
                 target=target,
+                silva_anchor=anchor,
                 silva_target=reference.target_id,
                 silva_reference=reference_name)
 
@@ -269,7 +271,8 @@ class link(SilvaElement):
             href=path,
             silva_href=path,
             title=title,
-            target=target)
+            target=target,
+            silva_anchor=anchor)
 
 
 class index(SilvaElement):

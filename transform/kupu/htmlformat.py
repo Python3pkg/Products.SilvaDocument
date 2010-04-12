@@ -528,6 +528,7 @@ class a(Element):
         title = self.getattr('title', default='')
         name = self.getattr('name', default=None)
         href = self.getattr('href', default='#')
+        anchor = self.getattr('silva_anchor', default=None)
         window_target = self.getattr('target', default='')
         if name is not None and href == '#':
             if self.getattr('class', None) == 'index':
@@ -560,6 +561,7 @@ class a(Element):
                 self.content.convert(context),
                 target=window_target,
                 title=title,
+                anchor=anchor,
                 reference=reference_name)
         elif self.hasattr('href'):
             # External links
@@ -573,7 +575,8 @@ class a(Element):
                 self.content.convert(context),
                 url=url,
                 target=window_target,
-                title=title)
+                title=title,
+                anchor=anchor)
         else:
             return Frag()
 
