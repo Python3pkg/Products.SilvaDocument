@@ -73,7 +73,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                             self.context, name=attributes['reference'])
                         # XXX: replace to absoluteURL
                         rewritten_url = reference.target.absolute_url()
-                    else:
+                    elif 'url' in attributes:
                         rewritten_url = IPath(document).pathToUrlPath(
                             attributes['url'])
                     anchor = attributes.get('anchor', '')
