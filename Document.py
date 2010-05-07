@@ -38,7 +38,7 @@ from Products.SilvaDocument import externalsource
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerPolicy
 from silva.core.views import views as silvaviews
-from silva.core.views import z3cforms as silvaz3cforms
+from silva.core.forms import z3cforms as silvaz3cforms
 
 from z3c.form import field
 
