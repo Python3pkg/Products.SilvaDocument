@@ -97,8 +97,7 @@ class DocumentVersion(CatalogedVersion):
             stream.write('<title>%s</title>' % translateCdata(self.get_title()))
 
         # Write Document
-        document = self._get_document_element()
-        document.writeStream(stream)
+        self.content.documentElement.writeStream(stream)
 
         if not text_only:
             # Write Metadata
@@ -141,15 +140,6 @@ class DocumentVersion(CatalogedVersion):
 
         notify(lifecycleevent.ObjectModifiedEvent(self))
 
-    def _get_document_element(self):
-        """returns the document element of this
-           version's ParsedXML object.
-           This is abstracted so that objects which
-           extend Document (e.g. News Items) can
-           have a different xml implementation
-           (i.e. silvaxmlattribute)"""
-        return self.content.documentElement
-
 
 InitializeClass(DocumentVersion)
 
@@ -188,7 +178,7 @@ class Document(CatalogedVersionedContent):
 
         # It should suffice to test the children of the root element only,
         # since currently the only non-cacheable elements are root elements
-        for node in viewable._get_document_element().childNodes:
+        for node in viewable.content.documentElement.childNodes:
             node_name = node.nodeName
             if node_name in non_cacheable_elements:
                 return 0
