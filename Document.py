@@ -130,10 +130,6 @@ class DocumentVersion(CatalogedVersion):
         """Set the document xml of the version from the given data
         in the given format.
         """
-        errors = self._set_metadata_from_content(data)
-        if errors:
-            raise ValueError(errors)
-
         transformer = EditorTransformer(editor=format)
         context = Context(self, request)
 
@@ -144,59 +140,6 @@ class DocumentVersion(CatalogedVersion):
         self.set_title(title)
 
         notify(lifecycleevent.ObjectModifiedEvent(self))
-
-    def _set_metadata_from_content(self, html):
-        """Rip the metadata out of the HTML (meta tags), set it on version"""
-        # XXX obviously it would make sense if the transformations could
-        # tackle this instead of doing it seperately, however, they are messy
-        # enough as they are now (and not capable of such a thing yet)
-
-        # XXX SAX took about 2 seconds (!) to get the meta values,
-        # so I decided to try re instead... this made sense, parsing now takes
-        # less than one hundreth of a second (usually even less than one
-        # thousandth!)
-
-        def _deentitize(xml):
-            return xml.replace('&lt;', '<').replace('&gt;', '>').\
-                replace('&quot;', '"').replace('&amp;', '&')
-
-        mapping = {}
-        reg = re.compile(r'\<meta[^\>]+\/\>')
-        while 1:
-            match = reg.search(html)
-            if not match:
-                break
-            tag = match.group(0)
-            html = html.replace(tag, '')
-            reg_props = re.compile(r'([a-zA-Z_]+)="([^"]+)"')
-            found = {}
-            while 1:
-                match = reg_props.search(tag)
-                if not match:
-                    break
-                tag = tag.replace(match.group(0), '')
-                if match.group(1) in ['name', 'content', 'scheme']:
-                    found[match.group(1)] = _deentitize(match.group(2))
-                if (found.has_key('name') and found.has_key('content') and
-                        found.has_key('scheme')):
-                    if not mapping.has_key(found['scheme']):
-                        mapping[found['scheme']] = {}
-                    mapping[found['scheme']][found['name']] = found['content']
-
-        errors = {}
-        binding = self.service_metadata.getMetadata(self)
-        for namespace, values in mapping.items():
-            # %!#$%# metadata system expects UTF-8 :(
-            for key, value in values.items():
-                del values[key]
-                if value is None:
-                    continue
-                values[key.encode('UTF-8')] = value.encode('UTF-8')
-            set = self.service_metadata.getMetadataSetFor(namespace)
-            ret = binding.setValues(set.id, values, reindex=1)
-            if ret:
-                errors.update(ret)
-        return errors
 
     def _get_document_element(self):
         """returns the document element of this

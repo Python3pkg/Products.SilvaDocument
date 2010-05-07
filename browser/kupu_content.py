@@ -21,7 +21,6 @@ HEADERS = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
 class KupuContent(grok.View):
     """Return content to edit in Kupu with the correct CSS.
     """
-
     grok.context(IDocument)
     grok.name(u'kupu_content')
     grok.layer(ISMILayer)
@@ -38,6 +37,7 @@ class KupuContent(grok.View):
         self.title = version.get_title_or_id()
         self.document = version.get_document_xml_as(
             format='kupu', request=self.request)
+        self.metadata = ''
 
 
 kupucontent = grok.PageTemplate("""
@@ -51,6 +51,7 @@ kupucontent = grok.PageTemplate("""
 <link type="text/css" rel="stylesheet" href="override_editor.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="docref" tal:attributes="content view/docref" />
+<tal:metadata tal:replace="structure view/metadata" />
 </head>
 <tal:body tal:replace="structure view/document">Content</tal:body>
 </html>
