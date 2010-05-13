@@ -27,6 +27,7 @@ class DocumentFeedEntryAdapter(grok.Adapter):
         return self.context.get_title()
 
     def html_description(self):
+        return ''
         document_element = self.version.content.documentElement
         ps = document_element.getElementsByTagName('p')
         if not ps:

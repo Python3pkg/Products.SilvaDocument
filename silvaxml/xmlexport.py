@@ -8,31 +8,25 @@ from Products.Silva.silvaxml.xmlexport import (
 from sprout.saxext.html2sax import saxify
 from Products.ParsedXML.DOM.Core import Node
 from Products.SilvaDocument.i18n import translate as _
-from Products.SilvaDocument.Document import Document, DocumentVersion
+from Products.SilvaDocument import interfaces
 
+from five import grok
 from zope import component
+from zope.interface import Interface
 
 from silva.core.interfaces import IImage
 from silva.core.interfaces.adapters import IPath
 from silva.core.references.interfaces import IReferenceService
 
-SilvaDocumentNS = 'http://infrae.com/namespace/silva-document'
-
-
-def initializeXMLExportRegistry():
-    """Here the actual content types are registered. Non-Silva-Core content
-    types probably need to register themselves in in their product
-    __init__.pies
-    """
-    exporter = theXMLExporter
-    exporter.registerNamespace('doc', SilvaDocumentNS)
-    exporter.registerProducer(Document, DocumentProducer)
-    exporter.registerProducer(DocumentVersion, DocumentVersionProducer)
+NS_SILVA_DOCUMENT = 'http://infrae.com/namespace/silva-document'
+theXMLExporter.registerNamespace('doc', NS_SILVA_DOCUMENT)
 
 
 class DocumentProducer(VersionedContentProducer):
     """Export a Silva Document object to XML.
     """
+    grok.adapts(interfaces.IDocument, Interface)
+
     def sax(self):
         self.startElement('document', {'id': self.context.id})
         self.workflow()
@@ -43,6 +37,8 @@ class DocumentProducer(VersionedContentProducer):
 class DocumentVersionProducer(SilvaBaseProducer):
     """Export a version of a Silva Document object to XML.
     """
+    grok.adapts(interfaces.IDocumentVersion, Interface)
+
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
         self.metadata()
@@ -81,12 +77,12 @@ class DocumentVersionProducer(SilvaBaseProducer):
                         rewritten_url += '#' + anchor
                     attributes['rewritten_url'] = rewritten_url
 
-            self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
+            self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
             if node.hasChildNodes():
                 self.sax_children(node)
             elif node.nodeValue:
                 self.handler.characters(node.nodeValue)
-            self.endElementNS(SilvaDocumentNS, node.nodeName)
+            self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
 
     def sax_children(self, node):
         for child in node.childNodes:
@@ -105,12 +101,12 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     unicode(thiserror),
                     '</div>']
             self.render_html("".join(html))
-            self.endElementNS(SilvaDocumentNS, node.nodeName)
+            self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
 
         attributes = {}
         if node.attributes:
             attributes = get_dict(node.attributes)
-        self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
+        self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
         try:
             # this can happen if no source was specified when the
             # element was added
@@ -126,7 +122,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 param_type = child.attributes.get('type')
                 if param_type:
                     attributes['type'] = param_type.value
-                self.startElementNS(SilvaDocumentNS, 'parameter', attributes)
+                self.startElementNS(NS_SILVA_DOCUMENT, 'parameter', attributes)
                 for grandChild in child.childNodes:
                     text = ''
                     if grandChild.nodeType == Node.TEXT_NODE:
@@ -134,7 +130,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                             self.handler.characters(grandChild.nodeValue)
                             text = text + grandChild.nodeValue
                     parameters[str(child.attributes['key'].value)] = text
-                self.endElementNS(SilvaDocumentNS, 'parameter')
+                self.endElementNS(NS_SILVA_DOCUMENT, 'parameter')
         if self.getSettings().externalRendering():
             request = self.context.REQUEST
             request.set('model', self.context.aq_inner)
@@ -151,13 +147,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
             if not request.get('edit_mode', None):
                 request.set('model', None)
             self.render_html(html)
-        self.endElementNS(SilvaDocumentNS, node.nodeName)
+        self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
 
     def sax_table(self, node):
         attributes = {}
         if node.attributes:
             attributes = get_dict(node.attributes)
-        self.startElementNS(SilvaDocumentNS, 'table', attributes)
+        self.startElementNS(NS_SILVA_DOCUMENT, 'table', attributes)
         columns_info = self.get_columns_info(node)
         nr_of_columns = len(columns_info)
         for column in columns_info:
@@ -165,8 +161,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
             width = column.get('html_width')
             if width:
                 col_attributes['width'] = width
-            self.startElementNS(SilvaDocumentNS, 'col', col_attributes)
-            self.endElementNS(SilvaDocumentNS, 'col')
+            self.startElementNS(NS_SILVA_DOCUMENT, 'col', col_attributes)
+            self.endElementNS(NS_SILVA_DOCUMENT, 'col')
         if node.hasChildNodes():
             row = 0
             for child in node.childNodes:
@@ -175,32 +171,32 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 elif child.nodeName == 'row':
                     row += 1
                     self.sax_row(child, row, columns_info)
-        self.endElementNS(SilvaDocumentNS, 'table')
+        self.endElementNS(NS_SILVA_DOCUMENT, 'table')
 
     def sax_row_heading(self, node, nr_of_columns):
         child_attrs = {'colspan': str(nr_of_columns)}
-        self.startElementNS(SilvaDocumentNS, 'row_heading', child_attrs)
+        self.startElementNS(NS_SILVA_DOCUMENT, 'row_heading', child_attrs)
         if node.hasChildNodes():
             self.sax_children(node)
-        self.endElementNS(SilvaDocumentNS, 'row_heading')
+        self.endElementNS(NS_SILVA_DOCUMENT, 'row_heading')
 
     def sax_row(self, node, row, columns_info):
         child_attrs = {'class': row % 2 and "odd" or "even"}
-        self.startElementNS(SilvaDocumentNS, 'row', child_attrs)
+        self.startElementNS(NS_SILVA_DOCUMENT, 'row', child_attrs)
         if node.hasChildNodes:
             col = 0
             for child in node.childNodes:
                 if child.nodeType == Node.ELEMENT_NODE:
                     self.sax_field(child, columns_info[col])
                     col += 1
-        self.endElementNS(SilvaDocumentNS, 'row')
+        self.endElementNS(NS_SILVA_DOCUMENT, 'row')
 
     def sax_field(self, node, col_info):
         child_attrs = {'class': 'align-' + col_info['align'],
                        'fieldtype': node.getAttribute('fieldtype') or 'td'}
         if node.hasAttribute('colspan'):
             child_attrs['colspan'] = node.getAttribute('colspan')
-        self.startElementNS(SilvaDocumentNS, 'field', child_attrs)
+        self.startElementNS(NS_SILVA_DOCUMENT, 'field', child_attrs)
         if node.hasChildNodes():
             for child in node.childNodes:
                 if child.nodeType == Node.TEXT_NODE:
@@ -224,7 +220,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                             self.sax_img(child)
                         else:
                             self.sax_node(child)
-        self.endElementNS(SilvaDocumentNS, 'field')
+        self.endElementNS(NS_SILVA_DOCUMENT, 'field')
 
     def get_columns_info(self, node):
         columns = int(node.getAttribute('columns'))
@@ -323,14 +319,13 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 attributes['alignment'] = 'default'
         else:
             attributes['alignment'] = 'default'
-        self.startElementNS(SilvaDocumentNS, node.nodeName, attributes)
-        self.endElementNS(SilvaDocumentNS, node.nodeName)
+        self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
+        self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
 
     def render_html(self, html):
-        self.startElementNS(SilvaDocumentNS, 'rendered_html')
+        self.startElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
         saxify(html, self.handler)
-        self.endElementNS(SilvaDocumentNS, 'rendered_html')
-
+        self.endElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
 
 def get_dict(attributes):
     result = {}

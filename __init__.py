@@ -9,10 +9,4 @@ silvaconf.extensionTitle('Silva Document')
 silvaconf.extensionDepends('SilvaExternalSources')
 
 
-def initialize(context):
-    from Products.SilvaDocument.silvaxml import xmlexport
-
-    # new xml import/export
-    xmlexport.initializeXMLExportRegistry()
-
 
