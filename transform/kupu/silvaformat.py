@@ -251,7 +251,7 @@ class link(SilvaElement):
             path = self.attr.url
             if not urlparse(unicode(path))[0]:
                 # path, not a full URL
-                pad = pathadapter.getPathAdapter(context.model.REQUEST)
+                pad = pathadapter.getPathAdapter(context.request)
                 path = pad.pathToUrlPath(unicode(path))
             return html.a(
                 self.content.convert(context),
