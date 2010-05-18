@@ -7,9 +7,9 @@ from StringIO import StringIO
 import re
 
 # Zope
+from five import grok
 from zope import lifecycleevent
 from zope.event import notify
-from zope.interface import implements
 
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
@@ -57,7 +57,7 @@ class DocumentVersion(CatalogedVersion):
     """Silva Document version.
     """
     meta_type = "Silva Document Version"
-    implements(IDocumentVersion)
+    grok.implements(IDocumentVersion)
 
     security = ClassSecurityInfo()
 
@@ -157,7 +157,7 @@ class Document(CatalogedVersionedContent):
 
     meta_type = "Silva Document"
 
-    implements(IDocument)
+    grok.implements(IDocument)
 
     silvaconf.icon('www/silvadoc.gif')
     silvaconf.priority(-6)
@@ -232,17 +232,15 @@ InitializeClass(Document)
 class DocumentAddForm(silvaz3cforms.AddForm):
     """Add form for a document.
     """
-
-    silvaconf.context(IDocument)
-    silvaconf.name(u'Silva Document')
+    grok.context(IDocument)
+    grok.name(u'Silva Document')
     fields = field.Fields(IDocumentVersion)
 
 
 class DocumentView(silvaviews.View):
     """View on a document.
     """
-
-    silvaconf.context(IDocument)
+    grok.context(IDocument)
 
     def render(self):
         # XXX This should be improved
@@ -254,7 +252,7 @@ class DocumentView(silvaviews.View):
 
 class SilvaDocumentPolicy(Persistent):
 
-    implements(IContainerPolicy)
+    grok.implements(IContainerPolicy)
 
     def createDefaultDocument(self, container, title):
         factory = container.manage_addProduct['SilvaDocument']
