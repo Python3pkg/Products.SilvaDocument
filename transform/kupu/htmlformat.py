@@ -727,39 +727,27 @@ class tr(Element):
                 cells)
 
 class td(Element):
-    def convert(self, context, parentisrow=0):
-        if not parentisrow:
-            return Frag()
-        result = fix_structure(rest, context)
-        colspan = getattr(self.attr,'colspan',None)
-        if colspan:
-            return silva.field(
-                result,
-                fieldtype='td',
-                colspan=colspan)
-        else:
-            return silva.field(
-                result,
-                fieldtype='td')
 
-class th(Element):
+    fieldtype = 'td'
+
     def convert(self, context, parentisrow=0):
         if not parentisrow:
             return Frag()
-        rest = self.find()
-        result = fix_structure(self.find(), context)
-        colspan = getattr(self.attr,'colspan',None)
-        if colspan:
-            return silva.field(
-                result,
-                fieldtype='th',
-                colspan=colspan)
-        else:
-            return silva.field(
-                result,
-                fieldtype='th')
+        colspan = getattr(self.attr, 'colspan', None)
+        attributes = {'fieldtype': self.fieldtype}
+        if colspan is not None:
+            attributes['colspan'] = colspan
+        return silva.field(
+            fix_structure(self.find(), context),
+            **attributes)
+
+class th(td):
+
+    fieldtype = 'th'
+
 
 class div(Element):
+
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
