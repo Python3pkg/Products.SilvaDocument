@@ -437,6 +437,7 @@ class field(SilvaElement):
 
 
 class source(SilvaElement):
+
     def convert(self, context):
         # external source element
         id = self.attr.id
@@ -447,6 +448,7 @@ class source(SilvaElement):
         if source is not None:
             meta_type = source.meta_type
             source_title = source.get_title() or id
+            source_form = source.form()
             header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
                              title=u'source id: %s'%id)
             desc = source.description()
@@ -455,6 +457,7 @@ class source(SilvaElement):
                     html.p(desc, class_="externalsource-description"))
         else:
             source_title = ''
+            source_form = None
             header = html.h4(
                 Text('[%s]' % _('external source element is broken')))
         for child in self.find():
@@ -470,11 +473,14 @@ class source(SilvaElement):
                 params[key] = (value,attrkey)
         divpar = []
         for key in params:
-            value,attrkey = params[key]
-            if source is not None:
-                display_key = source.form().get_field(key).title()
-            else:
-                display_key = key
+            value, attrkey = params[key]
+            display_key = key
+            if source_form is not None:
+                try:
+                    display_key = source_form.get_field(key).title()
+                except AttributeError:
+                    pass        # Field is gone
+
             divpar.append(html.strong("%s: " % display_key))
             if '__type__list' in attrkey:
                 for v in value:
