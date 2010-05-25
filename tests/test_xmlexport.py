@@ -12,7 +12,8 @@ from Products.Silva.tests import SilvaTestCase
 from Products.Silva.tests.test_xmlexport import XMLExportMixin
 
 
-class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
+class SetTestCase(SilvaTestCase.SilvaTestCase, XMLExportMixin):
+
     def test_xml_document_export(self):
         testfolder = self.add_folder(
             self.root,
@@ -28,7 +29,7 @@ class SetTestCase(SilvaTestCase.SilvaTestCase,XMLExportMixin):
             """<?xml version="1.0" encoding="utf-8"?><doc>
             <node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<node2>boo</node2>
             baz</node></doc>""")
-        xmlexport.initializeXMLExportRegistry()
+
         # We will now do some horrible, horrible stuff to be able to test
         # the export, while ignoring the export date, which we can't know
         # about beforehand. Also I don't see how to get this within 80
