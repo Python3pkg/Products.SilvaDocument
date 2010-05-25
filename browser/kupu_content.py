@@ -2,20 +2,17 @@
 # See also LICENSE.txt
 # $Id$
 
-from DateTime import DateTime
+from datetime import datetime
+
 from Products.SilvaDocument.interfaces import IDocument
+
 from five import grok
+from zope.component import getUtility
+from zope.intid.interfaces import IIntIds
+
 from silva.core.views.interfaces import IVirtualSite
 from silva.core.smi.interfaces import ISMILayer
 
-
-HEADERS = [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
-           ('Last-Modified', DateTime("GMT").strftime(
-                    "%a, %d %b %Y %H:%M:%S GMT")),
-           ('Cache-Control', 'no-cache, must-revalidate'),
-           ('Cache-Control', 'post-check=0, pre-check=0'),
-           ('Pragma', 'no-cache'),
-           ('Content-Type', 'text/html;charset=utf-8'),]
 
 
 class KupuContent(grok.View):
@@ -26,14 +23,24 @@ class KupuContent(grok.View):
     grok.layer(ISMILayer)
     grok.require('silva.ChangeSilvaContent')
 
+    @property
+    def headers(self):
+        # This is a property in order to have a recent last-modified date
+        return [('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT'),
+                ('Last-Modified', datetime.now().strftime(
+                    "%a, %d %b %Y %H:%M:%S GMT")),
+                ('Cache-Control', 'no-cache, must-revalidate'),
+                ('Cache-Control', 'post-check=0, pre-check=0'),
+                ('Pragma', 'no-cache'),
+                ('Content-Type', 'text/html;charset=utf-8'),]
+
     def update(self):
-        for key, value in HEADERS:
+        for key, value in self.headers:
             self.response.setHeader(key, value)
 
         version = self.context.get_editable()
         self.root_url = IVirtualSite(self.request).get_root_url()
-        # XXX Should replace this with intid
-        self.docref = self.context.create_ref(self.context)
+        self.docref = getUtility(IIntIds).register(version)
         self.title = version.get_title_or_id()
         self.document = version.get_document_xml_as(
             format='kupu', request=self.request)

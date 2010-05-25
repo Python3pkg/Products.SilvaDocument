@@ -132,20 +132,15 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     parameters[str(child.attributes['key'].value)] = text
                 self.endElementNS(NS_SILVA_DOCUMENT, 'parameter')
         if self.getSettings().externalRendering():
-            request = self.context.REQUEST
-            request.set('model', self.context.aq_inner)
             try:
-                html = source.to_html(request, **parameters)
+                html = source.to_html(self.context, None, **parameters)
             except Exception, err:
-                if source and hasattr(source.aq_explicit, 'log_traceback'):
-                    source.log_traceback()
                 source_error(unicode(_("error message:")) + " " + str(err))
                 return
             if not html:
-                source_error(unicode(_("error message:")) + " " + unicode(_("None returned from source")))
+                source_error(unicode(_("error message:")) + " " \
+                                 + unicode(_("None returned from source")))
                 return
-            if not request.get('edit_mode', None):
-                request.set('model', None)
             self.render_html(html)
         self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
 
