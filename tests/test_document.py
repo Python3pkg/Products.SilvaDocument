@@ -7,20 +7,23 @@ import unittest
 from zope.interface.verify import verifyObject
 
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
-from Products.Silva.tests.SilvaTestCase import SilvaTestCase
+from Products.Silva.testing import FunctionalLayer
 
 
-class DocumentTestCase(SilvaTestCase):
+class DocumentTestCase(unittest.TestCase):
     """Test a SilvaDocument
     """
+    layer = FunctionalLayer
 
-    def afterSetUp(self):
-        self.add_document(self.root, 'document', 'Document')
+    def setUp(self):
+        self.root = self.layer.get_application()
+        factory = self.root.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('document', 'Document')
 
     def test_interfaces(self):
         self.failUnless(verifyObject(IDocument, self.root.document))
-        self.failUnless(verifyObject(IDocumentVersion,
-                                     self.root.document.get_editable()))
+        self.failUnless(verifyObject(
+                IDocumentVersion, self.root.document.get_editable()))
 
 
 def test_suite():

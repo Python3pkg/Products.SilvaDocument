@@ -5,23 +5,25 @@
 
 import unittest
 
-from Products.Silva.tests import SilvaTestCase
+from Products.Silva.testing import FunctionalLayer
+from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.silvaxml import xmlimport
-from Products.SilvaDocument.tests.data import testopen
 
 
-class ImportTestCase(SilvaTestCase.SilvaTestCase):
+class ImportTestCase(unittest.TestCase):
     """Test the import of a document.
     """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
 
     def test_document_import(self):
-        importfolder = self.add_folder(
-            self.root,
-            'importfolder',
-            'This is <boo>a</boo> testfolder',
-            policy_name='Silva AutoTOC')
+        importfolder = self.root.folder
         importer = xmlimport.theXMLImporter
-        source_file = testopen('test_document.xml', 'r')
+        source_file = open_test_file('test_document.xml', globals(), 'r')
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
         importer.importFromFile(
