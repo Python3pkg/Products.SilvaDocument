@@ -8,19 +8,19 @@ import os.path
 from zope.interface.verify import verifyObject
 from silva.core.interfaces.adapters import IIndexable
 
-from Products.Silva.tests import SilvaTestCase
-from Products.Silva.tests.helpers import publishObject
+from Products.Silva.testing import FunctionalLayer
+from Products.Silva.tests.helpers import publish_object, open_test_file
 from Products.Silva.silvaxml import xmlimport
 
 
-def testdata_open(path):
-    directory = os.path.dirname(__file__)
-    return open(os.path.join(directory, 'data', path), 'r')
-
-
-class IndexableTest(SilvaTestCase.SilvaTestCase):
+class IndexableTest(unittest.TestCase):
     """Test the Indexer support of SilvaDocument.
     """
+    layer = FunctionalLayer
+
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
 
     def test_empty_document(self):
         factory = self.root.manage_addProduct['SilvaDocument']
@@ -31,7 +31,7 @@ class IndexableTest(SilvaTestCase.SilvaTestCase):
         self.failUnless(verifyObject(IIndexable, indexable))
         self.assertEqual(indexable.getIndexes(), [])
 
-        publishObject(doc)
+        publish_object(doc)
         indexable = IIndexable(doc)
         self.failUnless(verifyObject(IIndexable, indexable))
         self.assertEqual(indexable.getIndexes(), [])
@@ -39,7 +39,7 @@ class IndexableTest(SilvaTestCase.SilvaTestCase):
     def test_not_empty_document(self):
         # XML import is the only way to get a document ...
         importer = xmlimport.theXMLImporter
-        source_file = testdata_open('test_indexable.xml')
+        source_file = open_test_file('test_indexable.xml', globals())
         test_settings = xmlimport.ImportSettings()
         test_info = xmlimport.ImportInfo()
         importer.importFromFile(
@@ -54,7 +54,7 @@ class IndexableTest(SilvaTestCase.SilvaTestCase):
         self.failUnless(verifyObject(IIndexable, indexable))
         self.assertEqual(indexable.getIndexes(), [])
 
-        publishObject(doc)
+        publish_object(doc)
         indexable = IIndexable(doc)
         self.failUnless(verifyObject(IIndexable, indexable))
         self.assertEqual(

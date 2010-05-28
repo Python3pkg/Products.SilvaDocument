@@ -10,9 +10,8 @@ from zope.intid.interfaces import IIntIds
 from zope.publisher.browser import TestRequest
 from silva.core.references.interfaces import IReferenceService
 
-from Products.Silva.tests.SilvaTestCase import SilvaTestCase
-from Products.Silva.tests.helpers import publish_object
-from Products.SilvaDocument.tests.data import testopen
+from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.Silva.tests.helpers import publish_object, open_test_file
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
@@ -23,18 +22,23 @@ TEST_IMAGE_HTML = '<img src="http://localhost/root/chocobo" ' \
     'alt="Chocobo" alignment=""></img>'
 
 
-class KupuTransformerTest(SilvaTestCase):
+class KupuTransformerTest(TestCase):
     """Test Silva<->Kupu transformer. Transformer are not anymore
     content-agnostic, because of reference management. Transforming
     Kupu->Silva do change the version it is transformed for.
     """
+    layer = FunctionalLayer
 
-    def afterSetUp(self):
-        self.add_document(self.root, 'document', 'Document')
-        self.add_folder(self.root, 'folder', 'Folder')
-        self.add_publication(self.root, 'publication', 'Publication')
-        self.add_image(
-            self.root, 'chocobo', 'Chocobo', file=testopen('chocobo.jpg'))
+    def setUp(self):
+        self.root = self.layer.get_application()
+        self.layer.login('editor')
+        factory = self.root.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument('document', 'Document')
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addPublication('publication', 'Publication')
+        factory.manage_addImage(
+            'chocobo', 'Chocobo', file=open_test_file('chocobo.jpg', globals()))
         self.transformer = Transformer.EditorTransformer(editor='kupu')
         # Context need the a document version in order to determine
         # references, and REQUEST to compute link URLs
@@ -116,7 +120,6 @@ class KupuTransformerTest(SilvaTestCase):
             sourceobj=result, context=self.context).asBytes('utf-8')
         self.assertEqual(roundtrip, html)
 
-
     def test_new_image_round_trip(self):
         """We create a new image which is a reference to an image by
         transforming Kupu->Silva, and we check the result by
@@ -172,7 +175,6 @@ class KupuTransformerTest(SilvaTestCase):
         self.assertEqual(
             list(service.get_references_from(version)),
             [reference])
-
 
     def test_new_link_round_trip(self):
         """We create a new link which is a reference to a content in

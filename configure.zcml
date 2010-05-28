@@ -9,5 +9,5 @@
   <i18n:registerTranslations directory="i18n" />
 
   <grok:grok package="." />
-  
+
 </configure>
