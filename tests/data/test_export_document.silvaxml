@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<silva xmlns="http://infrae.com/namespace/silva" xmlns:doc="http://infrae.com/namespace/silva-document" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" datetime="YYYY-MM-DDTHH:MM:SS" path="/root/folder" silva_version="Silva 2.3dev" url="http://foo/root/folder">
+<silva xmlns="http://infrae.com/namespace/silva" {namespaces} datetime="YYYY-MM-DDTHH:MM:SS" path="/root/folder" silva_version="{version}" url="http://foo/root/folder">
  <folder id="folder">
   <metadata>
    <set id="silva-content">
@@ -22,7 +22,7 @@
      YYYY-MM-DDTHH:MM:SS
     </silva-extra:creationtime>
     <silva-extra:creator>
-     silvatestcase
+     author
     </silva-extra:creator>
     <silva-extra:expirationtime>
     </silva-extra:expirationtime>
@@ -82,7 +82,7 @@
       YYYY-MM-DDTHH:MM:SS
      </silva-extra:creationtime>
      <silva-extra:creator>
-      silvatestcase
+      author
      </silva-extra:creator>
      <silva-extra:expirationtime>
      </silva-extra:expirationtime>

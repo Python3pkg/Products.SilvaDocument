@@ -18,6 +18,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
+        self.layer.login('author')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Test <boo>Folder</boo>')
         factory = self.root.folder.manage_addProduct['SilvaDocument']
@@ -38,6 +39,7 @@ class XMLExportTestCase(SilvaXMLTestCase):
         self.assertEqual(info.getAssetPaths(), [])
 
     def test_document_with_source_export(self):
+        self.layer.login('manager')
         factory = self.root.folder.manage_addProduct['SilvaExternalSources']
         factory.manage_addCodeSource(
             'codesource', 'A Code Source', 'script')
@@ -48,22 +50,24 @@ class XMLExportTestCase(SilvaXMLTestCase):
         script = self.root.folder.codesource.script
         script.write('return "<ul><li>Item 1</li><li>Item 2</li></ul>"')
 
+        self.layer.login('author')
+
         doc = self.root.folder.document
         doc_edit = doc.get_editable()
         doc_edit.content = ParsedXML(
             'test_document',
             """<?xml version="1.0" encoding="utf-8"?><doc>
             <source id="codesource"></source>
-            <p type="normal">This is the text of the citation. Only this
-            text appears in the editing area, however the author and/or
-            source will be shown in the preview and published version of the
-            document.</p>
+            <p type="normal">This is some text.</p>
             </doc>""")
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(
             xml, 'test_export_codesource.silvaxml', globals())
-        self.assertEqual(info.getZexpPaths(), [])
+        # The code-source went into a ZEXP.
+        self.assertEqual(
+            info.getZexpPaths(),
+            [(('', 'root', 'folder', 'codesource'), '1.zexp')])
         self.assertEqual(info.getAssetPaths(), [])
 
 
