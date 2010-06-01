@@ -4,7 +4,6 @@
 
 from Products.Silva.silvaxml.xmlimport import (
     SilvaBaseHandler, NS_URI, updateVersionCount)
-from Products.SilvaDocument.Document import Document, DocumentVersion
 from Products.Silva import mangle
 
 from silva.core import conf as silvaconf
@@ -18,38 +17,35 @@ class DocumentHandler(SilvaBaseHandler):
     silvaconf.name('document')
 
     def getOverrides(self):
-        return {(NS_URI, 'content'): DocumentContentHandler}
+        return {(NS_URI, 'content'): DocumentVersionHandler}
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'document'):
-            id = attrs[(None, 'id')].encode('utf-8')
-            uid = self.generateOrReplaceId(id)
-            object = Document(uid)
-            self.parent()._setObject(uid, object)
-            self.setResult(getattr(self._parent, uid))
+            uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
+            self.parent().manage_addProduct['SilvaDocument'].manage_addDocument(
+                uid, '', no_default_version=True)
+            self.setResultId(uid)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'document'):
             ICataloging(self.result()).reindex()
 
 
-class DocumentContentHandler(SilvaBaseHandler):
+class DocumentVersionHandler(SilvaBaseHandler):
 
     def getOverrides(self):
         return {(DOC_NS_URI, 'doc'): DocElementHandler, }
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'content'):
-            id = attrs[(None, 'version_id')].encode('utf-8')
-            if not mangle.Id(self._parent, id).isValid():
-                return
-            version = DocumentVersion(id)
-            self.parent()._setObject(id, version)
-            self.setResult(getattr(self._parent, id))
-            updateVersionCount(self)
+            uid = attrs[(None, 'version_id')].encode('utf-8')
+            self.parent().manage_addProduct['SilvaDocument'].manage_addDocumentVersion(
+                uid, '')
+            self.setResultId(uid)
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
+            updateVersionCount(self)
             self.setMaintitle()
             self.storeMetadata()
             self.storeWorkflow()
@@ -59,8 +55,9 @@ class DocElementHandler(SilvaBaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (DOC_NS_URI, 'doc'):
-            self._node = self._parent.content.documentElement
-            self._tree = self._parent.content
+            version = self.parent()
+            self._tree = version.content
+            self._node = self._tree.documentElement
         else:
             child = self._tree.createElement(name[1])
             self._node.appendChild(child)
