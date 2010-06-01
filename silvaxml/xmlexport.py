@@ -13,6 +13,7 @@ from Products.SilvaDocument import interfaces
 from five import grok
 from zope import component
 from zope.interface import Interface
+from zope.traversing.browser import absoluteURL
 
 from silva.core.interfaces import IImage
 from silva.core.interfaces.adapters import IPath
@@ -61,21 +62,25 @@ class DocumentVersionProducer(SilvaBaseProducer):
         else:
             if node.nodeName == 'link':
                 if self.getSettings().externalRendering():
-                    document = self.context.object()
                     rewritten_url = ''
                     if 'reference' in attributes:
                         service = component.getUtility(IReferenceService)
                         reference = service.get_reference(
                             self.context, name=attributes['reference'])
-                        # XXX: replace to absoluteURL
-                        rewritten_url = reference.target.absolute_url()
+                        rewritten_url = absoluteURL(
+                            reference.target, settings.request)
                     elif 'url' in attributes:
+                        document = self.context.object()
                         rewritten_url = IPath(document).pathToUrlPath(
                             attributes['url'])
                     anchor = attributes.get('anchor', '')
                     if anchor:
                         rewritten_url += '#' + anchor
                     attributes['rewritten_url'] = rewritten_url
+                else:
+                    if 'reference' in attributes:
+                        attributes['reference'] = self.reference(
+                            attributes['reference'])
 
             self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
             if node.hasChildNodes():
@@ -286,7 +291,6 @@ class DocumentVersionProducer(SilvaBaseProducer):
             attributes = get_dict(node.attributes)
 
         if self.getSettings().externalRendering():
-            document = self.context.object()
             rewritten_path = None
             if 'reference' in attributes:
                 service = component.getUtility(IReferenceService)
@@ -295,6 +299,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 image = reference.target
                 rewritten_path = image.absolute_url()
             else:
+                document = self.context.get_content()
                 image = document.unrestrictedTraverse(
                     attributes['path'].split('/'), None)
                 rewritten_path = IPath(document).pathToUrlPath(
@@ -308,6 +313,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     attributes['width'] = str(width)
                     attributes['height'] = str(height)
                     attributes['rewritten_path'] += '?hires'
+        else:
+            if 'reference' in attributes:
+                attributes['reference'] = self.reference(
+                    attributes['reference'])
 
         if attributes.has_key('alignment'):
             if not attributes['alignment']:

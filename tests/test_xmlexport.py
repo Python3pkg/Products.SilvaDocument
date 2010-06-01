@@ -8,7 +8,12 @@ import unittest
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.silvaxml import xmlexport
 from Products.Silva.testing import FunctionalLayer
+from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests.test_xmlexport import SilvaXMLTestCase
+
+from zope import component
+from zope.intid.interfaces import IIntIds
+from silva.core.references.interfaces import IReferenceService
 
 
 class XMLExportTestCase(SilvaXMLTestCase):
@@ -25,9 +30,9 @@ class XMLExportTestCase(SilvaXMLTestCase):
         factory.manage_addDocument('document', 'Test document')
 
     def test_document(self):
-        doc = self.root.folder.document
-        doc_edit = doc.get_editable()
-        doc_edit.content = ParsedXML(
+        document = self.root.folder.document
+        version = document.get_editable()
+        version.content = ParsedXML(
             'document',
             """<?xml version="1.0" encoding="utf-8"?><doc>
             <node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<node2>boo</node2>
@@ -37,6 +42,57 @@ class XMLExportTestCase(SilvaXMLTestCase):
         self.assertExportEqual(xml, 'test_export_document.silvaxml', globals())
         self.assertEqual(info.getZexpPaths(), [])
         self.assertEqual(info.getAssetPaths(), [])
+
+    def test_document_link(self):
+        """Try to export a document that links to other resources.
+        """
+        document = self.root.folder.document
+        version = document.get_editable()
+        version.content = ParsedXML(
+            'document',
+            """<?xml version="1.0" encoding="utf-8"?>
+           <doc><p>This is a reference to
+           <link target="_blank" reference="infrae-site" title="">Infrae</link>
+           </p></doc>""")
+
+        # Create a link that will be the target of our reference in our document
+        self.root.folder.manage_addProduct['Silva'].manage_addLink(
+            'link', 'Link to Infrae', relative=False, url='http://infrae.com')
+        service = component.getUtility(IReferenceService)
+        reference = service.new_reference(version, name=u"document link")
+        reference.set_target(self.root.folder.link)
+        reference.add_tag(u"infrae-site")
+
+        xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_link.silvaxml', globals())
+        self.assertEqual(info.getZexpPaths(), [])
+        self.assertEqual(info.getAssetPaths(), [])
+
+    def test_document_image(self):
+        """Try to export a document that use an image.
+        """
+        document = self.root.folder.document
+        version = document.get_editable()
+        version.content = ParsedXML(
+            'document',
+            """<?xml version="1.0" encoding="utf-8"?>
+           <doc><p>Torvald last picture</p>
+           <image reference="torvald-pic" alignment="" title="Torvald"></image>
+           </doc>""")
+
+        # Create a image to use in the document
+        self.root.folder.manage_addProduct['Silva'].manage_addImage(
+            'torvald', 'Torvald', open_test_file('chocobo.jpg', globals()))
+        service = component.getUtility(IReferenceService)
+        reference = service.new_reference(version, name=u"document link")
+        reference.set_target(self.root.folder.torvald)
+        reference.add_tag(u"torvald-pic")
+
+        xml, info = xmlexport.exportToString(self.root.folder)
+        self.assertExportEqual(xml, 'test_export_image.silvaxml', globals())
+        self.assertEqual(info.getZexpPaths(), [])
+        self.assertEqual(
+            info.getAssetPaths(), [(('', 'root', 'folder', 'torvald'), '1')])
 
     def test_document_with_source_export(self):
         self.layer.login('manager')
