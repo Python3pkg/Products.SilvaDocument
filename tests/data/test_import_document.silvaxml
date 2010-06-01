@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:doc="http://infrae.com/namespace/silva-document" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" path="/root/folder" url="http://nohost/root/folder" datetime="2004-04-23T16:13:39Z">
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Folder with a document.
+        </silva-content:maintitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:hide_from_tocs>
+          do not hide
+        </silva-extra:hide_from_tocs>
+        <silva-extra:modificationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:modificationtime>
+        <silva-extra:creationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:creationtime>
+        <silva-extra:lastauthor>
+          wimbou from Gent
+        </silva-extra:lastauthor>
+        <silva-extra:creator>
+          wimbou from Gent
+        </silva-extra:creator>
+        <silva-extra:contactname>
+          Wim Boucquaert
+        </silva-extra:contactname>
+      </set>
+    </metadata>
+    <content>
+      <document id="document">
+        <workflow>
+          <version id="0">
+            <status>
+              unapproved
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Previewing a document
+              </silva-content:maintitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:modificationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:modificationtime>
+              <silva-extra:creationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:creationtime>
+              <silva-extra:lastauthor>
+                wimbou
+              </silva-extra:lastauthor>
+              <silva-extra:creator>
+                wimbou
+              </silva-extra:creator>
+              <silva-extra:content_description>
+                How to click on preview.
+              </silva-extra:content_description>
+              <silva-extra:comment>
+                Caution: A special skill-set is required for this operation.
+              </silva-extra:comment>
+            </set>
+          </metadata>
+          <doc:doc>
+            <doc:heading type="normal">
+              Silva Preview
+              <doc:index name="Previewing_a_document"
+                         title="Previewing a document">
+              </doc:index>
+            </doc:heading>
+            <doc:p type="normal">
+              After editing a document you can preview your work by
+              clicking on
+              <doc:em>
+                preview
+              </doc:em>
+              in the Silva top navigation bar. Make sure you save your
+              work first!
+              <doc:br />
+            </doc:p>
+            <doc:p type="normal">
+              The preview screen displays the content in the public
+              layout as it'll appear on the site after being
+              published.
+              <doc:br />
+            </doc:p>
+            <doc:heading type="sub">
+              Troubleshooting
+            </doc:heading>
+            <doc:p type="normal">
+              You need actually to press a button of your mouse.
+            </doc:p>
+          </doc:doc>
+        </content>
+      </document>
+    </content>
+  </folder>
+</silva>
+

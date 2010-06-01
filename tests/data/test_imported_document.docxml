@@ -1,0 +1,31 @@
+<doc>
+ <heading type="normal">
+  Silva Preview
+  <index name="Previewing_a_document" title="Previewing a document">
+  </index>
+ </heading>
+ <p type="normal">
+  After editing a document you can preview your work by
+              clicking on
+  <em>
+   preview
+  </em>
+  in the Silva top navigation bar. Make sure you save your
+              work first!
+  <br>
+  </br>
+ </p>
+ <p type="normal">
+  The preview screen displays the content in the public
+              layout as it'll appear on the site after being
+              published.
+  <br>
+  </br>
+ </p>
+ <heading type="sub">
+  Troubleshooting
+ </heading>
+ <p type="normal">
+  You need actually to press a button of your mouse.
+ </p>
+</doc>

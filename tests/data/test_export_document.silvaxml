@@ -1,119 +1,119 @@
 <?xml version='1.0' encoding='utf-8'?>
 <silva xmlns="http://infrae.com/namespace/silva" {namespaces} datetime="YYYY-MM-DDTHH:MM:SS" path="/root/folder" silva_version="{version}" url="http://foo/root/folder">
- <folder id="folder">
-  <metadata>
-   <set id="silva-content">
-    <silva-content:maintitle>
-     Test &lt;boo&gt;Folder&lt;/boo&gt;
-    </silva-content:maintitle>
-    <silva-content:shorttitle>
-    </silva-content:shorttitle>
-   </set>
-   <set id="silva-extra">
-    <silva-extra:comment>
-    </silva-extra:comment>
-    <silva-extra:contactemail>
-    </silva-extra:contactemail>
-    <silva-extra:contactname>
-    </silva-extra:contactname>
-    <silva-extra:content_description>
-    </silva-extra:content_description>
-    <silva-extra:creationtime>
-     YYYY-MM-DDTHH:MM:SS
-    </silva-extra:creationtime>
-    <silva-extra:creator>
-     author
-    </silva-extra:creator>
-    <silva-extra:expirationtime>
-    </silva-extra:expirationtime>
-    <silva-extra:hide_from_tocs>
-     do not hide
-    </silva-extra:hide_from_tocs>
-    <silva-extra:keywords>
-    </silva-extra:keywords>
-    <silva-extra:language>
-    </silva-extra:language>
-    <silva-extra:lastauthor>
-     unknown
-    </silva-extra:lastauthor>
-    <silva-extra:modificationtime>
-     YYYY-MM-DDTHH:MM:SS
-    </silva-extra:modificationtime>
-    <silva-extra:publicationtime>
-    </silva-extra:publicationtime>
-    <silva-extra:subject>
-    </silva-extra:subject>
-   </set>
-  </metadata>
-  <content>
-   <document id="document">
-    <workflow>
-     <version id="0">
-      <status>
-       unapproved
-      </status>
-      <publication_datetime>
-      </publication_datetime>
-      <expiration_datetime>
-      </expiration_datetime>
-     </version>
-    </workflow>
-   </document>
-  </content>
-  <content version_id="0">
-   <metadata>
-    <set id="silva-content">
-     <silva-content:maintitle>
-      Test document
-     </silva-content:maintitle>
-     <silva-content:shorttitle>
-     </silva-content:shorttitle>
-    </set>
-    <set id="silva-extra">
-     <silva-extra:comment>
-     </silva-extra:comment>
-     <silva-extra:contactemail>
-     </silva-extra:contactemail>
-     <silva-extra:contactname>
-     </silva-extra:contactname>
-     <silva-extra:content_description>
-     </silva-extra:content_description>
-     <silva-extra:creationtime>
-      YYYY-MM-DDTHH:MM:SS
-     </silva-extra:creationtime>
-     <silva-extra:creator>
-      author
-     </silva-extra:creator>
-     <silva-extra:expirationtime>
-     </silva-extra:expirationtime>
-     <silva-extra:hide_from_tocs>
-      do not hide
-     </silva-extra:hide_from_tocs>
-     <silva-extra:keywords>
-     </silva-extra:keywords>
-     <silva-extra:language>
-     </silva-extra:language>
-     <silva-extra:lastauthor>
-      unknown
-     </silva-extra:lastauthor>
-     <silva-extra:modificationtime>
-      YYYY-MM-DDTHH:MM:SS
-     </silva-extra:modificationtime>
-     <silva-extra:publicationtime>
-     </silva-extra:publicationtime>
-     <silva-extra:subject>
-     </silva-extra:subject>
-    </set>
-   </metadata>
-   <doc:doc>
-    <doc:node foo="bar">
-    承諾広告＊既に、２億、３億、５億９千万円収入者が続出
-     <doc:node2>
-      boo
-     </doc:node2>
-     baz
-    </doc:node>
-   </doc:doc>
-  </content>
- </folder>
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Test &lt;boo&gt;Folder&lt;/boo&gt;
+        </silva-content:maintitle>
+        <silva-content:shorttitle>
+        </silva-content:shorttitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:comment>
+        </silva-extra:comment>
+        <silva-extra:contactemail>
+        </silva-extra:contactemail>
+        <silva-extra:contactname>
+        </silva-extra:contactname>
+        <silva-extra:content_description>
+        </silva-extra:content_description>
+        <silva-extra:creationtime>
+          YYYY-MM-DDTHH:MM:SS
+        </silva-extra:creationtime>
+        <silva-extra:creator>
+          author
+        </silva-extra:creator>
+        <silva-extra:expirationtime>
+        </silva-extra:expirationtime>
+        <silva-extra:hide_from_tocs>
+          do not hide
+        </silva-extra:hide_from_tocs>
+        <silva-extra:keywords>
+        </silva-extra:keywords>
+        <silva-extra:language>
+        </silva-extra:language>
+        <silva-extra:lastauthor>
+          unknown
+        </silva-extra:lastauthor>
+        <silva-extra:modificationtime>
+          YYYY-MM-DDTHH:MM:SS
+        </silva-extra:modificationtime>
+        <silva-extra:publicationtime>
+        </silva-extra:publicationtime>
+        <silva-extra:subject>
+        </silva-extra:subject>
+      </set>
+    </metadata>
+    <content>
+      <document id="document">
+        <workflow>
+          <version id="0">
+            <status>
+              unapproved
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Test document
+              </silva-content:maintitle>
+              <silva-content:shorttitle>
+              </silva-content:shorttitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:comment>
+              </silva-extra:comment>
+              <silva-extra:contactemail>
+              </silva-extra:contactemail>
+              <silva-extra:contactname>
+              </silva-extra:contactname>
+              <silva-extra:content_description>
+              </silva-extra:content_description>
+              <silva-extra:creationtime>
+                YYYY-MM-DDTHH:MM:SS
+              </silva-extra:creationtime>
+              <silva-extra:creator>
+                author
+              </silva-extra:creator>
+              <silva-extra:expirationtime>
+              </silva-extra:expirationtime>
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:keywords>
+              </silva-extra:keywords>
+              <silva-extra:language>
+              </silva-extra:language>
+              <silva-extra:lastauthor>
+                unknown
+              </silva-extra:lastauthor>
+              <silva-extra:modificationtime>
+                YYYY-MM-DDTHH:MM:SS
+              </silva-extra:modificationtime>
+              <silva-extra:publicationtime>
+              </silva-extra:publicationtime>
+              <silva-extra:subject>
+              </silva-extra:subject>
+            </set>
+          </metadata>
+          <doc:doc>
+            <doc:node foo="bar">
+              承諾広告＊既に、２億、３億、５億９千万円収入者が続出
+              <doc:node2>
+                boo
+              </doc:node2>
+              baz
+            </doc:node>
+          </doc:doc>
+        </content>
+      </document>
+    </content>
+  </folder>
 </silva>
