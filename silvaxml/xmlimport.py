@@ -49,7 +49,6 @@ class DocumentVersionHandler(SilvaBaseHandler):
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'content'):
             updateVersionCount(self)
-            self.setMaintitle()
             self.storeMetadata()
             self.storeWorkflow()
 
