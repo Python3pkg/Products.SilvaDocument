@@ -3,10 +3,9 @@
 # $Id$
 
 import unittest
-import os.path
 
-from zope.interface.verify import verifyObject
 from silva.core.interfaces.adapters import IIndexable
+from zope.interface.verify import verifyObject
 
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import publish_object, open_test_file

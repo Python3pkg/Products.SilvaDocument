@@ -11,9 +11,8 @@ from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests.test_xmlexport import SilvaXMLTestCase
 
-from zope import component
-from zope.intid.interfaces import IIntIds
 from silva.core.references.interfaces import IReferenceService
+from zope import component
 
 
 class XMLExportTestCase(SilvaXMLTestCase):

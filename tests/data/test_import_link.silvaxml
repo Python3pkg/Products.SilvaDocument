@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:doc="http://infrae.com/namespace/silva-document" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" path="/root/folder" url="http://nohost/root/folder" datetime="2004-04-23T16:13:39Z">
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Folder with top secret information.
+        </silva-content:maintitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:hide_from_tocs>
+          do not hide
+        </silva-extra:hide_from_tocs>
+        <silva-extra:modificationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:modificationtime>
+        <silva-extra:creationtime>
+          2004-04-23T16:13:39Z
+        </silva-extra:creationtime>
+        <silva-extra:lastauthor>
+          wimbou from Gent
+        </silva-extra:lastauthor>
+        <silva-extra:creator>
+          wimbou from Gent
+        </silva-extra:creator>
+        <silva-extra:contactname>
+          Wim Boucquaert
+        </silva-extra:contactname>
+      </set>
+    </metadata>
+    <content>
+      <document id="document">
+        <workflow>
+          <version id="0">
+            <status>
+              public
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Cool site
+              </silva-content:maintitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:modificationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:modificationtime>
+              <silva-extra:creationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:creationtime>
+              <silva-extra:lastauthor>
+                wimbou
+              </silva-extra:lastauthor>
+              <silva-extra:creator>
+                wimbou
+              </silva-extra:creator>
+              <silva-extra:content_description>
+                Give information about a great site.
+              </silva-extra:content_description>
+            </set>
+          </metadata>
+          <doc:doc>
+            <doc:heading type="normal">
+              This document introduce a übber-cool site
+            </doc:heading>
+            <doc:p type="normal">
+              In this document you will find a link to
+              <doc:em>
+                a cool site
+              </doc:em>.
+              <doc:br />
+            </doc:p>
+            <doc:p type="normal">
+              Ok, so the link is:
+              <doc:link reference="folder/site" target="_blank">
+                Übber site
+              </doc:link>
+              <doc:br />
+            </doc:p>
+          </doc:doc>
+        </content>
+      </document>
+      <link id="site">
+        <workflow>
+          <version id="0">
+            <status>
+              public
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Top secret site
+              </silva-content:maintitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:content_description>
+                This site is only for averted users.
+              </silva-extra:content_description>
+              <silva-extra:creationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:creationtime>
+              <silva-extra:creator>
+                jean-marie
+              </silva-extra:creator>
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:lastauthor>
+                jean-marie
+              </silva-extra:lastauthor>
+              <silva-extra:modificationtime>
+                2004-04-23T16:13:39Z
+              </silva-extra:modificationtime>
+            </set>
+          </metadata>
+          <url>
+            http://docs.infrae.com/
+          </url>
+        </content>
+      </link>
+    </content>
+  </folder>
+</silva>
+

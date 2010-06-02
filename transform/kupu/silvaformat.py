@@ -13,16 +13,14 @@ doesn't allow python2.2.1
 __author__='holger krekel <hpk@trillke.net>'
 __version__='$Revision: 1.26 $'
 
-from Products.SilvaDocument.transform.base import Element, Frag, Text, \
-    CharacterData
+import operator
+from urlparse import urlparse
+
+from Products.SilvaDocument.transform.base import Element, Frag, Text
 
 from zope.traversing.browser import absoluteURL
 from Products.SilvaDocument.externalsource import getSourceForId
 from silva.core.interfaces import IPath, IImage
-
-import operator
-import types
-from urlparse import urlparse
 
 import htmlformat
 html = htmlformat

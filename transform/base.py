@@ -23,14 +23,15 @@ doesn't allow python2.2 or better.
 __author__='Holger P. Krekel <hpk@trillke.net>'
 __version__='$Revision: 1.4 $'
 
-import re
 from UserList import UserList as List
-from UserDict import UserDict as Dict
+import re
+import uuid
 
 from silva.translations import translate as _
 from silva.core.references.interfaces import IReferenceService
 from zope import component
-import uuid
+
+LINK_REFERENCE_TAG=u"document link"
 
 
 def determine_browser_from_request(request):
@@ -47,7 +48,7 @@ class Context(object):
     transformation. It contains methods to manage references.
     """
 
-    def __init__(self, context, request, reference_names=u"document link"):
+    def __init__(self, context, request, reference_names=LINK_REFERENCE_TAG):
         """A Transformation Context is built from a context of
         transformation, which is a version of a versioned content on
         which the transformed XML data is stored, and the request from

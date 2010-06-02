@@ -9,11 +9,11 @@ from zope.component import getUtility
 
 from Products.SilvaDocument.interfaces import IDocument
 from Products.SilvaMetadata.interfaces import IMetadataService
+from silva.core.references.interfaces import IReferenceService
 
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests.test_xmlimport import SilvaXMLTestCase
-from Products.Silva.silvaxml import xmlimport
 
 
 class XMLImportTestCase(SilvaXMLTestCase):
@@ -27,6 +27,15 @@ class XMLImportTestCase(SilvaXMLTestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
         self.metadata = getUtility(IMetadataService)
+
+    def assertDocumentEqual(self, version, filename, replaces={}):
+        """Assert that the content of the version is the same than the
+        thing in the given file.
+        """
+        with open_test_file(filename, globals()) as expected_source:
+            expected = expected_source.read().format(**replaces)
+            self.assertXMLEqual(
+                unicode(version.content.documentElement), expected)
 
     def test_document(self):
         """Import a simple document.
@@ -54,12 +63,41 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(
             binding.get('silva-extra', 'comment'),
             u'Caution: A special skill-set is required for this operation.')
+        self.assertDocumentEqual(version, 'test_imported_document.docxml')
 
-        with open_test_file(
-            'test_imported_document.docxml', globals()) as expected_document:
-            self.assertXMLEqual(
-                str(version.content.documentElement),
-                expected_document.read())
+    def test_document_link(self):
+        """Try to import a document that contains a link.
+        """
+        self.import_file('test_import_link.silvaxml', globals())
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(
+            self.root.folder.folder.objectIds(), ['document', 'site'])
+
+        document = self.root.folder.folder.document
+        link = self.root.folder.folder.site
+        self.failUnless(IDocument.providedBy(document))
+
+        version = document.get_viewable()
+        self.failIf(version is None)
+        self.assertEqual(document.get_editable(), None)
+        self.assertEqual(version.get_title(), u'Cool site')
+
+        service = getUtility(IReferenceService)
+        # Hopefully there is only one link in the document so this
+        # should match the only link we have
+        reference = service.get_reference(version, u"document link")
+        self.failIf(reference is None)
+        self.assertListEqual(
+            list(service.get_references_from(version)), [reference])
+        self.assertEqual(reference.target, link)
+
+        self.assertDocumentEqual(
+            version, 'test_imported_link.docxml',
+            dict(link_reference=reference.tags[1]))
+
+    def test_document_image(self):
+        """Try to import a document that contains an image.
+        """
 
 
 def test_suite():

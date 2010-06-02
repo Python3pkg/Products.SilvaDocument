@@ -151,6 +151,7 @@ class KupuTransformerTest(TestCase):
 
         # We verify that the reference has been created.
         reference = service.get_reference(version, reference_name)
+        self.failIf(reference is None)
         self.assertEqual(reference.source, version)
         self.assertEqual(reference.target, self.root.chocobo)
         self.assertEqual(reference.tags, [u"document link", reference_name])

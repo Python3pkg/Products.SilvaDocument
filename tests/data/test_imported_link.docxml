@@ -1,0 +1,22 @@
+<doc>
+ <heading type="normal">
+  This document introduce a übber-cool site
+ </heading>
+ <p type="normal">
+  In this document you will find a link to
+  <em>
+   a cool site
+  </em>
+  .
+  <br>
+  </br>
+ </p>
+ <p type="normal">
+  Ok, so the link is:
+  <link target="_blank" reference="{link_reference}">
+   Übber site
+  </link>
+  <br>
+  </br>
+ </p>
+</doc>

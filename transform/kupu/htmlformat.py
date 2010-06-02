@@ -27,13 +27,13 @@ doesn't allow python2.2
 __author__='holger krekel <hpk@trillke.net>'
 __version__='$Revision: 1.39 $'
 
+import re
+
 from zExceptions import NotFound
 
 from Products.SilvaDocument.transform.base import Element, Text, Frag
 from silva.core.interfaces import IPath, IImage
 from Products.Silva.mangle import Path
-
-import re
 
 import silvaformat
 silva = silvaformat
