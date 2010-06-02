@@ -7,12 +7,12 @@ import unittest
 
 from zope.component import getUtility
 from silva.core.references.interfaces import IReferenceService
+from silva.core.services.interfaces import ICatalogService
 
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.SilvaDocument.transform.base import LINK_REFERENCE_TAG
 from Products.SilvaMetadata.interfaces import IMetadataService
 
-from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests.test_xmlimport import SilvaXMLTestCase
 
@@ -20,14 +20,6 @@ from Products.Silva.tests.test_xmlimport import SilvaXMLTestCase
 class XMLImportTestCase(SilvaXMLTestCase):
     """Test the import of a document.
     """
-    layer = FunctionalLayer
-
-    def setUp(self):
-        self.root = self.layer.get_application()
-        self.layer.login('editor')
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'Folder')
-        self.metadata = getUtility(IMetadataService)
 
     def assertDocumentEqual(self, version, filename, **replaces):
         """Assert that the content of the version is the same than the
@@ -42,6 +34,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """Import a simple document.
         """
         self.import_file('test_import_document.silvaxml', globals())
+        self.assertEventsAre(
+            ['ContentImported for /root/folder/folder',
+             'ContentImported for /root/folder/folder/document'])
         self.assertListEqual(self.root.folder.objectIds(), ['folder'])
         self.assertListEqual(self.root.folder.folder.objectIds(), ['document'])
 
@@ -66,6 +61,12 @@ class XMLImportTestCase(SilvaXMLTestCase):
             binding.get('silva-extra', 'comment'),
             u'Caution: A special skill-set is required for this operation.')
         self.assertDocumentEqual(version, 'test_imported_document.docxml')
+
+        # Test the document have been indexed
+        catalog = getUtility(ICatalogService)
+        results = catalog(silvamaintitle=u"previewing document")
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getObject(), version)
 
     def test_document_link(self):
         """Try to import a document that contains a link.
@@ -97,6 +98,13 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertDocumentEqual(
             version, 'test_imported_link.docxml',
             link_reference=reference.tags[1])
+
+        # Test the document have been indexed. It is published so we
+        # can search on the fulltext.
+        catalog = getUtility(ICatalogService)
+        results = catalog(fulltext=u"übber-cool site")
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].getObject(), version)
 
     def test_document_image(self):
         """Try to import a document that contains an image.

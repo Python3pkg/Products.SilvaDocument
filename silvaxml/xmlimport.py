@@ -11,7 +11,6 @@ from Products.SilvaDocument.transform.base import LINK_REFERENCE_TAG
 
 from zope.component import getUtility
 from silva.core import conf as silvaconf
-from silva.core.services.interfaces import ICataloging
 from silva.core.references.interfaces import IReferenceService
 
 silvaconf.namespace(NS_URI)
@@ -32,7 +31,7 @@ class DocumentHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_URI, 'document'):
-            ICataloging(self.result()).reindex()
+            self.notifyImport()
 
 
 class DocumentVersionHandler(SilvaBaseHandler):
