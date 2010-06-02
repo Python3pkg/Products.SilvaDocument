@@ -2,24 +2,24 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.SilvaExternalSources.ExternalSource import getSourceForId
 from Products.Silva.silvaxml.xmlexport import (
     theXMLExporter, VersionedContentProducer, SilvaBaseProducer)
-from sprout.saxext.html2sax import saxify
+from Products.SilvaExternalSources.ExternalSource import getSourceForId
 from Products.ParsedXML.DOM.Core import Node
 from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument import interfaces
+from Products.SilvaDocument.silvaxml import NS_SILVA_DOCUMENT
 
 from five import grok
+from silva.core.interfaces import IImage
+from silva.core.interfaces.adapters import IPath
+from silva.core.references.interfaces import IReferenceService
+from sprout.saxext.html2sax import saxify
 from zope import component
 from zope.interface import Interface
 from zope.traversing.browser import absoluteURL
 
-from silva.core.interfaces import IImage
-from silva.core.interfaces.adapters import IPath
-from silva.core.references.interfaces import IReferenceService
 
-NS_SILVA_DOCUMENT = 'http://infrae.com/namespace/silva-document'
 theXMLExporter.registerNamespace('doc', NS_SILVA_DOCUMENT)
 
 

@@ -6,10 +6,11 @@
 import unittest
 
 from zope.component import getUtility
-
-from Products.SilvaDocument.interfaces import IDocument
-from Products.SilvaMetadata.interfaces import IMetadataService
 from silva.core.references.interfaces import IReferenceService
+
+from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
+from Products.SilvaDocument.transform.base import LINK_REFERENCE_TAG
+from Products.SilvaMetadata.interfaces import IMetadataService
 
 from Products.Silva.testing import FunctionalLayer
 from Products.Silva.tests.helpers import open_test_file
@@ -28,7 +29,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         factory.manage_addFolder('folder', 'Folder')
         self.metadata = getUtility(IMetadataService)
 
-    def assertDocumentEqual(self, version, filename, replaces={}):
+    def assertDocumentEqual(self, version, filename, **replaces):
         """Assert that the content of the version is the same than the
         thing in the given file.
         """
@@ -49,6 +50,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         version = document.get_editable()
         self.failIf(version is None)
+        self.failUnless(IDocumentVersion.providedBy(version))
         self.assertEqual(document.get_viewable(), None)
         self.assertEqual(version.get_title(), u'Previewing a document')
 
@@ -79,13 +81,14 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         version = document.get_viewable()
         self.failIf(version is None)
+        self.failUnless(IDocumentVersion.providedBy(version))
         self.assertEqual(document.get_editable(), None)
         self.assertEqual(version.get_title(), u'Cool site')
 
         service = getUtility(IReferenceService)
         # Hopefully there is only one link in the document so this
         # should match the only link we have
-        reference = service.get_reference(version, u"document link")
+        reference = service.get_reference(version, LINK_REFERENCE_TAG)
         self.failIf(reference is None)
         self.assertListEqual(
             list(service.get_references_from(version)), [reference])
@@ -93,11 +96,40 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         self.assertDocumentEqual(
             version, 'test_imported_link.docxml',
-            dict(link_reference=reference.tags[1]))
+            link_reference=reference.tags[1])
 
     def test_document_image(self):
         """Try to import a document that contains an image.
         """
+        self.import_zip('test_import_image.zip', globals())
+        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
+        self.assertListEqual(
+            self.root.folder.folder.objectIds(), ['document', 'pictures'])
+        self.assertListEqual(
+            self.root.folder.folder.pictures.objectIds(), ['chocobo'])
+
+        document = self.root.folder.folder.document
+        image = self.root.folder.folder.pictures.chocobo
+        self.failUnless(IDocument.providedBy(document))
+
+        version = document.get_viewable()
+        self.failIf(version is None)
+        self.failUnless(IDocumentVersion.providedBy(version))
+        self.assertEqual(document.get_editable(), None)
+        self.assertEqual(version.get_title(), u'New picture shoots')
+
+        service = getUtility(IReferenceService)
+        # Hopefully there is only one image in the document so this
+        # should match the only link we have
+        reference = service.get_reference(version, LINK_REFERENCE_TAG)
+        self.failIf(reference is None)
+        self.assertListEqual(
+            list(service.get_references_from(version)), [reference])
+        self.assertEqual(reference.target, image)
+
+        self.assertDocumentEqual(
+            version, 'test_imported_image.docxml',
+            image_reference=reference.tags[1])
 
 
 def test_suite():

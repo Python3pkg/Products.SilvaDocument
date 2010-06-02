@@ -6,6 +6,7 @@ import uuid
 
 from Products.Silva.silvaxml.xmlimport import (
     SilvaBaseHandler, NS_URI, updateVersionCount, resolve_path)
+from Products.SilvaDocument.silvaxml import NS_SILVA_DOCUMENT
 from Products.SilvaDocument.transform.base import LINK_REFERENCE_TAG
 
 from zope.component import getUtility
@@ -13,7 +14,6 @@ from silva.core import conf as silvaconf
 from silva.core.services.interfaces import ICataloging
 from silva.core.references.interfaces import IReferenceService
 
-DOC_NS_URI = 'http://infrae.com/namespace/silva-document'
 silvaconf.namespace(NS_URI)
 
 
@@ -38,7 +38,7 @@ class DocumentHandler(SilvaBaseHandler):
 class DocumentVersionHandler(SilvaBaseHandler):
 
     def getOverrides(self):
-        return {(DOC_NS_URI, 'doc'): DocXMLHandler, }
+        return {(NS_SILVA_DOCUMENT, 'doc'): DocXMLHandler, }
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_URI, 'content'):
@@ -65,24 +65,30 @@ class DocXMLHandler(SilvaBaseHandler):
         self.__current_node = None
         self.__version = self.parent()
 
-    def link_attributes(self, attributes):
+    def _new_reference(self, target):
+        """Create a new reference for link/image
+        """
+        service = getUtility(IReferenceService)
+        reference = service.new_reference(
+            self.__version, name=LINK_REFERENCE_TAG)
+        reference_name = unicode(uuid.uuid1())
+        reference.add_tag(reference_name)
+        info = self.getInfo()
+        info.addAction(
+            resolve_path, [reference.set_target, info.importRoot(), target])
+        return reference_name
+
+    def update_reference_attribute(self, attributes):
         if 'reference' in attributes:
-            service = getUtility(IReferenceService)
-            reference = service.new_reference(
-                self.__version, name=LINK_REFERENCE_TAG)
-            link_name = unicode(uuid.uuid1())
-            reference.add_tag(link_name)
-            info = self.getInfo()
-            info.addAction(
-                resolve_path,
-                [reference.set_target, info.importRoot(), attributes['reference']])
-            attributes['reference'] = link_name
+            attributes['reference'] = self._new_reference(
+                attributes['reference'])
         return attributes
 
-    TAG_ATTRIBUTES = {'link': link_attributes}
+    TAG_ATTRIBUTES = {'link': update_reference_attribute,
+                      'image': update_reference_attribute}
 
     def startElementNS(self, name, qname, attrs):
-        if name == (DOC_NS_URI, 'doc'):
+        if name == (NS_SILVA_DOCUMENT, 'doc'):
             version = self.parent()
             self.__tree = version.content
             self.__current_node = self.__tree.documentElement
@@ -94,7 +100,7 @@ class DocXMLHandler(SilvaBaseHandler):
             for ns, attr in attrs.keys():
                 attributes[attr] = attrs[(ns,attr)]
 
-            # Customize attributes
+            # Update attributes
             if name[1] in self.TAG_ATTRIBUTES:
                 self.TAG_ATTRIBUTES[name[1]](self, attributes)
 
@@ -109,7 +115,7 @@ class DocXMLHandler(SilvaBaseHandler):
         self.__current_node.appendChild(textNode)
 
     def endElementNS(self, name, qname):
-        if name == (DOC_NS_URI, 'doc'):
+        if name == (NS_SILVA_DOCUMENT, 'doc'):
             self.__current_node = None
         else:
             self.__current_node = self.__current_node.parentNode

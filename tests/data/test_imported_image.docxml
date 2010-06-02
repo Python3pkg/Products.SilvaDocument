@@ -1,0 +1,12 @@
+<doc>
+ <heading type="normal">
+  This exclusive picture of a new animal
+ </heading>
+ <p type="normal">
+  Well, you should that this animal seems to not exist (yet).
+  <br>
+  </br>
+ </p>
+ <image reference="{image_reference}" title="Chocobo">
+ </image>
+</doc>
