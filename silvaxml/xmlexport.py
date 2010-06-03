@@ -61,7 +61,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
             self.sax_img(node)
         else:
             if node.nodeName == 'link':
-                if self.getSettings().externalRendering():
+                settings = self.getSettings()
+                if settings.externalRendering():
                     rewritten_url = ''
                     if 'reference' in attributes:
                         service = component.getUtility(IReferenceService)
