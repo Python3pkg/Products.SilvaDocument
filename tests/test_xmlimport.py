@@ -6,6 +6,7 @@
 import unittest
 
 from zope.component import getUtility
+from silva.core.interfaces.events import IContentImported
 from silva.core.references.interfaces import IReferenceService
 from silva.core.services.interfaces import ICatalogService
 
@@ -35,12 +36,12 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """
         self.import_file('test_import_document.silvaxml', globals())
         self.assertEventsAre(
-            ['ContentImported for /root/folder/folder',
-             'ContentImported for /root/folder/folder/document'])
-        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
-        self.assertListEqual(self.root.folder.folder.objectIds(), ['document'])
+            ['ContentImported for /root/folder',
+             'ContentImported for /root/folder/document'],
+            IContentImported)
+        self.assertListEqual(self.root.folder.objectIds(), ['document'])
 
-        document = self.root.folder.folder.document
+        document = self.root.folder.document
         self.failUnless(IDocument.providedBy(document))
 
         version = document.get_editable()
@@ -72,12 +73,11 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """Try to import a document that contains a link.
         """
         self.import_file('test_import_link.silvaxml', globals())
-        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
         self.assertListEqual(
-            self.root.folder.folder.objectIds(), ['document', 'site'])
+            self.root.folder.objectIds(), ['document', 'site'])
 
-        document = self.root.folder.folder.document
-        link = self.root.folder.folder.site
+        document = self.root.folder.document
+        link = self.root.folder.site
         self.failUnless(IDocument.providedBy(document))
 
         version = document.get_viewable()
@@ -110,14 +110,13 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """Try to import a document that contains an image.
         """
         self.import_zip('test_import_image.zip', globals())
-        self.assertListEqual(self.root.folder.objectIds(), ['folder'])
         self.assertListEqual(
-            self.root.folder.folder.objectIds(), ['document', 'pictures'])
+            self.root.folder.objectIds(), ['document', 'pictures'])
         self.assertListEqual(
-            self.root.folder.folder.pictures.objectIds(), ['chocobo'])
+            self.root.folder.pictures.objectIds(), ['chocobo'])
 
-        document = self.root.folder.folder.document
-        image = self.root.folder.folder.pictures.chocobo
+        document = self.root.folder.document
+        image = self.root.folder.pictures.chocobo
         self.failUnless(IDocument.providedBy(document))
 
         version = document.get_viewable()
