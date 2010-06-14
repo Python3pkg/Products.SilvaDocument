@@ -288,10 +288,11 @@ class DocumentVersionProducer(SilvaBaseProducer):
         need to be retrieved here.
         """
         attributes = {}
+        settings = self.getSettings()
         if node.attributes:
             attributes = get_dict(node.attributes)
 
-        if self.getSettings().externalRendering():
+        if settings.externalRendering():
             rewritten_path = None
             if 'reference' in attributes:
                 service = component.getUtility(IReferenceService)
@@ -309,11 +310,14 @@ class DocumentVersionProducer(SilvaBaseProducer):
 
             if image is not None:
                 if IImage.providedBy(image):
+                    image_res = settings.options.get('image_res', 'hires')
                     attributes['image_title'] = image.get_title()
                     width, height = image.getDimensions(image.image)
-                    attributes['width'] = str(width)
-                    attributes['height'] = str(height)
-                    attributes['rewritten_path'] += '?hires'
+                    if image_res == 'hires':
+                        attributes['width'] = str(width)
+                        attributes['height'] = str(height)
+                    attributes['rewritten_path'] += \
+                        '?%s' % image_res
         else:
             if 'reference' in attributes:
                 attributes['reference'] = self.reference(
