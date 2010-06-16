@@ -311,7 +311,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             if image is not None:
                 if IImage.providedBy(image):
                     image_res = settings.options.get('image_res', 'hires')
-                    attributes['image_title'] = image.get_title()
+                    attributes['title'] = image.get_title()
                     width, height = image.getDimensions(image.image)
                     if image_res == 'hires':
                         attributes['width'] = str(width)
