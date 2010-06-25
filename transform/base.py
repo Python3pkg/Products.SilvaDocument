@@ -57,7 +57,7 @@ class Context(object):
         reference_names is used to identify which relations of the
         version are related to the processed XML data.
         """
-        self.model = context.object()
+        self.model = context.get_content()
         self.version = context
         self.request = request
         self.browser = determine_browser_from_request(request)

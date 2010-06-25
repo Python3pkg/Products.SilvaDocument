@@ -80,7 +80,7 @@ class DocumentVersion(CatalogedVersion):
         if self.version_status() == 'unapproved':
             return ''
         return [
-            self.object().getId(),
+            self.get_content().getId(),
             self.get_title(),
             remove_source_xml(self.get_document_xml(text_only=True))]
 
@@ -92,7 +92,8 @@ class DocumentVersion(CatalogedVersion):
         """
         stream = StringIO()
         if not text_only:
-            stream.write('<silva_document id="%s">' % self.object().getId())
+            stream.write(
+                '<silva_document id="%s">' % self.get_content().getId())
             # Write Title
             stream.write('<title>%s</title>' % translateCdata(self.get_title()))
 
