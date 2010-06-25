@@ -248,7 +248,7 @@ class DocumentView(silvaviews.View):
         registry = getRendererRegistry()
         renderers = registry.getRenderersForMetaType('Silva Document')
         renderer = renderers['Basic XSLT Renderer']
-        return renderer.transform(self.context, self.request)
+        return renderer.transform(self.content, self.request)
 
 
 class SilvaDocumentPolicy(Persistent):
