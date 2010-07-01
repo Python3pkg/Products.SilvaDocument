@@ -412,6 +412,7 @@ class row(SilvaElement):
         return tr
 
 class row_heading(SilvaElement):
+
     def convert(self, context):
         cols = context.tablestack[-1].cols
         return html.tr(
@@ -421,9 +422,10 @@ class row_heading(SilvaElement):
 
 
 class field(SilvaElement):
+
     def convert(self, context):
         ft = getattr(self.attr,'fieldtype','td')
-        c = ft=='td' and html.td or html.th
+        c = ft=='th' and html.th or html.td
         kw = {'align':self.attr.align,
               'class_':'align-%s' % self.attr.align,
               'width':self.attr.width}
