@@ -709,22 +709,13 @@ class table(Element):
             )
 
 class tr(Element):
+
     def convert(self, context, parentistable=0):
         if not parentistable:
             return Frag()
-        #tableheadings = self.content.find('th')
-        # is it non-header row?
-        uc_cells = self.find(('td','th'))
-        #if there is only one cell and it is a th, assume
-        #it is a silva row_heading
-        if len(uc_cells) == 1 and uc_cells[0].__class__.__name__=='th':
-            texts = extract_texts(self, context, 1)
-            return silva.row_heading(
-                texts)
-        else: #it is a normal table row
-            cells = [e.convert(context, 1) for e in self.find(('td','th'))]
-            return silva.row(
-                cells)
+        return silva.row(
+            [cell.convert(context, 1) for cell in self.find(('td','th'))])
+
 
 class td(Element):
 
