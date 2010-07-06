@@ -5,10 +5,14 @@
 import unittest
 from xml.parsers.expat import ExpatError
 
+from Acquisition import aq_chain
+
 from zope import component
 from zope.intid.interfaces import IIntIds
 from zope.publisher.browser import TestRequest
+
 from silva.core.references.interfaces import IReferenceService
+from silva.core.references.reference import get_content_id
 
 from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.Silva.tests.helpers import publish_object, open_test_file
@@ -22,7 +26,7 @@ TEST_IMAGE_HTML = '<img src="http://localhost/root/chocobo" ' \
     'alt="Chocobo" alignment=""></img>'
 
 
-class KupuTransformerTest(TestCase):
+class KupuTransformerTestCase(TestCase):
     """Test Silva<->Kupu transformer. Transformer are not anymore
     content-agnostic, because of reference management. Transforming
     Kupu->Silva do change the version it is transformed for.
@@ -207,7 +211,9 @@ class KupuTransformerTest(TestCase):
         # We verify that the reference has been created.
         reference = service.get_reference(version, reference_name)
         self.assertEqual(reference.source, version)
+        self.assertEqual(aq_chain(reference.source), aq_chain(version))
         self.assertEqual(reference.target, self.root.folder)
+        self.assertEqual(aq_chain(reference.target), aq_chain(self.root.folder))
         self.assertEqual(reference.tags, [u"document link", reference_name])
         self.assertEqual(
             list(service.get_references_to(self.root.folder)),
@@ -404,5 +410,5 @@ class KupuTransformerTest(TestCase):
 
 def test_suite():
     suite = unittest.TestSuite()
-    suite.addTest(unittest.makeSuite(KupuTransformerTest))
+    suite.addTest(unittest.makeSuite(KupuTransformerTestCase))
     return suite
