@@ -16,6 +16,8 @@ from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
 from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.Silva.tests.helpers import open_test_file
+
 
 KUPU_TABLE_HTML="""
 <table silva_type="plain" silva_origin="table" silva_columns="2" silva_column_info="L:1 L:1" class="plain" cellpadding="0" cellspacing="3" cols="2" width="100%">
@@ -80,11 +82,13 @@ KUPU_TABLE_LINK_HTML="""
   <tr class="even">
    <td class="align-left" align="left" width="50%%">
     <p class="normal">
+     Link to:
      <a title="One" silva_reference="new" silva_target="%s">Cell One</a>
     </p>
    </td>
    <td class="align-left" align="left" width="50%%">
     <p class="normal">
+     Link to:
      <a title="Two" href="http://infrae.com">Cell Two</a>
     </p>
    </td>
@@ -105,6 +109,7 @@ SILVA_TABLE_LINK_HTML = """
  <row>
   <field fieldtype="td">
    <p type="normal">
+    Link to:
     <link target="" reference="%s" title="One">
      Cell One
     </link>
@@ -112,6 +117,7 @@ SILVA_TABLE_LINK_HTML = """
   </field>
   <field fieldtype="td">
    <p type="normal">
+    Link to:
     <link url="http://infrae.com" target="" title="Two">
      Cell Two
     </link>
@@ -119,6 +125,54 @@ SILVA_TABLE_LINK_HTML = """
   </field>
  </row>
 </table>
+"""
+
+KUPU_TABLE_IMAGE_HTML="""
+<table silva_type="plain" silva_origin="table" silva_columns="1" silva_column_info="L:1 L:1" class="plain" cellpadding="0" cellspacing="3" cols="1" width="100%%">
+ <tbody>
+  <tr class="odd">
+   <th class="align-left" align="left" width="50%%">
+    <p class="normal">
+     Header cell
+    </p>
+   </th>
+  </tr>
+  <tr class="even">
+   <td class="align-left" align="left" width="50%%">
+    <p class="normal">
+     Chocobo:
+     <img src="chocobo.jpg" alt="Chocobo" silva_reference="new" silva_target="%s" />
+     (Limited edition).
+    </p>
+   </td>
+  </tr>
+ </tbody>
+</table>
+"""
+
+SILVA_TABLE_IMAGE_HTML="""
+<table column_info="L:1 L:1" type="plain" columns="1">
+ <row>
+  <field fieldtype="th">
+   <p type="normal">
+    Header cell
+   </p>
+  </field>
+ </row>
+ <row>
+  <field fieldtype="td">
+   <p type="normal">
+    Chocobo:
+   </p>
+   <image reference="%s" alignment="" title="Chocobo">
+   </image>
+   <p type="normal">
+    (Limited edition).
+   </p>
+  </field>
+ </row>
+</table>
+
 """
 
 
@@ -134,6 +188,8 @@ class KupuTransformerTablesTestCase(TestCase):
         factory.manage_addDocument('document', 'Document')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addImage(
+            'chocobo', 'Chocobo', file=open_test_file('chocobo.jpg', globals()))
 
         self.transformer = Transformer.EditorTransformer(editor='kupu')
         self.context = Context(
@@ -165,6 +221,28 @@ class KupuTransformerTablesTestCase(TestCase):
         self.assertEqual(aq_chain(reference.source), aq_chain(version))
 
         self.assertXMLEqual(result, SILVA_TABLE_LINK_HTML % reference.tags[1])
+
+    def test_table_with_images(self):
+        """Table containing images.
+        """
+        result = self.transformer.to_source(
+            targetobj=KUPU_TABLE_IMAGE_HTML % get_content_id(self.root.chocobo),
+            context=self.context).asBytes('utf-8')
+
+        version = self.root.document.get_editable()
+        service = component.getUtility(IReferenceService)
+        references = list(service.get_references_from(version))
+        self.assertEqual(len(references), 1)
+
+        reference = references[0]
+        self.assertEqual(reference.target, self.root.chocobo)
+        self.assertEqual(
+            aq_chain(reference.target),
+            aq_chain(self.root.chocobo))
+        self.assertEqual(reference.source, version)
+        self.assertEqual(aq_chain(reference.source), aq_chain(version))
+
+        self.assertXMLEqual(result, SILVA_TABLE_IMAGE_HTML % reference.tags[1])
 
 
 def test_suite():

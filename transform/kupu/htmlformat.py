@@ -130,7 +130,7 @@ def build_paragraph(nodes, context, ptype):
     return Frag()
 
 
-def fix_structure(nodes, context, allowtables=0):
+def fix_structure(nodes, context, allow_tables=0):
     """this goes through the document and convert it, move some
     components (table, top level elements) around in order to clean it.
 
@@ -156,7 +156,7 @@ def fix_structure(nodes, context, allowtables=0):
         # level elements are extracted from the node and added
         # afterward.
         tables = []
-        if allowtables:
+        if allow_tables:
             tables = retrieve_tables_and_sources(node, context)
         toplevel = retrieve_toplevel_elements(node, context)
         if not hasattr(node, 'should_be_removed'):
@@ -173,14 +173,12 @@ def fix_structure(nodes, context, allowtables=0):
     for node in nodes:
         # flatten p's by ignoring the element itself and walking through it as
         # if it's contents are part of the current element's contents
-        if node.name() == 'p' and allowtables:
+        if node.name() == 'p':
             ptype = get_paragraph_type(node)
             for child in node.find():
                 convert_node(child, ptype)
             flush_paragraph(ptype)
         else:
-            if node.name() == 'p':
-                ptype = get_paragraph_type(node)
             convert_node(node, ptype)
     flush_paragraph(ptype)
     return result
@@ -263,7 +261,7 @@ class body(Element):
             document = self.find(ignore=h2_tag.__eq__)
 
         # add <p> nodes around elements that aren't allowed top-level
-        document = fix_structure(document, context, 1)
+        document = fix_structure(document, context, allow_tables=1)
 
         return silva.silva_document(
                 silva.title(title),
