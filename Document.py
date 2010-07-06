@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2002-2009 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
@@ -10,6 +11,8 @@ import re
 from five import grok
 from zope import lifecycleevent
 from zope.event import notify
+from zope.interface import Interface
+from zope.schema import TextLine
 
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
@@ -25,7 +28,8 @@ from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva import mangle
 from Products.Silva.helpers import translateCdata
-from Products.Silva.ContentObjectFactoryRegistry import contentObjectFactoryRegistry
+from Products.Silva.ContentObjectFactoryRegistry import \
+    contentObjectFactoryRegistry
 from Products.Silva.transform.rendererreg import getRendererRegistry
 
 # Silva Document
@@ -34,6 +38,8 @@ from Products.SilvaDocument.transform.base import Context
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument import externalsource
+
+from zeam.form import silva as silvaforms
 
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerPolicy
@@ -230,12 +236,32 @@ class Document(CatalogedVersionedContent):
 InitializeClass(Document)
 
 
-class DocumentAddForm(silvaz3cforms.AddForm):
+class IDocumentSchema(Interface):
+    id = silvaconf.schema.ID(
+        title=_(u"id"),
+        description=_(u"No spaces or special characters besides"
+                      u"‘_’ or ‘-’ or ‘.’"),
+        required=True)
+
+    title = TextLine(
+        title=_(u'title'),
+        description=_(u"The title will be publicly visible, and "
+                      u"is used for the link in indexes."),
+        required=True)
+
+
+class DocumentAddForm(silvaforms.form.SMIAddForm):
     """Add form for a document.
     """
     grok.context(IDocument)
     grok.name(u'Silva Document')
-    fields = field.Fields(IDocumentVersion)
+    description = Document.__doc__
+    fields = silvaforms.Fields(IDocumentSchema)
+
+    def _add(self, parent, data):
+        factory = parent.manage_addProduct['SilvaDocument']
+        factory.manage_addDocument(data['id'], data['title'])
+        return getattr(parent, data['id'])
 
 
 class DocumentView(silvaviews.View):
