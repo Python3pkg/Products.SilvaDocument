@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+from cgi import escape
+
 from Products.Silva.silvaxml.xmlexport import (
     theXMLExporter, VersionedContentProducer, SilvaBaseProducer)
 from Products.SilvaExternalSources.ExternalSource import getSourceForId
@@ -100,11 +102,11 @@ class DocumentVersionProducer(SilvaBaseProducer):
 
     def sax_source(self, node):
         # simple output reporting to emulate behavior of widgets renderer
-        def source_error(thiserror):
+        def source_error(error):
             html = ['<div class="warning"><strong>[',
-                    unicode(_("external source element is broken")),
+                    "external source element is broken",
                     ']</strong><br />',
-                    unicode(thiserror),
+                    escape(unicode(error)),
                     '</div>']
             self.render_html("".join(html))
             self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
@@ -333,7 +335,15 @@ class DocumentVersionProducer(SilvaBaseProducer):
 
     def render_html(self, html):
         self.startElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
-        saxify(html, self.handler)
+        try:
+            saxify(html, self.handler)
+        except:
+            # The produce HTML was invalid
+            html = ['<div class="warning"><strong>[',
+                    "external source produced invalid HTML",
+                    ']</strong><br />',
+                    '</div>']
+            saxify(html, self.handler)
         self.endElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
 
 def get_dict(attributes):
