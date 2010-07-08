@@ -343,7 +343,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     "external source produced invalid HTML",
                     ']</strong><br />',
                     '</div>']
-            saxify(html, self.handler)
+            saxify("".join(html), self.handler)
         self.endElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
 
 def get_dict(attributes):
