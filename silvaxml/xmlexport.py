@@ -343,6 +343,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             raise
         self.endElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
 
+
 def get_dict(attributes):
     result = {}
     for key in attributes.keys():

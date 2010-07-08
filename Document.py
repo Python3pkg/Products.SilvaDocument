@@ -39,14 +39,11 @@ from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument import externalsource
 
-from zeam.form import silva as silvaforms
-
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IContainerPolicy
 from silva.core.views import views as silvaviews
-from silva.core.forms import z3cforms as silvaz3cforms
+from zeam.form import silva as silvaforms
 
-from z3c.form import field
 
 
 def remove_source_xml(xml):
@@ -236,32 +233,13 @@ class Document(CatalogedVersionedContent):
 InitializeClass(Document)
 
 
-class IDocumentSchema(Interface):
-    id = silvaconf.schema.ID(
-        title=_(u"id"),
-        description=_(u"No spaces or special characters besides"
-                      u"‘_’ or ‘-’ or ‘.’"),
-        required=True)
-
-    title = TextLine(
-        title=_(u'title'),
-        description=_(u"The title will be publicly visible, and "
-                      u"is used for the link in indexes."),
-        required=True)
-
-
-class DocumentAddForm(silvaforms.form.SMIAddForm):
+class DocumentAddForm(silvaforms.SMIAddForm):
     """Add form for a document.
     """
     grok.context(IDocument)
     grok.name(u'Silva Document')
-    description = Document.__doc__
-    fields = silvaforms.Fields(IDocumentSchema)
 
-    def _add(self, parent, data):
-        factory = parent.manage_addProduct['SilvaDocument']
-        factory.manage_addDocument(data['id'], data['title'])
-        return getattr(parent, data['id'])
+    description = Document.__doc__
 
 
 class DocumentView(silvaviews.View):
