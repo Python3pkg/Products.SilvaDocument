@@ -338,12 +338,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
         try:
             saxify(html, self.handler)
         except:
-            # The produce HTML was invalid
-            html = ['<div class="warning"><strong>[',
-                    "external source produced invalid HTML",
-                    ']</strong><br />',
-                    '</div>']
-            saxify("".join(html), self.handler)
+            # XXX: The produce HTML was invalid test for it first and
+            # make a nice error message.
+            raise
         self.endElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
 
 def get_dict(attributes):
