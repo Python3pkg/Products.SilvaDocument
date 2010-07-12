@@ -28,6 +28,7 @@ __author__='holger krekel <hpk@trillke.net>'
 __version__='$Revision: 1.39 $'
 
 import re
+from urlparse import urlparse
 
 from zExceptions import NotFound
 
@@ -528,7 +529,9 @@ class a(Element):
         href = self.getattr('href', default='#')
         anchor = self.getattr('silva_anchor', default=None)
         window_target = self.getattr('target', default='')
+
         if name is not None and href == '#':
+            # Case one, we are an anchor
             if self.getattr('class', None) == 'index':
                 # index item
                 text = ''.join([t.convert(context).asBytes('UTF-8') for
@@ -575,72 +578,78 @@ class a(Element):
                 target=window_target,
                 title=title,
                 anchor=anchor)
+        elif anchor is not None:
+            # Link to an anchor on the same page
+            return silva.link(
+                self.content.convert(context),
+                target=window_target,
+                title=title,
+                anchor=anchor)
         else:
             return Frag()
 
 
 class img(Element):
- 
+
    def convert(self, context):
-        if hasattr(self, 'should_be_removed') and self.should_be_removed:
-            return Frag()
+       if hasattr(self, 'should_be_removed') and self.should_be_removed:
+           return Frag()
 
-        title = self.getattr('alt', '')
-        alignment = self.getattr('alignment', 'default')
-        if alignment == 'default':
-            alignment = ''
+       title = self.getattr('alt', '')
+       alignment = self.getattr('alignment', 'default')
+       if alignment == 'default':
+           alignment = ''
 
-        if self.hasattr('silva_reference'):
-            reference_name = str(self.getattr('silva_reference'))
-            reference_name, reference = context.get_reference(reference_name)
-            assert reference is not None, "Invalid reference"
-            target_id = self.getattr('silva_target', '0')
-            try:
-                target_id = int(str(target_id))
-            except ValueError:
-                raise AssertionError("Invalid reference target id")
-            # The target changed, update it
-            if target_id != reference.target_id:
-                reference.set_target_id(target_id)
+       if self.hasattr('silva_reference'):
+           reference_name = str(self.getattr('silva_reference'))
+           reference_name, reference = context.get_reference(reference_name)
+           assert reference is not None, "Invalid reference"
+           target_id = self.getattr('silva_target', '0')
+           try:
+               target_id = int(str(target_id))
+           except ValueError:
+               raise AssertionError("Invalid reference target id")
+           # The target changed, update it
+           if target_id != reference.target_id:
+               reference.set_target_id(target_id)
 
-            return silva.image(
-                self.content.convert(context),
-                reference=reference_name,
-                alignment=alignment,
-                title=title)
+           return silva.image(
+               self.content.convert(context),
+               reference=reference_name,
+               alignment=alignment,
+               title=title)
 
-        # This is an old url-based image link
-        from urlparse import urlparse
-        src = getattr(self.attr, 'src', None)
-        if src is None:
-            src = 'unknown'
-        elif hasattr(src, 'content'):
-            src = src.content
-        src = urlparse(str(src))[2]
-        src = IPath(context.request).urlToPath(str(src))
-        if src.endswith('/image'):
-            src = src[:-len('/image')]
-        # turn path into relative if possible, traverse to the object to
-        # fix an IE problem that adds the current location in front of paths
-        # in an attempt to make them absolute, which leads to nasty paths
-        # such as '/silva/index/edit/index/edit/foo.jpg'
-        try:
-            obj = context.model.unrestrictedTraverse(src.split('/'))
-            # bail out if obj is not a Silva Image, otherwise the old
-            # href value would be lost
-            if not IImage.providedBy(obj):
-                raise NotFound(src)
-        except (KeyError, NotFound):
-            pass
-        else:
-            modelpath = context.model.aq_parent.getPhysicalPath()
-            src = '/'.join(Path(modelpath, obj.getPhysicalPath()))
+       # This is an old url-based image link
+       src = getattr(self.attr, 'src', None)
+       if src is None:
+           src = 'unknown'
+       elif hasattr(src, 'content'):
+           src = src.content
+       src = urlparse(str(src))[2]
+       src = IPath(context.request).urlToPath(str(src))
+       if src.endswith('/image'):
+           src = src[:-len('/image')]
+       # turn path into relative if possible, traverse to the object to
+       # fix an IE problem that adds the current location in front of paths
+       # in an attempt to make them absolute, which leads to nasty paths
+       # such as '/silva/index/edit/index/edit/foo.jpg'
+       try:
+           obj = context.model.unrestrictedTraverse(src.split('/'))
+           # bail out if obj is not a Silva Image, otherwise the old
+           # href value would be lost
+           if not IImage.providedBy(obj):
+               raise NotFound(src)
+       except (KeyError, NotFound):
+           pass
+       else:
+           modelpath = context.model.aq_parent.getPhysicalPath()
+           src = '/'.join(Path(modelpath, obj.getPhysicalPath()))
 
-        return silva.image(
-            self.content.convert(context),
-            path=src,
-            alignment=alignment,
-            title=title)
+       return silva.image(
+           self.content.convert(context),
+           path=src,
+           alignment=alignment,
+           title=title)
 
 
 class pre(Element):

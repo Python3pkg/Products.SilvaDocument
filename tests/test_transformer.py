@@ -407,6 +407,18 @@ class KupuTransformerTestCase(TestCase):
         self.assertEqual(list(service.get_references_from(version)), [])
         self.assertEqual(list(service.get_references_to(self.root.folder)), [])
 
+    def test_link_anchor_only(self):
+        """Test link that is to an anchor on the same document.
+        """
+        html = '<a title="Anchor" target="_self" silva_anchor="somewhere">'\
+            'Link to somewhere (not far)</a>'
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+        self.assertEqual(roundtrip, html)
+
 
 def test_suite():
     suite = unittest.TestSuite()
