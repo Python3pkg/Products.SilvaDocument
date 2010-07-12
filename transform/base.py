@@ -174,8 +174,7 @@ class Node(object):
 
         if vars(self.attr).has_key(name):
             return getattr(self.attr, name)
-        message = _("${name} attribute not found on tag ${self}",
-                    mapping={'name': name, 'self': self})
+        message = "%s attribute not found on tag %s" % (name, self)
         raise AttributeError,  message
 
     def query_one(self, path):
@@ -189,8 +188,7 @@ class Node(object):
         elif len(dic) == 1 and len(dic.values()[0]) == 1:
             return dic.values()[0][0]
         else:
-            message = _("more than one ${path} element",
-                        mapping={'path': path})
+            message = "more than one %s element" % path
             raise ValueError, message
 
     def query(self, querypath):

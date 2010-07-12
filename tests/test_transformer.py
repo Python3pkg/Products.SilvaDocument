@@ -410,14 +410,24 @@ class KupuTransformerTestCase(TestCase):
     def test_link_anchor_only(self):
         """Test link that is to an anchor on the same document.
         """
-        html = '<a title="Anchor" target="_self" silva_anchor="somewhere">'\
+        # Kupu removes all empty attributes, so test with them gone
+        html = '<a silva_anchor="somewhere" target="_self" title="Anchor">'\
             'Link to somewhere (not far)</a>'
-        result = self.transformer.to_source(
+
+        silvaxml = self.transformer.to_source(
             targetobj=html, context=self.context).asBytes('utf-8')
+        self.assertEqual(
+            silvaxml,
+            '<link target="_self" anchor="somewhere" title="Anchor">'\
+                'Link to somewhere (not far)</link>')
+
+        expected_html = '<a silva_anchor="somewhere" href="" target="_self" '\
+            'silva_href="" title="Anchor">'\
+            'Link to somewhere (not far)</a>'
 
         roundtrip = self.transformer.to_target(
-            sourceobj=result, context=self.context).asBytes('utf-8')
-        self.assertEqual(roundtrip, html)
+            sourceobj=silvaxml, context=self.context).asBytes('utf-8')
+        self.assertEqual(roundtrip, expected_html)
 
 
 def test_suite():

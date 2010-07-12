@@ -260,10 +260,12 @@ class link(SilvaElement):
                 silva_target=reference.target_id,
                 silva_reference=reference_name)
 
-        path = self.getattr('url')
-        if not urlparse(unicode(path))[0]:
-            # path, not a full URL
-            path = IPath(context.request).pathToUrlPath(unicode(path))
+        path = ''
+        if self.hasattr('url'):
+            path = self.getattr('url')
+            if not urlparse(unicode(path))[0]:
+                # path, not a full URL
+                path = IPath(context.request).pathToUrlPath(unicode(path))
         return html.a(
             self.content.convert(context),
             href=path,

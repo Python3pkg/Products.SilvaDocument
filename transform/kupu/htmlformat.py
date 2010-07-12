@@ -530,6 +530,10 @@ class a(Element):
         anchor = self.getattr('silva_anchor', default=None)
         window_target = self.getattr('target', default='')
 
+        link_attributes = {'target': window_target,
+                           'title': title,
+                           'anchor': anchor}
+
         if name is not None and href == '#':
             # Case one, we are an anchor
             if self.getattr('class', None) == 'index':
@@ -558,33 +562,28 @@ class a(Element):
             # The target changed, update it
             if target_id != reference.target_id:
                 reference.set_target_id(target_id)
+            link_attributes['reference'] = reference_name
             return silva.link(
                 self.content.convert(context),
-                target=window_target,
-                title=title,
-                anchor=anchor,
-                reference=reference_name)
+                **link_attributes)
         elif self.hasattr('href'):
             # External links
             url = self.getattr('silva_href', None)
             if url is None:
-                url = self.getattr('href', 'http://www.infrae.com')
+                url = self.getattr('href', '')
             if unicode(url).startswith('/'):
                 # convert to physical path before storing
                 url = Text(IPath(context.request).urlToPath(unicode(url)))
+            if url:
+                link_attributes['url'] = url
             return silva.link(
                 self.content.convert(context),
-                url=url,
-                target=window_target,
-                title=title,
-                anchor=anchor)
+                **link_attributes)
         elif anchor is not None:
             # Link to an anchor on the same page
             return silva.link(
                 self.content.convert(context),
-                target=window_target,
-                title=title,
-                anchor=anchor)
+                **link_attributes)
         else:
             return Frag()
 
