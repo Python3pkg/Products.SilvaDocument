@@ -11,8 +11,6 @@ import re
 from five import grok
 from zope import lifecycleevent
 from zope.event import notify
-from zope.interface import Interface
-from zope.schema import TextLine
 
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass

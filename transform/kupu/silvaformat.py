@@ -14,7 +14,6 @@ __author__='holger krekel <hpk@trillke.net>'
 __version__='$Revision: 1.26 $'
 
 import operator
-from urlparse import urlparse
 
 from Products.SilvaDocument.transform.base import Element, Frag, Text
 
@@ -262,10 +261,8 @@ class link(SilvaElement):
 
         path = ''
         if self.hasattr('url'):
-            path = self.getattr('url')
-            if not urlparse(unicode(path))[0]:
-                # path, not a full URL
-                path = IPath(context.request).pathToUrlPath(unicode(path))
+            url = self.getattr('url')
+            path = IPath(context.request).pathToUrlPath(str(url))
         return html.a(
             self.content.convert(context),
             href=path,
@@ -311,8 +308,8 @@ class image(SilvaElement):
             image = reference.target
             attributes['src'] = absoluteURL(image, context.request)
         elif self.hasattr('path'):
-            src = self.getattr('path')
-            src = IPath(context.request).pathToUrlPath(str(src))
+            path = self.getattr('path')
+            src = IPath(context.request).pathToUrlPath(str(path))
             attributes['src'] = src
             try:
                 image = context.model.unrestrictedTraverse(src.split('/'))
