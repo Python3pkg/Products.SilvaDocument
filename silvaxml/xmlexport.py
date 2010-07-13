@@ -340,11 +340,14 @@ class DocumentVersionProducer(SilvaBaseProducer):
             # We don't trust that the input is even valid HTML.
             saxify(html, self.handler, validate=True)
         except HTMLParseError, error:
+            lined_html = ''
+            for lineno, line in enumerate(escape(html).split('\n')):
+                lined_html += 'line %03d: %s\n' % (lineno, line)
             error_message = [
                 '<div class="html-error">',
-                '<strong>%s at line %d:%d in</strong><br />' % (
+                '<strong>Error: %s at line %d:%d in</strong><br />' % (
                     escape(error.msg), error.lineno, error.offset),
-                '<pre>%s</pre></div>' % escape(html)]
+                '<pre>%s</pre></div>' % lined_html]
             # Report the error message which is valid
             saxify("".join(error_message), self.handler)
         self.endElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
