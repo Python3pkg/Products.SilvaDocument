@@ -3,6 +3,7 @@
 # $Id$
 
 from cgi import escape
+from HTMLParser import HTMLParseError
 
 from Products.Silva.silvaxml.xmlexport import (
     theXMLExporter, VersionedContentProducer, SilvaBaseProducer)
@@ -336,11 +337,16 @@ class DocumentVersionProducer(SilvaBaseProducer):
     def render_html(self, html):
         self.startElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
         try:
-            saxify(html, self.handler)
-        except:
-            # XXX: The produce HTML was invalid test for it first and
-            # make a nice error message.
-            raise
+            # We don't trust that the input is even valid HTML.
+            saxify(html, self.handler, validate=True)
+        except HTMLParseError error:
+            error_message = [
+                '<div class="htmlerror">',
+                '<strong>%s at line %d:%d in</strong>' % (
+                    escape(error.msg), error.lineno, error.offset),
+                '<pre>%s</pre></div>' % escape(html)]
+            # Report the error message which is valid
+            saxify("".join(error_message), self.handler)
         self.endElementNS(NS_SILVA_DOCUMENT, 'rendered_html')
 
 
