@@ -339,7 +339,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         try:
             # We don't trust that the input is even valid HTML.
             saxify(html, self.handler, validate=True)
-        except HTMLParseError error:
+        except HTMLParseError, error:
             error_message = [
                 '<div class="html-error">',
                 '<strong>%s at line %d:%d in</strong><br />' % (
