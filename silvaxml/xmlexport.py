@@ -341,8 +341,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
             saxify(html, self.handler, validate=True)
         except HTMLParseError error:
             error_message = [
-                '<div class="htmlerror">',
-                '<strong>%s at line %d:%d in</strong>' % (
+                '<div class="html-error">',
+                '<strong>%s at line %d:%d in</strong><br />' % (
                     escape(error.msg), error.lineno, error.offset),
                 '<pre>%s</pre></div>' % escape(html)]
             # Report the error message which is valid
