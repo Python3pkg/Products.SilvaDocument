@@ -104,9 +104,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
     def sax_source(self, node):
         # simple output reporting to emulate behavior of widgets renderer
         def source_error(error):
-            html = ['<div class="warning"><strong>[',
-                    "external source element is broken",
-                    ']</strong><br />',
+            html = ['<div class="warning">'
+                    '<strong>[external source element is broken]</strong>',
+                    '<br />',
                     escape(unicode(error)),
                     '</div>']
             self.render_html("".join(html))
@@ -344,8 +344,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
             for lineno, line in enumerate(escape(html).split('\n')):
                 lined_html += 'line %03d: %s\n' % (lineno + 1, line)
             error_message = [
-                '<div class="html-error">',
-                '<strong>Error: %s at line %d:%d in</strong><br />' % (
+                '<div class="warning">',
+                '<strong>external source generated invalid HTML:',
+                ' %s at line %d:%d in</strong><br />' % (
                     escape(error.msg), error.lineno, error.offset),
                 '<pre>%s</pre></div>' % lined_html]
             # Report the error message which is valid
