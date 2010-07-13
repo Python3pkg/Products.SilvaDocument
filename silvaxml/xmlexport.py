@@ -342,7 +342,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         except HTMLParseError, error:
             lined_html = ''
             for lineno, line in enumerate(escape(html).split('\n')):
-                lined_html += 'line %03d: %s\n' % (lineno, line)
+                lined_html += 'line %03d: %s\n' % (lineno + 1, line)
             error_message = [
                 '<div class="html-error">',
                 '<strong>Error: %s at line %d:%d in</strong><br />' % (
