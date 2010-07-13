@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<doc>
+ <p type="normal">
+  A link to
+  <link target="_self" anchor="somewhere" title="Somewhere">
+   somewhere (not far)
+  </link>.
+ </p>
+</doc>

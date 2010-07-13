@@ -28,7 +28,7 @@ from Products.Silva import mangle
 from Products.Silva.helpers import translateCdata
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
-from Products.Silva.transform.rendererreg import getRendererRegistry
+from Products.Silva.transform.renderer.xsltrendererbase import XSLTTransformer
 
 # Silva Document
 from Products.SilvaDocument.transform.Transformer import EditorTransformer
@@ -240,17 +240,15 @@ class DocumentAddForm(silvaforms.SMIAddForm):
     description = Document.__doc__
 
 
+DocumentHTML = XSLTTransformer('document.xslt', __file__)
+
 class DocumentView(silvaviews.View):
     """View on a document.
     """
     grok.context(IDocument)
 
     def render(self):
-        # XXX This should be improved
-        registry = getRendererRegistry()
-        renderers = registry.getRenderersForMetaType('Silva Document')
-        renderer = renderers['Basic XSLT Renderer']
-        return renderer.transform(self.content, self.request)
+        return DocumentHTML.transform(self.content, self.request)
 
 
 class SilvaDocumentPolicy(Persistent):
