@@ -179,6 +179,7 @@ def fix_structure(nodes, context, allow_tables=0):
             for child in node.find():
                 convert_node(child, ptype)
             flush_paragraph(ptype)
+            node.should_be_removed = 1
         else:
             convert_node(node, ptype)
     flush_paragraph(ptype)
@@ -339,14 +340,16 @@ class p(Element):
     def convert(self, context):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
+        self.should_be_removed = 1
+
         # return a p, but only if there's any content besides whitespace
         # and <br>s
+        ptype = self.getattr('silva_type', 'normal')
+        if ptype not in ['normal', 'lead', 'annotation']:
+            ptype = 'normal'
         for child in self.find():
             if child.name() != 'br':
-                type = self.getattr('silva_type', 'normal')
-                if type not in ['normal', 'lead', 'annotation']:
-                    type = 'normal'
-                return silva.p(self.content.convert(context), type=type)
+                return silva.p(self.content.convert(context), type=ptype)
         return Frag()
 
 
@@ -751,6 +754,7 @@ class div(Element):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         self.should_be_removed = 1
+
         if self.hasattr('source_id'):
             content = []
             params = {}
