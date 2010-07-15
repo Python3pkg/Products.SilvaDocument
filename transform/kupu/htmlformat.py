@@ -86,7 +86,7 @@ def is_toplevel_element(node):
             if child.name() == 'img':
                 # the next line prevent to consider the image as a top
                 # level element as well
-                child.do_not_fix_content = lambda: 1
+                child.is_not_top_level = lambda: 1
                 return True
 
     return (node.name() in TOPLEVEL and not is_table_or_source(node))
@@ -97,7 +97,7 @@ def retrieve_toplevel_elements(node, context, elements=None):
     the document flow (in fact like retrieve_table does).
     """
     if (node.name() == 'Text' or node.name() in CONTAINERS or
-        (hasattr(node, 'do_not_fix_content') and node.do_not_fix_content()) or
+        (hasattr(node, 'is_not_top_level') and node.is_not_top_level()) or
         hasattr(node, 'should_be_removed')):
         return []
     if  elements is None:
@@ -238,8 +238,8 @@ class html(Element):
     def convert(self, context):
         """ forward to the body element ... """
         context.title = ''
-        bodytag = self.find('body')[0]
-        return bodytag.convert(context)
+        body = self.find('body')[0]
+        return body.convert(context)
 
 
 class body(Element):
@@ -252,21 +252,23 @@ class body(Element):
             or from the context (where silva should have
             filled in title and id as key/value pairs)
         """
-        h2_tag = self.find(tag=h2)
-        if not h2_tag:
+        title_tag = self.find(tag=h1)
+        if not title_tag:
+            title_tag = self.find(tag=h2)
+        if not title_tag:
             title = context.title
             document = self.find()
         else:
-            h2_tag = h2_tag[0]
-            title = h2_tag.extract_text()
-            document = self.find(ignore=h2_tag.__eq__)
+            title_tag = title_tag[0]
+            title = title_tag.extract_text()
+            document = self.find(ignore=title_tag.__eq__)
 
         # add <p> nodes around elements that aren't allowed top-level
         document = fix_structure(document, context, allow_tables=1)
 
         return silva.silva_document(
-                silva.title(title),
-                silva.doc(document))
+            silva.title(title),
+            silva.doc(document))
 
 
 class h1(Element):
@@ -749,7 +751,7 @@ class div(Element):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         self.should_be_removed = 1
-        if self.attr.source_id:
+        if self.hasattr('source_id'):
             content = []
             params = {}
             for thing in self.find():
@@ -795,8 +797,8 @@ class div(Element):
         else:
             return Frag(fix_structure(self.content, context))
 
-    def do_not_fix_content(self):
-        return 1
+    def is_not_top_level(self):
+        return self.hasattr('source_id')
 
 
 class span(Element):
