@@ -1,6 +1,20 @@
-
 ChangeLog
 =========
 
-For the time being, see the changes in Products.Silva.
+2.3 (2010/07/16)
+----------------
+
+* Remove form editor support and XMLWidgets renderer. The default renderer used
+  is now XSLT.
+
+* Add support for references: links and images are references to content
+  whenever possible (using ``silva.core.references``).
+
+* Review Document API to be saner and simpler to understand.
+
+* Improve Kupu edition, use a view to send content, IntIds to refer objects.
+
+* Remove support for old deprecated Silva Documents tags like toc and cite.
+
+* Add tests.
 
