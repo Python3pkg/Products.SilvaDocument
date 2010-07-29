@@ -73,7 +73,7 @@ class DocXMLHandler(SilvaBaseHandler):
         reference.add_tag(reference_name)
         info = self.getInfo()
         info.addAction(
-            resolve_path, [reference.set_target, info.importRoot(), target])
+            resolve_path, [reference.set_target, info, target])
         return reference_name
 
     def update_reference_attribute(self, attributes):
