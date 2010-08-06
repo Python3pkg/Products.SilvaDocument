@@ -309,8 +309,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 document = self.context.get_content()
                 image = document.unrestrictedTraverse(
                     attributes['path'].split('/'), None)
-                rewritten_path = IPath(document).pathToUrlPath(
-                    attributes['path'])
+                if image is not None:
+                    path = IPath(document)
+                    rewritten_path = path.pathToUrlPath(attributes['path'])
             if not rewritten_path:
                 site = IVirtualSite(settings.request)
                 rewritten_path = site.get_root_url() + \
