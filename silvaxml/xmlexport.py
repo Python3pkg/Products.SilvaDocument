@@ -302,7 +302,8 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 reference = service.get_reference(
                     self.context, name=attributes['reference'])
                 image = reference.target
-                rewritten_path = image.absolute_url()
+                if image is not None:
+                    rewritten_path = absoluteURL(image, settings.request)
             else:
                 document = self.context.get_content()
                 image = document.unrestrictedTraverse(
