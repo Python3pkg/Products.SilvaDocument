@@ -322,6 +322,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                         attributes['height'] = str(height)
                     attributes['rewritten_path'] += \
                         '?%s' % image_res
+            # XXX else add a image broken (from static)
         else:
             if 'reference' in attributes:
                 attributes['reference'] = self.reference(
