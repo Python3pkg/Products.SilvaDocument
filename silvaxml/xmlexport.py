@@ -17,6 +17,7 @@ from five import grok
 from silva.core.interfaces import IImage
 from silva.core.interfaces.adapters import IPath
 from silva.core.references.interfaces import IReferenceService
+from silva.core.views.interfaces import IVirtualSite
 from sprout.saxext.html2sax import saxify
 from zope import component
 from zope.interface import Interface
@@ -310,6 +311,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     attributes['path'].split('/'), None)
                 rewritten_path = IPath(document).pathToUrlPath(
                     attributes['path'])
+            if not rewritten_path:
+                site = IVirtualSite(settings.request)
+                rewritten_path = site.get_root_url() + \
+                    "/++resource++Products.SilvaDocument/broken-link.jpg"
             attributes['rewritten_path'] = rewritten_path
 
             if image is not None:
