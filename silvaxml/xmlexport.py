@@ -329,7 +329,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     attributes['rewritten_path'] += \
                         '?%s' % image_res
             else:
-                attributes['title'] = _(u'Target image is missing')
+                attributes['title'] = _(u'Referenced image is missing')
         else:
             if 'reference' in attributes:
                 attributes['reference'] = self.reference(
