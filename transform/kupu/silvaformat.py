@@ -248,7 +248,8 @@ class link(SilvaElement):
         if self.hasattr('reference'):
             # We have a reference
             reference_name = str(self.getattr('reference'))
-            reference_name, reference = context.get_reference(reference_name)
+            reference_name, reference = context.get_reference(
+                reference_name, read_only=True)
             assert reference is not None, "Invalid reference"
             return html.a(
                 self.content.convert(context),
@@ -301,7 +302,8 @@ class image(SilvaElement):
         if self.hasattr('reference'):
             # We have a reference
             reference_name = str(self.getattr('reference'))
-            reference_name, reference = context.get_reference(reference_name)
+            reference_name, reference = context.get_reference(
+                reference_name, read_only=True)
             assert reference is not None, "Invalid reference"
             attributes['silva_target'] = reference.target_id
             attributes['silva_reference'] = reference_name

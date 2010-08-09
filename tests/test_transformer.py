@@ -8,7 +8,6 @@ from xml.parsers.expat import ExpatError
 from Acquisition import aq_chain
 
 from zope import component
-from zope.intid.interfaces import IIntIds
 from zope.publisher.browser import TestRequest
 
 from silva.core.references.interfaces import IReferenceService
@@ -21,6 +20,11 @@ from Products.SilvaDocument.transform.base import Context
 
 TEST_LINK_HTML = '<a silva_target="%d" href="reference" target="_blank" ' \
     'silva_reference="%s" title="">My link</a>'
+TEST_DOUBLE_LINK_HTML = '<p>'\
+    '<a silva_target="%d" href="reference" target="_blank" ' \
+    'silva_reference="%s" title="">First</a>' \
+    '<a silva_target="%d" href="reference" target="_blank" ' \
+    'silva_reference="%s" title="">Second</a></p>'
 TEST_IMAGE_HTML = '<img src="http://localhost/root/chocobo" ' \
     'silva_reference="%s" silva_target="%d" height="118" width="112" ' \
     'alt="Chocobo" alignment=""></img>'
@@ -40,6 +44,7 @@ class KupuTransformerTestCase(TestCase):
         factory.manage_addDocument('document', 'Document')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
+        factory.manage_addFolder('other', 'Other')
         factory.manage_addPublication('publication', 'Publication')
         factory.manage_addImage(
             'chocobo', 'Chocobo', file=open_test_file('chocobo.jpg', globals()))
@@ -130,7 +135,7 @@ class KupuTransformerTestCase(TestCase):
         transforming Silva->Kupu again.
         """
         service = component.getUtility(IReferenceService)
-        target_id = component.getUtility(IIntIds).getId(self.root.chocobo)
+        target_id = get_content_id(self.root.chocobo)
         version = self.root.document.get_editable()
 
         # At first there is no references
@@ -187,7 +192,7 @@ class KupuTransformerTestCase(TestCase):
         link in Kupu by transforming Silva->Kupu.
         """
         service = component.getUtility(IReferenceService)
-        target_id = component.getUtility(IIntIds).getId(self.root.folder)
+        target_id = get_content_id(self.root.folder)
         version = self.root.document.get_editable()
 
         # At first there is no references
@@ -286,6 +291,60 @@ class KupuTransformerTestCase(TestCase):
             list(service.get_references_from(version)),
             [reference])
 
+    def test_existing_link_copied_in_source(self):
+        """We edit a existing link which have been duplicated in the
+        HTML source by an operation of copy and paste in the editor.
+        """
+        # Step one, create the existing link
+        service = component.getUtility(IReferenceService)
+        version = self.root.document.get_editable()
+        reference = service.new_reference(version, name=u"document link")
+        reference.set_target(self.root.folder)
+        reference_name = u"original-link-id"
+        reference.add_tag(reference_name)
+        original_id = get_content_id(self.root.folder)
+        copy_id = get_content_id(self.root.other)
+
+        # The HTML have been copied, so both links have the
+        # reference_name. However a different have been choosed for
+        # the second link.
+        html = TEST_DOUBLE_LINK_HTML % (
+            original_id, reference_name,
+            copy_id, reference_name)
+
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+
+        # So now we should have only have one reference from the
+        # folder to the document, but as well one from other to the
+        # document.
+        self.assertEqual(
+            len(list(service.get_references_from(version))),
+            2)
+        self.assertEqual(
+            len(list(service.get_references_to(self.root.folder))),
+            1)
+        self.assertEqual(
+            len(list(service.get_references_to(self.root.other))),
+            1)
+
+        original_ref = list(service.get_references_to(self.root.folder))[0]
+        self.assertEqual(original_ref.tags, reference.tags)
+        self.assertEqual(original_ref.source, version)
+        self.assertEqual(original_ref.target, self.root.folder)
+
+        copied_ref = list(service.get_references_to(self.root.other))[0]
+        self.assertNotEqual(copied_ref.tags, reference.tags)
+        self.assertEqual(copied_ref.source, version)
+        self.assertEqual(copied_ref.target, self.root.other)
+
+        self.assertEqual(
+            result,
+            '<p type="normal">'
+            '<link target="_blank" reference="%s" title="">First</link>'
+            '<link target="_blank" reference="%s" title="">Second</link>'
+            '</p>' % (original_ref.tags[1], copied_ref.tags[1]))
+
     def test_existing_link_round_trip_on_copy(self):
         """We edit a existing link that have been created on a
         previous version of the document.
@@ -322,8 +381,7 @@ class KupuTransformerTestCase(TestCase):
 
         # To spice up the situation, we are going to modify the
         # reference on the new version to the publication
-        new_target_id = component.getUtility(IIntIds).getId(
-            self.root.publication)
+        new_target_id = get_content_id(self.root.publication)
 
         html = TEST_LINK_HTML % (new_target_id, reference_name)
 

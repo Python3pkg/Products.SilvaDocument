@@ -27,7 +27,6 @@ doesn't allow python2.2
 __author__='holger krekel <hpk@trillke.net>'
 __version__='$Revision: 1.39 $'
 
-import re
 from urlparse import urlparse
 
 from zExceptions import NotFound
@@ -118,16 +117,15 @@ def retrieve_toplevel_elements(node, context, elements=None):
     return elements
 
 
-reg_ignorable = re.compile('^([ \t\n]|<br[^>]*>)*$')
 def build_paragraph(nodes, context, ptype):
-    """given a list of elements this either returns a p element
-    if the list contains non-ignorable elements or it will
-    return an empty fragment if it doesn't
+    """Given a list of nodes this either returns a p element or a frag
+    if the nodes are only spaces and br elements.
     """
-    frag = Frag(nodes)
-    converted = frag.convert(context).asBytes('UTF-8').strip()
-    if not reg_ignorable.search(converted):
-        return silva.p(nodes, type=ptype)
+    for node in nodes:
+        name = node.name()
+        if (name not in ['br', 'Text'] or
+            (name == 'Text' and not node.content.isspace())):
+            return silva.p(nodes, type=ptype)
     return Frag()
 
 

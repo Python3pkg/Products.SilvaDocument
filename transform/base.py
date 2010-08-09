@@ -68,10 +68,23 @@ class Context(object):
         self.resultstack = []
         self.tablestack = []
 
-    def get_reference(self, link_name):
+    def get_reference(self, link_name, read_only=False):
         """Retrieve an existing reference used in the XML.
+
+        If read_only is set to True, when it will fail if the asked
+        link is a new one or if it has already been asked.
+
+        Don't call this method twice with the same link name and
+        read_only set to False, or it will return a new reference (to
+        handle copies).
         """
-        if link_name == 'new':
+        if link_name == 'new' or link_name in self.__references_used:
+            # This is a new reference, or one that have already been
+            # edited. In that case we create a new one, as it might be
+            # a copy.
+            if read_only:
+                raise KeyError(u"Missing reference %s tagged %s" % (
+                        self.__reference_names, link_name))
             return self.new_reference()
         reference = self.__references.get(link_name, None)
         if reference is not None:
@@ -135,11 +148,11 @@ def build_pathmap(node):
 class Node(object):
 
     def _matches(self, tag):
-        if type(tag) == type(()):
+        if isinstance(tag, tuple):
             for i in tag:
                 if self._matches(i):
                     return 1
-        elif type(tag) in (type(''),type(u'')):
+        elif isinstance(tag, basestring):
             return self.name()==tag
         elif tag is None:
             return 1
