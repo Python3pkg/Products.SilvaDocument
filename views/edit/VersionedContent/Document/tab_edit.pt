@@ -27,16 +27,9 @@
       <metal:macro use-macro="here/service_kupu_silva/kupumacros/macros/jsincludes" />
     </metal:block>
 
-    <tal:block condition="nothing"> _______ refresh code for session timeout _______ </tal:block>
-
     <metal:block fill-slot="editor_content">
       <metal:macro use-macro="here/service_kupu_silva/kupumacros/macros/body" />
     </metal:block>
-
-    <tal:note replace="nothing"> if feedback is not desired percolate signal upwards</tal:note>
-    <metal:fill fill-slot="editorcheck">
-      <tal:plug define="global nofeedback string:'kupulive'" />
-    </metal:fill>
 
   </metal:block>
 </html>
