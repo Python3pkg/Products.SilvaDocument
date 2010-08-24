@@ -9,6 +9,7 @@
       i18n:domain="silva_document"
       tal:define="global vein string:editor;
                   model request/model;
+                  no_empty_feedback python:True;
                   is_editable model/get_unapproved_version;">
 
   <metal:block use-macro="here/macro_tab_edit/macros/editor">
@@ -26,7 +27,6 @@
     <metal:block fill-slot="script">
       <metal:macro use-macro="here/service_kupu_silva/kupumacros/macros/jsincludes" />
     </metal:block>
-
     <metal:block fill-slot="editor_content">
       <metal:macro use-macro="here/service_kupu_silva/kupumacros/macros/body" />
     </metal:block>
