@@ -237,8 +237,6 @@ class DocumentAddForm(silvaforms.SMIAddForm):
     grok.context(IDocument)
     grok.name(u'Silva Document')
 
-    description = Document.__doc__
-
 
 DocumentHTML = XSLTTransformer('document.xslt', __file__)
 
@@ -281,4 +279,3 @@ def _should_create_document(id, ct, body):
 contentObjectFactoryRegistry.registerFactory(
     document_factory,
     _should_create_document)
-
