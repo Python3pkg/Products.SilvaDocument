@@ -345,6 +345,73 @@ class KupuTransformerTestCase(TestCase):
             '<link target="_blank" reference="%s" title="">Second</link>'
             '</p>' % (original_ref.tags[1], copied_ref.tags[1]))
 
+    def test_invalid_reference_link_in_source(self):
+        """We save a link with a reference that doesn't exists.
+        """
+        service = component.getUtility(IReferenceService)
+        version = self.root.document.get_editable()
+
+        html = TEST_LINK_HTML % (42, 'alien-link-id')
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+
+        references = list(service.get_references_from(version))
+        self.assertEqual(len(references), 1)
+        reference = references[0]
+
+        # The a is generated, with a broken reference to it
+        self.assertEqual(
+            '<link target="_blank" reference="%s" title="">My link</link>' % (
+                reference.tags[-1]),
+            result)
+
+        # The reference is broken, it will appear in red in kupu
+        self.assertEqual(reference.target_id, 0)
+        self.assertEqual(reference.target, None)
+
+        result = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+
+        self.assertEqual(
+            '<a style="color: red !important" target="_blank" '
+            'silva_reference="%s" title="" silva_target="0" '
+            'href="reference">My link</a>' % (
+                reference.tags[-1]),
+            result)
+
+    def test_invalid_content_link_in_source(self):
+        """We save a link that have a valid reference identifier, and
+        an invalid content identifier.
+        """
+        service = component.getUtility(IReferenceService)
+        version = self.root.document.get_editable()
+        reference = service.new_reference(version, name=u"document link")
+        reference.set_target(self.root.folder)
+        reference_name = u"existing-link-id"
+        reference.add_tag(reference_name)
+
+        html = TEST_LINK_HTML % (42, reference_name)
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+
+        references = list(service.get_references_from(version))
+        self.assertEqual(len(references), 1)
+        reference = references[0]
+
+        # The reference is broken, it will appear in red in kupu
+        self.assertEqual(reference.target_id, 0)
+        self.assertEqual(reference.target, None)
+
+        result = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+
+        self.assertEqual(
+            '<a style="color: red !important" target="_blank" '
+            'silva_reference="%s" title="" silva_target="0" '
+            'href="reference">My link</a>' % (
+                reference.tags[-1]),
+            result)
+
     def test_existing_link_round_trip_on_copy(self):
         """We edit a existing link that have been created on a
         previous version of the document.

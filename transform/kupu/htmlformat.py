@@ -31,9 +31,10 @@ from urlparse import urlparse
 
 from zExceptions import NotFound
 
+from Products.Silva.mangle import Path
 from Products.SilvaDocument.transform.base import Element, Text, Frag
 from silva.core.interfaces import IPath, IImage
-from Products.Silva.mangle import Path
+from silva.core.references.reference import get_content_from_id
 
 import silvaformat
 silva = silvaformat
@@ -556,13 +557,21 @@ class a(Element):
             # Case of a Silva reference used
             reference_name = str(self.getattr('silva_reference'))
             reference_name, reference = context.get_reference(reference_name)
-            assert reference is not None, "Invalid reference"
-            target_id = self.getattr('silva_target', '0')
-            try:
-                target_id = int(str(target_id))
-            except ValueError:
-                raise AssertionError("Invalid reference target id")
-            # The target changed, update it
+            if reference is not None:
+                target_id = self.getattr('silva_target', '0')
+                try:
+                    target_id = int(str(target_id))
+                    assert get_content_from_id(target_id) is not None
+                except (ValueError, AssertionError):
+                    # Invalid target id, set it as zero (broken)
+                    target_id = 0
+            else:
+                # Invalid reference. We create a new one and mark the
+                # target as broken
+                reference_name, reference = context.get_reference('new')
+                target_id = 0
+
+            # If the target changed, update it
             if target_id != reference.target_id:
                 reference.set_target_id(target_id)
             link_attributes['reference'] = reference_name

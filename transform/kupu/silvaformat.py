@@ -251,14 +251,18 @@ class link(SilvaElement):
             reference_name, reference = context.get_reference(
                 reference_name, read_only=True)
             assert reference is not None, "Invalid reference"
+            attributes = {
+                'href': 'reference',
+                'title': title,
+                'target': target,
+                'silva_anchor': anchor,
+                'silva_target': reference.target_id,
+                'silva_reference': reference_name}
+            if not reference.target_id:
+                attributes['style'] = 'color: red !important'
             return html.a(
                 self.content.convert(context),
-                href='reference',
-                title=title,
-                target=target,
-                silva_anchor=anchor,
-                silva_target=reference.target_id,
-                silva_reference=reference_name)
+                **attributes)
 
         path = ''
         if self.hasattr('url'):
