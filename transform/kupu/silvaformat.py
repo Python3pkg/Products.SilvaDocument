@@ -15,11 +15,12 @@ __version__='$Revision: 1.26 $'
 
 import operator
 
-from Products.SilvaDocument.transform.base import Element, Frag, Text
-
-from zope.traversing.browser import absoluteURL
 from Products.SilvaDocument.externalsource import getSourceForId
+from Products.SilvaDocument.transform.base import Element, Frag, Text
 from silva.core.interfaces import IPath, IImage
+from silva.core.views.interfaces import IVirtualSite
+from zope.traversing.browser import absoluteURL
+
 
 import htmlformat
 html = htmlformat
@@ -259,7 +260,7 @@ class link(SilvaElement):
                 'silva_target': reference.target_id,
                 'silva_reference': reference_name}
             if not reference.target_id:
-                attributes['style'] = 'color: red !important'
+                attributes['class'] = 'broken-link'
             return html.a(
                 self.content.convert(context),
                 **attributes)
@@ -312,7 +313,13 @@ class image(SilvaElement):
             attributes['silva_target'] = reference.target_id
             attributes['silva_reference'] = reference_name
             image = reference.target
-            attributes['src'] = absoluteURL(image, context.request)
+            if image is not None:
+                attributes['src'] = absoluteURL(image, context.request)
+            else:
+                site = IVirtualSite(context.request)
+                attributes['src'] = site.get_root_url() + \
+                    "/++resource++Products.SilvaDocument/broken-link.jpg"
+                attributes['alt'] = u'Referenced image is missing.'
         elif self.hasattr('path'):
             path = self.getattr('path')
             src = IPath(context.request).pathToUrlPath(str(path))

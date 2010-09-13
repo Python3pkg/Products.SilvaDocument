@@ -67,21 +67,25 @@ class DocumentVersionProducer(SilvaBaseProducer):
             if node.nodeName == 'link':
                 settings = self.getSettings()
                 if settings.externalRendering():
-                    rewritten_url = ''
+                    href = ''
                     if 'reference' in attributes:
                         service = component.getUtility(IReferenceService)
                         reference = service.get_reference(
                             self.context, name=attributes['reference'])
-                        rewritten_url = absoluteURL(
-                            reference.target, settings.request)
+                        target = reference.target
+                        if target is not None:
+                            href = absoluteURL(
+                                reference.target, settings.request)
+                        else:
+                            attributes['class'] = 'broken-link'
                     elif 'url' in attributes:
                         document = self.context.get_content()
-                        rewritten_url = IPath(document).pathToUrlPath(
+                        href = IPath(document).pathToUrlPath(
                             attributes['url'])
                     anchor = attributes.get('anchor', '')
                     if anchor:
-                        rewritten_url += '#' + anchor
-                    attributes['rewritten_url'] = rewritten_url
+                        href += '#' + anchor
+                    attributes['href'] = href
                 else:
                     if 'reference' in attributes:
                         attributes['reference'] = self.reference(

@@ -186,6 +186,42 @@ class KupuTransformerTestCase(TestCase):
             list(service.get_references_from(version)),
             [reference])
 
+    def test_invalid_reference_image(self):
+        """We save a document with an invalid reference for an image.
+        """
+        service = component.getUtility(IReferenceService)
+        version = self.root.document.get_editable()
+
+        html = TEST_IMAGE_HTML % ('alien-image-id', 42)
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+
+        # This should create one broken image
+        references = list(service.get_references_from(version))
+        self.assertEqual(len(references), 1)
+        reference = references[0]
+
+        self.assertEqual(
+            '<image reference="%s" alignment="" title="Chocobo"></image>' % (
+                reference.tags[-1],),
+            result)
+
+        # The target must be 0
+        self.assertEqual(reference.target_id, 0)
+        self.assertEqual(reference.target, None)
+
+        # In kupu a special broken image will be rendered
+        result = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+
+        self.assertEqual(
+            '<img silva_target="0" alt="Referenced image is missing." '
+            'silva_reference="%s" alignment="" '
+            'src="http://localhost/root/++resource++Products.SilvaDocument/broken-link.jpg">'
+            '</img>' % (
+                reference.tags[-1]),
+            result)
+
     def test_new_link_round_trip(self):
         """We create a new link which is a reference to a content in
         Silva, by transforming Kupu->Silva, and verify we get back our
@@ -373,9 +409,8 @@ class KupuTransformerTestCase(TestCase):
             sourceobj=result, context=self.context).asBytes('utf-8')
 
         self.assertEqual(
-            '<a style="color: red !important" target="_blank" '
-            'silva_reference="%s" title="" silva_target="0" '
-            'href="reference">My link</a>' % (
+            '<a target="_blank" silva_reference="%s" title="" silva_target="0" '
+            'href="reference" class="broken-link">My link</a>' % (
                 reference.tags[-1]),
             result)
 
@@ -406,9 +441,8 @@ class KupuTransformerTestCase(TestCase):
             sourceobj=result, context=self.context).asBytes('utf-8')
 
         self.assertEqual(
-            '<a style="color: red !important" target="_blank" '
-            'silva_reference="%s" title="" silva_target="0" '
-            'href="reference">My link</a>' % (
+            '<a target="_blank" silva_reference="%s" title="" silva_target="0" '
+            'href="reference" class="broken-link">My link</a>' % (
                 reference.tags[-1]),
             result)
 

@@ -614,12 +614,16 @@ class img(Element):
        if self.hasattr('silva_reference'):
            reference_name = str(self.getattr('silva_reference'))
            reference_name, reference = context.get_reference(reference_name)
-           assert reference is not None, "Invalid reference"
-           target_id = self.getattr('silva_target', '0')
-           try:
-               target_id = int(str(target_id))
-           except ValueError:
-               raise AssertionError("Invalid reference target id")
+           if reference is not None:
+               target_id = self.getattr('silva_target', '0')
+               try:
+                   target_id = int(str(target_id))
+               except ValueError:
+                   target_id = 0
+           else:
+               reference_name, reference = context.get_reference('new')
+               target_id = 0
+
            # The target changed, update it
            if target_id != reference.target_id:
                reference.set_target_id(target_id)
