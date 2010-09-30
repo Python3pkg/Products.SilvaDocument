@@ -48,20 +48,20 @@ class Context(object):
     transformation. It contains methods to manage references.
     """
 
-    def __init__(self, context, request, reference_names=LINK_REFERENCE_TAG):
+    def __init__(self, context, request, reference_name=LINK_REFERENCE_TAG):
         """A Transformation Context is built from a context of
         transformation, which is a version of a versioned content on
         which the transformed XML data is stored, and the request from
         which the transformation is triggered.
 
-        reference_names is used to identify which relations of the
+        reference_name is used to identify which relations of the
         version are related to the processed XML data.
         """
         self.model = context.get_content()
         self.version = context
         self.request = request
         self.browser = determine_browser_from_request(request)
-        self.__reference_names = reference_names
+        self.__reference_name = reference_name
         self.__reference_service = component.getUtility(IReferenceService)
         self.__references_used = set()
         self.__references = {}
@@ -84,7 +84,7 @@ class Context(object):
             # a copy.
             if read_only:
                 raise KeyError(u"Missing reference %s tagged %s" % (
-                        self.__reference_names, link_name))
+                        self.__reference_name, link_name))
             return self.new_reference()
         reference = self.__references.get(link_name, None)
         if reference is not None:
@@ -95,7 +95,7 @@ class Context(object):
         """Create a new reference to be used in the XML.
         """
         reference = self.__reference_service.new_reference(
-            self.version, self.__reference_names)
+            self.version, self.__reference_name)
         link_name = unicode(uuid.uuid1())
         reference.add_tag(link_name)
         self.__references[link_name] = reference
@@ -111,7 +111,7 @@ class Context(object):
         self.__references = dict(map(
                 lambda r: (r.tags[1], r),
                 filter(
-                    lambda r: r.tags[0] == self.__reference_names,
+                    lambda r: r.tags[0] == self.__reference_name,
                     self.__reference_service.get_references_from(
                         self.version))))
 
