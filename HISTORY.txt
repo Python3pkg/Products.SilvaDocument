@@ -1,10 +1,15 @@
 ChangeLog
 =========
 
-2.3.1 (unreleased)
+2.3.1 (2010/10/18)
 ------------------
 
-* ...
+* Better support of broken references: You can create a new version of
+  a document which have broken references. You can display it.
+
+* In Kupu, you can copy and paste broken references as well.
+
+* You can export in Silva XML broken references.
 
 2.3 (2010/07/16)
 ----------------
@@ -22,4 +27,3 @@ ChangeLog
 * Remove support for old deprecated Silva Documents tags like toc and cite.
 
 * Add tests.
-
