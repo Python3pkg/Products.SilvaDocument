@@ -118,6 +118,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
             self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
 
         attributes = {}
+        settings = self.getSettings()
         if node.attributes:
             attributes = get_dict(node.attributes)
         self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
@@ -126,9 +127,11 @@ class DocumentVersionProducer(SilvaBaseProducer):
             # element was added
             id = attributes['id']
         except KeyError:
-            source_error(_("no external source specified"))
+            source_error("no external source specified")
             return
         source = getSourceForId(self.context.get_content(), id)
+
+        # Collect parameters
         parameters = {}
         for child in node.childNodes:
             if child.nodeName == 'parameter':
@@ -145,15 +148,16 @@ class DocumentVersionProducer(SilvaBaseProducer):
                             text = text + grandChild.nodeValue
                     parameters[str(child.attributes['key'].value)] = text
                 self.endElementNS(NS_SILVA_DOCUMENT, 'parameter')
-        if self.getSettings().externalRendering():
+
+        # Render source if needed
+        if settings.externalRendering():
             try:
-                html = source.to_html(self.context, None, **parameters)
-            except Exception, err:
-                source_error(unicode(_("error message:")) + " " + str(err))
+                html = source.to_html(self.context, settings.request, **parameters)
+            except Exception, error:
+                source_error("error message: " + str(error))
                 return
             if not html:
-                source_error(unicode(_("error message:")) + " " \
-                                 + unicode(_("None returned from source")))
+                source_error("error message: the source returned no output.")
                 return
             self.render_html(html)
         self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
