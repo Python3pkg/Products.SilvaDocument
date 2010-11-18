@@ -460,13 +460,13 @@ class source(SilvaElement):
         if source is not None:
             meta_type = source.meta_type
             source_title = source.get_title() or id
-            source_form = source.form()
+            source_form = source.get_parameters_form()
             header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
                              title=u'source id: %s'%id)
-            desc = source.description()
-            if desc:
+            description = source.get_description()
+            if description:
                 divcontent.append(
-                    html.p(desc, class_="externalsource-description"))
+                    html.p(description, class_="externalsource-description"))
         else:
             source_title = ''
             source_form = None
