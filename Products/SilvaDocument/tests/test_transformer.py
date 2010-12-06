@@ -470,7 +470,7 @@ class KupuTransformerTestCase(TestCase):
         self.assertEqual(
             list(service.get_references_to(self.root.publication)),
             [])
-        self.assertListEqual(
+        self.assertItemsEqual(
             list(service.get_references_to(self.root.folder)),
             [reference, new_reference])
         self.assertEqual(
