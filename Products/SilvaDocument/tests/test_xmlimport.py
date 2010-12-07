@@ -39,7 +39,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
             ['ContentImported for /root/folder',
              'ContentImported for /root/folder/document'],
             IContentImported)
-        self.assertListEqual(self.root.folder.objectIds(), ['document'])
+        self.assertItemsEqual(self.root.folder.objectIds(), ['document'])
 
         document = self.root.folder.document
         self.failUnless(IDocument.providedBy(document))
@@ -73,7 +73,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """Try to import a document that contains a link.
         """
         self.import_file('test_import_link.silvaxml', globals())
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.objectIds(), ['document', 'site'])
 
         document = self.root.folder.document
@@ -91,7 +91,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         # should match the only link we have
         reference = service.get_reference(version, LINK_REFERENCE_TAG)
         self.failIf(reference is None)
-        self.assertListEqual(
+        self.assertItemsEqual(
             list(service.get_references_from(version)), [reference])
         self.assertEqual(reference.target, link)
 
@@ -110,9 +110,9 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """Try to import a document that contains an image.
         """
         self.import_zip('test_import_image.zip', globals())
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.objectIds(), ['document', 'pictures'])
-        self.assertListEqual(
+        self.assertItemsEqual(
             self.root.folder.pictures.objectIds(), ['chocobo'])
 
         document = self.root.folder.document
@@ -130,7 +130,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         # should match the only link we have
         reference = service.get_reference(version, LINK_REFERENCE_TAG)
         self.failIf(reference is None)
-        self.assertListEqual(
+        self.assertItemsEqual(
             list(service.get_references_from(version)), [reference])
         self.assertEqual(reference.target, image)
 
