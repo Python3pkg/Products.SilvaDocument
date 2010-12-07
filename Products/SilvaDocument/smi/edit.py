@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2002-2009 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from five import grok
 from zope.interface import alsoProvides
 from silva.core.smi import smi as silvasmi
@@ -5,7 +10,7 @@ from silva.core.smi import interfaces
 from silva.core.layout.jquery.interfaces import IJQueryResources
 from Products.SilvaDocument.interfaces import IDocument
 from silva.core import conf as silvaconf
-import zeam.form.silva as silvaforms
+from infrae import rest
 from zExceptions import BadRequest
 
 grok.layer(interfaces.ISMILayer)
@@ -32,33 +37,21 @@ class SMITabEdit(silvasmi.SMIPage):
 
     def update(self):
         alsoProvides(self.request, ICKEditorResources)
-        self.document = self.context.get_editable().get_document_xml_as(
-            request=self.request)
+        self.document = None
+        version = self.context.get_editable()
+        if version is not None:
+            self.document = version.get_document_xml_as(request=self.request)
+        # If self.document is None
 
 
-class EditorSaveDocument(silvasmi.SilvaForm):
-    """ A form to save the document
+class DontFuckingUseThingsThatProvidesThingsYouDontNeedSpeciallyWhenItIsNinetyNinePercentOfIt(rest.REST):
+    """Save document.
     """
     grok.context(IDocument)
-    grok.name('editor_save')
 
-    fields = silvaforms.Fields(
-        silvaforms.Field('content', required=True))
-    ignoreContent = True
-    ignoreRequest = False
-    tab = 'edit'
-
-    @silvaforms.action('save', method="post")
-    def save(self):
-        data, errors = self.extractData()
-        if errors:
-            raise BadRequest(errors)
+    def POST(self, content):
         version = self.context.get_editable()
         if version is None:
-            raise BadRequest('invalid version')
-        version.set_document_xml_from(data['content'])
-        return silvaforms.SUCCESS
-
-    def render(self):
-        return u''
+            raise BadRequest('Document is not editable')
+        version.set_document_xml_from(content)
 
