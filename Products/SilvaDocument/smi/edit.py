@@ -44,14 +44,21 @@ class SMITabEdit(silvasmi.SMIPage):
         # If self.document is None
 
 
-class DontFuckingUseThingsThatProvidesThingsYouDontNeedSpeciallyWhenItIsNinetyNinePercentOfIt(rest.REST):
+class RESTSaveDocument(rest.REST):
     """Save document.
     """
     grok.context(IDocument)
+    grok.name('silva.document.save')
+
+    format = 'ckeditor'
 
     def POST(self, content):
         version = self.context.get_editable()
         if version is None:
             raise BadRequest('Document is not editable')
-        version.set_document_xml_from(content)
+        version.set_document_xml_from(
+            u"<body>" + unicode(content, 'utf-8') + u"</body>",
+            request=self.request, format=self.format)
+        return version.get_document_xml_as(
+            request=self.request, format=self.format)
 

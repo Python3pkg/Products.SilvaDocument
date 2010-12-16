@@ -1,17 +1,3 @@
 <div id="editor">
-  <!-- <textarea tal:content="structure view.document" /> -->
-  <textarea>
-    <p>asdlkfj asdl</p>
-    sd;kf;kasd lfk jas;lkdfa
-    asd;flkja sdf
-    <div contenteditable="false">
-      <div>
-        <p>content is not editable</p>
-        <span><a href="link">a link to something</a></span>
-      </div>
-    </div>
-    <p>
-      some text
-    </p>
-  </textarea>
+  <textarea tal:content="structure view.document" />
 </div>
