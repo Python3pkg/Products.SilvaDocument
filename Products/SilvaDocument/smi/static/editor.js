@@ -20,4 +20,9 @@ $(document).ready(function(){
       ],
       extraPlugins: 'silvaajaxsave'
     });
+    element.bind('instanceReady.ckeditor', function(event) {
+        $('div.externalsource h4').bind('click', function(event) {
+            alert('a malibu');
+        });
+    });
 });

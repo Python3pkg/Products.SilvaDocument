@@ -509,6 +509,7 @@ class source(SilvaElement):
 
         content = Frag(header, divcontent);
         return html.div(content,
+                        contenteditable='false',
                         source_id=id,
                         source_title = source_title,
                         class_='externalsource',
