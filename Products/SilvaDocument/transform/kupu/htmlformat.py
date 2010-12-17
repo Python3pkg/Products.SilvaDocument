@@ -490,6 +490,12 @@ class b(strong):
     pass
 
 
+class strike(Element):
+
+    def convert(self, context):
+        return silva.strike(self.content.convert(context))
+
+
 class em(Element):
 
     def convert(self, context):

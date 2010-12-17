@@ -129,6 +129,7 @@ class br(Element):
     def convert(self, context):
         return html.br()
 
+
 class list(SilvaElement):
     """ Simple lists """
     def convert(self, context):
@@ -169,20 +170,22 @@ class list(SilvaElement):
         return tag(
             converted,
             attrs,
-            type=listtype,
-        )
+            type=listtype)
+
 
 class nlist(list):
     pass
 
+
 class li(SilvaElement):
     """ list items """
+
     def convert(self, context):
-        return html.li(
-            self.content.convert(context)
-            )
+        return html.li(self.content.convert(context))
+
 
 class dlist(SilvaElement):
+
     def convert(self, context):
         children = []
         lastchild = None
@@ -199,45 +202,60 @@ class dlist(SilvaElement):
                 lastchild = child
         return html.dl(Frag(children))
 
+
 class dt(SilvaElement):
+
     def convert(self, context):
         return html.dt(self.content.convert(context))
 
+
 class dd(SilvaElement):
+
     def convert(self, context):
         return html.dd(self.content.convert(context))
 
+
 class strong(SilvaElement):
+
     def convert(self, context):
         if context.browser == 'Mozilla':
             return html.b(self.content.convert(context))
         else:
             return html.strong(self.content.convert(context))
 
-class underline(SilvaElement):
+
+class strike(Element):
+
     def convert(self, context):
-        return html.u(
-            self.content.convert(context)
-            )
+        return html.strike(self.content.convert(context))
+
+
+class underline(SilvaElement):
+
+    def convert(self, context):
+        return html.u(self.content.convert(context))
+
 
 class em(SilvaElement):
+
     def convert(self, context):
         if context.browser == 'Mozilla':
             return html.i(self.content.convert(context))
         else:
             return html.em(self.content.convert(context))
 
+
 class super(SilvaElement):
+
     def convert(self, context):
-        return html.sup(
-            self.content.convert(context),
-            )
+        return html.sup(self.content.convert(context))
+
 
 class sub(SilvaElement):
+
     def convert(self, context):
-        return html.sub(
-            self.content.convert(context),
-            )
+        return html.sub(self.content.convert(context))
+
 
 class link(SilvaElement):
 
