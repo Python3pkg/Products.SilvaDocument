@@ -19,7 +19,8 @@ grok.layer(interfaces.ISMILayer)
 class ICKEditorResources(IJQueryResources):
     """ Resource for CKEditor
     """
-    silvaconf.resource('ckeditor/ckeditor.js')
+    silvaconf.resource('json-template.js')
+    silvaconf.resource('ckeditor/ckeditor_source.js')
     silvaconf.resource('ckeditor/adapters/jquery.js')
     silvaconf.resource('editor.js')
 

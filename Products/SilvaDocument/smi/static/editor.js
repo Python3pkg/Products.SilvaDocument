@@ -7,18 +7,18 @@ $(document).ready(function(){
       entities: false,
       toolbar: 'silva',
       toolbar_silva: [
-        ['SilvaAjaxSave', '-', 'Source'],
-        ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Scayt'],
-        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-        ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
-        '/',
-        ['Styles','Format'],
-        ['Bold','Italic','Strike'],
-        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-        ['Link','Unlink','Anchor'],
-        ['Maximize','-','About']
+          ['SilvaAjaxSave', 'SilvaLink', '-', 'Source'],
+          ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Scayt'],
+          ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+          ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+          '/',
+          ['Styles','Format'],
+          ['Bold','Italic','Strike'],
+          ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+          ['Link','Unlink','Anchor'],
+          ['Maximize','-','About']
       ],
-      extraPlugins: 'silvaajaxsave'
+        extraPlugins: 'silvaajaxsave,silvalink'
     });
     element.bind('instanceReady.ckeditor', function(event) {
         $('div.externalsource h4').bind('click', function(event) {
