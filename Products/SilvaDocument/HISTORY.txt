@@ -1,10 +1,13 @@
 ChangeLog
 =========
 
-2.3.2 (unreleased)
+2.3.2 (2010/12/20)
 ------------------
 
-* ...
+* Add support for strikethrough in Silva XML / kupu transformation.
+
+* Update and improve code source rendering (including in case of
+  errors).
 
 2.3.1 (2010/10/18)
 ------------------
