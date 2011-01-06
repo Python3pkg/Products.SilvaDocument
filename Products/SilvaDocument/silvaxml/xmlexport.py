@@ -328,14 +328,14 @@ class DocumentVersionProducer(SilvaBaseProducer):
 
             if image is not None:
                 if IImage.providedBy(image):
-                    image_res = settings.options.get('image_res', 'hires')
+                    resolution = settings.options.get('image_res')
                     attributes['title'] = image.get_title()
-                    width, height = image.getDimensions(image.image)
-                    if image_res == 'hires':
+                    if resolution:
+                        attributes['rewritten_path'] += '?%s' % resolution
+                        if resolution == 'hires':
+                            width, height = image.get_dimensions()
                         attributes['width'] = str(width)
                         attributes['height'] = str(height)
-                    attributes['rewritten_path'] += \
-                        '?%s' % image_res
             else:
                 attributes['title'] = _(u'Referenced image is missing')
         else:
