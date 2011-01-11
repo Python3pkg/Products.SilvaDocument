@@ -317,8 +317,9 @@ class h6(h1):
         if hasattr(self, 'should_be_removed') and self.should_be_removed:
             return Frag()
         fixedcontent = fix_allowed_items_in_heading(self.find(), context)
-        if (hasattr(self, 'attr') and hasattr(self.attr, 'silva_type')
-            and self.attr.silva_type == 'sub'):
+        if (hasattr(self, 'attr') and
+            self.hasattr('_silva_type') and
+            self.getattr('_silva_type') == 'sub'):
             self.header_type = 'subparagraph'
         result = silva.heading(
             fixedcontent, type=self.header_type)
@@ -343,7 +344,7 @@ class p(Element):
 
         # return a p, but only if there's any content besides whitespace
         # and <br>s
-        ptype = self.getattr('silva_type', 'normal')
+        ptype = self.getattr('_silva_type', 'normal')
         if ptype not in ['normal', 'lead', 'annotation']:
             ptype = 'normal'
         for child in self.find():
@@ -537,7 +538,7 @@ class a(Element):
         title = self.getattr('title', default='')
         name = self.getattr('name', default=None)
         href = self.getattr('href', default='#')
-        anchor = self.getattr('silva_anchor', default=None)
+        anchor = self.getattr('_silva_anchor', default=None)
         window_target = self.getattr('target', default='')
 
         link_attributes = {'target': window_target,
@@ -559,12 +560,12 @@ class a(Element):
             else:
                 # named anchor, probably pasted from some other page
                 return Frag(self.content.convert(context))
-        elif self.hasattr('silva_reference'):
+        elif self.hasattr('_silva_reference'):
             # Case of a Silva reference used
-            reference_name = str(self.getattr('silva_reference'))
+            reference_name = str(self.getattr('_silva_reference'))
             reference_name, reference = context.get_reference(reference_name)
             if reference is not None:
-                target_id = self.getattr('silva_target', '0')
+                target_id = self.getattr('_silva_target', '0')
                 try:
                     target_id = int(str(target_id))
                     assert get_content_from_id(target_id) is not None
@@ -586,7 +587,7 @@ class a(Element):
                 **link_attributes)
         elif self.hasattr('href'):
             # External links
-            url = self.getattr('silva_href', None)
+            url = self.getattr('_silva_href', None)
             if url is None:
                 url = self.getattr('href', '')
             if unicode(url).startswith('/'):
@@ -617,11 +618,11 @@ class img(Element):
        if alignment == 'default':
            alignment = ''
 
-       if self.hasattr('silva_reference'):
-           reference_name = str(self.getattr('silva_reference'))
+       if self.hasattr('_silva_reference'):
+           reference_name = str(self.getattr('_silva_reference'))
            reference_name, reference = context.get_reference(reference_name)
            if reference is not None:
-               target_id = self.getattr('silva_target', '0')
+               target_id = self.getattr('_silva_target', '0')
                try:
                    target_id = int(str(target_id))
                except ValueError:
@@ -702,7 +703,7 @@ class table(Element):
                 if cols > highest:
                     highest = cols
         # create the column info
-        colinfo_attr_value = self.getattr('silva_column_info', None)
+        colinfo_attr_value = self.getattr('_silva_column_info', None)
         if colinfo_attr_value is not None:
             colinfo = colinfo_attr_value
         else:

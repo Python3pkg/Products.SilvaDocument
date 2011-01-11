@@ -20,7 +20,7 @@ from Products.Silva.tests.helpers import open_test_file
 
 
 KUPU_TABLE_HTML="""
-<table silva_type="plain" silva_origin="table" silva_columns="2" silva_column_info="L:1 L:1" class="plain" cellpadding="0" cellspacing="3" cols="2" width="100%">
+<table _silva_type="plain" _silva_origin="table" _silva_columns="2" _silva_column_info="L:1 L:1" class="plain" cellpadding="0" cellspacing="3" cols="2" width="100%">
  <tbody>
   <tr class="odd">
    <th class="align-left" colspan="2" align="left" width="50%">
@@ -70,7 +70,7 @@ SILVA_TABLE_HTML="""
 """
 
 KUPU_TABLE_LINK_HTML="""
-<table silva_type="plain" silva_origin="table" silva_columns="2" silva_column_info="L:1 L:1" class="plain" cellpadding="0" cellspacing="3" cols="2" width="100%%">
+<table _silva_type="plain" _silva_origin="table" _silva_columns="2" _silva_column_info="L:1 L:1" class="plain" cellpadding="0" cellspacing="3" cols="2" width="100%%">
  <tbody>
   <tr class="odd">
    <th class="align-left" colspan="2" align="left" width="50%%">
@@ -83,7 +83,7 @@ KUPU_TABLE_LINK_HTML="""
    <td class="align-left" align="left" width="50%%">
     <p class="normal">
      Link to:
-     <a title="One" silva_reference="new" silva_target="%s">Cell One</a>
+     <a title="One" _silva_reference="new" _silva_target="%s">Cell One</a>
     </p>
    </td>
    <td class="align-left" align="left" width="50%%">
@@ -128,7 +128,7 @@ SILVA_TABLE_LINK_HTML = """
 """
 
 KUPU_TABLE_IMAGE_HTML="""
-<table silva_type="plain" silva_origin="table" silva_columns="1" silva_column_info="L:1 L:1" class="plain" cellpadding="0" cellspacing="3" cols="1" width="100%%">
+<table _silva_type="plain" _silva_origin="table" _silva_columns="1" _silva_column_info="L:1 L:1" class="plain" cellpadding="0" cellspacing="3" cols="1" width="100%%">
  <tbody>
   <tr class="odd">
    <th class="align-left" align="left" width="50%%">
@@ -141,7 +141,7 @@ KUPU_TABLE_IMAGE_HTML="""
    <td class="align-left" align="left" width="50%%">
     <p class="normal">
      Chocobo:
-     <img src="chocobo.jpg" alt="Chocobo" silva_reference="new" silva_target="%s" />
+     <img src="chocobo.jpg" alt="Chocobo" _silva_reference="new" _silva_target="%s" />
      (Limited edition).
     </p>
    </td>

@@ -84,17 +84,22 @@ class silva_document(SilvaElement):
     def asBytes(self, *args, **kwargs):
         return SilvaElement.asBytes(self, *args, **kwargs)
 
+
 class title(SilvaElement):
     """ us used with documents, list and tables (i guess) """
 
+
 class doc(SilvaElement):
     """ subtag of silva_document """
+
     def asBytes(self, *args, **kwargs):
         # disabled xmlns declaration for now, should be solved properly later
         # self.attr.xmlns = 'http://xml.infrae.com/document/0.9.3'
         return SilvaElement.asBytes(self, *args, **kwargs)
 
+
 class heading(SilvaElement):
+
     def convert(self, context):
         # some defensive programming here...
         level = self.attr.type
@@ -113,25 +118,27 @@ class heading(SilvaElement):
 
         return h_tag(
             self.content.convert(context),
-            silva_type = silva_type,
-            class_ = class_,
-            )
+            _silva_type = silva_type,
+            class_ = class_)
+
 
 class p(SilvaElement):
+
     def convert(self, context):
         ptype = self.getattr('type', 'normal')
         return html.p(
             self.content.convert(context),
-            class_=ptype
-            )
+            class_=ptype)
 
 class br(Element):
+
     def convert(self, context):
         return html.br()
 
 
 class list(SilvaElement):
     """ Simple lists """
+
     def convert(self, context):
         listtype = self.getattr('type', u'none')
 
@@ -274,9 +281,9 @@ class link(SilvaElement):
                 'href': 'reference',
                 'title': title,
                 'target': target,
-                'silva_anchor': anchor,
-                'silva_target': reference.target_id,
-                'silva_reference': reference_name}
+                '_silva_anchor': anchor,
+                '_silva_target': reference.target_id,
+                '_silva_reference': reference_name}
             if not reference.target_id:
                 attributes['class'] = 'broken-link'
             return html.a(
@@ -290,10 +297,10 @@ class link(SilvaElement):
         return html.a(
             self.content.convert(context),
             href=path,
-            silva_href=path,
             title=title,
             target=target,
-            silva_anchor=anchor)
+            _silva_href=path,
+            _silva_anchor=anchor)
 
 
 class index(SilvaElement):
@@ -328,8 +335,8 @@ class image(SilvaElement):
             reference_name, reference = context.get_reference(
                 reference_name, read_only=True)
             assert reference is not None, "Invalid reference"
-            attributes['silva_target'] = reference.target_id
-            attributes['silva_reference'] = reference_name
+            attributes['_silva_target'] = reference.target_id
+            attributes['_silva_reference'] = reference_name
             image = reference.target
             if image is not None:
                 attributes['src'] = absoluteURL(image, context.request)
