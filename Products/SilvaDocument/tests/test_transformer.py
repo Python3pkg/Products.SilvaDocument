@@ -18,16 +18,16 @@ from Products.Silva.tests.helpers import publish_object, open_test_file
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
-TEST_LINK_HTML = '<a silva_target="%d" href="reference" target="_blank" ' \
-    'silva_reference="%s" title="">My link</a>'
+TEST_LINK_HTML = '<a _silva_reference="%s" href="reference" ' \
+    '_silva_target="%d" target="_blank" title="">My link</a>'
 TEST_DOUBLE_LINK_HTML = '<p>'\
-    '<a silva_target="%d" href="reference" target="_blank" ' \
-    'silva_reference="%s" title="">First</a>' \
-    '<a silva_target="%d" href="reference" target="_blank" ' \
-    'silva_reference="%s" title="">Second</a></p>'
+    '<a _silva_target="%d" href="reference" target="_blank" ' \
+    '_silva_reference="%s" title="">First</a>' \
+    '<a _silva_target="%d" href="reference" target="_blank" ' \
+    '_silva_reference="%s" title="">Second</a></p>'
 TEST_IMAGE_HTML = '<img src="http://localhost/root/chocobo" ' \
-    'silva_reference="%s" silva_target="%d" height="118" width="112" ' \
-    'alt="Chocobo" alignment=""></img>'
+    '_silva_reference="%s" _silva_target="%d" width="112" ' \
+    'alt="Chocobo" height="118" alignment=""></img>'
 
 
 class KupuTransformerTestCase(TestCase):
@@ -215,9 +215,9 @@ class KupuTransformerTestCase(TestCase):
             sourceobj=result, context=self.context).asBytes('utf-8')
 
         self.assertEqual(
-            '<img silva_target="0" alt="Referenced image is missing." '
-            'silva_reference="%s" alignment="" '
-            'src="http://localhost/root/++resource++Products.SilvaDocument/broken-link.jpg">'
+            '<img _silva_reference="%s" '
+            'src="http://localhost/root/++resource++Products.SilvaDocument/broken-link.jpg" '
+            'alt="Referenced image is missing." alignment="" _silva_target="0">'
             '</img>' % (
                 reference.tags[-1]),
             result)
@@ -235,7 +235,7 @@ class KupuTransformerTestCase(TestCase):
         self.assertEqual(list(service.get_references_from(version)), [])
         self.assertEqual(list(service.get_references_to(self.root.folder)), [])
 
-        html = TEST_LINK_HTML % (target_id, 'new')
+        html = TEST_LINK_HTML % ('new', target_id)
 
         # We convert our HTML with a new reference to Kupu
         node = self.transformer.to_source(targetobj=html, context=self.context)
@@ -268,7 +268,7 @@ class KupuTransformerTestCase(TestCase):
             sourceobj=result, context=self.context).asBytes('utf-8')
         self.assertEqual(
             roundtrip,
-            TEST_LINK_HTML % (target_id, reference_name))
+            TEST_LINK_HTML % (reference_name, target_id))
 
         # Our new reference has been kept
         self.assertEqual(
@@ -298,7 +298,7 @@ class KupuTransformerTestCase(TestCase):
             list(service.get_references_from(version)),
             [reference])
 
-        html = TEST_LINK_HTML % (reference.target_id, reference_name)
+        html = TEST_LINK_HTML % (reference_name, reference.target_id)
 
         result = self.transformer.to_source(
             targetobj=html, context=self.context).asBytes('utf-8')
@@ -387,7 +387,7 @@ class KupuTransformerTestCase(TestCase):
         service = component.getUtility(IReferenceService)
         version = self.root.document.get_editable()
 
-        html = TEST_LINK_HTML % (42, 'alien-link-id')
+        html = TEST_LINK_HTML % ('alien-link-id', 42)
         result = self.transformer.to_source(
             targetobj=html, context=self.context).asBytes('utf-8')
 
@@ -409,7 +409,7 @@ class KupuTransformerTestCase(TestCase):
             sourceobj=result, context=self.context).asBytes('utf-8')
 
         self.assertEqual(
-            '<a target="_blank" silva_reference="%s" title="" silva_target="0" '
+            '<a target="_blank" title="" _silva_reference="%s" _silva_target="0" '
             'href="reference" class="broken-link">My link</a>' % (
                 reference.tags[-1]),
             result)
@@ -425,7 +425,7 @@ class KupuTransformerTestCase(TestCase):
         reference_name = u"existing-link-id"
         reference.add_tag(reference_name)
 
-        html = TEST_LINK_HTML % (42, reference_name)
+        html = TEST_LINK_HTML % (reference_name, 42)
         result = self.transformer.to_source(
             targetobj=html, context=self.context).asBytes('utf-8')
 
@@ -441,7 +441,7 @@ class KupuTransformerTestCase(TestCase):
             sourceobj=result, context=self.context).asBytes('utf-8')
 
         self.assertEqual(
-            '<a target="_blank" silva_reference="%s" title="" silva_target="0" '
+            '<a target="_blank" title="" _silva_reference="%s" _silva_target="0" '
             'href="reference" class="broken-link">My link</a>' % (
                 reference.tags[-1]),
             result)
@@ -484,7 +484,7 @@ class KupuTransformerTestCase(TestCase):
         # reference on the new version to the publication
         new_target_id = get_content_id(self.root.publication)
 
-        html = TEST_LINK_HTML % (new_target_id, reference_name)
+        html = TEST_LINK_HTML % (reference_name, new_target_id)
 
         context = Context(new_version, TestRequest())
         result = self.transformer.to_source(
@@ -570,7 +570,7 @@ class KupuTransformerTestCase(TestCase):
         """Test link that is to an anchor on the same document.
         """
         # Kupu removes all empty attributes, so test with them gone
-        html = '<a silva_anchor="somewhere" target="_self" title="Anchor">'\
+        html = '<a _silva_anchor="somewhere" target="_self" title="Anchor">'\
             'Link to somewhere (not far)</a>'
 
         silvaxml = self.transformer.to_source(
@@ -580,13 +580,13 @@ class KupuTransformerTestCase(TestCase):
             '<link target="_self" anchor="somewhere" title="Anchor">'\
                 'Link to somewhere (not far)</link>')
 
-        expected_html = '<a silva_anchor="somewhere" href="" target="_self" '\
-            'silva_href="" title="Anchor">'\
+        expected_html = '<a href="" _silva_href="" _silva_anchor="somewhere" '\
+            'target="_self" title="Anchor">'\
             'Link to somewhere (not far)</a>'
 
         roundtrip = self.transformer.to_target(
             sourceobj=silvaxml, context=self.context).asBytes('utf-8')
-        self.assertEqual(roundtrip, expected_html)
+        self.assertEqual(expected_html, roundtrip)
 
 
 def test_suite():
