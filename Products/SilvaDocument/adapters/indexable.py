@@ -3,34 +3,23 @@
 # $Id$
 
 from five import grok
-
-from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
+from Products.SilvaDocument.interfaces import IDocument
 from Products.Silva.adapters.indexable import IndexableAdapter
-from silva.core.interfaces.adapters import IIndexable
 
 
 class DocumentIndexableAdapter(IndexableAdapter):
-
     grok.context(IDocument)
 
-    def getIndexes(self):
+    def get_entries(self):
         version = self.context.get_viewable()
         if version:
-            return IIndexable(version).getIndexes()
+            indexes = []
+            docElement = version.content.firstChild
+            nodes = docElement.getElementsByTagName('index')
+            for node in nodes:
+                indexTitle = node.getAttribute('title')
+                if indexTitle:
+                    indexName = node.getAttribute('name')
+                    indexes.append((indexName, indexTitle))
+            return indexes
         return []
-
-
-class DocumentVersionIndexableAdapter(IndexableAdapter):
-
-    grok.context(IDocumentVersion)
-
-    def getIndexes(self):
-        indexes = []
-        docElement = self.context.content.firstChild
-        nodes = docElement.getElementsByTagName('index')
-        for node in nodes:
-            indexTitle = node.getAttribute('title')
-            if indexTitle:
-                indexName = node.getAttribute('name')
-                indexes.append((indexName, indexTitle))
-        return indexes
