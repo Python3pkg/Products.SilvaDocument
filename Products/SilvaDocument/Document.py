@@ -19,13 +19,14 @@ from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zExceptions import InternalError
 
 from Products.ParsedXML.ParsedXML import ParsedXML
+from Products.ParsedXML.PrettyPrinter import _translateCdata as translateCdata
 
 # Silva
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva import mangle
-from Products.Silva.helpers import translateCdata
+
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
 from Products.Silva.transform.renderer.xsltrendererbase import XSLTTransformer
