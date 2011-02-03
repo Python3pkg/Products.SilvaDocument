@@ -55,7 +55,6 @@ kupucontent = grok.PageTemplate("""
       tal:attributes="href string:${view/root_url}/globals/frontend.css" />
 <link type="text/css" rel="stylesheet"
       tal:attributes="href string:${view/root_url}/globals/kupu.css" />
-<link type="text/css" rel="stylesheet" href="override_editor.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="docref" tal:attributes="content view/docref" />
 <tal:metadata tal:replace="structure view/metadata" />
