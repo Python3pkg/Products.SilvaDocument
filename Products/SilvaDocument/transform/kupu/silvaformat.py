@@ -406,9 +406,10 @@ class table(SilvaElement):
     def compute_aligns_relwidths(self):
         """ return a list with the alignments """
         infos = str(self.attr.column_info).split(' ')
-        aligns = [(self.alignmapping.has_key(i[0]) and
-                        self.alignmapping[i[0]] or 'left')
-                    for i in infos]
+        mapping = self.alignmapping
+        aligns = [
+            (mapping[i[0]] if i[0] in mapping else 'left')
+            for i in infos if i]
         try:
             relwidths = [int(i[2:]) for i in infos]
         except ValueError:
