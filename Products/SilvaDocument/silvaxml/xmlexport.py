@@ -236,7 +236,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
         self.endElementNS(NS_SILVA_DOCUMENT, 'field')
 
     def get_columns_info(self, node):
-        columns = int(node.getAttribute('columns'))
+        try:
+            columns = int(node.getAttribute('columns'))
+        except ValueError:
+            return []
         if node.hasAttribute('column_info'):
             column_info = node.getAttribute('column_info')
         else:
@@ -244,7 +247,6 @@ class DocumentVersionProducer(SilvaBaseProducer):
             for i in range(columns):
                 result.append({'align': 'left', 'width': 1,
                                'html_width': '%s%%' % (100 / columns)})
-            node.REQUEST.set('columns_info', result)
             return result
 
         lookup = {'L': 'left', 'C': 'center', 'R': 'right'}
