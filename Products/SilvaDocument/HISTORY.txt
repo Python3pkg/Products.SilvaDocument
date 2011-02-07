@@ -1,12 +1,16 @@
 ChangeLog
 =========
 
-2.3.3 (unreleased)
+2.3.3 (2010-02-07)
 ------------------
 
-* ...
+* Fix handling code for tables.
 
-2.3.2 (2010/12/20)
+* Update custom attribute in kupu from silva_ to _silva_ (otherwise
+  they are discarded when copying/cuting and pasting in recent version
+  of Firefox.
+
+2.3.2 (2010-12-20)
 ------------------
 
 * Add support for strikethrough in Silva XML / kupu transformation.
@@ -14,7 +18,7 @@ ChangeLog
 * Update and improve code source rendering (including in case of
   errors).
 
-2.3.1 (2010/10/18)
+2.3.1 (2010-10-18)
 ------------------
 
 * Better support of broken references: You can create a new version of
@@ -24,7 +28,7 @@ ChangeLog
 
 * You can export in Silva XML broken references.
 
-2.3 (2010/07/16)
+2.3 (2010-07-16)
 ----------------
 
 * Remove form editor support and XMLWidgets renderer. The default renderer used
