@@ -76,6 +76,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
                         if target is not None:
                             href = absoluteURL(
                                 reference.target, settings.request)
+                            if IImage.providedBy(target):
+                                link_res = settings.options.get('image_link_res')
+                                if link_res:
+                                    href += '?' + link_res
                         else:
                             attributes['class'] = 'broken-link'
                     elif 'url' in attributes:
