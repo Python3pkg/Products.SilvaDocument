@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Silva.install import add_fss_directory_view
 from Products.SilvaDocument import Document
 
 
@@ -16,11 +15,7 @@ def configureAddables(root):
 
 
 def install(root):
-    # create the core views from filesystem
-    add_fss_directory_view(root.service_views,
-                           'SilvaDocument', __file__, 'views')
     # also register views
-    registerViews(root.service_view_registry)
     configureAddables(root)
 
     # security
@@ -38,26 +33,9 @@ def install(root):
 
 
 def uninstall(root):
-    unregisterViews(root.service_view_registry)
-    root.service_views.manage_delObjects(['SilvaDocument'])
-    # uninstall metadata mapping?
     root.service_containerpolicy.unregister('Silva Document')
 
 
 def is_installed(root):
-    return hasattr(root.service_views, 'SilvaDocument')
-
-
-def registerViews(reg):
-    """Register core views on registry.
-    """
-    # edit
-    reg.register('edit', 'Silva Document',
-                 ['edit', 'VersionedContent', 'Document'])
-
-
-def unregisterViews(reg):
-    """Unregister core views.
-    """
-    reg.unregister('edit', 'Silva Document')
+    return False
 

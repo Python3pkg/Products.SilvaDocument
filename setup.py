@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.4dev'
+version = '3.0dev'
 
 tests_require = [
     'Products.Silva [test]',
@@ -36,7 +36,6 @@ setup(name='Products.SilvaDocument',
         'Products.ParsedXML',
         'Products.Silva',
         'Products.SilvaExternalSources',
-        'Products.SilvaKupu',
         'Sprout',
         'five.grok',
         'setuptools',
