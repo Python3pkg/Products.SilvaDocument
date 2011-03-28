@@ -29,7 +29,7 @@ from Products.Silva import mangle
 
 from Products.Silva.ContentObjectFactoryRegistry import \
     contentObjectFactoryRegistry
-from Products.Silva.transform.renderer.xsltrendererbase import XSLTTransformer
+from Products.SilvaDocument.rendering.xsltrendererbase import XSLTTransformer
 
 # Silva Document
 from Products.SilvaDocument.transform.Transformer import EditorTransformer
