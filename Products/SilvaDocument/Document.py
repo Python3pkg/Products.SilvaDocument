@@ -23,8 +23,8 @@ from Products.ParsedXML.PrettyPrinter import _translateCdata as translateCdata
 
 # Silva
 from Products.Silva import SilvaPermissions
-from Products.Silva.VersionedContent import CatalogedVersionedContent
-from Products.Silva.Version import CatalogedVersion
+from Products.Silva.VersionedContent import VersionedContent
+from Products.Silva.Version import Version
 from Products.Silva import mangle
 
 from Products.Silva.ContentObjectFactoryRegistry import \
@@ -55,7 +55,7 @@ def remove_source_xml(xml):
     return re.sub('<[^>]*>(?i)(?m)', ' ', xml)
 
 
-class DocumentVersion(CatalogedVersion):
+class DocumentVersion(Version):
     """Silva Document version.
     """
     meta_type = "Silva Document Version"
@@ -65,7 +65,7 @@ class DocumentVersion(CatalogedVersion):
 
     manage_options = (
         {'label':'Edit',       'action':'manage_main'},
-        ) + CatalogedVersion.manage_options
+        ) + Version.manage_options
 
     def __init__(self, id):
         super(DocumentVersion, self).__init__(id)
@@ -147,7 +147,7 @@ class DocumentVersion(CatalogedVersion):
 InitializeClass(DocumentVersion)
 
 
-class Document(CatalogedVersionedContent):
+class Document(VersionedContent):
     __doc__ = _(
     """A Document is the basic unit of information in Silva. A document
         can &#8211; much like word processor documents &#8211; contain text,
