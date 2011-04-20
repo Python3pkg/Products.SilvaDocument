@@ -13,7 +13,8 @@ from zope.publisher.browser import TestRequest
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.reference import get_content_id
 
-from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.SilvaDocument.testing import FunctionalLayer
+from Products.Silva.testing import TestCase
 from Products.Silva.tests.helpers import publish_object, open_test_file
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context

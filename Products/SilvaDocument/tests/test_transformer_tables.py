@@ -15,7 +15,8 @@ from silva.core.references.reference import get_content_id
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
-from Products.Silva.testing import FunctionalLayer, TestCase
+from Products.SilvaDocument.testing import FunctionalLayer
+from Products.Silva.testing import TestCase
 from Products.Silva.tests.helpers import open_test_file
 
 

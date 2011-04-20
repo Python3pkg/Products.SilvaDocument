@@ -358,7 +358,7 @@ class image(SilvaElement):
 
         if image and IImage.providedBy(image):
             attributes['width'], attributes['height'] = \
-                image.getDimensions(image.image)
+                image.get_dimensions(image.image)
 
         return html.img(self.content.convert(context), **attributes)
 

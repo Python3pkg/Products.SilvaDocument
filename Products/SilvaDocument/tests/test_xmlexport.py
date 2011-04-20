@@ -7,9 +7,9 @@ import unittest
 
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.silvaxml import xmlexport
-from Products.Silva.testing import FunctionalLayer
+from Products.SilvaDocument.testing import FunctionalLayer
 from Products.Silva.tests.helpers import open_test_file
-from Products.Silva.tests.test_xmlexport import SilvaXMLTestCase
+from Products.Silva.tests.test_xml_export import SilvaXMLTestCase
 
 from silva.core.references.interfaces import IReferenceService
 from zope import component

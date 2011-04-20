@@ -12,15 +12,16 @@ from silva.core.services.interfaces import ICatalogService
 
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
 from Products.SilvaDocument.transform.base import LINK_REFERENCE_TAG
-from Products.SilvaMetadata.interfaces import IMetadataService
 
+from Products.SilvaDocument.testing import FunctionalLayer
 from Products.Silva.tests.helpers import open_test_file
-from Products.Silva.tests.test_xmlimport import SilvaXMLTestCase
+from Products.Silva.tests.test_xml_import import SilvaXMLTestCase
 
 
 class XMLImportTestCase(SilvaXMLTestCase):
     """Test the import of a document.
     """
+    layer = FunctionalLayer
 
     def assertDocumentEqual(self, version, filename, **replaces):
         """Assert that the content of the version is the same than the

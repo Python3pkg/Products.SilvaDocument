@@ -6,9 +6,10 @@ import unittest
 
 from zope.publisher.browser import TestRequest
 
+from Products.Silva.testing import TestCase
 from Products.Silva.tests.helpers import open_test_file
-from Products.Silva.testing import FunctionalLayer, TestCase
 from Products.SilvaDocument.Document import DocumentHTML
+from Products.SilvaDocument.testing import FunctionalLayer
 
 
 class XSLTRenderingTestCase(TestCase):

@@ -14,7 +14,6 @@ from zope.event import notify
 
 from AccessControl import ClassSecurityInfo
 from App.class_init import InitializeClass
-from Persistence import Persistent
 from Products.PageTemplates.PageTemplateFile import PageTemplateFile
 from zExceptions import InternalError
 
@@ -25,13 +24,8 @@ from Products.ParsedXML.PrettyPrinter import _translateCdata as translateCdata
 from Products.Silva import SilvaPermissions
 from Products.Silva.VersionedContent import VersionedContent
 from Products.Silva.Version import Version
-from Products.Silva import mangle
 
-from Products.Silva.ContentObjectFactoryRegistry import \
-    contentObjectFactoryRegistry
 from Products.SilvaDocument.rendering.xsltrendererbase import XSLTTransformer
-
-# Silva Document
 from Products.SilvaDocument.transform.Transformer import EditorTransformer
 from Products.SilvaDocument.transform.base import Context
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
@@ -39,7 +33,7 @@ from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument import externalsource
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import IContainerPolicy
+from silva.core.interfaces import IVersionManager
 from silva.core.views import views as silvaviews
 from zeam.form import silva as silvaforms
 
@@ -78,8 +72,9 @@ class DocumentVersion(Version):
     security.declareProtected(
         SilvaPermissions.AccessContentsInformation, 'fulltext')
     def fulltext(self):
-        """Return the content of this object without any xml"""
-        if self.version_status() == 'unapproved':
+        """Return the content of this object without any xml for cataloging.
+        """
+        if IVersionManager(self).get_status() == 'unapproved':
             return ''
         return [
             self.get_content().getId(),
@@ -249,34 +244,3 @@ class DocumentView(silvaviews.View):
     def render(self):
         return DocumentHTML.transform(self.content, self.request)
 
-
-class SilvaDocumentPolicy(Persistent):
-
-    grok.implements(IContainerPolicy)
-
-    def createDefaultDocument(self, container, title):
-        factory = container.manage_addProduct['SilvaDocument']
-        factory.manage_addDocument('index', title)
-
-
-def document_factory(self, id, title, body):
-    """Add a Document."""
-    if not mangle.Id(self, id).isValid():
-        return
-    obj = Document(id).__of__(self)
-    version = DocumentVersion('0').__of__(self)
-    obj._setObject('0', version)
-    obj.create_version('0', None, None)
-    version = obj.get_editable()
-    version.content.manage_edit(body)
-
-    return obj
-
-def _should_create_document(id, ct, body):
-    rightct = (ct in ['application/x-silva-document-xml'])
-    rightext = id.endswith('.slv')
-    return rightct or rightext
-
-contentObjectFactoryRegistry.registerFactory(
-    document_factory,
-    _should_create_document)

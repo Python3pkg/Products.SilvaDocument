@@ -7,7 +7,7 @@ import unittest
 from zope.interface.verify import verifyObject
 
 from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
-from Products.Silva.testing import FunctionalLayer
+from Products.SilvaDocument.testing import FunctionalLayer
 
 
 class DocumentTestCase(unittest.TestCase):
