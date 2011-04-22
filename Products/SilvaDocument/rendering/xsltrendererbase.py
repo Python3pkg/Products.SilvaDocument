@@ -7,12 +7,7 @@ from lxml import etree
 import os
 import threading
 
-from five import grok
-from silva.core.interfaces import IXMLSource
-from zope.component import getMultiAdapter
-
-from AccessControl import ClassSecurityInfo
-from App.class_init import InitializeClass
+from Products.Silva.silvaxml import xmlexport
 
 
 class ImportResolver(etree.Resolver):
@@ -60,8 +55,11 @@ class XSLTTransformer(object):
             self.__local.stylesheet = etree.XSLT(xslt_doc)
         return self.__local.stylesheet
 
-    def transform(self, context, request):
-        source = getMultiAdapter((context, request), IXMLSource).get_XML()
+    def transform(self, context, request, options={}):
+        settings = xmlexport.ExportSettings(request=request, options=options)
+        settings.setVersion(xmlexport.PREVIEWABLE_VERSION)
+        settings.setExternalRendering(True)
+        source, info = xmlexport.exportToString(context, settings)
         return self.transform_xml(source)
 
     def transform_xml(self, text):
@@ -71,16 +69,3 @@ class XSLTTransformer(object):
         if result.startswith('<!DOCTYPE'):
             result = result[result.find('>')+1:].strip()
         return result
-
-
-class XSLTRendererBase(XSLTTransformer):
-    grok.baseclass()
-
-    security = ClassSecurityInfo()
-    security.declareObjectPublic()
-    security.declareProtected("View", "transform_xml")
-    security.declareProtected("View", "render")
-
-    render = XSLTTransformer.transform
-
-InitializeClass(XSLTRendererBase)
