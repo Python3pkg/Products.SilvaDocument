@@ -72,12 +72,15 @@ class DocumentVersionProducer(SilvaBaseProducer):
                         service = component.getUtility(IReferenceService)
                         reference = service.get_reference(
                             self.context, name=attributes['reference'])
-                        target = reference.target
-                        if target is not None:
-                            href = absoluteURL(
-                                reference.target, settings.request)
+                        if settings.options.get('upgrade30'):
+                            attributes['target'] = str(reference.target_id)
                         else:
-                            attributes['class'] = 'broken-link'
+                            target = reference.target
+                            if target is not None:
+                                href = absoluteURL(
+                                    reference.target, settings.request)
+                            else:
+                                attributes['class'] = 'broken-link'
                     elif 'url' in attributes:
                         document = self.context.get_content()
                         href = IPath(document).pathToUrlPath(
@@ -310,9 +313,12 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 service = component.getUtility(IReferenceService)
                 reference = service.get_reference(
                     self.context, name=attributes['reference'])
-                image = reference.target
-                if image is not None:
-                    rewritten_path = absoluteURL(image, settings.request)
+                if settings.options.get('upgrade30'):
+                    attributes['target'] = str(reference.target_id)
+                else:
+                    image = reference.target
+                    if image is not None:
+                        rewritten_path = absoluteURL(image, settings.request)
             else:
                 document = self.context.get_content()
                 image = document.unrestrictedTraverse(
