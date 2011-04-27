@@ -30,6 +30,8 @@ DocumentHTML = XSLTTransformer('document.xslt', __file__)
 
 
 def copy_annotation(source, target):
+    """Copy Zope annotations from source to target.
+    """
     source_anno = IAnnotations(source)
     target_anno = IAnnotations(target)
     for key in source_anno.keys():
@@ -37,17 +39,39 @@ def copy_annotation(source, target):
 
 
 def move_references(source, target):
+    """Move references from source to target.
+    """
     service = getUtility(IReferenceService)
     for reference in service.get_references_to(source):
         reference.set_target(target)
 
 
 def move_text(source, target):
+    """Move text content from old SilvaDocument source to a
+    silva.app.document target.
+    """
     request = TestRequest()
     html = DocumentHTML.transform(source, request, options={'upgrade30': True})
     transformer = getMultiAdapter((target, request), ITransformer)
     target.body.save_raw_text(transformer.data(
             'body', target.body, html, ISaveEditorFilter))
+
+
+def copy_version(source, target):
+    """Copy version document from source to target.
+    """
+    # Copy metadata content
+    copy_annotation(source, target)
+    # Move references
+    move_references(source, target)
+    # Move text
+    move_text(source, target)
+    # Publication datetime
+    info = IVersionManager(source)
+    target.set_unapproved_version_publication_datetime(
+        info.get_publication_datetime())
+    target.set_unapproved_version_expiration_datetime(
+        info.get_expiration_datetime())
 
 
 class DocumentUpgrader(BaseUpgrader):
@@ -72,23 +96,21 @@ class DocumentUpgrader(BaseUpgrader):
             # Move references
             move_references(doc, new_doc)
 
+            # Last closed version
+            last_closed_version = doc.get_last_closed()
+            if last_closed_version is not None:
+                new_last_closed_version = new_doc.get_editable()
+                copy_version(last_closed_version, new_last_closed_version)
+                new_doc.approve_version()
+                new_doc.close_version()
+                new_doc.create_copy()
+
             # Published version
             public_version = doc.get_viewable()
             if public_version is not None:
                 new_public_version = new_doc.get_editable()
-                # Copy metadata content
-                copy_annotation(public_version, new_public_version)
-                # Move references
-                move_references(public_version, new_public_version)
-                # Move text
-                move_text(public_version, new_public_version)
-                # Publication datetime
-                info = IVersionManager(public_version)
-                new_public_version.set_unapproved_version_publication_datetime(
-                    info.get_publication_datetime())
-                new_public_version.set_unapproved_version_expiration_datetime(
-                    info.get_expiration_datetime())
-                new_public_version.approve_version()
+                copy_version(public_version, new_public_version)
+                new_doc.approve_version()
 
             # Editable version
             editable_version = doc.get_editable()
@@ -96,18 +118,7 @@ class DocumentUpgrader(BaseUpgrader):
                 if public_version is not None:
                     new_doc.create_copy()
                 new_editable_version = new_doc.get_editable()
-                # Copy metadata content
-                copy_annotation(editable_version, new_editable_version)
-                # Move references
-                move_references(editable_version, new_editable_version)
-                # Move text
-                move_text(editable_version, new_editable_version)
-                # Publication datetime
-                info = IVersionManager(public_version)
-                new_editable_version.set_unapproved_version_publication_datetime(
-                    info.get_publication_datetime())
-                new_editable_version.set_unapproved_version_expiration_datetime(
-                    info.get_expiration_datetime())
+                copy_version(editable_version, new_editable_version)
 
             # Delete old document and rename content to final id
             parent.manage_delObjects([identifier])
