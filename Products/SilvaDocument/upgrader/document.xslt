@@ -49,6 +49,28 @@
     </a>
   </xsl:template>
 
+  <xsl:template match="doc:image">
+    <div class="image {@alignment}">
+      <img src="{@rewritten_path}" alt="{@title}">
+        <xsl:if test="@data-silva-reference">
+          <xsl:attribute name="data-silva-reference">
+            <xsl:value-of select="@data-silva-reference" />
+          </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@data-silva-target">
+          <xsl:attribute name="data-silva-target">
+            <xsl:value-of select="@data-silva-target" />
+          </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@data-silva-href">
+          <xsl:attribute name="data-silva-href">
+            <xsl:value-of select="@data-silva-href" />
+          </xsl:attribute>
+        </xsl:if>
+      </img>
+    </div>
+  </xsl:template>
+
   <xsl:template match="/">
     <xsl:apply-templates />
   </xsl:template>

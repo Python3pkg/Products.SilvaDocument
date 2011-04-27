@@ -322,24 +322,29 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 service = component.getUtility(IReferenceService)
                 reference = service.get_reference(
                     self.context, name=attributes['reference'])
+                image = reference.target
                 if settings.options.get('upgrade30'):
-                    attributes['target'] = str(reference.target_id)
-                else:
-                    image = reference.target
-                    if image is not None:
-                        rewritten_path = absoluteURL(image, settings.request)
+                    attributes['data-silva-target'] = str(reference.target_id)
+                    attributes['data-silva-reference'] = reference.tags[1]
+                    reference.tags[0] = u"body image"
+                    reference._p_changed = True
+                elif image is not None:
+                    rewritten_path = absoluteURL(image, settings.request)
             else:
                 document = self.context.get_content()
                 image = document.unrestrictedTraverse(
                     attributes['path'].split('/'), None)
-                if image is not None:
+                if settings.options.get('upgrade30'):
+                    attributes['data-silva-src'] = attributes['path']
+                elif image is not None:
                     path = IPath(document)
                     rewritten_path = path.pathToUrlPath(attributes['path'])
-            if not rewritten_path:
-                site = IVirtualSite(settings.request)
-                rewritten_path = site.get_root_url() + \
-                    "/++resource++Products.SilvaDocument/broken-link.jpg"
-            attributes['rewritten_path'] = rewritten_path
+            if not settings.options.get('upgrade30'):
+                if not rewritten_path:
+                    site = IVirtualSite(settings.request)
+                    rewritten_path = site.get_root_url() + \
+                        "/++resource++Products.SilvaDocument/broken-link.jpg"
+                attributes['rewritten_path'] = rewritten_path
 
             if image is not None:
                 if IImage.providedBy(image):
