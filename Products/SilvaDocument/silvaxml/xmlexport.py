@@ -73,7 +73,10 @@ class DocumentVersionProducer(SilvaBaseProducer):
                         reference = service.get_reference(
                             self.context, name=attributes['reference'])
                         if settings.options.get('upgrade30'):
-                            attributes['target'] = str(reference.target_id)
+                            attributes['data-silva-target'] = str(reference.target_id)
+                            attributes['data-silva-reference'] = reference.tags[1]
+                            reference.tags[0] = u"body link"
+                            reference._p_changed = True
                         else:
                             target = reference.target
                             if target is not None:
@@ -82,12 +85,18 @@ class DocumentVersionProducer(SilvaBaseProducer):
                             else:
                                 attributes['class'] = 'broken-link'
                     elif 'url' in attributes:
-                        document = self.context.get_content()
-                        href = IPath(document).pathToUrlPath(
-                            attributes['url'])
+                        if settings.options.get('upgrade30'):
+                            attributes['data-silva-href'] = attributes['url']
+                        else:
+                            document = self.context.get_content()
+                            href = IPath(document).pathToUrlPath(attributes['url'])
+
                     anchor = attributes.get('anchor', '')
                     if anchor:
-                        href += '#' + anchor
+                        if settings.options.get('upgrade30'):
+                            attributes['data-silva-anchor'] = anchor
+                        else:
+                            href += '#' + anchor
                     attributes['href'] = href
                 else:
                     if 'reference' in attributes:

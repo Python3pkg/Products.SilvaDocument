@@ -39,11 +39,16 @@ def copy_annotation(source, target):
 
 
 def move_references(source, target):
-    """Move references from source to target.
+    """Move references form source to target.
     """
     service = getUtility(IReferenceService)
-    for reference in service.get_references_to(source):
+    # list are here required. You cannot iterator and change the
+    # result at the same time, as they won't appear in the result any
+    # more and move eveything. :)
+    for reference in list(service.get_references_to(source)):
         reference.set_target(target)
+    for reference in list(service.get_references_from(source)):
+        reference.set_source(target)
 
 
 def move_text(source, target):
@@ -52,6 +57,9 @@ def move_text(source, target):
     """
     request = TestRequest()
     html = DocumentHTML.transform(source, request, options={'upgrade30': True})
+
+    move_references(source, target)
+
     transformer = getMultiAdapter((target, request), ITransformer)
     target.body.save_raw_text(transformer.data(
             'body', target.body, html, ISaveEditorFilter))
@@ -62,8 +70,6 @@ def copy_version(source, target):
     """
     # Copy metadata content
     copy_annotation(source, target)
-    # Move references
-    move_references(source, target)
     # Move text
     move_text(source, target)
     # Publication datetime

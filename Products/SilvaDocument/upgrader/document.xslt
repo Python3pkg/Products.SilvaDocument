@@ -17,6 +17,38 @@
     doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
     doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
 
+
+  <xsl:template match="doc:link" mode="text-content">
+    <a class="link" title="{@title}">
+      <xsl:if test="@target">
+        <xsl:attribute name="target">
+          <xsl:value-of select="@target" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@data-silva-anchor">
+        <xsl:attribute name="data-silva-anchor">
+          <xsl:value-of select="@data-silva-anchor" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@data-silva-reference">
+        <xsl:attribute name="data-silva-reference">
+          <xsl:value-of select="@data-silva-reference" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@data-silva-target">
+        <xsl:attribute name="data-silva-target">
+          <xsl:value-of select="@data-silva-target" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:if test="@data-silva-href">
+        <xsl:attribute name="data-silva-href">
+          <xsl:value-of select="@data-silva-href" />
+        </xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates mode="text-content" />
+    </a>
+  </xsl:template>
+
   <xsl:template match="/">
     <xsl:apply-templates />
   </xsl:template>
