@@ -2,8 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
-from cgi import escape
 from HTMLParser import HTMLParseError
+from cgi import escape
+import urllib
 
 from Products.Silva.silvaxml.xmlexport import (
     theXMLExporter, VersionedContentProducer, SilvaBaseProducer)
@@ -129,10 +130,41 @@ class DocumentVersionProducer(SilvaBaseProducer):
             self.render_html("".join(html))
             self.endElementNS(NS_SILVA_DOCUMENT, node.nodeName)
 
+        parameters = {}
+        parameters_type = {}
+        for child in node.childNodes:
+            if child.nodeName == 'parameter':
+                name = str(child.attributes['key'].value)
+                param_type = child.attributes.get('type')
+                if param_type:
+                    parameters_type[name]= str(param_type.value)
+                for grandChild in child.childNodes:
+                    text = ''
+                    if grandChild.nodeType == Node.TEXT_NODE:
+                        if grandChild.nodeValue:
+                            text = text + grandChild.nodeValue
+                    parameters[name] = text
+
         attributes = {}
-        settings = self.getSettings()
         if node.attributes:
             attributes = get_dict(node.attributes)
+
+        settings = self.getSettings()
+        if settings.options.get('upgrade30'):
+            value_settings = []
+            for name, value in parameters.items():
+                if parameters_type[name] == 'boolean':
+                    if value != u"1":
+                        value = u''
+                if parameters_type[name] == 'list':
+                    items = eval(value)
+                    for item in items:
+                        value_settings.append(('field_' + name, item),)
+                else:
+                    value_settings.append(('field_' + name, value),)
+
+            attributes['settings'] = urllib.urlencode(value_settings)
+
         self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
         try:
             # this can happen if no source was specified when the
@@ -144,7 +176,6 @@ class DocumentVersionProducer(SilvaBaseProducer):
         source = getSourceForId(self.context.get_content(), id)
 
         # Collect parameters
-        parameters = {}
         for child in node.childNodes:
             if child.nodeName == 'parameter':
                 attributes = {'key': child.attributes['key'].value}
@@ -153,12 +184,9 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     attributes['type'] = param_type.value
                 self.startElementNS(NS_SILVA_DOCUMENT, 'parameter', attributes)
                 for grandChild in child.childNodes:
-                    text = ''
                     if grandChild.nodeType == Node.TEXT_NODE:
                         if grandChild.nodeValue:
                             self.handler.characters(grandChild.nodeValue)
-                            text = text + grandChild.nodeValue
-                    parameters[str(child.attributes['key'].value)] = text
                 self.endElementNS(NS_SILVA_DOCUMENT, 'parameter')
 
         # Render source if needed

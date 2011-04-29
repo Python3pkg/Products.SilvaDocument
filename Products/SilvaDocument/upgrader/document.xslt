@@ -125,6 +125,16 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template match="doc:source">
+    <div class="external-source" data-silva-name="{@id}" data-silva-settings="{@settings}">
+      <xsl:apply-templates />
+    </div>
+  </xsl:template>
+
+  <xsl:template match="doc:rendered_html" />
+
+  <xsl:template match="doc:parameter" />
+
   <xsl:template match="/">
     <xsl:apply-templates />
   </xsl:template>
