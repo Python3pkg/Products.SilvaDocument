@@ -149,6 +149,12 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if node.attributes:
             attributes = get_dict(node.attributes)
 
+        try:
+            id = attributes['id']
+        except KeyError:
+            return
+        source = getSourceForId(self.context.get_content(), id)
+
         settings = self.getSettings()
         if settings.options.get('upgrade30'):
             value_settings = []
@@ -166,14 +172,6 @@ class DocumentVersionProducer(SilvaBaseProducer):
             attributes['settings'] = urllib.urlencode(value_settings)
 
         self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
-        try:
-            # this can happen if no source was specified when the
-            # element was added
-            id = attributes['id']
-        except KeyError:
-            source_error("no external source specified")
-            return
-        source = getSourceForId(self.context.get_content(), id)
 
         # Collect parameters
         for child in node.childNodes:
