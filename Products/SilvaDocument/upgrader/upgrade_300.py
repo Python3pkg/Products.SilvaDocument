@@ -26,7 +26,7 @@ logger = logging.getLogger('silva.core.upgrade')
 VERSION_A0='3.0a0'
 
 
-DocumentHTML = XSLTTransformer('document.xslt', __file__)
+UpgradeHTML = XSLTTransformer('upgrade_300.xslt', __file__)
 
 
 def copy_annotation(source, target):
@@ -56,7 +56,7 @@ def move_text(source, target):
     silva.app.document target.
     """
     request = TestRequest()
-    html = DocumentHTML.transform(source, request, options={'upgrade30': True})
+    html = UpgradeHTML.transform(source, request, options={'upgrade30': True})
 
     move_references(source, target)
 
