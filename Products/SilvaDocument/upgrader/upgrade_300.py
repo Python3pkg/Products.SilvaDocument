@@ -133,4 +133,4 @@ class DocumentUpgrader(BaseUpgrader):
         return doc
 
 
-document_upgrader = DocumentUpgrader(VERSION_A0, 'Silva Document')
+document_upgrader = DocumentUpgrader(VERSION_A0, 'Obsolete Document')

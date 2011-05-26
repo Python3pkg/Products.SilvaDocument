@@ -10,7 +10,7 @@ class IExtension(Interface):
 
 
 def configure_addables(root):
-    addables = ['Silva Document']
+    addables = ['Obsolete Document']
     new_addables = root.get_silva_addables_allowed_in_container()
     if new_addables is not None:
         for a in addables:
@@ -24,12 +24,12 @@ def install(root):
     configure_addables(root)
 
     # security
-    root.manage_permission('Add Silva Documents',
+    root.manage_permission('Add Obsolete Documents',
                            ['Author', 'Editor', 'ChiefEditor', 'Manager'])
-    root.manage_permission('Add Silva Document Versions',
+    root.manage_permission('Add Obsolete Document Versions',
                            ['Author', 'Editor', 'ChiefEditor', 'Manager'])
     root.service_metadata.addTypesMapping(
-        ('Silva Document Version', ), ('silva-content', 'silva-extra'))
+        ('Obsolete Document Version', ), ('silva-content', 'silva-extra'))
     root.service_metadata.initializeMetadata()
     alsoProvides(root, IExtension)
 

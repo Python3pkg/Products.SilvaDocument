@@ -5,6 +5,7 @@
 from HTMLParser import HTMLParseError
 from cgi import escape
 import urllib
+import logging
 
 from Products.Silva.silvaxml.xmlexport import (
     theXMLExporter, VersionedContentProducer, SilvaBaseProducer)
@@ -13,6 +14,7 @@ from Products.ParsedXML.DOM.Core import Node
 from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument import interfaces
 from Products.SilvaDocument.silvaxml import NS_SILVA_DOCUMENT
+from Products.SilvaDocument.upgrader.utils import resolve_path
 
 from five import grok
 from silva.core.interfaces import IImage
@@ -20,12 +22,13 @@ from silva.core.interfaces.adapters import IPath
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views.interfaces import IVirtualSite
 from sprout.saxext.html2sax import saxify
-from zope import component
+from zope.component import getUtility
 from zope.interface import Interface
+from zope.intid.interfaces import IIntIds
 from zope.traversing.browser import absoluteURL
 
-
 theXMLExporter.registerNamespace('doc', NS_SILVA_DOCUMENT)
+logger = logging.getLogger('SilvaDocument')
 
 
 class DocumentProducer(VersionedContentProducer):
@@ -70,7 +73,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                 if settings.externalRendering():
                     href = ''
                     if 'reference' in attributes:
-                        service = component.getUtility(IReferenceService)
+                        service = getUtility(IReferenceService)
                         reference = service.get_reference(
                             self.context, name=attributes['reference'])
                         if settings.options.get('upgrade30'):
@@ -159,16 +162,39 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if settings.options.get('upgrade30'):
             value_settings = []
             for name, value in parameters.items():
-                if parameters_type[name] == 'boolean':
-                    if value != u"1":
-                        value = u''
-                if parameters_type[name] == 'list':
-                    items = eval(value)
-                    for item in items:
-                        value_settings.append(('field_' + name, item),)
-                else:
-                    value_settings.append(('field_' + name, value),)
+                try:
+                    field = source.parameters.get_field(name)
+                    if field.meta_type == 'ReferenceField':
 
+                        content = self.context.get_content()
+                        content_path = '/'.join(content.getPhysicalPath())
+                        to_identifier = getUtility(IIntIds).register
+
+                        def resolve_location(location):
+                            target, fragment = resolve_path(location, content_path, content, 'code source')
+                            if target is not None:
+                                value_settings.append(('field_' + name, str(to_identifier(target))))
+
+                        is_multiple = field.get_value('multiple')
+                        if is_multiple:
+                            map(resolve_location, value.split(','))
+                        else:
+                            resolve_location(value)
+                    else:
+                        if parameters_type[name] == 'boolean':
+                            if value != u"1":
+                                value = u''
+                        if parameters_type[name] == 'list':
+                            items = eval(value)
+                            for item in items:
+                                value_settings.append(('field_' + name, unicode(item).encode('utf-8')),)
+                        else:
+                            value_settings.append(('field_' + name, unicode(value).encode('utf-8')),)
+
+                except AttributeError:
+                    logger.error("Parameter %s missing in code source %s" % (name, id))
+
+            logger.info(value_settings)
             attributes['settings'] = urllib.urlencode(value_settings)
 
         self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
@@ -345,7 +371,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
         if settings.externalRendering():
             rewritten_path = None
             if 'reference' in attributes:
-                service = component.getUtility(IReferenceService)
+                service = getUtility(IReferenceService)
                 reference = service.get_reference(
                     self.context, name=attributes['reference'])
                 image = reference.target

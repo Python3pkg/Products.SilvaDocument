@@ -35,8 +35,6 @@ from Products.SilvaDocument import externalsource
 from silva.core import conf as silvaconf
 from silva.core.interfaces import IVersionManager
 from silva.core.views import views as silvaviews
-from zeam.form import silva as silvaforms
-
 
 
 def remove_source_xml(xml):
@@ -52,7 +50,7 @@ def remove_source_xml(xml):
 class DocumentVersion(Version):
     """Silva Document version.
     """
-    meta_type = "Silva Document Version"
+    meta_type = "Obsolete Document Version"
     grok.implements(IDocumentVersion)
 
     security = ClassSecurityInfo()
@@ -153,12 +151,11 @@ class Document(VersionedContent):
     """)
     security = ClassSecurityInfo()
 
-    meta_type = "Silva Document"
+    meta_type = "Obsolete Document"
 
     grok.implements(IDocument)
 
     silvaconf.icon('www/silvadoc.gif')
-    silvaconf.priority(-6)
     silvaconf.versionClass(DocumentVersion)
 
     # ACCESSORS
@@ -225,13 +222,6 @@ class Document(VersionedContent):
 
 
 InitializeClass(Document)
-
-
-class DocumentAddForm(silvaforms.SMIAddForm):
-    """Add form for a document.
-    """
-    grok.context(IDocument)
-    grok.name(u'Silva Document')
 
 
 DocumentHTML = XSLTTransformer('document.xslt', __file__)
