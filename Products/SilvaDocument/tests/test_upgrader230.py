@@ -9,8 +9,8 @@ from Products.Silva.tests.helpers import open_test_file
 from Products.ParsedXML.ParsedXML import ParsedXML
 
 from silva.core.references.interfaces import IReferenceService
-from Products.SilvaDocument.upgrader.upgrade_230 import (
-    document_upgrader, split_path)
+from Products.SilvaDocument.upgrader.upgrade_230 import document_upgrader
+from Products.SilvaDocument.upgrader.utils import split_path
 from zope import component
 
 
