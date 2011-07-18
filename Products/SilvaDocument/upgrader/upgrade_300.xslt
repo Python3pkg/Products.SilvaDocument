@@ -140,7 +140,7 @@
   </xsl:template>
 
   <xsl:template match="doc:index" mode="text-content">
-    <a class="anchor" name="{@name}" title="{@title}"><xsl:value-of select="@title" /></a>
+    <a class="anchor" name="{@name}" title="{@title}"></a>
   </xsl:template>
 
   <xsl:template match="silva:silva_document">
