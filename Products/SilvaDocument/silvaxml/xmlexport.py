@@ -160,7 +160,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
 
         settings = self.getSettings()
         if settings.options.get('upgrade30'):
-            value_settings = []
+            value_settings = [('source_failover', '1')]
             for name, value in parameters.items():
                 try:
                     field = source.parameters.get_field(name)
@@ -181,10 +181,11 @@ class DocumentVersionProducer(SilvaBaseProducer):
                         else:
                             resolve_location(value)
                     else:
-                        if parameters_type[name] == 'boolean':
+                        parameter_type = parameters_type.get(name)
+                        if parameter_type == 'boolean':
                             if value != u"1":
                                 value = u''
-                        if parameters_type[name] == 'list':
+                        if parameter_type == 'list':
                             items = eval(value)
                             for item in items:
                                 value_settings.append(('field_' + name, unicode(item).encode('utf-8')),)
@@ -192,7 +193,7 @@ class DocumentVersionProducer(SilvaBaseProducer):
                             value_settings.append(('field_' + name, unicode(value).encode('utf-8')),)
 
                 except AttributeError:
-                    logger.error("Parameter %s missing in code source %s" % (name, id))
+                    logger.error("parameter %s missing in source %s" % (name, id))
 
             logger.info(value_settings)
             attributes['settings'] = urllib.urlencode(value_settings)

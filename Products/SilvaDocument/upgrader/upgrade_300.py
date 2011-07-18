@@ -7,6 +7,7 @@ import copy
 import logging
 
 from Acquisition import aq_parent
+from DateTime import DateTime
 
 from silva.core.interfaces import IVersionManager
 from silva.core.editor.transform.interfaces import ISaveEditorFilter
@@ -65,7 +66,7 @@ def move_text(source, target):
             'body', target.body, html, ISaveEditorFilter))
 
 
-def copy_version(source, target):
+def copy_version(source, target, ensure=False):
     """Copy version document from source to target.
     """
     # Copy metadata content
@@ -74,8 +75,11 @@ def copy_version(source, target):
     move_text(source, target)
     # Publication datetime
     info = IVersionManager(source)
+    publication_datetime = info.get_publication_datetime()
+    if publication_datetime is None and ensure:
+        publication_datetime = DateTime()
     target.set_unapproved_version_publication_datetime(
-        info.get_publication_datetime())
+        publication_datetime)
     target.set_unapproved_version_expiration_datetime(
         info.get_expiration_datetime())
 
@@ -106,7 +110,7 @@ class DocumentUpgrader(BaseUpgrader):
             last_closed_version = doc.get_last_closed()
             if last_closed_version is not None:
                 new_last_closed_version = new_doc.get_editable()
-                copy_version(last_closed_version, new_last_closed_version)
+                copy_version(last_closed_version, new_last_closed_version, True)
                 new_doc.approve_version()
                 new_doc.close_version()
                 new_doc.create_copy()
@@ -115,7 +119,7 @@ class DocumentUpgrader(BaseUpgrader):
             public_version = doc.get_viewable()
             if public_version is not None:
                 new_public_version = new_doc.get_editable()
-                copy_version(public_version, new_public_version)
+                copy_version(public_version, new_public_version, True)
                 new_doc.approve_version()
 
             # Editable version
