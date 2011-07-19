@@ -6,7 +6,7 @@
 import copy
 import logging
 
-from Acquisition import aq_parent
+from Acquisition import aq_parent, aq_base
 from DateTime import DateTime
 
 from silva.core.interfaces import IVersionManager
@@ -20,6 +20,7 @@ from zope.publisher.browser import TestRequest
 
 from Products.SilvaDocument.interfaces import IDocument
 from Products.SilvaDocument.rendering.xsltrendererbase import XSLTTransformer
+from Products.Silva.Membership import noneMember
 
 logger = logging.getLogger('silva.core.upgrade')
 
@@ -33,6 +34,8 @@ UpgradeHTML = XSLTTransformer('upgrade_300.xslt', __file__)
 def copy_annotation(source, target):
     """Copy Zope annotations from source to target.
     """
+    # Metadata and subscriptions are stored as annotations. This
+    # migrates them.
     source_anno = IAnnotations(source)
     target_anno = IAnnotations(target)
     for key in source_anno.keys():
@@ -82,6 +85,13 @@ def copy_version(source, target, ensure=False):
         publication_datetime)
     target.set_unapproved_version_expiration_datetime(
         info.get_expiration_datetime())
+    # Copy last author information
+    user = aq_base(source.sec_get_last_author_info())
+    if user is not noneMember:
+        target._last_author_userid = user.id
+        target._last_author_info = user
+    # Copy creator information
+    target._owner = getattr(aq_base(source), '_owner', None)
 
 
 class DocumentUpgrader(BaseUpgrader):
