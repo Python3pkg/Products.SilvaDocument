@@ -20,7 +20,7 @@ from zope.publisher.browser import TestRequest
 
 from Products.SilvaDocument.interfaces import IDocument
 from Products.SilvaDocument.rendering.xsltrendererbase import XSLTTransformer
-from Products.Silva.Membership import noneMember
+from Products.Silva.Membership import NoneMember
 
 logger = logging.getLogger('silva.core.upgrade')
 
@@ -87,7 +87,7 @@ def copy_version(source, target, ensure=False):
         info.get_expiration_datetime())
     # Copy last author information
     user = aq_base(source.sec_get_last_author_info())
-    if user is not noneMember:
+    if not isinstance(user, NoneMember):
         target._last_author_userid = user.id
         target._last_author_info = user
     # Copy creator information
