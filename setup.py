@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.3.3'
+version = '2.3.4'
 
 tests_require = [
     'Products.Silva [test]',
