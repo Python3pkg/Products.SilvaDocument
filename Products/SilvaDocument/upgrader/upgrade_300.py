@@ -98,9 +98,16 @@ class DocumentUpgrader(BaseUpgrader):
     """We convert a old SilvaDocument to a new one.
     """
 
+    def create_document(self, parent, identifier, title):
+        factory = parent.manage_addProduct['silva.app.document']
+        factory.manage_addDocument(identifier, title)
+
+    def copy_version(self, source, target, ensure=False):
+        copy_version(source, target, ensure=ensure)
+
     def upgrade(self, doc):
         if IDocument.providedBy(doc):
-            logger.info(u'upgrading document in: %s', content_path(doc))
+            logger.info(u'upgrading HTML content in: %s', content_path(doc))
             # ID + Title
             identifier = doc.id
             title = doc.get_title()
@@ -108,8 +115,7 @@ class DocumentUpgrader(BaseUpgrader):
 
             # Create a new doccopy the annotation
             tmp_identifier = identifier + '__conv_silva30'
-            factory = parent.manage_addProduct['silva.app.document']
-            factory.manage_addDocument(tmp_identifier, title)
+            self.create_document(parent, tmp_identifier, title)
             new_doc = parent[tmp_identifier]
             # Copy annotation
             copy_annotation(doc, new_doc)
@@ -120,7 +126,8 @@ class DocumentUpgrader(BaseUpgrader):
             last_closed_version = doc.get_last_closed()
             if last_closed_version is not None:
                 new_last_closed_version = new_doc.get_editable()
-                copy_version(last_closed_version, new_last_closed_version, True)
+                self.copy_version(
+                    last_closed_version, new_last_closed_version, True)
                 new_doc.approve_version()
                 new_doc.close_version()
                 new_doc.create_copy()
@@ -129,7 +136,8 @@ class DocumentUpgrader(BaseUpgrader):
             public_version = doc.get_viewable()
             if public_version is not None:
                 new_public_version = new_doc.get_editable()
-                copy_version(public_version, new_public_version, True)
+                self.copy_version(
+                    public_version, new_public_version, True)
                 new_doc.approve_version()
 
             # Editable version
@@ -138,7 +146,8 @@ class DocumentUpgrader(BaseUpgrader):
                 if public_version is not None:
                     new_doc.create_copy()
                 new_editable_version = new_doc.get_editable()
-                copy_version(editable_version, new_editable_version)
+                self.copy_version(
+                    editable_version, new_editable_version)
 
             # Delete old document and rename content to final id
             parent.manage_delObjects([identifier])
