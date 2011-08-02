@@ -14,6 +14,8 @@ from silva.core.editor.transform.interfaces import ISaveEditorFilter
 from silva.core.editor.transform.interfaces import ITransformer
 from silva.core.references.interfaces import IReferenceService
 from silva.core.upgrade.upgrade import BaseUpgrader, content_path
+from silva.core.services.interfaces import ICataloging
+
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility, getMultiAdapter
 from zope.publisher.browser import TestRequest
@@ -129,7 +131,9 @@ class DocumentUpgrader(BaseUpgrader):
                 self.copy_version(
                     last_closed_version, new_last_closed_version, True)
                 new_doc.approve_version()
-                new_doc.close_version()
+                if new_doc.get_public_version():
+                    # The version can already be expired
+                    new_doc.close_version()
                 new_doc.create_copy()
 
             # Published version
@@ -152,7 +156,9 @@ class DocumentUpgrader(BaseUpgrader):
             # Delete old document and rename content to final id
             parent.manage_delObjects([identifier])
             parent.manage_renameObject(tmp_identifier, identifier)
-            return parent[identifier]
+            new_doc = parent[identifier]
+            ICataloging(new_doc).reindex()
+            return new_doc
         return doc
 
 

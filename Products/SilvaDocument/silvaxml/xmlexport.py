@@ -161,39 +161,60 @@ class DocumentVersionProducer(SilvaBaseProducer):
         settings = self.getSettings()
         if settings.options.get('upgrade30'):
             value_settings = [('source_failover', '1')]
+            seen_fields = set()
+
+            def convert_parameter(name, value):
+                field = source.parameters.get_field(name)
+                if field.meta_type == 'ReferenceField':
+                    content = self.context.get_content()
+                    content_path = '/'.join(content.getPhysicalPath())
+                    to_identifier = getUtility(IIntIds).register
+
+                    def resolve_location(location):
+                        target, fragment = resolve_path(
+                            location, content_path, content, 'code source')
+                        if target is not None:
+                            value_settings.append(
+                                ('field_' + name,
+                                 str(to_identifier(target))))
+
+                    is_multiple = field.get_value('multiple')
+                    if is_multiple:
+                        map(resolve_location, value.split(','))
+                    else:
+                        resolve_location(value)
+                else:
+                    parameter_type = parameters_type.get(name)
+                    if parameter_type == 'boolean' or isinstance(value, bool):
+                        if value is True:
+                            value = u'1'
+                        elif value != u'1':
+                            value = u''
+                    if parameter_type == 'list' or isinstance(value, list):
+                        if isinstance(value, basestring):
+                            value = eval(value)
+                        for item in value:
+                            value_settings.append(
+                                ('field_' + name,
+                                 unicode(item).encode('utf-8')),)
+                    else:
+                        value_settings.append(
+                            ('field_' + name,
+                             unicode(value).encode('utf-8')),)
+
+            # Convert actual stored value
             for name, value in parameters.items():
                 try:
-                    field = source.parameters.get_field(name)
-                    if field.meta_type == 'ReferenceField':
-
-                        content = self.context.get_content()
-                        content_path = '/'.join(content.getPhysicalPath())
-                        to_identifier = getUtility(IIntIds).register
-
-                        def resolve_location(location):
-                            target, fragment = resolve_path(location, content_path, content, 'code source')
-                            if target is not None:
-                                value_settings.append(('field_' + name, str(to_identifier(target))))
-
-                        is_multiple = field.get_value('multiple')
-                        if is_multiple:
-                            map(resolve_location, value.split(','))
-                        else:
-                            resolve_location(value)
-                    else:
-                        parameter_type = parameters_type.get(name)
-                        if parameter_type == 'boolean':
-                            if value != u"1":
-                                value = u''
-                        if parameter_type == 'list':
-                            items = eval(value)
-                            for item in items:
-                                value_settings.append(('field_' + name, unicode(item).encode('utf-8')),)
-                        else:
-                            value_settings.append(('field_' + name, unicode(value).encode('utf-8')),)
-
+                    convert_parameter(name, value)
+                    seen_fields.add(name)
                 except AttributeError:
-                    logger.error("parameter %s missing in source %s" % (name, id))
+                    logger.error("parameter %s missing in source %s" % (
+                            name, id))
+
+            # For any field that was not seen, add the (required) default value
+            for field in source.parameters.get_fields():
+                if field.id not in seen_fields:
+                    convert_parameter(field.id, field.get_value('default'))
 
             logger.info(value_settings)
             attributes['settings'] = urllib.urlencode(value_settings)
