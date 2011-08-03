@@ -28,7 +28,7 @@ from zope.intid.interfaces import IIntIds
 from zope.traversing.browser import absoluteURL
 
 theXMLExporter.registerNamespace('doc', NS_SILVA_DOCUMENT)
-logger = logging.getLogger('SilvaDocument')
+logger = logging.getLogger('silva.old.document')
 
 
 class DocumentProducer(VersionedContentProducer):
@@ -160,6 +160,11 @@ class DocumentVersionProducer(SilvaBaseProducer):
 
         settings = self.getSettings()
         if settings.options.get('upgrade30'):
+
+            if source is None:
+                logger.error("missing source %s, skipping it." % id)
+                return
+
             value_settings = [('source_failover', '1')]
             seen_fields = set()
 
@@ -208,15 +213,18 @@ class DocumentVersionProducer(SilvaBaseProducer):
                     convert_parameter(name, value)
                     seen_fields.add(name)
                 except AttributeError:
-                    logger.error("parameter %s missing in source %s" % (
+                    logger.error(
+                        "parameter %s missing in source %s." % (
                             name, id))
 
             # For any field that was not seen, add the (required) default value
             for field in source.parameters.get_fields():
                 if field.id not in seen_fields:
+                    logger.info(
+                        "using default for parameter %s in source %s." % (
+                            field.id, id))
                     convert_parameter(field.id, field.get_value('default'))
 
-            logger.info(value_settings)
             attributes['settings'] = urllib.urlencode(value_settings)
 
         self.startElementNS(NS_SILVA_DOCUMENT, node.nodeName, attributes)
