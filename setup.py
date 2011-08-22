@@ -14,7 +14,7 @@ tests_require = [
 
 setup(name='Products.SilvaDocument',
       version=version,
-      description="Document content for Silva 2.x",
+      description="Document content for Silva 2.x.",
       long_description=open(os.path.join("Products", "SilvaDocument", "README.txt")).read() + "\n" +
                        open(os.path.join("Products", "SilvaDocument", "HISTORY.txt")).read(),
       classifiers=[

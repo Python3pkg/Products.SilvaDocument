@@ -5,9 +5,9 @@
 from silva.core import conf as silvaconf
 from Products.SilvaDocument import install
 
-silvaconf.extensionName('SilvaDocument')
-silvaconf.extensionTitle('Silva Obsolete Document')
-silvaconf.extensionDepends('SilvaExternalSources')
+silvaconf.extension_name('SilvaDocument')
+silvaconf.extension_title('Silva Obsolete Document')
+silvaconf.extension_depends(["Silva", "SilvaExternalSources"])
 
 
 
