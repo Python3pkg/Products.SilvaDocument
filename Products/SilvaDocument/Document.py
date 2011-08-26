@@ -33,7 +33,6 @@ from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument import externalsource
 
 from silva.core import conf as silvaconf
-from silva.core.interfaces import IVersionManager
 from silva.core.views import views as silvaviews
 
 
@@ -72,8 +71,6 @@ class DocumentVersion(Version):
     def fulltext(self):
         """Return the content of this object without any xml for cataloging.
         """
-        if IVersionManager(self).get_status() == 'unapproved':
-            return ''
         return [
             self.get_content().getId(),
             self.get_title(),
@@ -156,7 +153,7 @@ class Document(VersionedContent):
     grok.implements(IDocument)
 
     silvaconf.icon('www/silvadoc.gif')
-    silvaconf.versionClass(DocumentVersion)
+    silvaconf.version_class(DocumentVersion)
 
     # ACCESSORS
     security.declareProtected(SilvaPermissions.View, 'is_cacheable')

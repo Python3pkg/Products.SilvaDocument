@@ -1,3 +1,3 @@
 # XML Import/Export
 
-NS_SILVA_DOCUMENT = 'http://infrae.com/namespace/silva-document'
+NS_DOCUMENT_URI = 'http://infrae.com/namespace/silva-document'

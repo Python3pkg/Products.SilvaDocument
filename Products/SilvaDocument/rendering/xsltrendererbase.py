@@ -56,10 +56,11 @@ class XSLTTransformer(object):
         return self.__local.stylesheet
 
     def transform(self, context, request, options={}):
-        settings = xmlexport.ExportSettings(request=request, options=options)
+        settings = xmlexport.ExportSettings(options=options)
         settings.setVersion(xmlexport.PREVIEWABLE_VERSION)
         settings.setExternalRendering(True)
-        source, info = xmlexport.exportToString(context, settings)
+        source, info = xmlexport.exportToString(
+            context, settings=settings, request=request)
         return self.transform_xml(source)
 
     def transform_xml(self, text):

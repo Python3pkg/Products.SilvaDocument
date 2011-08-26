@@ -24,8 +24,6 @@
         <silva-extra:creator>
           author
         </silva-extra:creator>
-        <silva-extra:expirationtime>
-        </silva-extra:expirationtime>
         <silva-extra:hide_from_tocs>
           do not hide
         </silva-extra:hide_from_tocs>
@@ -39,8 +37,6 @@
         <silva-extra:modificationtime>
           YYYY-MM-DDTHH:MM:SS
         </silva-extra:modificationtime>
-        <silva-extra:publicationtime>
-        </silva-extra:publicationtime>
         <silva-extra:subject>
         </silva-extra:subject>
       </set>
@@ -82,8 +78,6 @@
               <silva-extra:creator>
                 author
               </silva-extra:creator>
-              <silva-extra:expirationtime>
-              </silva-extra:expirationtime>
               <silva-extra:hide_from_tocs>
                 do not hide
               </silva-extra:hide_from_tocs>
@@ -97,8 +91,6 @@
               <silva-extra:modificationtime>
                 YYYY-MM-DDTHH:MM:SS
               </silva-extra:modificationtime>
-              <silva-extra:publicationtime>
-              </silva-extra:publicationtime>
               <silva-extra:subject>
               </silva-extra:subject>
             </set>
@@ -112,7 +104,7 @@
           </doc:doc>
         </content>
 </document>
-  <image_asset id="torvald" web_crop="" web_format="JPEG" web_scale="100%">
+  <image id="torvald" web_crop="" web_format="JPEG" web_scale="100%">
    <metadata>
     <set id="silva-content">
      <silva-content:maintitle>
@@ -136,8 +128,6 @@
      <silva-extra:creator>
       author
      </silva-extra:creator>
-     <silva-extra:expirationtime>
-     </silva-extra:expirationtime>
      <silva-extra:hide_from_tocs>
       do not hide
      </silva-extra:hide_from_tocs>
@@ -151,16 +141,13 @@
      <silva-extra:modificationtime>
       YYYY-MM-DDTHH:MM:SS
      </silva-extra:modificationtime>
-     <silva-extra:publicationtime>
-     </silva-extra:publicationtime>
      <silva-extra:subject>
      </silva-extra:subject>
     </set>
    </metadata>
-   <asset_id>
-    1
-   </asset_id>
-  </image_asset>
+   <asset id="1">
+   </asset>
+  </image>
 </content>
  </folder>
 </silva>
