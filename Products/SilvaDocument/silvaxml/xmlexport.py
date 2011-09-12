@@ -14,10 +14,10 @@ from Products.SilvaDocument.i18n import translate as _
 from Products.SilvaDocument import interfaces
 from Products.SilvaDocument.silvaxml import NS_DOCUMENT_URI
 from Products.SilvaDocument.upgrader.utils import resolve_path
+from Products.SilvaDocument.interfaces import IPath
 
 from five import grok
 from silva.core.interfaces import IImage
-from silva.core.interfaces.adapters import IPath
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views.interfaces import IVirtualSite
 from sprout.saxext.html2sax import saxify

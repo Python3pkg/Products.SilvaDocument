@@ -16,8 +16,9 @@ __version__='$Revision: 1.26 $'
 import operator
 
 from Products.SilvaDocument.externalsource import getSourceForId
+from Products.SilvaDocument.interfaces import IPath
 from Products.SilvaDocument.transform.base import Element, Frag, Text
-from silva.core.interfaces import IPath, IImage
+from silva.core.interfaces import IImage
 from silva.core.views.interfaces import IVirtualSite
 from zope.traversing.browser import absoluteURL
 

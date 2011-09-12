@@ -33,7 +33,8 @@ from zExceptions import NotFound
 
 from Products.Silva.mangle import Path
 from Products.SilvaDocument.transform.base import Element, Text, Frag
-from silva.core.interfaces import IPath, IImage
+from silva.core.interfaces import IImage
+from Products.SilvaDocument.interfaces import IPath
 from silva.core.references.reference import get_content_from_id
 
 import silvaformat

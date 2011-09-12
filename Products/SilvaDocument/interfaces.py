@@ -3,6 +3,18 @@
 # $Id$
 
 from silva.core.interfaces import IVersionedContent, IVersion
+from zope import interface
+
+
+class IPath(interface.Interface):
+
+    def pathToUrl(path):
+        """Convert a physical path to a URL.
+        """
+
+    def urlToPath(url):
+        """Convert a HTTP URL to a physical path.
+        """
 
 
 class IDocument(IVersionedContent):
