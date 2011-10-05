@@ -31,7 +31,6 @@ from urlparse import urlparse
 
 from zExceptions import NotFound
 
-from Products.Silva.mangle import Path
 from Products.SilvaDocument.transform.base import Element, Text, Frag
 from silva.core.interfaces import IImage
 from Products.SilvaDocument.interfaces import IPath
@@ -45,6 +44,17 @@ DEBUG=0
 TOPLEVEL = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'h7', 'p', 'pre', 'table', 'img', 'ul', 'ol', 'dl', 'div']
 CONTAINERS = ['body', 'td', 'li', 'th'] # XXX should only contain li's that are descendant of nlist
 
+def Path(base_path, item_path):
+    """mangle path"""
+    i = 0
+    absolute = 0
+    for i in range(0, min(len(item_path), len(base_path))):
+        if item_path[i] != base_path[i]:
+            absolute = 1
+            break
+    if not absolute:
+        item_path = item_path[len(base_path):]
+    return item_path
 
 def is_table_or_source(node):
     """tell you if the node is a table or a code source.
