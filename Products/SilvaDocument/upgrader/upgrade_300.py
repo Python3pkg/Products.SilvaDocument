@@ -10,14 +10,12 @@ from Acquisition import aq_parent, aq_base
 from DateTime import DateTime
 
 from silva.core.interfaces import IVersionManager
-from silva.core.editor.transform.interfaces import ISaveEditorFilter
-from silva.core.editor.transform.interfaces import ITransformer
 from silva.core.references.interfaces import IReferenceService
 from silva.core.upgrade.upgrade import BaseUpgrader, content_path
 from silva.core.services.interfaces import ICataloging
 
 from zope.annotation.interfaces import IAnnotations
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getUtility
 from zope.publisher.browser import TestRequest
 
 from Products.SilvaDocument.interfaces import IDocument
@@ -66,9 +64,7 @@ def move_text(source, target):
 
     move_references(source, target)
 
-    transformer = getMultiAdapter((target, request), ITransformer)
-    target.body.save_raw_text(transformer.data(
-            'body', target.body, html, ISaveEditorFilter))
+    target.body.save(target, request, html)
 
 
 def copy_version(source, target, ensure=False):
