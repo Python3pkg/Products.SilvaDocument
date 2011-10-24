@@ -121,16 +121,18 @@ class DocumentUpgrader(BaseUpgrader):
             move_references(doc, new_doc)
 
             # Last closed version
-            last_closed_version = doc.get_last_closed()
-            if last_closed_version is not None:
-                new_last_closed_version = new_doc.get_editable()
-                self.copy_version(
-                    last_closed_version, new_last_closed_version, True)
-                new_doc.approve_version()
-                if new_doc.get_public_version():
-                    # The version can already be expired
-                    new_doc.close_version()
-                new_doc.create_copy()
+            last_closed_version_id = doc.get_last_closed_version()
+            if last_closed_version_id is not None:
+                last_closed_version = doc._getOb(last_closed_version_id, None)
+                if last_closed_version is not None:
+                    new_last_closed_version = new_doc.get_editable()
+                    self.copy_version(
+                        last_closed_version, new_last_closed_version, True)
+                    new_doc.approve_version()
+                    if new_doc.get_public_version():
+                        # The version can already be expired
+                        new_doc.close_version()
+                    new_doc.create_copy()
 
             # Published version
             public_version = doc.get_viewable()
