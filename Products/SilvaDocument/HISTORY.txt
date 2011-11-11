@@ -1,10 +1,11 @@
 ChangeLog
 =========
 
-2.3.2 (unreleased)
+3.0b1 (2011/11/11)
 ------------------
 
-* ...
+* Remove all edition support. This extension contains just upgraders
+  to ``silva.app.document``.
 
 2.3.1 (2010/10/18)
 ------------------

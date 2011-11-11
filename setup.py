@@ -6,7 +6,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.0dev'
+version = '3.0b1'
 
 tests_require = [
     'Products.Silva [test]',
@@ -38,19 +38,21 @@ setup(name='Products.SilvaDocument',
         'Products.SilvaExternalSources',
         'Sprout',
         'five.grok',
+        'lxml',
         'setuptools',
         'silva.core.conf',
         'silva.core.interfaces',
         'silva.core.references',
         'silva.core.services',
-        'silva.core.smi',
+        'silva.core.upgrade',
         'silva.core.views',
         'silva.translations',
-        'zeam.form.silva',
+        'zope.annotation',
         'zope.component',
         'zope.event',
         'zope.interface',
         'zope.intid',
+        'zope.publisher',
         'zope.traversing',
         ],
       tests_require = tests_require,
