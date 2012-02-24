@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2002-2011 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
@@ -18,6 +19,8 @@ from Products.Silva.tests.helpers import publish_object, open_test_file
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
+TEST_EXTERNAL_LINK_HTML = '<a _silva_href="%s" '\
+    'href="%s" target="_blank" title="">My link</a>'
 TEST_LINK_HTML = '<a _silva_reference="%s" href="reference" ' \
     '_silva_target="%d" target="_blank" title="">My link</a>'
 TEST_DOUBLE_LINK_HTML = '<p>'\
@@ -124,6 +127,36 @@ class KupuTransformerTestCase(TestCase):
             result,
             '<nlist type="disc"><li><p type="normal">foo</p>'
             '<list type="disc"><li>bar</li></list></li></nlist>')
+
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+        self.assertEqual(roundtrip, html)
+
+    def test_regular_external_link_round_trip(self):
+        """Save a regular link.
+        """
+        url = "http://infrae.com/"
+        html = TEST_EXTERNAL_LINK_HTML % (url, url)
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+        self.assertEqual(
+            result,
+            '<link url="%s" target="_blank" title="">My link</link>' % url)
+
+        roundtrip = self.transformer.to_target(
+            sourceobj=result, context=self.context).asBytes('utf-8')
+        self.assertEqual(roundtrip, html)
+
+    def test_unicode_external_link_round_trip(self):
+        """Save a regular link.
+        """
+        url = u"http://infrae.com/élémentaire".encode('utf-8')
+        html = TEST_EXTERNAL_LINK_HTML % (url, url)
+        result = self.transformer.to_source(
+            targetobj=html, context=self.context).asBytes('utf-8')
+        self.assertEqual(
+            result,
+            '<link url="%s" target="_blank" title="">My link</link>' % url)
 
         roundtrip = self.transformer.to_target(
             sourceobj=result, context=self.context).asBytes('utf-8')

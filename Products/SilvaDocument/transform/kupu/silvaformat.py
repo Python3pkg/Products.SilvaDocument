@@ -14,6 +14,7 @@ __author__='holger krekel <hpk@trillke.net>'
 __version__='$Revision: 1.26 $'
 
 import operator
+import logging
 
 from Products.SilvaDocument.externalsource import getSourceForId
 from Products.SilvaDocument.transform.base import Element, Frag, Text
@@ -24,6 +25,7 @@ from zope.traversing.browser import absoluteURL
 
 import htmlformat
 html = htmlformat
+logger = logging.getLogger('Products.SilvaDocument')
 
 from silva.translations import translate as _
 
@@ -276,13 +278,20 @@ class link(SilvaElement):
             reference_name = str(self.getattr('reference'))
             reference_name, reference = context.get_reference(
                 reference_name, read_only=True)
-            assert reference is not None, "Invalid reference"
+            if reference is None:
+                logger.error(
+                    u"Invalid reference link detected in document: %s" %
+                    context.model.absolute_url())
+                target_id = 0
+                reference_name = 'new'
+            else:
+                target_id = reference.target_id
             attributes = {
                 'href': 'reference',
                 'title': title,
                 'target': target,
                 '_silva_anchor': anchor,
-                '_silva_target': reference.target_id,
+                '_silva_target': target_id,
                 '_silva_reference': reference_name}
             if not reference.target_id:
                 attributes['class'] = 'broken-link'
@@ -292,8 +301,9 @@ class link(SilvaElement):
 
         path = ''
         if self.hasattr('url'):
-            url = self.getattr('url')
-            path = IPath(context.request).pathToUrlPath(str(url))
+            # URL can have unicode characters
+            url = unicode(self.getattr('url'))
+            path = IPath(context.request).pathToUrlPath(url)
         return html.a(
             self.content.convert(context),
             href=path,
@@ -329,25 +339,35 @@ class image(SilvaElement):
         attributes = {'alignment': self.getattr('alignment', 'default'),
                       'alt': self.getattr('title', '')}
 
+        def broken_image():
+            site = IVirtualSite(context.request)
+            attributes['src'] = site.get_root_url() + \
+                "/++resource++Products.SilvaDocument/broken-link.jpg"
+            attributes['alt'] = u'Referenced image is missing.'
+
         if self.hasattr('reference'):
             # We have a reference
             reference_name = str(self.getattr('reference'))
             reference_name, reference = context.get_reference(
                 reference_name, read_only=True)
-            assert reference is not None, "Invalid reference"
-            attributes['_silva_target'] = reference.target_id
-            attributes['_silva_reference'] = reference_name
-            image = reference.target
-            if image is not None:
-                attributes['src'] = absoluteURL(image, context.request)
+            if reference is None:
+                logger.error(
+                    u"Invalid image reference detected in document: %s",
+                    context.model.absolute_url())
+                attributes['_silva_target'] = '0'
+                attributes['_silva_reference'] = 'new'
+                broken_image()
             else:
-                site = IVirtualSite(context.request)
-                attributes['src'] = site.get_root_url() + \
-                    "/++resource++Products.SilvaDocument/broken-link.jpg"
-                attributes['alt'] = u'Referenced image is missing.'
+                attributes['_silva_target'] = reference.target_id
+                attributes['_silva_reference'] = reference_name
+                image = reference.target
+                if image is not None:
+                    attributes['src'] = absoluteURL(image, context.request)
+                else:
+                    broken_image()
         elif self.hasattr('path'):
-            path = self.getattr('path')
-            src = IPath(context.request).pathToUrlPath(str(path))
+            path = unicode(self.getattr('path'))
+            src = IPath(context.request).pathToUrlPath(path)
             attributes['src'] = src
             try:
                 image = context.model.unrestrictedTraverse(src.split('/'))
