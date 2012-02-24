@@ -1,10 +1,14 @@
 ChangeLog
 =========
 
-2.3.5 (unreleased)
+2.3.5 (2012-02-24)
 ------------------
 
-* ...
+* Support unicode in external link URLs. This was previously
+  generating some errors.
+
+* Be more flexible in case of broken reference, replace an assert by
+  an error in the logs, generate a broken image in the output.
 
 2.3.4 (2011-07-27)
 ------------------
