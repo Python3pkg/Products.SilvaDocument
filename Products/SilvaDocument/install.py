@@ -19,7 +19,7 @@ def configure_addables(root):
         root.set_silva_addables_allowed_in_container(new_addables)
 
 
-def install(root):
+def install(root, extension):
     # also register views
     configure_addables(root)
 
@@ -34,10 +34,10 @@ def install(root):
     alsoProvides(root, IExtension)
 
 
-def uninstall(root):
+def uninstall(root, extension):
     noLongerProvides(root, IExtension)
 
 
-def is_installed(root):
+def is_installed(root, extension):
     return IExtension.providedBy(root)
 
