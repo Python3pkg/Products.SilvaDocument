@@ -75,7 +75,7 @@ class CodeSourceXSLTRenderingTestCase(XSLTRenderingTestCase):
         """
         self.layer.login('manager')
         if parameters is None:
-            parameters = '##parameters=model,version,request'
+            parameters = '##parameters=model,version,REQUEST'
         script = self.root.codesource.script
         script.write('\n'.join((parameters, '', script_data, '')))
         self.layer.login('author')
