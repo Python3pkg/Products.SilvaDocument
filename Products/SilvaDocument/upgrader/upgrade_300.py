@@ -96,6 +96,9 @@ class DocumentUpgrader(BaseUpgrader):
     """We convert a old SilvaDocument to a new one.
     """
 
+    def validate(self, doc):
+        return IDocument.providedBy(doc)
+
     def create_document(self, parent, identifier, title):
         factory = parent.manage_addProduct['silva.app.document']
         factory.manage_addDocument(identifier, title)
@@ -104,63 +107,61 @@ class DocumentUpgrader(BaseUpgrader):
         copy_version(source, target, ensure=ensure)
 
     def upgrade(self, doc):
-        if IDocument.providedBy(doc):
-            logger.info(u'upgrading HTML content in: %s', content_path(doc))
-            # ID + Title
-            identifier = doc.id
-            title = doc.get_title()
-            parent = aq_parent(doc)
+        logger.info(u'upgrading HTML content in: %s', content_path(doc))
+        # ID + Title
+        identifier = doc.id
+        title = doc.get_title()
+        parent = aq_parent(doc)
 
-            # Create a new doccopy the annotation
-            tmp_identifier = identifier + '__conv_silva30'
-            self.create_document(parent, tmp_identifier, title)
-            new_doc = parent[tmp_identifier]
-            # Copy annotation
-            copy_annotation(doc, new_doc)
-            # Move references
-            move_references(doc, new_doc)
+        # Create a new doccopy the annotation
+        tmp_identifier = identifier + '__conv_silva30'
+        self.create_document(parent, tmp_identifier, title)
+        new_doc = parent[tmp_identifier]
+        # Copy annotation
+        copy_annotation(doc, new_doc)
+        # Move references
+        move_references(doc, new_doc)
 
-            # Last closed version
-            last_closed_version_id = doc.get_last_closed_version()
-            if last_closed_version_id is not None:
-                last_closed_version = doc._getOb(last_closed_version_id, None)
-                if last_closed_version is not None:
-                    new_last_closed_version = new_doc.get_editable()
-                    self.copy_version(
-                        last_closed_version, new_last_closed_version, True)
-                    new_doc.approve_version()
-                    if new_doc.get_public_version():
-                        # The version can already be expired
-                        new_doc.close_version()
-                    new_doc.create_copy()
-
-            # Published version
-            public_version = doc.get_viewable()
-            if public_version is not None:
-                new_public_version = new_doc.get_editable()
+        # Last closed version
+        last_closed_version_id = doc.get_last_closed_version()
+        if last_closed_version_id is not None:
+            last_closed_version = doc._getOb(last_closed_version_id, None)
+            if last_closed_version is not None:
+                new_last_closed_version = new_doc.get_editable()
                 self.copy_version(
-                    public_version, new_public_version, True)
+                    last_closed_version, new_last_closed_version, True)
                 new_doc.approve_version()
+                if new_doc.get_public_version():
+                    # The version can already be expired
+                    new_doc.close_version()
+                new_doc.create_copy()
 
-            # Editable version
-            editable_version = doc.get_editable()
-            if editable_version is not None:
-                if public_version is not None:
-                    new_doc.create_copy()
-                new_editable_version = new_doc.get_editable()
-                self.copy_version(
-                    editable_version, new_editable_version)
+        # Published version
+        public_version = doc.get_viewable()
+        if public_version is not None:
+            new_public_version = new_doc.get_editable()
+            self.copy_version(
+                public_version, new_public_version, True)
+            new_doc.approve_version()
 
-            # Delete old document and rename content to final id
-            manager = IOrderManager(parent)
-            position = manager.get_position(doc)
-            parent.manage_delObjects([identifier])
-            parent.manage_renameObject(tmp_identifier, identifier)
-            new_doc = parent[identifier]
-            manager.move(new_doc, position)
-            ICataloging(new_doc).reindex()
-            return new_doc
-        return doc
+        # Editable version
+        editable_version = doc.get_editable()
+        if editable_version is not None:
+            if public_version is not None:
+                new_doc.create_copy()
+            new_editable_version = new_doc.get_editable()
+            self.copy_version(
+                editable_version, new_editable_version)
+
+        # Delete old document and rename content to final id
+        manager = IOrderManager(parent)
+        position = manager.get_position(doc)
+        parent.manage_delObjects([identifier])
+        parent.manage_renameObject(tmp_identifier, identifier)
+        new_doc = parent[identifier]
+        manager.move(new_doc, position)
+        ICataloging(new_doc).reindex()
+        return new_doc
 
 
 document_upgrader = DocumentUpgrader(VERSION_A0, 'Obsolete Document')

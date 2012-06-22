@@ -5,7 +5,7 @@
 import logging
 
 from Products.SilvaDocument.upgrader.utils import resolve_path
-from Products.SilvaDocument.interfaces import IDocumentVersion
+from Products.SilvaDocument.interfaces import IDocument
 from Products.SilvaDocument.transform.base import Context
 from silva.core.upgrade.upgrade import BaseUpgrader, content_path
 
@@ -34,13 +34,25 @@ class DocumentUpgrader(BaseUpgrader):
     references where ever it is possible.
     """
 
-    def upgrade(self, obj):
-        if IDocumentVersion.providedBy(obj):
-            context = Context(obj, None)
-            dom = obj.content.documentElement
-            self.__upgrade_links(obj, context, dom)
-            self.__upgrade_images(obj, context, dom)
-        return obj
+    def validate(self, doc):
+        return IDocument.providedBy(doc)
+
+    def upgrade(self, doc):
+        # The 3.0 upgrader only upgrade the published, working and
+        # last closed version. Only apply this upgrader on thoses.
+        for version_id in [doc.get_public_version(),
+                           doc.get_unapproved_version(),
+                           doc.get_last_closed_version()]:
+            if version_id is None:
+                continue
+            version = doc._getOb(version_id, None)
+            if version is None or not hasattr(version, 'content'):
+                continue
+            dom = version.content.documentElement
+            context = Context(version, None)
+            self.__upgrade_links(version, context, dom)
+            self.__upgrade_images(version, context, dom)
+        return doc
 
     def __upgrade_links(self, version, context, dom):
         links = dom.getElementsByTagName('link')
@@ -143,7 +155,6 @@ class DocumentUpgrader(BaseUpgrader):
                 image.setAttribute('title', title)
 
 
-document_upgrader = DocumentUpgrader(
-    VERSION_B1, 'Obsolete Document Version')
+document_upgrader = DocumentUpgrader(VERSION_B1, 'Obsolete Document')
 
 
