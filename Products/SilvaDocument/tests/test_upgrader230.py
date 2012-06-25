@@ -58,7 +58,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     def test_upgrade_link(self):
         """Test upgrade of a simple link
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -67,15 +68,14 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="./publication">Publication link</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failUnless(link.hasAttribute('reference'))
-        self.failIf(link.hasAttribute('url'))
-        self.failIf(link.hasAttribute('anchor'))
+        self.assertTrue(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('anchor'))
         reference_name = link.getAttribute('reference')
         reference_service = component.getUtility(IReferenceService)
         reference = reference_service.get_reference(
@@ -85,7 +85,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     def test_upgrade_link_absolute_path(self):
         """Test upgrade of a simple link
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -94,15 +95,14 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="/root/publication">Publication link</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failUnless(link.hasAttribute('reference'))
-        self.failIf(link.hasAttribute('url'))
-        self.failIf(link.hasAttribute('anchor'))
+        self.assertTrue(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('anchor'))
         reference_name = link.getAttribute('reference')
         reference_service = component.getUtility(IReferenceService)
         reference = reference_service.get_reference(
@@ -112,7 +112,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     def test_upgrade_link_absolute_path_from_silva(self):
         """Test upgrade of a simple link
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -121,15 +122,14 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="/publication">Publication link</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failUnless(link.hasAttribute('reference'))
-        self.failIf(link.hasAttribute('url'))
-        self.failIf(link.hasAttribute('anchor'))
+        self.assertTrue(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('anchor'))
         reference_name = link.getAttribute('reference')
         reference_service = component.getUtility(IReferenceService)
         reference = reference_service.get_reference(
@@ -140,7 +140,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         """Test upgrade of a link that does not point to a Silva
         object, like for instance to the edit interface.
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -149,22 +150,22 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="./edit">SMI</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failIf(link.hasAttribute('reference'))
-        self.failUnless(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('reference'))
+        self.assertTrue(link.hasAttribute('url'))
         self.assertEquals(link.getAttribute('url'), './edit')
-        self.failIf(link.hasAttribute('anchor'))
+        self.assertFalse(link.hasAttribute('anchor'))
 
     def test_upgrade_link_too_high(self):
         """Test upgrade of a link that have an invalid relative path
         to something not possible (like too many ..).
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -173,22 +174,22 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="./../../../MANAGE">ME HACKER</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failIf(link.hasAttribute('reference'))
-        self.failUnless(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('reference'))
+        self.assertTrue(link.hasAttribute('url'))
         self.assertEquals(link.getAttribute('url'), './../../../MANAGE')
-        self.failIf(link.hasAttribute('anchor'))
+        self.assertFalse(link.hasAttribute('anchor'))
 
     def test_upgrade_link_only_anchor(self):
         """Test upgrade of a link that is only to an anchor on the
         same page
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -197,21 +198,21 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="#on_me">On me link</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failIf(link.hasAttribute('reference'))
-        self.failIf(link.hasAttribute('url'))
-        self.failUnless(link.hasAttribute('anchor'))
+        self.assertFalse(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('url'))
+        self.assertTrue(link.hasAttribute('anchor'))
         self.assertEqual(link.getAttribute('anchor'), 'on_me')
 
     def test_upgrade_link_with_anchor(self):
         """Test upgrade of a simple link to a content with an anchor
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -220,15 +221,14 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="./publication#on_me">On me link</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failUnless(link.hasAttribute('reference'))
-        self.failIf(link.hasAttribute('url'))
-        self.failUnless(link.hasAttribute('anchor'))
+        self.assertTrue(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('url'))
+        self.assertTrue(link.hasAttribute('anchor'))
         self.assertEqual(link.getAttribute('anchor'), 'on_me')
         reference_name = link.getAttribute('reference')
         reference_service = component.getUtility(IReferenceService)
@@ -239,7 +239,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     def test_upgrade_link_external(self):
         """Test upgrade of a link which is an external URL
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -248,22 +249,22 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="http://infrae.com#top">Infrae link</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failIf(link.hasAttribute('reference'))
-        self.failIf(link.hasAttribute('anchor'))
-        self.failUnless(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('anchor'))
+        self.assertTrue(link.hasAttribute('url'))
         url = link.getAttribute('url')
         self.assertEqual(url, 'http://infrae.com#top')
 
     def test_upgrade_link_broken(self):
         """Test upgrade of a link which is an external URL
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -272,21 +273,21 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <link target="_blank" url="./../publication/inexisting_document">Document link</link>
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failIf(link.hasAttribute('reference'))
-        self.failUnless(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('reference'))
+        self.assertTrue(link.hasAttribute('url'))
         url = link.getAttribute('url')
         self.assertEqual(url, './../publication/inexisting_document')
 
     def test_upgrade_image(self):
         """Test upgrade of an image, regular without any link
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -295,20 +296,19 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <image alignment="image-left" title="" width="600" image_title="Chocobo" rewritten_path="http://localhost/root/chocobo" target="_self" height="177" path="chocobo" link_to_hires="0" link="" />
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
         images = document_dom.getElementsByTagName('image')
         self.assertEqual(len(images), 1)
         image = images[0]
-        self.failUnless(image.hasAttribute('reference'))
-        self.failIf(image.hasAttribute('path'))
-        self.failIf(image.hasAttribute('rewritten_path'))
-        self.failIf(image.hasAttribute('target'))
-        self.failIf(image.hasAttribute('link'))
-        self.failIf(image.hasAttribute('link_to_hires'))
-        self.failIf(image.hasAttribute('silva_title'))
-        self.failUnless(image.hasAttribute('title'))
+        self.assertTrue(image.hasAttribute('reference'))
+        self.assertFalse(image.hasAttribute('path'))
+        self.assertFalse(image.hasAttribute('rewritten_path'))
+        self.assertFalse(image.hasAttribute('target'))
+        self.assertFalse(image.hasAttribute('link'))
+        self.assertFalse(image.hasAttribute('link_to_hires'))
+        self.assertFalse(image.hasAttribute('silva_title'))
+        self.assertTrue(image.hasAttribute('title'))
         self.assertEqual(image.getAttribute('title'), 'Chocobo')
         reference_name = image.getAttribute('reference')
         reference_service = component.getUtility(IReferenceService)
@@ -320,7 +320,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         """Test to upgrade an image that contains a link to a hires
         version of itself.
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -329,19 +330,18 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <image alignment="image-left" title="Big Chocobo" width="600" image_title="Chocobo" rewritten_path="http://localhost/root/chocobo" target="_self" height="177" path="chocobo" link_to_hires="1" link="" />
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
         reference_service = component.getUtility(IReferenceService)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
 
         # The converter added a link to the hires chocobo
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failUnless(link.hasAttribute('reference'))
-        self.failUnless(link.hasAttribute('target'))
+        self.assertTrue(link.hasAttribute('reference'))
+        self.assertTrue(link.hasAttribute('target'))
         self.assertEqual(link.getAttribute('target'), '_self')
-        self.failUnless(link.hasAttribute('title'))
+        self.assertTrue(link.hasAttribute('title'))
         self.assertEqual(link.getAttribute('title'), 'Big Chocobo')
         reference_name = link.getAttribute('reference')
         reference = reference_service.get_reference(
@@ -353,14 +353,14 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         self.assertEqual(len(images), 1)
         image = images[0]
         self.assertEqual(image.nodeName, 'image')
-        self.failUnless(image.hasAttribute('reference'))
-        self.failIf(image.hasAttribute('path'))
-        self.failIf(image.hasAttribute('rewritten_path'))
-        self.failIf(image.hasAttribute('target'))
-        self.failIf(image.hasAttribute('link'))
-        self.failIf(image.hasAttribute('link_to_hires'))
-        self.failIf(image.hasAttribute('silva_title'))
-        self.failUnless(image.hasAttribute('title'))
+        self.assertTrue(image.hasAttribute('reference'))
+        self.assertFalse(image.hasAttribute('path'))
+        self.assertFalse(image.hasAttribute('rewritten_path'))
+        self.assertFalse(image.hasAttribute('target'))
+        self.assertFalse(image.hasAttribute('link'))
+        self.assertFalse(image.hasAttribute('link_to_hires'))
+        self.assertFalse(image.hasAttribute('silva_title'))
+        self.assertTrue(image.hasAttribute('title'))
         self.assertEqual(image.getAttribute('title'), 'Chocobo')
         reference_name = image.getAttribute('reference')
         reference = reference_service.get_reference(
@@ -376,7 +376,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         """Test to upgrade an image that contains a link to a
         different content in Silva.
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -385,19 +386,18 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <image alignment="image-left" title="Pub" width="600" image_title="Chocobo" rewritten_path="http://localhost/root/chocobo" target="_blank" height="177" path="chocobo" link_to_hires="0" link="../publication" />
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
         reference_service = component.getUtility(IReferenceService)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
 
         # The converter added a link to the publication
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failUnless(link.hasAttribute('reference'))
-        self.failUnless(link.hasAttribute('target'))
+        self.assertTrue(link.hasAttribute('reference'))
+        self.assertTrue(link.hasAttribute('target'))
         self.assertEqual(link.getAttribute('target'), '_blank')
-        self.failUnless(link.hasAttribute('title'))
+        self.assertTrue(link.hasAttribute('title'))
         self.assertEqual(link.getAttribute('title'), 'Pub')
         reference_name = link.getAttribute('reference')
         reference = reference_service.get_reference(
@@ -409,14 +409,14 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         self.assertEqual(len(images), 1)
         image = images[0]
         self.assertEqual(image.nodeName, 'image')
-        self.failUnless(image.hasAttribute('reference'))
-        self.failIf(image.hasAttribute('path'))
-        self.failIf(image.hasAttribute('rewritten_path'))
-        self.failIf(image.hasAttribute('target'))
-        self.failIf(image.hasAttribute('link'))
-        self.failIf(image.hasAttribute('link_to_hires'))
-        self.failIf(image.hasAttribute('silva_title'))
-        self.failUnless(image.hasAttribute('title'))
+        self.assertTrue(image.hasAttribute('reference'))
+        self.assertFalse(image.hasAttribute('path'))
+        self.assertFalse(image.hasAttribute('rewritten_path'))
+        self.assertFalse(image.hasAttribute('target'))
+        self.assertFalse(image.hasAttribute('link'))
+        self.assertFalse(image.hasAttribute('link_to_hires'))
+        self.assertFalse(image.hasAttribute('silva_title'))
+        self.assertTrue(image.hasAttribute('title'))
         self.assertEqual(image.getAttribute('title'), 'Chocobo')
         reference_name = image.getAttribute('reference')
         reference = reference_service.get_reference(
@@ -432,6 +432,7 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         """Test to upgrade an missing image that contains a link to a
         different content in Silva.
         """
+        document = self.root.document
         editable = self.root.document.get_editable()
         editable.content = ParsedXML(
             'content',
@@ -441,19 +442,18 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <image alignment="image-left" title="Pub" width="600" image_title="Nothing" rewritten_path="http://localhost/root/nothing" target="_blank" height="177" path="nothing" link_to_hires="0" link="../publication" />
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
         reference_service = component.getUtility(IReferenceService)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
 
         # The converter added a link to the publication
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failUnless(link.hasAttribute('reference'))
-        self.failUnless(link.hasAttribute('target'))
+        self.assertTrue(link.hasAttribute('reference'))
+        self.assertTrue(link.hasAttribute('target'))
         self.assertEqual(link.getAttribute('target'), '_blank')
-        self.failUnless(link.hasAttribute('title'))
+        self.assertTrue(link.hasAttribute('title'))
         self.assertEqual(link.getAttribute('title'), 'Pub')
         reference_name = link.getAttribute('reference')
         reference = reference_service.get_reference(
@@ -465,18 +465,18 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         self.assertEqual(len(images), 1)
         image = images[0]
         self.assertEqual(image.nodeName, 'image')
-        self.failIf(image.hasAttribute('reference'))
-        self.failUnless(image.hasAttribute('path'))
+        self.assertFalse(image.hasAttribute('reference'))
+        self.assertTrue(image.hasAttribute('path'))
         self.assertEqual(image.getAttribute('path'), 'nothing')
-        self.failUnless(image.hasAttribute('rewritten_path'))
+        self.assertTrue(image.hasAttribute('rewritten_path'))
         self.assertEqual(
             image.getAttribute('rewritten_path'),
             'http://localhost/root/nothing')
-        self.failIf(image.hasAttribute('target'))
-        self.failIf(image.hasAttribute('link'))
-        self.failIf(image.hasAttribute('link_to_hires'))
-        self.failIf(image.hasAttribute('silva_title'))
-        self.failUnless(image.hasAttribute('title'))
+        self.assertFalse(image.hasAttribute('target'))
+        self.assertFalse(image.hasAttribute('link'))
+        self.assertFalse(image.hasAttribute('link_to_hires'))
+        self.assertFalse(image.hasAttribute('silva_title'))
+        self.assertTrue(image.hasAttribute('title'))
         self.assertEqual(image.getAttribute('title'), 'Nothing')
 
         # There is only one image in the document
@@ -489,7 +489,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         different missing content in Silva. This would be the same for
         link with external URLs.
         """
-        editable = self.root.document.get_editable()
+        document = self.root.document
+        editable = document.get_editable()
         editable.content = ParsedXML(
             'content',
             """<?xml version="1.0" encoding="utf-8"?>
@@ -498,21 +499,20 @@ class DocumentUpgraderTestCase(unittest.TestCase):
     <image alignment="image-left" title="Pub" width="600" image_title="Chocobo" rewritten_path="http://localhost/root/chocobo" target="_blank" height="177" path="chocobo" link_to_hires="0" link="foo_bar" />
   </p>
 </doc>""")
-        result = document_upgrader.upgrade(editable)
         reference_service = component.getUtility(IReferenceService)
-        self.assertEqual(result, editable)
+        self.assertEqual(document_upgrader.upgrade(document), document)
         document_dom = editable.content.documentElement
 
         # The converter added a link to the foo_bar URL.
         links = document_dom.getElementsByTagName('link')
         self.assertEqual(len(links), 1)
         link = links[0]
-        self.failIf(link.hasAttribute('reference'))
-        self.failUnless(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('reference'))
+        self.assertTrue(link.hasAttribute('url'))
         self.assertEqual(link.getAttribute('url'), 'foo_bar')
-        self.failUnless(link.hasAttribute('target'))
+        self.assertTrue(link.hasAttribute('target'))
         self.assertEqual(link.getAttribute('target'), '_blank')
-        self.failUnless(link.hasAttribute('title'))
+        self.assertTrue(link.hasAttribute('title'))
         self.assertEqual(link.getAttribute('title'), 'Pub')
 
         # The image points to the chocobo
@@ -520,14 +520,14 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         self.assertEqual(len(images), 1)
         image = images[0]
         self.assertEqual(image.nodeName, 'image')
-        self.failUnless(image.hasAttribute('reference'))
-        self.failIf(image.hasAttribute('path'))
-        self.failIf(image.hasAttribute('rewritten_path'))
-        self.failIf(image.hasAttribute('target'))
-        self.failIf(image.hasAttribute('link'))
-        self.failIf(image.hasAttribute('link_to_hires'))
-        self.failIf(image.hasAttribute('silva_title'))
-        self.failUnless(image.hasAttribute('title'))
+        self.assertTrue(image.hasAttribute('reference'))
+        self.assertFalse(image.hasAttribute('path'))
+        self.assertFalse(image.hasAttribute('rewritten_path'))
+        self.assertFalse(image.hasAttribute('target'))
+        self.assertFalse(image.hasAttribute('link'))
+        self.assertFalse(image.hasAttribute('link_to_hires'))
+        self.assertFalse(image.hasAttribute('silva_title'))
+        self.assertTrue(image.hasAttribute('title'))
         self.assertEqual(image.getAttribute('title'), 'Chocobo')
         reference_name = image.getAttribute('reference')
         reference = reference_service.get_reference(

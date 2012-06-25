@@ -43,11 +43,11 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertItemsEqual(self.root.folder.objectIds(), ['document'])
 
         document = self.root.folder.document
-        self.failUnless(IDocument.providedBy(document))
+        self.assertTrue(IDocument.providedBy(document))
 
         version = document.get_editable()
-        self.failIf(version is None)
-        self.failUnless(IDocumentVersion.providedBy(version))
+        self.assertFalse(version is None)
+        self.assertTrue(IDocumentVersion.providedBy(version))
         self.assertEqual(document.get_viewable(), None)
         self.assertEqual(version.get_title(), u'Previewing a document')
 
@@ -67,8 +67,10 @@ class XMLImportTestCase(SilvaXMLTestCase):
         # Test the document have been indexed
         catalog = getUtility(ICatalogService)
         results = catalog(silvamaintitle=u"previewing document")
-        self.assertEqual(len(results), 1)
-        self.assertEqual(results[0].getObject(), version)
+        self.assertItemsEqual(
+            map(lambda r: r.getPath(), results),
+            ['/root/folder/document',
+             '/root/folder/document/0'])
 
     def test_document_link(self):
         """Try to import a document that contains a link.
@@ -79,11 +81,11 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         document = self.root.folder.document
         link = self.root.folder.site
-        self.failUnless(IDocument.providedBy(document))
+        self.assertTrue(IDocument.providedBy(document))
 
         version = document.get_viewable()
-        self.failIf(version is None)
-        self.failUnless(IDocumentVersion.providedBy(version))
+        self.assertFalse(version is None)
+        self.assertTrue(IDocumentVersion.providedBy(version))
         self.assertEqual(document.get_editable(), None)
         self.assertEqual(version.get_title(), u'Cool site')
 
@@ -91,7 +93,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         # Hopefully there is only one link in the document so this
         # should match the only link we have
         reference = service.get_reference(version, LINK_REFERENCE_TAG)
-        self.failIf(reference is None)
+        self.assertFalse(reference is None)
         self.assertItemsEqual(
             list(service.get_references_from(version)), [reference])
         self.assertEqual(reference.target, link)
@@ -118,11 +120,11 @@ class XMLImportTestCase(SilvaXMLTestCase):
 
         document = self.root.folder.document
         image = self.root.folder.pictures.chocobo
-        self.failUnless(IDocument.providedBy(document))
+        self.assertTrue(IDocument.providedBy(document))
 
         version = document.get_viewable()
-        self.failIf(version is None)
-        self.failUnless(IDocumentVersion.providedBy(version))
+        self.assertFalse(version is None)
+        self.assertTrue(IDocumentVersion.providedBy(version))
         self.assertEqual(document.get_editable(), None)
         self.assertEqual(version.get_title(), u'New picture shoots')
 
@@ -130,7 +132,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         # Hopefully there is only one image in the document so this
         # should match the only link we have
         reference = service.get_reference(version, LINK_REFERENCE_TAG)
-        self.failIf(reference is None)
+        self.assertFalse(reference is None)
         self.assertItemsEqual(
             list(service.get_references_from(version)), [reference])
         self.assertEqual(reference.target, image)
