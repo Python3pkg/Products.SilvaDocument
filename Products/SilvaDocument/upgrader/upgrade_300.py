@@ -9,26 +9,24 @@ import logging
 from Acquisition import aq_parent, aq_base
 from DateTime import DateTime
 
+from silva.core.interfaces import IPostUpgrader
 from silva.core.interfaces import IVersionManager, IOrderManager
-from silva.core.references.interfaces import IReferenceService
-from silva.core.upgrade.upgrade import BaseUpgrader, content_path
-from silva.core.services.interfaces import ICataloging
 from silva.core.layout.interfaces import IMarkManager
+from silva.core.references.interfaces import IReferenceService
+from silva.core.services.interfaces import ICataloging
+from silva.core.upgrade.upgrade import BaseUpgrader, content_path
 
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
+from zope.interface import implements
 from zope.publisher.browser import TestRequest
 
 from Products.SilvaDocument.interfaces import IDocument
 from Products.SilvaDocument.rendering.xsltrendererbase import XSLTTransformer
 from Products.Silva.Membership import NoneMember
 
+VERSION_A1='3.0a1'
 logger = logging.getLogger('silva.core.upgrade')
-
-
-VERSION_A0='3.0a0'
-
-
 UpgradeHTML = XSLTTransformer('upgrade_300.xslt', __file__)
 
 
@@ -108,7 +106,7 @@ class DocumentUpgrader(BaseUpgrader):
         copy_version(source, target, ensure=ensure)
 
     def upgrade(self, doc):
-        logger.info(u'upgrading HTML content in: %s', content_path(doc))
+        logger.info(u'Upgrading HTML in: %s', content_path(doc))
         # ID + Title
         identifier = doc.id
         title = doc.get_title()
@@ -171,4 +169,33 @@ class DocumentUpgrader(BaseUpgrader):
         return new_doc
 
 
-document_upgrader = DocumentUpgrader(VERSION_A0, 'Obsolete Document')
+document_upgrader = DocumentUpgrader(VERSION_A1, 'Obsolete Document')
+
+
+class RootUpgrader(BaseUpgrader):
+
+    def upgrade(self, root):
+        # We need to install the new SilvaDocument, and Silva Obsolete
+        # Document for the document migration.
+        extensions = root.service_extensions
+        if not extensions.is_installed('silva.app.document'):
+            extensions.install('silva.app.document')
+        if not extensions.is_installed('SilvaDocument'):
+            extensions.install('SilvaDocument')
+        return root
+
+root_upgrader = RootUpgrader(VERSION_A1, 'Silva Root')
+
+
+class RootPostUpgrader(BaseUpgrader):
+    implements(IPostUpgrader)
+
+    def upgrade(self, root):
+        # We need to install the new SilvaDocument, and Silva Obsolete
+        # Document for the document migration.
+        extensions = root.service_extensions
+        if extensions.is_installed('SilvaDocument'):
+            extensions.uninstall('SilvaDocument')
+        return root
+
+root_post_upgrader = RootPostUpgrader(VERSION_A1, 'Silva Root')

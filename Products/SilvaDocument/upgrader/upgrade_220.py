@@ -38,7 +38,7 @@ class SilvaXMLUpgrader(BaseUpgrader):
     def _upgrade_citations(self, version, doc_el):
         cites = doc_el.getElementsByTagName('cite')
         if cites:
-            logger.info(u'upgrading CITE Elements in %s', content_path(version))
+            logger.info(u'Upgrading CITE Elements in %s', content_path(version))
         for c in cites:
             author = source = ''
             citation = []
@@ -86,7 +86,7 @@ class SilvaXMLUpgrader(BaseUpgrader):
     def _upgrade_tocs(self, version, doc_el):
         tocs = doc_el.getElementsByTagName('toc')
         if tocs:
-            logger.info('upgrading TOC Elements in: %s' %
+            logger.info('Upgrading TOC Elements in: %s' %
                         ('/'.join(version.getPhysicalPath())))
         path = '/'.join(version.get_container().getPhysicalPath())
         for t in tocs:
