@@ -13,6 +13,7 @@ from silva.core.interfaces import IVersionManager, IOrderManager
 from silva.core.references.interfaces import IReferenceService
 from silva.core.upgrade.upgrade import BaseUpgrader, content_path
 from silva.core.services.interfaces import ICataloging
+from silva.core.layout.interfaces import IMarkManager
 
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getUtility
@@ -153,13 +154,19 @@ class DocumentUpgrader(BaseUpgrader):
             self.copy_version(
                 editable_version, new_editable_version)
 
+        # Markers
+        new_mark_mg = IMarkManager(new_doc)
+        for marker in IMarkManager(doc).usedMarkers:
+            new_mark_mg.add_marker(marker)
+
         # Delete old document and rename content to final id
-        manager = IOrderManager(parent)
-        position = manager.get_position(doc)
+        order_mg = IOrderManager(parent)
+        position = order_mg.get_position(doc)
         parent.manage_delObjects([identifier])
         parent.manage_renameObject(tmp_identifier, identifier)
         new_doc = parent[identifier]
-        manager.move(new_doc, position)
+        if position > -1:
+            order_mg.move(new_doc, position)
         ICataloging(new_doc).reindex()
         return new_doc
 
