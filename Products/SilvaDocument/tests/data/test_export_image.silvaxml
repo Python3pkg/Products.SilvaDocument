@@ -24,9 +24,6 @@
         <silva-extra:creator>
           author
         </silva-extra:creator>
-        <silva-extra:hide_from_tocs>
-          do not hide
-        </silva-extra:hide_from_tocs>
         <silva-extra:keywords>
         </silva-extra:keywords>
         <silva-extra:language>
@@ -39,6 +36,11 @@
         </silva-extra:modificationtime>
         <silva-extra:subject>
         </silva-extra:subject>
+      </set>
+      <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+        <silvasettings:hide_from_tocs>
+          do not hide
+        </silvasettings:hide_from_tocs>
       </set>
     </metadata>
     <content>
@@ -78,9 +80,6 @@
               <silva-extra:creator>
                 author
               </silva-extra:creator>
-              <silva-extra:hide_from_tocs>
-                do not hide
-              </silva-extra:hide_from_tocs>
               <silva-extra:keywords>
               </silva-extra:keywords>
               <silva-extra:language>
@@ -94,6 +93,11 @@
               <silva-extra:subject>
               </silva-extra:subject>
             </set>
+            <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+              <silvasettings:hide_from_tocs>
+                do not hide
+              </silvasettings:hide_from_tocs>
+            </set>
           </metadata>
           <doc:doc>
             <doc:p>
@@ -103,51 +107,48 @@
             </doc:image>
           </doc:doc>
         </content>
-</document>
-  <image id="torvald" web_crop="" web_format="JPEG" web_scale="100%">
-   <metadata>
-    <set id="silva-content">
-     <silva-content:maintitle>
-      Torvald
-     </silva-content:maintitle>
-     <silva-content:shorttitle>
-     </silva-content:shorttitle>
-    </set>
-    <set id="silva-extra">
-     <silva-extra:comment>
-     </silva-extra:comment>
-     <silva-extra:contactemail>
-     </silva-extra:contactemail>
-     <silva-extra:contactname>
-     </silva-extra:contactname>
-     <silva-extra:content_description>
-     </silva-extra:content_description>
-     <silva-extra:creationtime>
-      YYYY-MM-DDTHH:MM:SS
-     </silva-extra:creationtime>
-     <silva-extra:creator>
-      author
-     </silva-extra:creator>
-     <silva-extra:hide_from_tocs>
-      do not hide
-     </silva-extra:hide_from_tocs>
-     <silva-extra:keywords>
-     </silva-extra:keywords>
-     <silva-extra:language>
-     </silva-extra:language>
-     <silva-extra:lastauthor>
-      author
-     </silva-extra:lastauthor>
-     <silva-extra:modificationtime>
-      YYYY-MM-DDTHH:MM:SS
-     </silva-extra:modificationtime>
-     <silva-extra:subject>
-     </silva-extra:subject>
-    </set>
-   </metadata>
-   <asset id="1">
-   </asset>
-  </image>
-</content>
- </folder>
+      </document>
+      <image id="torvald" web_crop="" web_format="JPEG" web_scale="100%">
+        <metadata>
+          <set id="silva-content">
+            <silva-content:maintitle>
+              Torvald
+            </silva-content:maintitle>
+            <silva-content:shorttitle>
+            </silva-content:shorttitle>
+          </set>
+          <set id="silva-extra">
+            <silva-extra:comment>
+            </silva-extra:comment>
+            <silva-extra:contactemail>
+            </silva-extra:contactemail>
+            <silva-extra:contactname>
+            </silva-extra:contactname>
+            <silva-extra:content_description>
+            </silva-extra:content_description>
+            <silva-extra:creationtime>
+              YYYY-MM-DDTHH:MM:SS
+            </silva-extra:creationtime>
+            <silva-extra:creator>
+              author
+            </silva-extra:creator>
+            <silva-extra:keywords>
+            </silva-extra:keywords>
+            <silva-extra:language>
+            </silva-extra:language>
+            <silva-extra:lastauthor>
+              author
+            </silva-extra:lastauthor>
+            <silva-extra:modificationtime>
+              YYYY-MM-DDTHH:MM:SS
+            </silva-extra:modificationtime>
+            <silva-extra:subject>
+            </silva-extra:subject>
+          </set>
+        </metadata>
+        <asset id="1">
+        </asset>
+      </image>
+    </content>
+  </folder>
 </silva>

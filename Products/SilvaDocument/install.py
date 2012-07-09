@@ -24,12 +24,15 @@ def install(root, extension):
     configure_addables(root)
 
     # security
-    root.manage_permission('Add Obsolete Documents',
-                           ['Author', 'Editor', 'ChiefEditor', 'Manager'])
-    root.manage_permission('Add Obsolete Document Versions',
-                           ['Author', 'Editor', 'ChiefEditor', 'Manager'])
+    root.manage_permission(
+        'Add Obsolete Documents',
+        ['Author', 'Editor', 'ChiefEditor', 'Manager'])
+    root.manage_permission(
+        'Add Obsolete Document Versions',
+        ['Author', 'Editor', 'ChiefEditor', 'Manager'])
     root.service_metadata.addTypesMapping(
-        ('Obsolete Document Version', ), ('silva-content', 'silva-extra'))
+        ('Obsolete Document Version', ),
+        ('silva-content', 'silva-extra', 'silva-settings'))
     root.service_metadata.initializeMetadata()
     alsoProvides(root, IExtension)
 
