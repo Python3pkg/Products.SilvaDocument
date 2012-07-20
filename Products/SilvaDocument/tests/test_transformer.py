@@ -9,12 +9,13 @@ from Acquisition import aq_chain
 
 from zope import component
 
+from silva.core.interfaces import IPublicationWorkflow
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.reference import get_content_id
 
 from Products.SilvaDocument.testing import FunctionalLayer
 from Products.Silva.testing import TestCase, TestRequest
-from Products.Silva.tests.helpers import publish_object, open_test_file
+from Products.Silva.tests.helpers import open_test_file
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
@@ -459,7 +460,7 @@ class KupuTransformerTestCase(TestCase):
         reference.add_tag(reference_name)
 
         # Step two, make a new copy
-        publish_object(self.root.document)
+        IPublicationWorkflow(self.root.document).publish()
         self.root.document.create_copy()
         new_version = self.root.document.get_editable()
         self.failIfEqual(version, new_version)

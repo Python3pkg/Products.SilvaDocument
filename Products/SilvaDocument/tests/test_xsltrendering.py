@@ -94,14 +94,6 @@ class CodeSourceXSLTRenderingTestCase(XSLTRenderingTestCase):
         self.set_source_script("return noexistant_var")
         self.assertRenderingEqual('test_xslt_source_broken.html')
 
-    def test_invalid_html_source(self):
-        """Test a source that generate a invalid XML as an
-        output. That should not break everything.
-        """
-        self.set_source_script(
-            "return '<I sucks so much that I can\\\'t write any XML at all'")
-        self.assertRenderingEqual('test_xslt_source_invalid_xml.html')
-
 
 def test_suite():
     suite = unittest.TestSuite()
