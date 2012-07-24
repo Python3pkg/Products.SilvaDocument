@@ -1,14 +1,21 @@
 
 import unittest
+
+from zope.component import getUtility
+
+from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.SilvaDocument.testing import Functional30Layer
 from Products.SilvaDocument.upgrader.upgrade_300 import document_upgrader
+from Products.Silva.testing import TestCase
+
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core.interfaces import IOrderManager
 from silva.core.layout.interfaces import IMarkManager
+from silva.core.references.interfaces import IReferenceService
 from silva.core.views.interfaces import IDisableBreadcrumbTag
 
 
-class UpgraderTestCase(unittest.TestCase):
+class UpgraderTestCase(TestCase):
     layer = Functional30Layer
 
     def setUp(self):
@@ -38,6 +45,83 @@ class UpgraderTestCase(unittest.TestCase):
         self.assertEqual(document.get_editable().get_title(), 'Information')
         self.assertEqual(upgraded.get_viewable(), None)
         self.assertEqual(document_upgrader.validate(upgraded), False)
+
+    def test_upgrade_simple_html(self):
+        """Upgrade a document that contains some text.
+        """
+        document = self.root.document
+        document.get_editable().content = ParsedXML(
+            'document',
+            """<?xml version="1.0" encoding="utf-8"?>
+<doc>
+   <p>This is a simple piece of text with two paragraph.</p>
+   <p>This is the second paragraph.</p>
+</doc>
+""")
+
+        # Upgrade the document
+        self.assertEqual(document_upgrader.validate(document), True)
+        self.assertNotEqual(document_upgrader.upgrade(document), document)
+
+        upgraded = self.root.document
+        self.assertTrue(IDocument.providedBy(upgraded))
+        self.assertNotEqual(upgraded.get_editable(), None)
+        version = upgraded.get_editable()
+        self.assertEqual(version.get_title(), 'Information')
+        self.assertXMLEqual(
+            str(version.body),
+            """
+   <p class="p">This is a simple piece of text with two paragraph.</p>
+   <p class="p">This is the second paragraph.</p>
+""")
+
+    def test_upgrade_html_with_link(self):
+        """Try to upgrade a link inside an HTML piece.
+        """
+        document = self.root.document
+        version = document.get_editable()
+        version.content = ParsedXML(
+            'document',
+            """<?xml version="1.0" encoding="utf-8"?>
+<doc>
+   <p>
+     This is a link with a Silva reference to the
+     <link target="_blank" reference="infrae-site" title="">Infrae site</link>.
+   </p>
+</doc>
+""")
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addLink(
+            'link', 'Link to Infrae', relative=False, url='http://infrae.com')
+        service = getUtility(IReferenceService)
+        reference = service.new_reference(version, name=u"document link")
+        reference.set_target(self.root.folder.link)
+        reference.add_tag(u"infrae-site")
+
+        # Upgrade the document
+        self.assertEqual(document_upgrader.validate(document), True)
+        self.assertNotEqual(document_upgrader.upgrade(document), document)
+
+        upgraded = self.root.document
+        self.assertTrue(IDocument.providedBy(upgraded))
+        self.assertNotEqual(upgraded.get_editable(), None)
+        version = upgraded.get_editable()
+        self.assertEqual(version.get_title(), 'Information')
+        self.assertXMLEqual(
+            str(version.body),
+            """
+<p class="p">
+  This is a link with a Silva reference to the
+  <a class="link" title="" target="_blank" reference="infrae-site">
+    Infrae site
+  </a>.
+</p>
+""")
+        reference = service.get_reference(version, 'infrae-site')
+        self.assertIsNot(reference.target, None)
+        self.assertEqual(reference.target, self.root.folder.link)
+        self.assertItemsEqual(
+            list(service.get_references_from(version)), [reference])
 
     def test_upgrade_customization_markers(self):
         """Upgrade a document with a marker.

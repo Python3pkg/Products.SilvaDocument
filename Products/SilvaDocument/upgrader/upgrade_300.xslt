@@ -17,6 +17,9 @@
       doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"
       doctype-public="-//W3C//DTD XHTML 1.0 Transitional//EN" />
 
+  <!-- Discard metadata and workflow information if present -->
+  <xsl:template match="silva:metadata" />
+  <xsl:template match="silva:workflow" />
 
   <xsl:template match="doc:link" mode="text-content">
     <a class="link" title="{@title}">
@@ -150,13 +153,5 @@
   <xsl:template match="doc:doc">
     <xsl:apply-templates />
   </xsl:template>
-
-  <xsl:template match="silva:metadata">
-    <h2 class="heading">
-      <xsl:value-of select="silva:set[@id='silva-content']/silva-content:maintitle" />
-    </h2>
-  </xsl:template>
-
-  <xsl:template match="silva:workflow" />
 
 </xsl:stylesheet>

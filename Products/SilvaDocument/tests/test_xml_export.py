@@ -33,9 +33,10 @@ class XMLExportTestCase(SilvaXMLTestCase):
         version = document.get_editable()
         version.content = ParsedXML(
             'document',
-            """<?xml version="1.0" encoding="utf-8"?><doc>
-            <node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<node2>boo</node2>
-            baz</node></doc>""")
+            """<?xml version="1.0" encoding="utf-8"?>
+<doc>
+   <node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<node2>boo</node2>baz</node>
+</doc>""")
 
         xml, info = xmlexport.exportToString(self.root.folder)
         self.assertExportEqual(xml, 'test_export_document.silvaxml', globals())
@@ -50,12 +51,16 @@ class XMLExportTestCase(SilvaXMLTestCase):
         version.content = ParsedXML(
             'document',
             """<?xml version="1.0" encoding="utf-8"?>
-           <doc><p>This is a reference to
-           <link target="_blank" reference="infrae-site" title="">Infrae</link>
-           </p></doc>""")
+<doc>
+   <p>
+      This is a reference to
+      <link target="_blank" reference="infrae-site" title="">Infrae</link>
+   </p>
+</doc>""")
 
         # Create a link that will be the target of our reference in our document
-        self.root.folder.manage_addProduct['Silva'].manage_addLink(
+        factory = self.root.folder.manage_addProduct['Silva']
+        factory.manage_addLink(
             'link', 'Link to Infrae', relative=False, url='http://infrae.com')
         service = component.getUtility(IReferenceService)
         reference = service.new_reference(version, name=u"document link")

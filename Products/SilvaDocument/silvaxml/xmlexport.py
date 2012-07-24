@@ -37,7 +37,8 @@ class DocumentProducer(xmlexport.SilvaVersionedContentProducer):
 
     def sax(self):
         self.startElement('document', {'id': self.context.id})
-        self.workflow()
+        if not self.getSettings().options.get('upgrade30'):
+            self.workflow()
         self.versions()
         self.endElement('document')
 
@@ -49,7 +50,8 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
 
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
-        self.metadata()
+        if not self.getSettings().options.get('upgrade30'):
+            self.metadata()
         node = self.context.content.documentElement.getDOMObj()
         self.sax_node(node)
         self.endElement('content')
