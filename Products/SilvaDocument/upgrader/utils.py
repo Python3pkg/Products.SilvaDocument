@@ -50,7 +50,7 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
     scheme, netloc, path, parameters, query, fragment = urlparse(url)
     if scheme:
         # This is a remote URL
-        logger.debug(u'found a remote link %s' % url)
+        #logger.debug(u'found a remote link %s' % url)
         return None, None
     if not path:
         # This is to an anchor in the document, nothing else
@@ -65,7 +65,7 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
                 path, context, context.get_root())
             target = path_root.unrestrictedTraverse(cleaned_path)
         except (AttributeError, KeyError, NotFound, TypeError):
-            logger.error(u'broken %s %s in %s' % (obj_type, url, content_path))
+            logger.error(u'Broken %s %s in %s' % (obj_type, url, content_path))
             return None, fragment
     if not ISilvaObject.providedBy(target):
         logger.error(
@@ -76,6 +76,6 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
         [o for o in aq_iter(target, error=RuntimeError)]
         return target, fragment
     except RuntimeError:
-        logger.error(u'invalid target %s %s in %s' %(
+        logger.error(u'Invalid target %s %s in %s' %(
                 obj_type, path, content_path))
         return None, fragment

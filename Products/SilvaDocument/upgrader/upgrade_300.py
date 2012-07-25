@@ -100,7 +100,7 @@ class DocumentUpgrader(BaseUpgrader):
 
     def create_document(self, parent, identifier, title):
         factory = parent.manage_addProduct['silva.app.document']
-        factory.manage_addDocument(identifier, title)
+        return factory.manage_addDocument(identifier, title)
 
     def copy_version(self, source, target, ensure=False):
         copy_version(source, target, ensure=ensure)
@@ -113,9 +113,8 @@ class DocumentUpgrader(BaseUpgrader):
         parent = aq_parent(doc)
 
         # Create a new doccopy the annotation
-        tmp_identifier = identifier + '__conv_silva30'
-        self.create_document(parent, tmp_identifier, title)
-        new_doc = parent[tmp_identifier]
+        new_doc = self.create_document(parent, identifier + 'conv__silva30', title)
+        new_identifier = new_doc.getId() # The id can have changed
         # Copy annotation
         copy_annotation(doc, new_doc)
         # Move references
@@ -161,7 +160,7 @@ class DocumentUpgrader(BaseUpgrader):
         order_mg = IOrderManager(parent)
         position = order_mg.get_position(doc)
         parent.manage_delObjects([identifier])
-        parent.manage_renameObject(tmp_identifier, identifier)
+        parent.manage_renameObject(new_identifier, identifier)
         new_doc = parent[identifier]
         if position > -1:
             order_mg.move(new_doc, position)
