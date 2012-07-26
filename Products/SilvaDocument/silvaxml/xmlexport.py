@@ -172,7 +172,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
             def convert_parameter(name, value):
                 field = source.parameters.get_field(name)
                 if field.meta_type in set([
-                        'ListField', 'RadioField',
+                        'ListField', 'RadioField', 'ReferenceField',
                         'MultiCheckBoxField', 'MultiListField']):
                     value_settings.append(
                         ('field_' + name + '_novalidate', '1'))
@@ -220,16 +220,18 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                     seen_fields.add(name)
                 except AttributeError:
                     logger.error(
-                        "parameter %s missing in source %s." % (
+                        "Parameter %s missing in source %s." % (
                             name, id))
 
             # For any field that was not seen, add the (required) default value
             for field in source.parameters.get_fields():
                 if field.id not in seen_fields:
-                    logger.info(
-                        "using default for parameter %s in source %s." % (
-                            field.id, id))
-                    convert_parameter(field.id, field.get_value('default'))
+                    default_value = field.get_value('default')
+                    if default_value is not None:
+                        logger.warn(
+                            "Using default for parameter %s in source %s." % (
+                                field.id, id))
+                        convert_parameter(field.id, default_value)
 
             attributes['settings'] = urllib.urlencode(value_settings)
 
