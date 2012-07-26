@@ -49,8 +49,8 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
     """
     url = url.strip()
     scheme, netloc, path, parameters, query, fragment = urlparse(url)
-    if scheme:
-        # This is a remote URL
+    if scheme or ' ' in url:
+        # This is a remote URL or invalid URL.
         #logger.debug(u'found a remote link %s' % url)
         return url, None, None
     if not path:
