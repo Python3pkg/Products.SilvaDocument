@@ -182,7 +182,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                     to_identifier = getUtility(IIntIds).register
 
                     def resolve_location(location):
-                        target, fragment = resolve_path(
+                        url, target, fragment = resolve_path(
                             location, content_path, content, 'code source')
                         if target is not None:
                             value_settings.append(
