@@ -56,7 +56,7 @@ class DocumentUpgraderTestCase(unittest.TestCase):
             (['publication', 'document'], self.root))
 
     def test_upgrade_link(self):
-        """Test upgrade of a simple link
+        """Test upgrade of a simple link.
         """
         document = self.root.document
         editable = document.get_editable()
@@ -66,6 +66,33 @@ class DocumentUpgraderTestCase(unittest.TestCase):
 <doc>
   <p type="normal">
     <link target="_blank" url="./publication">Publication link</link>
+  </p>
+</doc>""")
+        self.assertEqual(document_upgrader.upgrade(document), document)
+        document_dom = editable.content.documentElement
+        links = document_dom.getElementsByTagName('link')
+        self.assertEqual(len(links), 1)
+        link = links[0]
+        self.assertTrue(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('url'))
+        self.assertFalse(link.hasAttribute('anchor'))
+        reference_name = link.getAttribute('reference')
+        reference_service = component.getUtility(IReferenceService)
+        reference = reference_service.get_reference(
+            editable, name=reference_name)
+        self.assertEqual(reference.target, self.root.publication)
+
+    def test_upgrade_link_spaces(self):
+        """Test upgrade of a simple link with spaces in the path.
+        """
+        document = self.root.document
+        editable = document.get_editable()
+        editable.content = ParsedXML(
+            'content',
+            """<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <p type="normal">
+    <link target="_blank" url=" ./publication">Publication link</link>
   </p>
 </doc>""")
         self.assertEqual(document_upgrader.upgrade(document), document)
@@ -208,6 +235,30 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         self.assertTrue(link.hasAttribute('anchor'))
         self.assertEqual(link.getAttribute('anchor'), 'on_me')
 
+    def test_upgrade_link_only_anchor_spaces(self):
+        """Test upgrade of a link that is only to an anchor on the
+        same page
+        """
+        document = self.root.document
+        editable = document.get_editable()
+        editable.content = ParsedXML(
+            'content',
+            """<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <p type="normal">
+    <link target="_blank" url=" #on_me ">On me link</link>
+  </p>
+</doc>""")
+        self.assertEqual(document_upgrader.upgrade(document), document)
+        document_dom = editable.content.documentElement
+        links = document_dom.getElementsByTagName('link')
+        self.assertEqual(len(links), 1)
+        link = links[0]
+        self.assertFalse(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('url'))
+        self.assertTrue(link.hasAttribute('anchor'))
+        self.assertEqual(link.getAttribute('anchor'), 'on_me')
+
     def test_upgrade_link_with_anchor(self):
         """Test upgrade of a simple link to a content with an anchor
         """
@@ -247,6 +298,30 @@ class DocumentUpgraderTestCase(unittest.TestCase):
 <doc>
   <p type="normal">
     <link target="_blank" url="http://infrae.com#top">Infrae link</link>
+  </p>
+</doc>""")
+        self.assertEqual(document_upgrader.upgrade(document), document)
+        document_dom = editable.content.documentElement
+        links = document_dom.getElementsByTagName('link')
+        self.assertEqual(len(links), 1)
+        link = links[0]
+        self.assertFalse(link.hasAttribute('reference'))
+        self.assertFalse(link.hasAttribute('anchor'))
+        self.assertTrue(link.hasAttribute('url'))
+        url = link.getAttribute('url')
+        self.assertEqual(url, 'http://infrae.com#top')
+
+    def test_upgrade_link_external_spaces(self):
+        """Test upgrade of a link which is an external URL
+        """
+        document = self.root.document
+        editable = document.get_editable()
+        editable.content = ParsedXML(
+            'content',
+            """<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <p type="normal">
+    <link target="_blank" url=" http://infrae.com#top ">Infrae link</link>
   </p>
 </doc>""")
         self.assertEqual(document_upgrader.upgrade(document), document)

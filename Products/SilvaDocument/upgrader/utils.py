@@ -47,14 +47,15 @@ def split_path(path, context, root=None):
 def resolve_path(url, content_path, context, obj_type=u'link'):
     """Resolve path to an object or report an error.
     """
+    url = url.strip()
     scheme, netloc, path, parameters, query, fragment = urlparse(url)
     if scheme:
         # This is a remote URL
         #logger.debug(u'found a remote link %s' % url)
-        return None, None
+        return url, None, None
     if not path:
         # This is to an anchor in the document, nothing else
-        return None, fragment
+        return url, None, fragment
     try:
         cleaned_path, path_root = split_path(path, context)
         target = path_root.unrestrictedTraverse(cleaned_path)
@@ -65,17 +66,20 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
                 path, context, context.get_root())
             target = path_root.unrestrictedTraverse(cleaned_path)
         except (AttributeError, KeyError, NotFound, TypeError):
-            logger.error(u'Broken %s %s in %s' % (obj_type, url, content_path))
-            return None, fragment
+            logger.warn(
+                u'Cannot resolve %s %s in %s',
+                obj_type, url, content_path)
+            return url, None, fragment
     if not ISilvaObject.providedBy(target):
         logger.error(
-            u'%s %s did not resolve to a Silva content in %s' % (
-                obj_type, path, content_path))
-        return None, fragment
+            u'%s %s did not resolve to a Silva content in %s',
+            obj_type, path, content_path)
+        return url, None, fragment
     try:
         [o for o in aq_iter(target, error=RuntimeError)]
-        return target, fragment
+        return url, target, fragment
     except RuntimeError:
-        logger.error(u'Invalid target %s %s in %s' %(
-                obj_type, path, content_path))
-        return None, fragment
+        logger.error(
+            u'Invalid target %s %s in %s',
+            obj_type, path, content_path)
+        return url, None, fragment

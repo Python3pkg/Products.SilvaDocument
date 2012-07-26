@@ -65,11 +65,14 @@ class DocumentUpgrader(BaseUpgrader):
                 continue
             path = link.getAttribute('url')
             # Look for object
-            target, fragment = resolve_path(path, version_path, context.model)
+            url, target, fragment = resolve_path(
+                path, version_path, context.model)
             if fragment:
                 link.setAttribute('anchor', fragment)
                 link.removeAttribute('url')
             if target is None:
+                if not fragment:
+                    link.setAttribute('url', url)
                 continue
             build_reference(context, target, link)
             if not fragment:
@@ -106,7 +109,7 @@ class DocumentUpgrader(BaseUpgrader):
                 # Already a reference
                 continue
             path = image.getAttribute('path')
-            target, fragment = resolve_path(
+            url, target, fragment = resolve_path(
                 path, version_path, context.model, 'image')
             if target is not None:
                 # If the image target is found it is changed to a
@@ -130,7 +133,7 @@ class DocumentUpgrader(BaseUpgrader):
             if image.hasAttribute('link'):
                 link = image.getAttribute('link')
                 if link:
-                    link_target, fragment = resolve_path(
+                    link_url, link_target, fragment = resolve_path(
                         link, version_path, context.model)
                     if link_target is not None:
                         make_link(
@@ -138,7 +141,7 @@ class DocumentUpgrader(BaseUpgrader):
                     elif fragment:
                         make_link(image, '', title, window_target, fragment)
                     else:
-                        make_link(image, link, title, window_target)
+                        make_link(image, link_url, title, window_target)
                     link_set = True
                 image.removeAttribute('link')
             # Check for a link to high resolution version of the image
