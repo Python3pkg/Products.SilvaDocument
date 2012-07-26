@@ -8,6 +8,8 @@ import logging
 
 from Acquisition import aq_parent, aq_base
 from DateTime import DateTime
+from OFS.CopySupport import CopyError
+from zExceptions import BadRequest
 
 from silva.core.interfaces import IPostUpgrader
 from silva.core.interfaces import IVersionManager, IOrderManager
@@ -39,6 +41,11 @@ def copy_annotation(source, target):
     target_anno = IAnnotations(target)
     for key in source_anno.keys():
         target_anno[key] = copy.deepcopy(source_anno[key])
+    # Copy the old annotations to the version, it is possible we are
+    # upgrading a 2.1 version that is not yet upgraded.
+    old_annotations = getattr(aq_base(source), '_portal_annotations_', None)
+    if old_annotations is not None:
+        target._portal_annotations_ = old_annotations
 
 
 def move_references(source, target):
@@ -160,7 +167,19 @@ class DocumentUpgrader(BaseUpgrader):
         order_mg = IOrderManager(parent)
         position = order_mg.get_position(doc)
         parent.manage_delObjects([identifier])
-        parent.manage_renameObject(new_identifier, identifier)
+        try:
+            parent.manage_renameObject(new_identifier, identifier)
+        except CopyError:
+            try:
+                parent._checkId(identifier)
+            except BadRequest:
+                logger.error(
+                    u"Could not replace document with '%s' identifier, renaming it to '%s_changed'.",
+                    identifier, identifier)
+                identifier += '_changed'
+                parent.manage_renameObject(new_identifier, identifier)
+            else:
+                raise
         new_doc = parent[identifier]
         if position > -1:
             order_mg.move(new_doc, position)

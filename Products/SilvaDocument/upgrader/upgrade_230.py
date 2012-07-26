@@ -50,11 +50,11 @@ class DocumentUpgrader(BaseUpgrader):
                 continue
             dom = version.content.documentElement
             context = Context(version, None)
-            self.__upgrade_links(version, context, dom)
-            self.__upgrade_images(version, context, dom)
+            self._upgrade_links(version, context, dom)
+            self._upgrade_images(version, context, dom)
         return doc
 
-    def __upgrade_links(self, version, context, dom):
+    def _upgrade_links(self, version, context, dom):
         links = dom.getElementsByTagName('link')
         version_path = content_path(version)
         if links:
@@ -75,7 +75,7 @@ class DocumentUpgrader(BaseUpgrader):
             if not fragment:
                 link.removeAttribute('url')
 
-    def __upgrade_images(self, version, context, dom):
+    def _upgrade_images(self, version, context, dom):
         images = dom.getElementsByTagName('image')
         version_path = content_path(version)
 
