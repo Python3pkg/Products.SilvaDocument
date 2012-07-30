@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (c) 2009-2010 Infrae. All rights reserved.
 # See also LICENSE.txt
 # $Id$
@@ -286,6 +287,29 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         reference = reference_service.get_reference(
             editable, name=reference_name)
         self.assertEqual(reference.target, self.root.publication)
+
+    def test_upgrade_link_invalid(self):
+        """Test upgrade of a simple link with a completely invalid
+        URL as a link.
+        """
+        document = self.root.document
+        editable = document.get_editable()
+        editable.content = ParsedXML(
+            'content', u"""<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <p type="normal">
+    <link target="_blank" url="Aléatoire">On me link</link>
+  </p>
+</doc>""".encode('utf-8'))
+        self.assertEqual(document_upgrader.upgrade(document), document)
+        document_dom = editable.content.documentElement
+        links = document_dom.getElementsByTagName('link')
+        self.assertEqual(len(links), 1)
+        link = links[0]
+        self.assertTrue(link.hasAttribute('url'))
+        self.assertEqual(link.getAttribute('url'), u'Aléatoire')
+        self.assertFalse(link.hasAttribute('anchor'))
+        self.assertFalse(link.hasAttribute('reference'))
 
     def test_upgrade_link_external(self):
         """Test upgrade of a link which is an external URL

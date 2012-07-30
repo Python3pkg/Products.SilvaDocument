@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 import unittest
 
@@ -73,6 +74,35 @@ class UpgraderTestCase(TestCase):
             """
    <p class="p">This is a simple piece of text with two paragraph.</p>
    <p class="p">This is the second paragraph.</p>
+""")
+
+    def test_upgrade_unicode_html(self):
+        """Upgrade a document that contains some text.
+        """
+        document = self.root.document
+        document.get_editable().content = ParsedXML(
+            'document',
+            u"""<?xml version="1.0" encoding="utf-8"?>
+<doc>
+   <p>Il était une fois, un élève qui était allé à l'école étudier.</p>
+   <p>Étant content, il étudiat.</p>
+</doc>
+""".encode('utf-8'))
+
+        # Upgrade the document
+        self.assertEqual(document_upgrader.validate(document), True)
+        self.assertNotEqual(document_upgrader.upgrade(document), document)
+
+        upgraded = self.root.document
+        self.assertTrue(IDocument.providedBy(upgraded))
+        self.assertNotEqual(upgraded.get_editable(), None)
+        version = upgraded.get_editable()
+        self.assertEqual(version.get_title(), 'Information')
+        self.assertXMLEqual(
+            str(version.body),
+            """
+   <p class="p">Il &#233;tait une fois, un &#233;l&#232;ve qui &#233;tait all&#233; &#224; l'&#233;cole &#233;tudier.</p>
+   <p class="p">&#201;tant content, il &#233;tudiat.</p>
 """)
 
     def test_upgrade_html_with_link(self):
