@@ -172,7 +172,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
             def convert_parameter(name, value):
                 field = source.parameters.get_field(name)
                 if field.meta_type in set([
-                        'ListField', 'RadioField', 'ReferenceField',
+                        'ListField', 'RadioField',
                         'MultiCheckBoxField', 'MultiListField']):
                     value_settings.append(
                         ('field_' + name + '_novalidate', '1'))

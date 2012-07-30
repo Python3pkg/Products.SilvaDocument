@@ -113,7 +113,7 @@ class DocumentUpgrader(BaseUpgrader):
         copy_version(source, target, ensure=ensure)
 
     def upgrade(self, doc):
-        logger.info(u'Upgrading HTML in: %s', content_path(doc))
+        logger.info(u'Upgrading HTML in: %s.', content_path(doc))
         # ID + Title
         identifier = doc.id
         title = doc.get_title()
