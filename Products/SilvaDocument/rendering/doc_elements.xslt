@@ -17,7 +17,7 @@
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h3 class="heading"><xsl:apply-templates mode="text-content" /></h3>
+        <h2><xsl:apply-templates mode="text-content" /></h2>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -26,7 +26,7 @@
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h4 class="heading"><xsl:apply-templates mode="text-content" /></h4>
+        <h3><xsl:apply-templates mode="text-content" /></h3>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -35,7 +35,7 @@
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h5 class="heading"><xsl:apply-templates mode="text-content" /></h5>
+        <h4><xsl:apply-templates mode="text-content" /></h4>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -44,7 +44,7 @@
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h6 class="heading"><xsl:apply-templates mode="text-content" /></h6>
+        <h5><xsl:apply-templates mode="text-content" /></h5>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -53,7 +53,7 @@
     <xsl:choose>
       <xsl:when test="not(text()[normalize-space(.)] | *)" />
       <xsl:otherwise>
-        <h6 class="minor"><xsl:apply-templates mode="text-content" /></h6>
+        <h6><xsl:apply-templates mode="text-content" /></h6>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -61,7 +61,7 @@
   <xsl:template match="doc:p[@type]">
     <xsl:choose>
       <xsl:when test="./@type='normal'">
-        <p class="p"><xsl:apply-templates mode="text-content" /></p>
+        <p><xsl:apply-templates mode="text-content" /></p>
       </xsl:when>
       <xsl:otherwise>
         <p class="{@type}"><xsl:apply-templates mode="text-content" /></p>
@@ -70,7 +70,7 @@
   </xsl:template>
 
   <xsl:template match="doc:p[not(@type)]">
-    <p class="p"><xsl:apply-templates mode="text-content" /></p>
+    <p><xsl:apply-templates mode="text-content" /></p>
   </xsl:template>
 
   <xsl:template match="doc:list[@type='disc']">
@@ -138,7 +138,7 @@
   </xsl:template>
 
   <xsl:template match="doc:pre">
-    <pre class="pre"><xsl:apply-templates mode="pre" /></pre>
+    <pre><xsl:apply-templates mode="pre" /></pre>
   </xsl:template>
 
   <xsl:template match="doc:nlist[@type='disc']">
