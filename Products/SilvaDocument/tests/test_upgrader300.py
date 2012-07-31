@@ -72,8 +72,8 @@ class UpgraderTestCase(TestCase):
         self.assertXMLEqual(
             str(version.body),
             """
-   <p class="p">This is a simple piece of text with two paragraph.</p>
-   <p class="p">This is the second paragraph.</p>
+   <p>This is a simple piece of text with two paragraph.</p>
+   <p>This is the second paragraph.</p>
 """)
 
     def test_upgrade_unicode_html(self):
@@ -101,8 +101,8 @@ class UpgraderTestCase(TestCase):
         self.assertXMLEqual(
             str(version.body),
             """
-   <p class="p">Il &#233;tait une fois, un &#233;l&#232;ve qui &#233;tait all&#233; &#224; l'&#233;cole &#233;tudier.</p>
-   <p class="p">&#201;tant content, il &#233;tudiat.</p>
+   <p>Il &#233;tait une fois, un &#233;l&#232;ve qui &#233;tait all&#233; &#224; l'&#233;cole &#233;tudier.</p>
+   <p>&#201;tant content, il &#233;tudiat.</p>
 """)
 
     def test_upgrade_html_with_link(self):
@@ -140,7 +140,7 @@ class UpgraderTestCase(TestCase):
         self.assertXMLEqual(
             str(version.body),
             """
-<p class="p">
+<p>
   This is a link with a Silva reference to the
   <a class="link" title="" target="_blank" reference="infrae-site">
     Infrae site
