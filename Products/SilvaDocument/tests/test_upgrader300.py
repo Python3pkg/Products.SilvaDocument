@@ -55,8 +55,8 @@ class UpgraderTestCase(TestCase):
             'document',
             """<?xml version="1.0" encoding="utf-8"?>
 <doc>
-   <p>This is a simple piece of text with two paragraph.</p>
-   <p>This is the second paragraph.</p>
+   <p type="normal">This is a simple piece of text with two paragraph.</p>
+   <p type="lead">This is the second paragraph.</p>
 </doc>
 """)
 
@@ -73,7 +73,7 @@ class UpgraderTestCase(TestCase):
             str(version.body),
             """
    <p>This is a simple piece of text with two paragraph.</p>
-   <p>This is the second paragraph.</p>
+   <p class="lead">This is the second paragraph.</p>
 """)
 
     def test_upgrade_unicode_html(self):
@@ -84,8 +84,9 @@ class UpgraderTestCase(TestCase):
             'document',
             u"""<?xml version="1.0" encoding="utf-8"?>
 <doc>
-   <p>Il était une fois, un élève qui était allé à l'école étudier.</p>
-   <p>Étant content, il étudiat.</p>
+   <heading type="normal">Histoire d'un élève suisse</heading>
+   <p type="normal">Il était une fois, un élève qui était allé à l'école étudier.</p>
+   <p type="normal">Étant content, il étudiat.</p>
 </doc>
 """.encode('utf-8'))
 
@@ -101,6 +102,7 @@ class UpgraderTestCase(TestCase):
         self.assertXMLEqual(
             str(version.body),
             """
+   <h2>Histoire d'un &#233;l&#232;ve suisse</h2>
    <p>Il &#233;tait une fois, un &#233;l&#232;ve qui &#233;tait all&#233; &#224; l'&#233;cole &#233;tudier.</p>
    <p>&#201;tant content, il &#233;tudiat.</p>
 """)
