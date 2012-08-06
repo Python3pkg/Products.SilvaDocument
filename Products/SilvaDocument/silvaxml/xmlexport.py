@@ -163,7 +163,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
         if settings.options.get('upgrade30'):
 
             if source is None:
-                logger.error("missing source %s, skipping it." % id)
+                logger.error(u"Missing source %s, skipping it." % id)
                 return
 
             value_settings = []
@@ -221,7 +221,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                         seen_fields.add(name)
                     except AttributeError:
                         logger.error(
-                            "Parameter %s missing in source %s." % (
+                            u"Parameter %s missing in source %s." % (
                                 name, id))
 
                 # For any field that was not seen, add the (required)
