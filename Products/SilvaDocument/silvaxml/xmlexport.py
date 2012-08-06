@@ -213,25 +213,27 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                             ('field_' + name,
                              unicode(value).encode('utf-8')),)
 
-            # Convert actual stored value
-            for name, value in parameters.items():
-                try:
-                    convert_parameter(name, value)
-                    seen_fields.add(name)
-                except AttributeError:
-                    logger.error(
-                        "Parameter %s missing in source %s." % (
-                            name, id))
+            if source.parameters is not None:
+                # Convert actual stored value
+                for name, value in parameters.items():
+                    try:
+                        convert_parameter(name, value)
+                        seen_fields.add(name)
+                    except AttributeError:
+                        logger.error(
+                            "Parameter %s missing in source %s." % (
+                                name, id))
 
-            # For any field that was not seen, add the (required) default value
-            for field in source.parameters.get_fields():
-                if field.id not in seen_fields:
-                    default_value = field.get_value('default')
-                    if default_value is not None:
-                        logger.warn(
-                            "Using default for parameter %s in source %s." % (
-                                field.id, id))
-                        convert_parameter(field.id, default_value)
+                # For any field that was not seen, add the (required)
+                # default value
+                for field in source.parameters.get_fields():
+                    if field.id not in seen_fields:
+                        default_value = field.get_value('default')
+                        if default_value is not None:
+                            logger.warn(
+                                u"Using default for parameter %s in source %s." % (
+                                    field.id, id))
+                            convert_parameter(field.id, default_value)
 
             attributes['settings'] = urllib.urlencode(value_settings)
 
