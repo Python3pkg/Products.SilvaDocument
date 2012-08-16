@@ -91,7 +91,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                                 attributes['class'] = 'broken-link'
                     elif 'url' in attributes:
                         if settings.options.get('upgrade30'):
-                            attributes['data-silva-href'] = attributes['url']
+                            attributes['data-silva-url'] = attributes['url']
                         else:
                             document = self.context.get_content()
                             href = IPath(document).pathToUrlPath(attributes['url'])
