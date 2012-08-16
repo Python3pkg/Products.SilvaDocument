@@ -43,9 +43,9 @@
           <xsl:value-of select="@data-silva-target" />
         </xsl:attribute>
       </xsl:if>
-      <xsl:if test="@data-silva-href">
-        <xsl:attribute name="data-silva-href">
-          <xsl:value-of select="@data-silva-href" />
+      <xsl:if test="@data-silva-url">
+        <xsl:attribute name="data-silva-url">
+          <xsl:value-of select="@data-silva-url" />
         </xsl:attribute>
       </xsl:if>
       <xsl:apply-templates mode="text-content" />
@@ -65,9 +65,9 @@
             <xsl:value-of select="@data-silva-target" />
           </xsl:attribute>
         </xsl:if>
-        <xsl:if test="@data-silva-href">
-          <xsl:attribute name="data-silva-href">
-            <xsl:value-of select="@data-silva-href" />
+        <xsl:if test="@data-silva-url">
+          <xsl:attribute name="data-silva-url">
+            <xsl:value-of select="@data-silva-url" />
           </xsl:attribute>
         </xsl:if>
       </img>
@@ -100,9 +100,9 @@
                 <xsl:value-of select="@data-silva-target" />
               </xsl:attribute>
             </xsl:if>
-            <xsl:if test="@data-silva-href">
-              <xsl:attribute name="data-silva-href">
-                <xsl:value-of select="@data-silva-href" />
+            <xsl:if test="@data-silva-url">
+              <xsl:attribute name="data-silva-url">
+                <xsl:value-of select="@data-silva-url" />
               </xsl:attribute>
             </xsl:if>
             <img src="{$image/@rewritten_path}" alt="{$image/@title}">
@@ -116,9 +116,9 @@
                   <xsl:value-of select="$image/@data-silva-target" />
                 </xsl:attribute>
               </xsl:if>
-              <xsl:if test="$image/@data-silva-href">
-                <xsl:attribute name="data-silva-href">
-                  <xsl:value-of select="$image/@data-silva-href" />
+              <xsl:if test="$image/@data-silva-url">
+                <xsl:attribute name="data-silva-url">
+                  <xsl:value-of select="$image/@data-silva-url" />
                 </xsl:attribute>
               </xsl:if>
             </img>

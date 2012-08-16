@@ -392,7 +392,7 @@ class DocumentUpgraderTestCase(unittest.TestCase):
             """<?xml version="1.0" encoding="utf-8"?>
 <doc>
   <p type="normal">
-    <image alignment="image-left" title="" width="600" image_title="Chocobo" rewritten_path="http://localhost/root/chocobo" target="_self" height="177" path="chocobo" link_to_hires="0" link="" />
+    <image alignment="image-left" title="" width="600" image_title="Chocobo" rewritten_path="http://localhost/root/chocobo" target="_self" height="177" path="/root/chocobo" link_to_hires="0" link="" />
   </p>
 </doc>""")
         self.assertEqual(document_upgrader.upgrade(document), document)
