@@ -429,7 +429,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                 image = document.unrestrictedTraverse(
                     attributes['path'].split('/'), None)
                 if settings.options.get('upgrade30'):
-                    attributes['data-silva-src'] = attributes['path']
+                    attributes['data-silva-url'] = attributes['path']
                 elif image is not None:
                     path = IPath(document)
                     rewritten_path = path.pathToUrlPath(attributes['path'])
