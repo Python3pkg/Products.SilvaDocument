@@ -10,12 +10,10 @@ from silva.core.interfaces.events import IContentImported
 from silva.core.references.interfaces import IReferenceService
 from silva.core.services.interfaces import ICatalogService
 
-from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
-from Products.SilvaDocument.transform.base import LINK_REFERENCE_TAG
-
-from Products.SilvaDocument.testing import FunctionalLayer
-from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests.test_xml_import import SilvaXMLTestCase
+from Products.SilvaDocument.interfaces import IDocument, IDocumentVersion
+from Products.SilvaDocument.testing import FunctionalLayer
+from Products.SilvaDocument.transform.base import LINK_REFERENCE_TAG
 
 
 class XMLImportTestCase(SilvaXMLTestCase):
@@ -27,7 +25,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         """Assert that the content of the version is the same than the
         thing in the given file.
         """
-        with open_test_file(filename, globals()) as expected_source:
+        with self.layer.open_fixture(filename) as expected_source:
             expected = expected_source.read().format(**replaces)
             self.assertXMLEqual(
                 unicode(version.content.documentElement), expected)

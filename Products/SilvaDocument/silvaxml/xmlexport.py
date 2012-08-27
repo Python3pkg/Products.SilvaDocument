@@ -438,6 +438,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                     site = IVirtualSite(request)
                     rewritten_path = site.get_root_url() + \
                         "/++resource++Products.SilvaDocument/broken-link.jpg"
+                    attributes['title'] = _(u'Referenced image is missing')
                 attributes['rewritten_path'] = rewritten_path
 
             if image is not None:
@@ -450,8 +451,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                             width, height = image.get_dimensions()
                         attributes['width'] = str(width)
                         attributes['height'] = str(height)
-            else:
-                attributes['title'] = _(u'Referenced image is missing')
+
         else:
             if 'reference' in attributes:
                 attributes['reference'] = self.reference(

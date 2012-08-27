@@ -107,7 +107,77 @@ class UpgraderTestCase(TestCase):
    <p>&#201;tant content, il &#233;tudiat.</p>
 """)
 
-    def test_upgrade_html_with_link(self):
+    def test_upgrade_html_with_image_reference(self):
+        """Try to upgrade an image with a reference inside an HTML
+        piece.
+        """
+        document = self.root.document
+        version = document.get_editable()
+        version.content = ParsedXML(
+            'document',
+            """<?xml version="1.0" encoding="utf-8"?>
+<doc>
+   <image alignment="align-center" reference="chocobo-master" />
+</doc>
+""")
+        # Create the refered image
+        factory = self.root.manage_addProduct['Silva']
+        with self.layer.open_fixture('chocobo.jpg') as image:
+            factory.manage_addImage('chocobo', 'Chocobo', image)
+        service = getUtility(IReferenceService)
+        reference = service.new_reference(version, name=u"document image")
+        reference.set_target(self.root.chocobo)
+        reference.add_tag(u"chocobo-master")
+
+        # Upgrade the document
+        self.assertEqual(document_upgrader.validate(document), True)
+        self.assertNotEqual(document_upgrader.upgrade(document), document)
+
+        upgraded = self.root.document
+        self.assertTrue(IDocument.providedBy(upgraded))
+        self.assertNotEqual(upgraded.get_editable(), None)
+        version = upgraded.get_editable()
+        self.assertEqual(version.get_title(), 'Information')
+        self.assertXMLEqual(
+            str(version.body),
+            """
+<div class="image align-center">
+ <img alt="Chocobo" reference="chocobo-master" />
+</div>
+""")
+
+
+    def test_upgrade_html_with_image_path(self):
+        """Try to upgrade an image with an URL inside an HTML piece.
+        """
+        document = self.root.document
+        version = document.get_editable()
+        version.content = ParsedXML(
+            'document',
+            """<?xml version="1.0" encoding="utf-8"?>
+<doc>
+   <image alignment="float-left" path="http://infrae.com/image.gif" />
+</doc>
+""")
+
+        # Upgrade the document
+        self.assertEqual(document_upgrader.validate(document), True)
+        self.assertNotEqual(document_upgrader.upgrade(document), document)
+
+        upgraded = self.root.document
+        self.assertTrue(IDocument.providedBy(upgraded))
+        self.assertNotEqual(upgraded.get_editable(), None)
+        version = upgraded.get_editable()
+        self.assertEqual(version.get_title(), 'Information')
+        self.assertXMLEqual(
+            str(version.body),
+            """
+<div class="image float-left">
+ <img alt="" src="http://infrae.com/image.gif" />
+</div>
+""")
+
+    def test_upgrade_html_with_link_reference(self):
         """Try to upgrade a link inside an HTML piece.
         """
         document = self.root.document

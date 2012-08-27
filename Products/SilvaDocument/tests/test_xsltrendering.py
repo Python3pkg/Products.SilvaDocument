@@ -5,7 +5,6 @@
 import unittest
 
 from Products.Silva.testing import TestCase, TestRequest
-from Products.Silva.tests.helpers import open_test_file
 from Products.SilvaDocument.Document import DocumentHTML
 from Products.SilvaDocument.testing import FunctionalLayer
 
@@ -26,7 +25,7 @@ class XSLTRenderingTestCase(TestCase):
     def set_document_xml(self, source_filename):
         """Set the document xml from the content of the source file.
         """
-        with open_test_file(source_filename, globals()) as source:
+        with self.layer.open_fixture(source_filename) as source:
             self.version.content.manage_edit(source.read())
 
     def assertRenderingEqual(self, expected_filename):
@@ -35,7 +34,7 @@ class XSLTRenderingTestCase(TestCase):
         """
         rendered_html = DocumentHTML.transform(self.version, self.request)
 
-        with open_test_file(expected_filename, globals()) as expected:
+        with self.layer.open_fixture(expected_filename) as expected:
             self.assertXMLEqual(expected.read(), rendered_html)
 
     def test_link_anchor(self):

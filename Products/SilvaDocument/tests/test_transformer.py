@@ -13,9 +13,8 @@ from silva.core.interfaces import IPublicationWorkflow
 from silva.core.references.interfaces import IReferenceService
 from silva.core.references.reference import get_content_id
 
-from Products.SilvaDocument.testing import FunctionalLayer
 from Products.Silva.testing import TestCase, TestRequest
-from Products.Silva.tests.helpers import open_test_file
+from Products.SilvaDocument.testing import FunctionalLayer
 from Products.SilvaDocument.transform import Transformer
 from Products.SilvaDocument.transform.base import Context
 
@@ -47,8 +46,8 @@ class KupuTransformerTestCase(TestCase):
         factory.manage_addFolder('folder', 'Folder')
         factory.manage_addFolder('other', 'Other')
         factory.manage_addPublication('publication', 'Publication')
-        factory.manage_addImage(
-            'chocobo', 'Chocobo', file=open_test_file('chocobo.jpg', globals()))
+        with self.layer.open_fixture('chocobo.jpg') as image:
+            factory.manage_addImage('chocobo', 'Chocobo', image)
         self.transformer = Transformer.EditorTransformer(editor='kupu')
         # Context need the a document version in order to determine
         # references, and REQUEST to compute link URLs

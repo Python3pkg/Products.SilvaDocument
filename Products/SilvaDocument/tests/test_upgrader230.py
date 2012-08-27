@@ -6,7 +6,6 @@
 import unittest
 
 from Products.SilvaDocument.testing import FunctionalLayer
-from Products.Silva.tests.helpers import open_test_file
 from Products.ParsedXML.ParsedXML import ParsedXML
 
 from silva.core.references.interfaces import IReferenceService
@@ -27,8 +26,8 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
         factory.manage_addPublication('publication', 'Publication')
-        factory.manage_addImage('chocobo', 'Chocobo', file=open_test_file(
-                'chocobo.jpg', globals()))
+        with self.layer.open_fixture('chocobo.jpg') as image:
+            factory.manage_addImage('chocobo', 'Chocobo', image)
         factory = self.root.manage_addProduct['SilvaDocument']
         factory.manage_addDocument('document', 'Document')
 

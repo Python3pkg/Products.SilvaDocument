@@ -16,7 +16,6 @@ from Products.SilvaDocument.transform.base import Context
 
 from Products.SilvaDocument.testing import FunctionalLayer
 from Products.Silva.testing import TestCase, TestRequest
-from Products.Silva.tests.helpers import open_test_file
 
 
 KUPU_TABLE_HTML="""
@@ -188,8 +187,8 @@ class KupuTransformerTablesTestCase(TestCase):
         factory.manage_addDocument('document', 'Document')
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
-        factory.manage_addImage(
-            'chocobo', 'Chocobo', file=open_test_file('chocobo.jpg', globals()))
+        with self.layer.open_fixture('chocobo.jpg') as image:
+            factory.manage_addImage('chocobo', 'Chocobo', image)
 
         self.transformer = Transformer.EditorTransformer(editor='kupu')
         self.context = Context(

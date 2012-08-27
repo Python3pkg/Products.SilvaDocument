@@ -7,9 +7,8 @@ import unittest
 
 from Products.ParsedXML.ParsedXML import ParsedXML
 from Products.Silva.silvaxml import xmlexport
-from Products.SilvaDocument.testing import FunctionalLayer
-from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests.test_xml_export import SilvaXMLTestCase
+from Products.SilvaDocument.testing import FunctionalLayer
 
 from silva.core.references.interfaces import IReferenceService
 from zope import component
@@ -85,8 +84,9 @@ class XMLExportTestCase(SilvaXMLTestCase):
            </doc>""")
 
         # Create a image to use in the document
-        self.root.folder.manage_addProduct['Silva'].manage_addImage(
-            'torvald', 'Torvald', open_test_file('chocobo.jpg', globals()))
+        factory = self.root.folder.manage_addProduct['Silva']
+        with self.layer.open_fixture('chocobo.jpg') as image:
+            factory.manage_addImage('torvald', 'Torvald', image)
         service = component.getUtility(IReferenceService)
         reference = service.new_reference(version, name=u"document link")
         reference.set_target(self.root.folder.torvald)
