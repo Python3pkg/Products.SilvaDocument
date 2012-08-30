@@ -171,11 +171,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
 
             def convert_parameter(name, value):
                 field = source.parameters.get_field(name)
-                if field.meta_type in set([
-                        'ListField', 'RadioField',
-                        'MultiCheckBoxField', 'MultiListField']):
-                    value_settings.append(
-                        ('field_' + name + '_novalidate', '1'))
+                value_settings.append(('field_' + name + '_novalidate', '1'))
                 if field.meta_type == 'ReferenceField':
                     content = self.context.get_content()
                     content_path = '/'.join(content.getPhysicalPath())

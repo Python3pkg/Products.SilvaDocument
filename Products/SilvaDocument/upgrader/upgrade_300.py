@@ -90,10 +90,10 @@ def copy_version(source, target, ensure=False):
     target.set_unapproved_version_expiration_datetime(
         info.get_expiration_datetime())
     # Copy last author information
-    user = aq_base(source.sec_get_last_author_info())
+    user = aq_base(source.get_last_author_info())
     if not isinstance(user, NoneMember):
         target._last_author_userid = user.id
-        target._last_author_info = user
+        target._last_author_info = aq_base(user)
     # Copy creator information
     target._owner = getattr(aq_base(source), '_owner', None)
 

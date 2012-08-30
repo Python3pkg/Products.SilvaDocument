@@ -50,8 +50,6 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertEqual(version.get_title(), u'Previewing a document')
 
         binding = self.metadata.getMetadata(version)
-        self.assertEqual(binding.get('silva-extra', 'creator'), u'wimbou')
-        self.assertEqual(binding.get('silva-extra', 'lastauthor'), u'wimbou')
         self.assertEqual(
             binding.get('silva-content', 'maintitle'), u'Previewing a document')
         self.assertEqual(
