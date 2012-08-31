@@ -76,10 +76,10 @@ def move_text(source, target):
 def copy_version(source, target, ensure=False):
     """Copy version document from source to target.
     """
-    # Copy metadata content
-    copy_annotation(source, target)
     # Move text
     move_text(source, target)
+    # Copy metadata content
+    copy_annotation(source, target)
     # Publication datetime
     info = IVersionManager(source)
     publication_datetime = info.get_publication_datetime()
