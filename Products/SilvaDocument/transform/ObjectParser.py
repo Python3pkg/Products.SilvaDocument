@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2012  Infrae. All rights reserved.
+# See also LICENSE.txt
 """
 module for parsing dom-nodes or strings to an
 object tree based on the classes in 'base.py'.

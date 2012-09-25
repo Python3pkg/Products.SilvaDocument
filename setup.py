@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2002-2009 Infrae. All rights reserved.
+# Copyright (c) 2002-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id$
 
 from setuptools import setup, find_packages
 import os
 
-version = '3.0dev'
+version = '3.0c1'
 
 tests_require = [
     'Products.Silva [test]',
@@ -42,6 +41,7 @@ setup(name='Products.SilvaDocument',
         'setuptools',
         'silva.core.conf',
         'silva.core.interfaces',
+        'silva.core.layout',
         'silva.core.references',
         'silva.core.services',
         'silva.core.upgrade',
@@ -50,8 +50,10 @@ setup(name='Products.SilvaDocument',
         'zope.annotation',
         'zope.component',
         'zope.event',
+        'zope.i18nmessageid',
         'zope.interface',
         'zope.intid',
+        'zope.lifecycleevent',
         'zope.publisher',
         'zope.traversing',
         ],
