@@ -5,7 +5,6 @@
 import unittest
 
 from zope.component import getUtility
-from silva.core.interfaces.events import IContentImported
 from silva.core.references.interfaces import IReferenceService
 from silva.core.services.interfaces import ICatalogService
 
@@ -32,11 +31,11 @@ class XMLImportTestCase(SilvaXMLTestCase):
     def test_document(self):
         """Import a simple document.
         """
-        self.import_file('test_import_document.silvaxml', globals())
-        self.assertEventsAre(
-            ['ContentImported for /root/folder',
-             'ContentImported for /root/folder/document'],
-            IContentImported)
+        importer = self.assertImportFile(
+            'test_import_document.silvaxml',
+            ['/root/folder',
+             '/root/folder/document'])
+        self.assertEqual(importer.getProblems(), [])
         self.assertItemsEqual(self.root.folder.objectIds(), ['document'])
 
         document = self.root.folder.document
@@ -70,9 +69,15 @@ class XMLImportTestCase(SilvaXMLTestCase):
     def test_document_link(self):
         """Try to import a document that contains a link.
         """
-        self.import_file('test_import_link.silvaxml', globals())
+        importer = self.assertImportFile(
+            'test_import_link.silvaxml',
+            ['/root/folder/document',
+             '/root/folder/site',
+             '/root/folder'])
+        self.assertEqual(importer.getProblems(), [])
         self.assertItemsEqual(
-            self.root.folder.objectIds(), ['document', 'site'])
+            self.root.folder.objectIds(),
+            ['document', 'site'])
 
         document = self.root.folder.document
         link = self.root.folder.site
@@ -107,11 +112,19 @@ class XMLImportTestCase(SilvaXMLTestCase):
     def test_document_image(self):
         """Try to import a document that contains an image.
         """
-        self.import_zip('test_import_image.zip', globals())
+        importer = self.assertImportZip(
+            'test_import_image.zip',
+            ['/root/folder/document',
+             '/root/folder/pictures/chocobo',
+             '/root/folder/pictures',
+             '/root/folder'])
+        self.assertEqual(importer.getProblems(), [])
         self.assertItemsEqual(
-            self.root.folder.objectIds(), ['document', 'pictures'])
+            self.root.folder.objectIds(),
+            ['document', 'pictures'])
         self.assertItemsEqual(
-            self.root.folder.pictures.objectIds(), ['chocobo'])
+            self.root.folder.pictures.objectIds(),
+            ['chocobo'])
 
         document = self.root.folder.document
         image = self.root.folder.pictures.chocobo

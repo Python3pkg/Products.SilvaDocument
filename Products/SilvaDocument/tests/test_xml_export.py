@@ -5,7 +5,6 @@
 import unittest
 
 from Products.ParsedXML.ParsedXML import ParsedXML
-from Products.Silva.silvaxml import xmlexport
 from Products.Silva.tests.test_xml_export import SilvaXMLTestCase
 from Products.SilvaDocument.testing import FunctionalLayer
 
@@ -36,10 +35,12 @@ class XMLExportTestCase(SilvaXMLTestCase):
    <node foo="bar">承諾広告＊既に、２億、３億、５億９千万円収入者が続出<node2>boo</node2>baz</node>
 </doc>""")
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_document.silvaxml', globals())
-        self.assertEqual(info.getZexpPaths(), [])
-        self.assertEqual(info.getAssetPaths(), [])
+        exported = self.assertExportEqual(
+            self.root.folder,
+            'test_export_document.silvaxml')
+        self.assertEqual(exported.getZexpPaths(), [])
+        self.assertEqual(exported.getAssetPaths(), [])
+        self.assertEqual(exported.getProblems(), [])
 
     def test_document_link(self):
         """Try to export a document that links to other resources.
@@ -65,10 +66,12 @@ class XMLExportTestCase(SilvaXMLTestCase):
         reference.set_target(self.root.folder.link)
         reference.add_tag(u"infrae-site")
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_link.silvaxml', globals())
-        self.assertEqual(info.getZexpPaths(), [])
-        self.assertEqual(info.getAssetPaths(), [])
+        exported = self.assertExportEqual(
+            self.root.folder,
+            'test_export_link.silvaxml')
+        self.assertEqual(exported.getZexpPaths(), [])
+        self.assertEqual(exported.getAssetPaths(), [])
+        self.assertEqual(exported.getProblems(), [])
 
     def test_document_image(self):
         """Try to export a document that use an image.
@@ -91,11 +94,18 @@ class XMLExportTestCase(SilvaXMLTestCase):
         reference.set_target(self.root.folder.torvald)
         reference.add_tag(u"torvald-pic")
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(xml, 'test_export_image.silvaxml', globals())
-        self.assertEqual(info.getZexpPaths(), [])
+        exported = self.assertExportEqual(
+            self.root.folder,
+            'test_export_image.silvaxml')
         self.assertEqual(
-            info.getAssetPaths(), [(('', 'root', 'folder', 'torvald'), '1')])
+            exported.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exported.getAssetPaths(),
+            [(('', 'root', 'folder', 'torvald'), '1')])
+        self.assertEqual(
+            exported.getProblems(),
+            [])
 
     def test_document_with_source_export(self):
         self.layer.login('manager')
@@ -120,14 +130,18 @@ class XMLExportTestCase(SilvaXMLTestCase):
             <p type="normal">This is some text.</p>
             </doc>""")
 
-        xml, info = xmlexport.exportToString(self.root.folder)
-        self.assertExportEqual(
-            xml, 'test_export_codesource.silvaxml', globals())
+        exported = self.assertExportEqual(
+            self.root.folder, 'test_export_codesource.silvaxml')
         # The code-source went into a ZEXP.
         self.assertEqual(
-            info.getZexpPaths(),
+            exported.getZexpPaths(),
             [(('', 'root', 'folder', 'codesource'), '1.zexp')])
-        self.assertEqual(info.getAssetPaths(), [])
+        self.assertEqual(
+            exported.getAssetPaths(),
+            [])
+        self.assertEqual(
+            exported.getProblems(),
+            [])
 
 
 def test_suite():

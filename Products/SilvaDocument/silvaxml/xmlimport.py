@@ -4,19 +4,18 @@
 
 import uuid
 
-from Products.Silva.silvaxml.xmlimport import (
-    SilvaBaseHandler, NS_SILVA_URI, updateVersionCount, resolve_path)
 from Products.SilvaDocument.silvaxml import NS_DOCUMENT_URI
 from Products.SilvaDocument.transform.base import LINK_REFERENCE_TAG
 
 from zope.component import getUtility
+from silva.core.xml import handlers, NS_SILVA_URI
 from silva.core import conf as silvaconf
 from silva.core.references.interfaces import IReferenceService
 
 silvaconf.namespace(NS_SILVA_URI)
 
 
-class DocumentHandler(SilvaBaseHandler):
+class DocumentHandler(handlers.SilvaHandler):
     silvaconf.name('document')
 
     def getOverrides(self):
@@ -24,7 +23,7 @@ class DocumentHandler(SilvaBaseHandler):
 
     def startElementNS(self, name, qname, attrs):
         if name == (NS_SILVA_URI, 'document'):
-            uid = self.generateOrReplaceId(attrs[(None, 'id')].encode('utf-8'))
+            uid = self.generateIdentifier(attrs)
             factory = self.parent().manage_addProduct['SilvaDocument']
             factory.manage_addDocument(uid, '', no_default_version=True)
             self.setResultId(uid)
@@ -34,7 +33,7 @@ class DocumentHandler(SilvaBaseHandler):
             self.notifyImport()
 
 
-class DocumentVersionHandler(SilvaBaseHandler):
+class DocumentVersionHandler(handlers.SilvaVersionHandler):
 
     def getOverrides(self):
         return {(NS_DOCUMENT_URI, 'doc'): DocXMLHandler, }
@@ -48,12 +47,12 @@ class DocumentVersionHandler(SilvaBaseHandler):
 
     def endElementNS(self, name, qname):
         if name == (NS_SILVA_URI, 'content'):
-            updateVersionCount(self)
+            self.updateVersionCount()
             self.storeMetadata()
             self.storeWorkflow()
 
 
-class DocXMLHandler(SilvaBaseHandler):
+class DocXMLHandler(handlers.SilvaHandler):
     """Import and convert Silva Document XML.
     """
 
@@ -71,9 +70,9 @@ class DocXMLHandler(SilvaBaseHandler):
             self.__version, name=LINK_REFERENCE_TAG)
         reference_name = unicode(uuid.uuid1())
         reference.add_tag(reference_name)
-        info = self.getInfo()
-        info.addAction(
-            resolve_path, [reference.set_target, info, target])
+        importer = self.getExtra()
+        importer.resolveImportedPath(
+            self.__version, reference.set_target, target)
         return reference_name
 
     def update_reference_attribute(self, attributes):

@@ -7,7 +7,6 @@ from cgi import escape
 import urllib
 import logging
 
-from Products.Silva.silvaxml import xmlexport
 from Products.SilvaExternalSources.ExternalSource import getSourceForId
 from Products.ParsedXML.DOM.Core import Node
 from Products.SilvaDocument.i18n import translate as _
@@ -20,38 +19,38 @@ from five import grok
 from silva.core.interfaces import IImage
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views.interfaces import IVirtualSite
+from silva.core.xml import producers
 from sprout.saxext.html2sax import saxify
 from zope.component import getUtility
 from zope.interface import Interface
 from zope.intid.interfaces import IIntIds
 from zope.traversing.browser import absoluteURL
 
-xmlexport.registerNamespace('doc', NS_DOCUMENT_URI)
 logger = logging.getLogger('silva.old.document')
 
 
-class DocumentProducer(xmlexport.SilvaVersionedContentProducer):
+class DocumentProducer(producers.SilvaVersionedContentProducer):
     """Export a Silva Document object to XML.
     """
     grok.adapts(interfaces.IDocument, Interface)
 
     def sax(self):
         self.startElement('document', {'id': self.context.id})
-        if not self.getSettings().options.get('upgrade30'):
-            self.workflow()
-        self.versions()
+        if not self.getOptions().upgrade30:
+            self.sax_workflow()
+        self.sax_versions()
         self.endElement('document')
 
 
-class DocumentVersionProducer(xmlexport.SilvaProducer):
+class DocumentVersionProducer(producers.SilvaProducer):
     """Export a version of a Silva Document object to XML.
     """
     grok.adapts(interfaces.IDocumentVersion, Interface)
 
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
-        if not self.getSettings().options.get('upgrade30'):
-            self.metadata()
+        if not self.getOptions().upgrade30:
+            self.sax_metadata()
         node = self.context.content.documentElement.getDOMObj()
         self.sax_node(node)
         self.endElement('content')
@@ -70,14 +69,14 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
             self.sax_img(node)
         else:
             if node.nodeName == 'link':
-                settings = self.getSettings()
-                if settings.externalRendering():
+                options = self.getOptions()
+                if options.external_rendering:
                     href = ''
                     if 'reference' in attributes:
                         service = getUtility(IReferenceService)
                         reference = service.get_reference(
                             self.context, name=attributes['reference'])
-                        if settings.options.get('upgrade30'):
+                        if options.upgrade30:
                             attributes['data-silva-target'] = str(reference.target_id)
                             attributes['data-silva-reference'] = reference.tags[1]
                             reference.tags[0] = u"body link"
@@ -86,11 +85,12 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                             target = reference.target
                             if target is not None:
                                 href = absoluteURL(
-                                    reference.target, self.getInfo().request)
+                                    reference.target,
+                                    self.getExported().request)
                             else:
                                 attributes['class'] = 'broken-link'
                     elif 'url' in attributes:
-                        if settings.options.get('upgrade30'):
+                        if settings.upgrade30:
                             attributes['data-silva-url'] = attributes['url']
                         else:
                             document = self.context.get_content()
@@ -98,14 +98,14 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
 
                     anchor = attributes.get('anchor', '')
                     if anchor:
-                        if settings.options.get('upgrade30'):
+                        if settings.upgrade30:
                             attributes['data-silva-anchor'] = anchor
                         else:
                             href += '#' + anchor
                     attributes['href'] = href
                 else:
                     if 'reference' in attributes:
-                        attributes['reference'] = self.reference(
+                        attributes['reference'] = self.get_reference(
                             attributes['reference'])
 
             self.startElementNS(NS_DOCUMENT_URI, node.nodeName, attributes)
@@ -159,8 +159,8 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
             return
         source = getSourceForId(self.context.get_content(), id)
 
-        settings = self.getSettings()
-        if settings.options.get('upgrade30'):
+        options = self.getOptions()
+        if options.upgrade30:
 
             if source is None:
                 logger.error(u"Missing source %s, skipping it." % id)
@@ -250,8 +250,8 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                 self.endElementNS(NS_DOCUMENT_URI, 'parameter')
 
         # Render source if needed
-        if settings.externalRendering():
-            request = self.getInfo().request
+        if options.external_rendering:
+            request = self.getExported().request
             try:
                 html = source.to_html(self.context, request, **parameters)
             except Exception, error:
@@ -401,19 +401,19 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
         need to be retrieved here.
         """
         attributes = {}
-        settings = self.getSettings()
-        request = self.getInfo().request
+        options = self.getOptions()
+        request = self.getExported().request
         if node.attributes:
             attributes = get_dict(node.attributes)
 
-        if settings.externalRendering():
+        if options.external_rendering:
             rewritten_path = None
             if 'reference' in attributes:
                 service = getUtility(IReferenceService)
                 reference = service.get_reference(
                     self.context, name=attributes['reference'])
                 image = reference.target
-                if settings.options.get('upgrade30'):
+                if options.upgrade30:
                     attributes['data-silva-target'] = str(reference.target_id)
                     attributes['data-silva-reference'] = reference.tags[1]
                     reference.tags[0] = u"body image"
@@ -424,12 +424,12 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
                 document = self.context.get_content()
                 image = document.unrestrictedTraverse(
                     attributes['path'].split('/'), None)
-                if settings.options.get('upgrade30'):
+                if settings.upgrade30:
                     attributes['data-silva-url'] = attributes['path']
                 elif image is not None:
                     path = IPath(document)
                     rewritten_path = path.pathToUrlPath(attributes['path'])
-            if not settings.options.get('upgrade30'):
+            if not settings.upgrade30:
                 if not rewritten_path:
                     site = IVirtualSite(request)
                     rewritten_path = site.get_root_url() + \
@@ -439,7 +439,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
 
             if image is not None:
                 if IImage.providedBy(image):
-                    resolution = settings.options.get('image_res')
+                    resolution = settings.image_res
                     attributes['title'] = image.get_title()
                     if resolution:
                         attributes['rewritten_path'] += '?%s' % resolution
@@ -450,7 +450,7 @@ class DocumentVersionProducer(xmlexport.SilvaProducer):
 
         else:
             if 'reference' in attributes:
-                attributes['reference'] = self.reference(
+                attributes['reference'] = self.get_reference(
                     attributes['reference'])
 
         if attributes.has_key('alignment'):

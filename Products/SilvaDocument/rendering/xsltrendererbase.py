@@ -7,7 +7,7 @@ from lxml import etree
 import os
 import threading
 
-from Products.Silva.silvaxml import xmlexport
+from silva.core.xml import Exporter
 
 
 class ImportResolver(etree.Resolver):
@@ -56,12 +56,9 @@ class XSLTTransformer(object):
         return self.__local.stylesheet
 
     def transform(self, context, request, options={}):
-        settings = xmlexport.ExportSettings(options=options)
-        settings.setVersion(xmlexport.PREVIEWABLE_VERSION)
-        settings.setExternalRendering(True)
-        source, info = xmlexport.exportToString(
-            context, settings=settings, request=request)
-        return self.transform_xml(source)
+        options.update({'external_rendering': True, 'only_previewable': True})
+        exporter = Exporter(context, request, options)
+        return self.transform_xml(exporter.getString())
 
     def transform_xml(self, text):
         style = self.stylesheet()
