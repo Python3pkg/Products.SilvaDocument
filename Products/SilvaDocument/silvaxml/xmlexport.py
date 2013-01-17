@@ -90,7 +90,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
                             else:
                                 attributes['class'] = 'broken-link'
                     elif 'url' in attributes:
-                        if settings.upgrade30:
+                        if options.upgrade30:
                             attributes['data-silva-url'] = attributes['url']
                         else:
                             document = self.context.get_content()
@@ -98,7 +98,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
 
                     anchor = attributes.get('anchor', '')
                     if anchor:
-                        if settings.upgrade30:
+                        if options.upgrade30:
                             attributes['data-silva-anchor'] = anchor
                         else:
                             href += '#' + anchor
@@ -424,12 +424,12 @@ class DocumentVersionProducer(producers.SilvaProducer):
                 document = self.context.get_content()
                 image = document.unrestrictedTraverse(
                     attributes['path'].split('/'), None)
-                if settings.upgrade30:
+                if options.upgrade30:
                     attributes['data-silva-url'] = attributes['path']
                 elif image is not None:
                     path = IPath(document)
                     rewritten_path = path.pathToUrlPath(attributes['path'])
-            if not settings.upgrade30:
+            if not options.upgrade30:
                 if not rewritten_path:
                     site = IVirtualSite(request)
                     rewritten_path = site.get_root_url() + \
@@ -439,7 +439,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
 
             if image is not None:
                 if IImage.providedBy(image):
-                    resolution = settings.image_res
+                    resolution = options.image_res
                     attributes['title'] = image.get_title()
                     if resolution:
                         attributes['rewritten_path'] += '?%s' % resolution
