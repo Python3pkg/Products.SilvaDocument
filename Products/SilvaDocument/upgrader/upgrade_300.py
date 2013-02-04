@@ -119,7 +119,12 @@ class DocumentUpgrader(BaseUpgrader):
         parent = aq_parent(doc)
 
         # Create a new doccopy the annotation
-        new_doc = self.create_document(parent, identifier + 'conv__silva30', title)
+        try:
+            new_doc = self.create_document(
+                parent, identifier + 'conv__silva30', title)
+        except ValueError:
+            logger.error(u'Cannot convert document: %s.', content_path(doc))
+            return doc
         new_identifier = new_doc.getId() # The id can have changed
         # Copy annotation
         copy_annotation(doc, new_doc)
