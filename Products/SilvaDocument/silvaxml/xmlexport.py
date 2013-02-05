@@ -301,7 +301,10 @@ class DocumentVersionProducer(producers.SilvaProducer):
             col = 0
             for child in node.childNodes:
                 if child.nodeType == Node.ELEMENT_NODE:
-                    self.sax_field(child, columns_info[col])
+                    column_info = {'align': 'L'}
+                    if len(columns_info) < col:
+                        column_info = columns_info[col]
+                    self.sax_field(child, column_info)
                     col += 1
         self.endElementNS(NS_DOCUMENT_URI, 'row')
 
