@@ -1,10 +1,17 @@
 ChangeLog
 =========
 
-3.0 (unreleased)
+3.0 (2013/03/06)
 ----------------
 
-* ...
+* Update Silva XML import and export API.
+
+* Fix upgrade with broken documents (probably created with
+  copy and paste):
+
+  - some link used the attribute at some point in their life,
+
+  - some table have invalid header declarations.
 
 3.0c1 (2012/09/25)
 ------------------
