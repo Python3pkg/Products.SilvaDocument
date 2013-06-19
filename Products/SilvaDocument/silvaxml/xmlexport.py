@@ -163,8 +163,9 @@ class DocumentVersionProducer(producers.SilvaProducer):
         if options.upgrade30:
 
             if source is None:
-                logger.error(u"Missing source %s, skipping it." % id)
+                logger.error(u"Missing source %s, skipping it.", id)
                 return
+            logger.info(u'Document uses source %s.', id)
 
             value_settings = []
             seen_fields = set()
