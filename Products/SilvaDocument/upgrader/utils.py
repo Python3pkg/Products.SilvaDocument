@@ -4,6 +4,7 @@
 
 from urlparse import urlparse
 import logging
+import urllib
 
 from zExceptions import NotFound
 from five.intid.site import aq_iter
@@ -58,7 +59,8 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
     except ValueError:
             logger.error(u"Invalid %s '%s' (is not a valid URL).", obj_type, url)
-            return url, None, None
+            # We quote them so they parse ...
+            return urllib.quote(url), None, None
     if scheme:
         # This is a remote URL or invalid URL.
         #logger.debug(u'found a remote link %s' % url)
