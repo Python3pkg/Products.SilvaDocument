@@ -54,7 +54,11 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
             logger.error(u"Invalid %s '%s' (contains unicode).", obj_type, url)
             return url, None, None
     url = url.strip()
-    scheme, netloc, path, parameters, query, fragment = urlparse(url)
+    try:
+        scheme, netloc, path, parameters, query, fragment = urlparse(url)
+    except ValueError:
+            logger.error(u"Invalid %s '%s' (is not a valid URL).", obj_type, url)
+            return url, None, None
     if scheme:
         # This is a remote URL or invalid URL.
         #logger.debug(u'found a remote link %s' % url)
