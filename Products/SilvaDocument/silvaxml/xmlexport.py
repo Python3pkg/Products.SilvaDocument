@@ -236,32 +236,37 @@ class DocumentVersionProducer(producers.SilvaProducer):
 
         self.startElementNS(NS_DOCUMENT_URI, node.nodeName, attributes)
 
-        # Collect parameters
-        for child in node.childNodes:
-            if child.nodeName == 'parameter':
-                attributes = {'key': child.attributes['key'].value}
-                param_type = child.attributes.get('type')
-                if param_type:
-                    attributes['type'] = param_type.value
-                self.startElementNS(NS_DOCUMENT_URI, 'parameter', attributes)
-                for grandChild in child.childNodes:
-                    if grandChild.nodeType == Node.TEXT_NODE:
-                        if grandChild.nodeValue:
-                            self.handler.characters(grandChild.nodeValue)
-                self.endElementNS(NS_DOCUMENT_URI, 'parameter')
+        if not options.upgrade30:
+            # We don't need to include anything inside a code for the
+            # upgrade, and don't need to render it.
 
-        # Render source if needed
-        if options.external_rendering:
-            request = self.getExported().request
-            try:
-                html = source.to_html(self.context, request, **parameters)
-            except Exception, error:
-                source_error("error message: " + str(error))
-                return
-            if not html:
-                source_error("error message: the source returned no output.")
-                return
-            self.render_html(html)
+            # Collect parameters
+            for child in node.childNodes:
+                if child.nodeName == 'parameter':
+                    attributes = {'key': child.attributes['key'].value}
+                    param_type = child.attributes.get('type')
+                    if param_type:
+                        attributes['type'] = param_type.value
+                    self.startElementNS(NS_DOCUMENT_URI, 'parameter', attributes)
+                    for grandChild in child.childNodes:
+                        if grandChild.nodeType == Node.TEXT_NODE:
+                            if grandChild.nodeValue:
+                                self.handler.characters(grandChild.nodeValue)
+                    self.endElementNS(NS_DOCUMENT_URI, 'parameter')
+
+            # Render source if needed
+            if options.external_rendering:
+                request = self.getExported().request
+                try:
+                    html = source.to_html(self.context, request, **parameters)
+                except Exception, error:
+                    source_error("error message: " + str(error))
+                    return
+                if not html:
+                    source_error("error message: the source returned no output.")
+                    return
+                self.render_html(html)
+
         self.endElementNS(NS_DOCUMENT_URI, node.nodeName)
 
     def sax_table(self, node):
@@ -445,7 +450,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
                 if IImage.providedBy(image):
                     resolution = options.image_res
                     attributes['title'] = image.get_title()
-                    if resolution:
+                    if resolution and not options.upgrade30:
                         attributes['rewritten_path'] += '?%s' % resolution
                         if resolution == 'hires':
                             width, height = image.get_dimensions()
