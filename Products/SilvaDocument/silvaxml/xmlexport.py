@@ -196,7 +196,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
                     if parameter_type == 'boolean' or isinstance(value, bool):
                         if value is True:
                             value = u'1'
-                        elif value != u'1':
+                        elif value not in (u'1', u'True'):
                             value = u''
                     if parameter_type == 'list' or isinstance(value, list):
                         if isinstance(value, basestring):
