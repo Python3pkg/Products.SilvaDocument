@@ -141,6 +141,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
             self.render_html("".join(html))
             self.endElementNS(NS_DOCUMENT_URI, node.nodeName)
 
+        options = self.getOptions()
         parameters = {}
         parameters_type = {}
         for child in node.childNodes:
@@ -168,7 +169,6 @@ class DocumentVersionProducer(producers.SilvaProducer):
             return
         source = getSourceForId(self.context.get_content(), id)
 
-        options = self.getOptions()
         if options.upgrade30:
 
             if source is None:
