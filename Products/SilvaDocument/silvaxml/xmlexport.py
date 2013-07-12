@@ -29,6 +29,13 @@ from zope.traversing.browser import absoluteURL
 logger = logging.getLogger('silva.old.document')
 
 
+# Those fields trigger problems in the new version. Automatically
+# rename them to _value.
+RENAMED_FIELDS = {
+    'content': 'content_value',
+    'script': 'script_value'}
+
+
 class DocumentProducer(producers.SilvaVersionedContentProducer):
     """Export a Silva Document object to XML.
     """
@@ -139,6 +146,8 @@ class DocumentVersionProducer(producers.SilvaProducer):
         for child in node.childNodes:
             if child.nodeName == 'parameter':
                 name = str(child.attributes['key'].value)
+                if options.upgrade30 and name in RENAMED_FIELDS:
+                    name = RENAMED_FIELDS[name]
                 param_type = child.attributes.get('type')
                 if param_type:
                     parameters_type[name]= str(param_type.value)
@@ -172,6 +181,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
 
             def convert_parameter(name, value):
                 field = source.parameters.get_field(name)
+                value_settings.append(('marker_field_' + name, '1'))
                 value_settings.append(('field_' + name + '_novalidate', '1'))
                 if field.meta_type == 'ReferenceField':
                     content = self.context.get_content()
@@ -194,10 +204,11 @@ class DocumentVersionProducer(producers.SilvaProducer):
                 else:
                     parameter_type = parameters_type.get(name)
                     if parameter_type == 'boolean' or isinstance(value, bool):
-                        if value is True:
+                        if value in (True, u'1', u'True'):
                             value = u'1'
-                        elif value not in (u'1', u'True'):
-                            value = u''
+                        else:
+                            # False boolean are not included in the settings.
+                            return
                     if parameter_type == 'list' or isinstance(value, list):
                         if isinstance(value, basestring):
                             value = eval(value)

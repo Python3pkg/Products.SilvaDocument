@@ -46,6 +46,8 @@ def split_path(path, context, root=None):
 
 def resolve_path(url, content_path, context, obj_type=u'link'):
     """Resolve path to an object or report an error.
+
+    Return (url, target i.e an content in Silva, fragment).
     """
     if isinstance(url, unicode):
         # If the link contains unicode, that is not a link.
