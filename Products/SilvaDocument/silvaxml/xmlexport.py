@@ -203,7 +203,9 @@ class DocumentVersionProducer(producers.SilvaProducer):
                         resolve_location(value)
                 else:
                     parameter_type = parameters_type.get(name)
-                    if parameter_type == 'boolean' or isinstance(value, bool):
+                    if (field.meta_type == 'CheckBoxField' or
+                        parameter_type == 'boolean' or
+                        isinstance(value, bool)):
                         if value in (True, u'1', u'True'):
                             value = u'1'
                         else:
