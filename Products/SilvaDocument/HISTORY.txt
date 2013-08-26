@@ -1,10 +1,12 @@
 ChangeLog
 =========
 
-3.0.1 (unreleased)
+3.0.1 (2013/08/26)
 ------------------
 
-* ....
+* Update upgraders: support more different scheme of broken links in
+  document. Support upgrade of CheckboxField when used inside Code
+  sources.
 
 3.0 (2013/03/06)
 ----------------
