@@ -13,7 +13,7 @@ tests_require = [
 
 setup(name='Products.SilvaDocument',
       version=version,
-      description="Document content for Silva 2.x.",
+      description="Document content type for Silva 2",
       long_description=open(os.path.join("Products", "SilvaDocument", "README.txt")).read() + "\n" +
                        open(os.path.join("Products", "SilvaDocument", "HISTORY.txt")).read(),
       classifiers=[
@@ -25,7 +25,7 @@ setup(name='Products.SilvaDocument',
       keywords='silva cms document zope',
       author='Infrae',
       author_email='info@infrae.com',
-      url='http://infrae.com/products/silva',
+      url='https://github.com/silvacms/Products.SilvaDocument',
       license='BSD',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['Products'],

@@ -16,8 +16,8 @@ documents with `Kupu`_. Please look at older versions for this.
 Code repository
 ===============
 
-You can find the code of this extension in Mercurial:
-https://hg.infrae.com/Products.SilvaDocument/.
+You can find the code of this extension in Git:
+https://github.com/silvacms/Products.SilvaDocument
 
 .. _Silva: http://silvacms.org/
 .. _Kupu: http://www.infrae.com/products/kupu_editor
