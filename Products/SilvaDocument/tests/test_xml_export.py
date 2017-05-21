@@ -66,9 +66,9 @@ class XMLExportTestCase(SilvaXMLTestCase):
             factory.manage_addLink(
                 'link', 'Link to Infrae', relative=False, url='http://infrae.com')
             service = component.getUtility(IReferenceService)
-            reference = service.new_reference(version, name=u"document link")
+            reference = service.new_reference(version, name="document link")
             reference.set_target(self.root.folder.link)
-            reference.add_tag(u"infrae-site")
+            reference.add_tag("infrae-site")
 
         exported = self.assertExportEqual(
             self.root.folder,
@@ -95,9 +95,9 @@ class XMLExportTestCase(SilvaXMLTestCase):
             with self.layer.open_fixture('chocobo.jpg') as image:
                 factory.manage_addImage('torvald', 'Torvald', image)
             service = component.getUtility(IReferenceService)
-            reference = service.new_reference(version, name=u"document link")
+            reference = service.new_reference(version, name="document link")
             reference.set_target(self.root.folder.torvald)
-            reference.add_tag(u"torvald-pic")
+            reference.add_tag("torvald-pic")
 
         exported = self.assertExportEqual(
             self.root.folder,

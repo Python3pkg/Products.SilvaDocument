@@ -2,7 +2,7 @@
 # Copyright (c) 2002-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
-from StringIO import StringIO
+from io import StringIO
 from lxml import etree
 import os
 import threading

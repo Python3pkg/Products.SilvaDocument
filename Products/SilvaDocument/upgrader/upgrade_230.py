@@ -58,7 +58,7 @@ class DocumentUpgrader(BaseUpgrader):
         links = dom.getElementsByTagName('link')
         version_path = content_path(version)
         if links:
-            logger.info(u'Upgrading links in: %s.', version_path)
+            logger.info('Upgrading links in: %s.', version_path)
         for link in links:
             if link.hasAttribute('reference'):
                 # Already migrated
@@ -87,7 +87,7 @@ class DocumentUpgrader(BaseUpgrader):
             image as child of the link.
             """
             link = dom.createElement('link')
-            if not isinstance(target, basestring):
+            if not isinstance(target, str):
                 build_reference(context, target, link)
             else:
                 link.setAttribute('url', target)

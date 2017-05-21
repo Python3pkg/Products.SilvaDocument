@@ -26,7 +26,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         with self.layer.open_fixture(filename) as expected_source:
             expected = expected_source.read().format(**replaces)
             self.assertXMLEqual(
-                unicode(version.content.documentElement), expected)
+                str(version.content.documentElement), expected)
 
     def test_document(self):
         """Import a simple document.
@@ -45,24 +45,24 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertFalse(version is None)
         self.assertTrue(IDocumentVersion.providedBy(version))
         self.assertEqual(document.get_viewable(), None)
-        self.assertEqual(version.get_title(), u'Previewing a document')
+        self.assertEqual(version.get_title(), 'Previewing a document')
 
         binding = self.metadata.getMetadata(version)
         self.assertEqual(
-            binding.get('silva-content', 'maintitle'), u'Previewing a document')
+            binding.get('silva-content', 'maintitle'), 'Previewing a document')
         self.assertEqual(
             binding.get('silva-extra', 'content_description'),
-            u'How to click on preview.')
+            'How to click on preview.')
         self.assertEqual(
             binding.get('silva-extra', 'comment'),
-            u'Caution: A special skill-set is required for this operation.')
+            'Caution: A special skill-set is required for this operation.')
         self.assertDocumentEqual(version, 'test_imported_document.docxml')
 
         # Test the document have been indexed
         catalog = getUtility(ICatalogService)
-        results = catalog(silvamaintitle=u"previewing document")
+        results = catalog(silvamaintitle="previewing document")
         self.assertItemsEqual(
-            map(lambda r: r.getPath(), results),
+            [r.getPath() for r in results],
             ['/root/folder/document',
              '/root/folder/document/0'])
 
@@ -87,7 +87,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertFalse(version is None)
         self.assertTrue(IDocumentVersion.providedBy(version))
         self.assertEqual(document.get_editable(), None)
-        self.assertEqual(version.get_title(), u'Cool site')
+        self.assertEqual(version.get_title(), 'Cool site')
 
         service = getUtility(IReferenceService)
         # Hopefully there is only one link in the document so this
@@ -105,7 +105,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         # Test the document have been indexed. It is published so we
         # can search on the fulltext.
         catalog = getUtility(ICatalogService)
-        results = catalog(fulltext=u"übber-cool site")
+        results = catalog(fulltext="übber-cool site")
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].getObject(), version)
 
@@ -134,7 +134,7 @@ class XMLImportTestCase(SilvaXMLTestCase):
         self.assertFalse(version is None)
         self.assertTrue(IDocumentVersion.providedBy(version))
         self.assertEqual(document.get_editable(), None)
-        self.assertEqual(version.get_title(), u'New picture shoots')
+        self.assertEqual(version.get_title(), 'New picture shoots')
 
         service = getUtility(IReferenceService)
         # Hopefully there is only one image in the document so this

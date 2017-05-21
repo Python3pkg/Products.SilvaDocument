@@ -84,7 +84,7 @@ class UpgraderTestCase(TestCase):
         document = self.root.document
         document.get_editable().content = ParsedXML(
             'document',
-            u"""<?xml version="1.0" encoding="utf-8"?>
+            """<?xml version="1.0" encoding="utf-8"?>
 <doc>
    <heading type="normal">Histoire d'un élève suisse</heading>
    <p type="normal">Il était une fois, un élève qui était allé à l'école étudier.</p>
@@ -127,9 +127,9 @@ class UpgraderTestCase(TestCase):
         with self.layer.open_fixture('chocobo.jpg') as image:
             factory.manage_addImage('chocobo', 'Chocobo', image)
         service = getUtility(IReferenceService)
-        reference = service.new_reference(version, name=u"document image")
+        reference = service.new_reference(version, name="document image")
         reference.set_target(self.root.chocobo)
-        reference.add_tag(u"chocobo-master")
+        reference.add_tag("chocobo-master")
 
         # Upgrade the document
         self.assertEqual(document_upgrader.validate(document), True)
@@ -198,9 +198,9 @@ class UpgraderTestCase(TestCase):
         factory.manage_addLink(
             'link', 'Link to Infrae', relative=False, url='http://infrae.com')
         service = getUtility(IReferenceService)
-        reference = service.new_reference(version, name=u"document link")
+        reference = service.new_reference(version, name="document link")
         reference.set_target(self.root.folder.link)
-        reference.add_tag(u"infrae-site")
+        reference.add_tag("infrae-site")
 
         # Upgrade the document
         self.assertEqual(document_upgrader.validate(document), True)

@@ -163,7 +163,7 @@ class KupuTransformerTestCase(TestCase):
         self.failIf(reference is None)
         self.assertEqual(reference.source, version)
         self.assertEqual(reference.target, self.root.chocobo)
-        self.assertEqual(reference.tags, [u"document link", reference_name])
+        self.assertEqual(reference.tags, ["document link", reference_name])
         self.assertEqual(
             list(service.get_references_to(self.root.chocobo)),
             [reference])
@@ -255,7 +255,7 @@ class KupuTransformerTestCase(TestCase):
         self.assertEqual(aq_chain(reference.source), aq_chain(version))
         self.assertEqual(reference.target, self.root.folder)
         self.assertEqual(aq_chain(reference.target), aq_chain(self.root.folder))
-        self.assertEqual(reference.tags, [u"document link", reference_name])
+        self.assertEqual(reference.tags, ["document link", reference_name])
         self.assertEqual(
             list(service.get_references_to(self.root.folder)),
             [reference])
@@ -285,9 +285,9 @@ class KupuTransformerTestCase(TestCase):
         """
         service = component.getUtility(IReferenceService)
         version = self.root.document.get_editable()
-        reference = service.new_reference(version, name=u"document link")
+        reference = service.new_reference(version, name="document link")
         reference.set_target(self.root.folder)
-        reference_name = u"existing-link-id"
+        reference_name = "existing-link-id"
         reference.add_tag(reference_name)
 
         # We have a reference
@@ -334,9 +334,9 @@ class KupuTransformerTestCase(TestCase):
         # Step one, create the existing link
         service = component.getUtility(IReferenceService)
         version = self.root.document.get_editable()
-        reference = service.new_reference(version, name=u"document link")
+        reference = service.new_reference(version, name="document link")
         reference.set_target(self.root.folder)
-        reference_name = u"original-link-id"
+        reference_name = "original-link-id"
         reference.add_tag(reference_name)
         original_id = get_content_id(self.root.folder)
         copy_id = get_content_id(self.root.other)
@@ -420,9 +420,9 @@ class KupuTransformerTestCase(TestCase):
         """
         service = component.getUtility(IReferenceService)
         version = self.root.document.get_editable()
-        reference = service.new_reference(version, name=u"document link")
+        reference = service.new_reference(version, name="document link")
         reference.set_target(self.root.folder)
-        reference_name = u"existing-link-id"
+        reference_name = "existing-link-id"
         reference.add_tag(reference_name)
 
         html = TEST_LINK_HTML % (reference_name, 42)
@@ -453,9 +453,9 @@ class KupuTransformerTestCase(TestCase):
         # Step one, create a link
         service = component.getUtility(IReferenceService)
         version = self.root.document.get_editable()
-        reference = service.new_reference(version, name=u"document link")
+        reference = service.new_reference(version, name="document link")
         reference.set_target(self.root.folder)
-        reference_name = u"existing-link-id"
+        reference_name = "existing-link-id"
         reference.add_tag(reference_name)
 
         # Step two, make a new copy
@@ -534,9 +534,9 @@ class KupuTransformerTestCase(TestCase):
         """
         service = component.getUtility(IReferenceService)
         version = self.root.document.get_editable()
-        reference = service.new_reference(version, name=u"document link")
+        reference = service.new_reference(version, name="document link")
         reference.set_target(self.root.folder)
-        reference_name = u"existing-link-id"
+        reference_name = "existing-link-id"
         reference.add_tag(reference_name)
 
         # We have a reference

@@ -2,9 +2,9 @@
 # Copyright (c) 2011-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
-from urlparse import urlparse
+from urllib.parse import urlparse
 import logging
-import urllib
+import urllib.request, urllib.parse, urllib.error
 
 from zExceptions import NotFound
 from five.intid.site import aq_iter
@@ -24,9 +24,9 @@ def split_path(path, context, root=None):
     parts = path.split('/')
     if len(parts) and not parts[0]:
         context = root
-    parts = filter(lambda x: x != '', parts)
-    context_parts = filter(lambda x: x != '', list(context.getPhysicalPath()))
-    root_parts = filter(lambda x: x != '', list(root.getPhysicalPath()))
+    parts = [x for x in parts if x != '']
+    context_parts = [x for x in list(context.getPhysicalPath()) if x != '']
+    root_parts = [x for x in list(root.getPhysicalPath()) if x != '']
     assert len(context_parts) >= len(root_parts)
     if len(root_parts):
         context_parts = context_parts[len(root_parts):]
@@ -44,25 +44,25 @@ def split_path(path, context, root=None):
     return context_parts + parts, root
 
 
-def resolve_path(url, content_path, context, obj_type=u'link'):
+def resolve_path(url, content_path, context, obj_type='link'):
     """Resolve path to an object or report an error.
 
     Return (url, target i.e an content in Silva, fragment).
     """
-    if isinstance(url, unicode):
+    if isinstance(url, str):
         # If the link contains unicode, that is not a link.
         try:
             url.encode('ascii')
         except UnicodeEncodeError:
-            logger.error(u"Invalid %s '%s' (contains unicode).", obj_type, url)
+            logger.error("Invalid %s '%s' (contains unicode).", obj_type, url)
             return url, None, None
     url = url.strip()
     try:
         scheme, netloc, path, parameters, query, fragment = urlparse(url)
     except ValueError:
-            logger.error(u"Invalid %s '%s' (is not a valid URL).", obj_type, url)
+            logger.error("Invalid %s '%s' (is not a valid URL).", obj_type, url)
             # We quote them so they parse ...
-            return urllib.quote(url), None, None
+            return urllib.parse.quote(url), None, None
     if scheme:
         # This is a remote URL or invalid URL.
         #logger.debug(u'found a remote link %s' % url)
@@ -81,12 +81,12 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
             target = path_root.unrestrictedTraverse(cleaned_path)
         except (AttributeError, KeyError, NotFound, TypeError):
             logger.warn(
-                u'Cannot resolve %s %s in %s',
+                'Cannot resolve %s %s in %s',
                 obj_type, url, content_path)
             return url, None, fragment
     if not ISilvaObject.providedBy(target):
         logger.error(
-            u'%s %s did not resolve to a Silva content in %s',
+            '%s %s did not resolve to a Silva content in %s',
             obj_type, path, content_path)
         return url, None, fragment
     try:
@@ -94,6 +94,6 @@ def resolve_path(url, content_path, context, obj_type=u'link'):
         return url, target, fragment
     except RuntimeError:
         logger.error(
-            u'Invalid target %s %s in %s',
+            'Invalid target %s %s in %s',
             obj_type, path, content_path)
         return url, None, fragment

@@ -41,7 +41,7 @@ class SilvaXMLUpgrader(BaseUpgrader):
     def _upgrade_citations(self, version, doc_el):
         cites = doc_el.getElementsByTagName('cite')
         if cites:
-            logger.info(u'Upgrading CITE Elements in %s', content_path(version))
+            logger.info('Upgrading CITE Elements in %s', content_path(version))
         for c in cites:
             author = source = ''
             citation = []

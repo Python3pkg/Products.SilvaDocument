@@ -68,7 +68,7 @@ class DocXMLHandler(handlers.SilvaHandler):
         service = getUtility(IReferenceService)
         reference = service.new_reference(
             self.__version, name=LINK_REFERENCE_TAG)
-        reference_name = unicode(uuid.uuid1())
+        reference_name = str(uuid.uuid1())
         reference.add_tag(reference_name)
         importer = self.getExtra()
         importer.resolveImportedPath(
@@ -94,7 +94,7 @@ class DocXMLHandler(handlers.SilvaHandler):
 
             # Collect attributes
             attributes = {}
-            for ns, attr in attrs.keys():
+            for ns, attr in list(attrs.keys()):
                 attributes[attr] = attrs[(ns,attr)]
 
             # Update attributes
@@ -104,7 +104,7 @@ class DocXMLHandler(handlers.SilvaHandler):
             # Create node
             self.__current_node.appendChild(child)
             self.__current_node = child
-            for name, value in attributes.items():
+            for name, value in list(attributes.items()):
                 self.__current_node.setAttribute(name, value)
 
     def characters(self, chrs):

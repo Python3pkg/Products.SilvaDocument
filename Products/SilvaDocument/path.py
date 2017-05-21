@@ -2,7 +2,7 @@
 # Copyright (c) 2002-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 from Products.SilvaDocument.interfaces import IPath
 from five import grok

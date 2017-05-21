@@ -26,7 +26,7 @@ doesn't allow python2.2 or better.
 __author__='Holger P. Krekel <hpk@trillke.net>'
 __version__='$Revision: 1.4 $'
 
-from UserList import UserList as List
+from collections import UserList as List
 import re
 import uuid
 
@@ -34,7 +34,7 @@ from silva.translations import translate as _
 from silva.core.references.interfaces import IReferenceService
 from zope import component
 
-LINK_REFERENCE_TAG=u"document link"
+LINK_REFERENCE_TAG="document link"
 
 
 def determine_browser_from_request(request):
@@ -86,7 +86,7 @@ class Context(object):
             # edited. In that case we create a new one, as it might be
             # a copy.
             if read_only:
-                raise KeyError(u"Missing reference %s tagged %s" % (
+                raise KeyError("Missing reference %s tagged %s" % (
                         self.__reference_name, link_name))
             return self.new_reference()
         reference = self.__references.get(link_name, None)
@@ -99,7 +99,7 @@ class Context(object):
         """
         reference = self.__reference_service.new_reference(
             self.version, self.__reference_name)
-        link_name = unicode(uuid.uuid1())
+        link_name = str(uuid.uuid1())
         reference.add_tag(link_name)
         self.__references[link_name] = reference
         self.__references_used.add(link_name)
@@ -111,19 +111,15 @@ class Context(object):
         by any node.
         """
         self.__references_used = set()
-        self.__references = dict(map(
-                lambda r: (r.tags[1], r),
-                filter(
-                    lambda r: r.tags[0] == self.__reference_name,
-                    self.__reference_service.get_references_from(
-                        self.version))))
+        self.__references = dict([(r.tags[1], r) for r in [r for r in self.__reference_service.get_references_from(
+                        self.version) if r.tags[0] == self.__reference_name]])
 
     def finish_transform(self):
         """This method should be called by the Transformer after the
         transformation process is done. It should not be called by any
         node.
         """
-        for link_name, reference in self.__references.items():
+        for link_name, reference in list(self.__references.items()):
             if link_name not in self.__references_used:
                 # Reference has not been used, remove it.
                 del self.__reference_service.references[reference.__name__]
@@ -155,7 +151,7 @@ class Node(object):
             for i in tag:
                 if self._matches(i):
                     return 1
-        elif isinstance(tag, basestring):
+        elif isinstance(tag, str):
             return self.name()==tag
         elif tag is None:
             return 1
@@ -174,7 +170,7 @@ class Node(object):
         """Return true if the attribute 'name' is an attribute name
         of this tag
         """
-        return self.attr.__dict__.has_key(name)
+        return name in self.attr.__dict__
 
     def getattr(self, name, default=_marker):
         """Return xml attribute value or a given default.
@@ -188,10 +184,10 @@ class Node(object):
                 return default
             return ret
 
-        if vars(self.attr).has_key(name):
+        if name in vars(self.attr):
             return getattr(self.attr, name)
         message = "%s attribute not found on tag %s" % (name, self)
-        raise AttributeError,  message
+        raise AttributeError(message)
 
     def query_one(self, path):
         """Return exactly one tag pointed to by a simple 'path' or
@@ -200,12 +196,12 @@ class Node(object):
         dic = self.query(path)
         if len(dic) == 0:
             message = _("no ${path} element", mapping={'path': path})
-            raise ValueError,  message
-        elif len(dic) == 1 and len(dic.values()[0]) == 1:
-            return dic.values()[0][0]
+            raise ValueError(message)
+        elif len(dic) == 1 and len(list(dic.values())[0]) == 1:
+            return list(dic.values())[0][0]
         else:
             message = "more than one %s element" % path
-            raise ValueError, message
+            raise ValueError(message)
 
     def query(self, querypath):
         """Return a dictionary with path -> node mappings matching
@@ -237,7 +233,7 @@ class Node(object):
                 message = _(
                     "intermingling * is not allowed ${i}",
                     mapping={'i': i})
-                raise ValueError,  message
+                raise ValueError(message)
             elif '|' in i:
                 l.append("(%s)" % i)
             else:
@@ -294,7 +290,7 @@ class Frag(Node, List):
         l = []
         for node in self:
             l.append(node.extract_text())
-        return u''.join(l)
+        return ''.join(l)
 
     def compact(self):
         node = self.__class__()
@@ -370,10 +366,10 @@ class Element(Node):
         for child in content:
             try:
                 # if child is 'dictish' assume it contains attrs-bindings
-                for name, value in child.items():
+                for name, value in list(child.items()):
                     setattr(self.attr, name, value)
             except AttributeError:
-                if type(child) in (type(''),type(u'')):
+                if type(child) in (type(''),type('')):
                     child = Text(child)
                 newcontent.append(child)
         self.content = Frag(*newcontent)
@@ -381,7 +377,7 @@ class Element(Node):
             #assert not getattr(obj, 'parent', None)
         #    obj.parent = self
 
-        for name, value in kw.items():
+        for name, value in list(kw.items()):
             if value is not None:
                 setattr(self.attr, name, value)
 
@@ -391,7 +387,7 @@ class Element(Node):
     def __ne__(self, other):
         return not self==other
 
-    def __nonzero__(self):
+    def __bool__(self):
         return self.name()!=Element.__name__
 
     def compact(self):
@@ -429,14 +425,14 @@ class Element(Node):
     def asBytes(self, encoding='UTF-8'):
         """ return canonical xml-representation  """
         attrlist=[]
-        for name, value in vars(self.attr).items():
+        for name, value in list(vars(self.attr).items()):
             if value is None:
                 continue
 
             name = name.encode(encoding)
             if hasattr(value, 'asBytes'):
                 value = value.asBytes(encoding)
-            elif type(value)==type(u''):
+            elif type(value)==type(''):
                 value = value.encode(encoding)
             else:
                 value = value
@@ -472,13 +468,13 @@ class gt(CharRef): "greater-than sign, U+003E ISOnum"; codepoint = 62
 class _escape_chars:
     def __init__(self):
         self.escape_chars = {}
-        for _name, _obj in globals().items():
+        for _name, _obj in list(globals().items()):
             try:
                 if issubclass(_obj, CharRef) and _obj is not CharRef:
-                    self.escape_chars[unichr(_obj.codepoint)] = u"&%s;" % _name
+                    self.escape_chars[chr(_obj.codepoint)] = "&%s;" % _name
             except TypeError:
                 continue
-        self.charef_rex = re.compile(u"|".join(self.escape_chars.keys()))
+        self.charef_rex = re.compile("|".join(list(self.escape_chars.keys())))
 
     def _replacer(self, match):
         return self.escape_chars[match.group(0)]
@@ -491,9 +487,9 @@ escape_chars = _escape_chars()
 # END special character handling
 
 class CharacterData(Node):
-    def __init__(self, content=u""):
+    def __init__(self, content=""):
         if type(content)==type(''):
-            content = unicode(content)
+            content = str(content)
         self.content = content
 
     def extract_text(self):

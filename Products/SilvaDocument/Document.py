@@ -3,7 +3,7 @@
 # See also LICENSE.txt
 
 # Python
-from StringIO import StringIO
+from io import StringIO
 import re
 
 # Zope
@@ -111,8 +111,8 @@ class DocumentVersion(Version):
         rendered_document = transformer.to_target(
             sourceobj=self.get_document_xml(), context=context)
 
-        result = unicode(rendered_document.asBytes('utf8'), 'utf8')
-        result = result.replace(u'\xa0', u'&nbsp;')
+        result = str(rendered_document.asBytes('utf8'), 'utf8')
+        result = result.replace('\xa0', '&nbsp;')
         return result
 
     security.declareProtected(

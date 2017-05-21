@@ -30,7 +30,7 @@ doesn't allow python2.2
 __author__='holger krekel <hpk@trillke.net>'
 __version__='$Revision: 1.39 $'
 
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 from zExceptions import NotFound
 
@@ -39,7 +39,7 @@ from silva.core.interfaces import IImage
 from Products.SilvaDocument.interfaces import IPath
 from silva.core.references.reference import get_content_from_id
 
-import silvaformat
+from . import silvaformat
 silva = silvaformat
 
 DEBUG=0
@@ -205,7 +205,7 @@ def extract_texts(node, context, allow_indexes=0):
     result = []
     for child in node.find():
         if child.name() == 'br':
-            result.append(Text(u'\n'))
+            result.append(Text('\n'))
         elif (allow_indexes and child.name() == 'a' and
               not child.getattr('href', None)):
             result.append(child.convert(context))
@@ -604,9 +604,9 @@ class a(Element):
             url = self.getattr('_silva_href', None)
             if url is None:
                 url = self.getattr('href', '')
-            if unicode(url).startswith('/'):
+            if str(url).startswith('/'):
                 # convert to physical path before storing
-                url = Text(IPath(context.request).urlToPath(unicode(url)))
+                url = Text(IPath(context.request).urlToPath(str(url)))
             if url:
                 link_attributes['url'] = url
             return silva.link(
@@ -802,8 +802,8 @@ class div(Element):
                             vtype = 'string' # default type
                             if '__type__' in key:
                                 vtype = key.split('__type__')[1]
-                            if type(value) != unicode:
-                                value = unicode(value, 'UTF-8')
+                            if type(value) != str:
+                                value = str(value, 'UTF-8')
                             if vtype == 'list':
                                 if not key in params:
                                     params[key] = []
@@ -816,7 +816,7 @@ class div(Element):
                 if '__type__' in key:
                     vkey, vtype = key.split('__type__')
                 if vtype == 'list':
-                    value = unicode(
+                    value = str(
                         str(([x.encode('utf-8') for x in params[key]])),
                         'utf-8')
                 else:

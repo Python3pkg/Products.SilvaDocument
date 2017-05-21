@@ -38,7 +38,7 @@ def copy_annotation(source, target):
     # migrates them.
     source_anno = IAnnotations(source)
     target_anno = IAnnotations(target)
-    for key in source_anno.keys():
+    for key in list(source_anno.keys()):
         target_anno[key] = copy.deepcopy(source_anno[key])
     # Copy the old annotations to the version, it is possible we are
     # upgrading a 2.1 version that is not yet upgraded.
@@ -112,7 +112,7 @@ class DocumentUpgrader(BaseUpgrader):
         copy_version(source, target, ensure=ensure)
 
     def upgrade(self, doc):
-        logger.info(u'Upgrading HTML in: %s.', content_path(doc))
+        logger.info('Upgrading HTML in: %s.', content_path(doc))
         # ID + Title
         identifier = doc.id
         title = doc.get_title()
@@ -123,7 +123,7 @@ class DocumentUpgrader(BaseUpgrader):
             new_doc = self.create_document(
                 parent, identifier + 'conv__silva30', title)
         except ValueError:
-            logger.error(u'Cannot convert document: %s.', content_path(doc))
+            logger.error('Cannot convert document: %s.', content_path(doc))
             return doc
         new_identifier = new_doc.getId() # The id can have changed
         # Copy annotation
@@ -178,7 +178,7 @@ class DocumentUpgrader(BaseUpgrader):
                 parent._checkId(identifier)
             except BadRequest:
                 logger.error(
-                    u"Could not replace document with '%s' identifier, renaming it to '%s_changed'.",
+                    "Could not replace document with '%s' identifier, renaming it to '%s_changed'.",
                     identifier, identifier)
                 identifier += '_changed'
                 parent.manage_renameObject(new_identifier, identifier)

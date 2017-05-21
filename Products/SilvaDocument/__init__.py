@@ -11,7 +11,7 @@ silvaconf.extension_depends(["Silva", "SilvaExternalSources"])
 
 
 # add some scheme to urlparse
-import urlparse
+import urllib.parse
 
 
 SCHEME_HTTP_LIKE_CAPABILITIES = [

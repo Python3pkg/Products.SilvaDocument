@@ -18,7 +18,7 @@ Currently only minidom is supported.
 __author__='Holger P. Krekel <hpk@trillke.net>'
 __version__='$Revision: 1.3 $'
 
-from base import Element, Frag, Text
+from .base import Element, Frag, Text
 
 #
 # Transformation from Dom to our Nodes
@@ -31,7 +31,7 @@ class ObjectParser:
         """
         self.spec = spec
         self.typemap = {}
-        for x,y in vars(spec).items():
+        for x,y in list(vars(spec).items()):
             try:
                 if issubclass(y, Element):
                     if hasattr(y, 'xmlname'):
@@ -47,7 +47,7 @@ class ObjectParser:
             Fragment contains node objects and unknown a list of unmapped 
             nodes.
         """
-        if type(source)==type(u''):
+        if type(source)==type(''):
             source = source.encode('UTF8')
 
         if type(source)==type(''):
@@ -65,7 +65,7 @@ class ObjectParser:
         """ transform dom-nodes to objects """
         res = Frag()
 
-        for node in filter(None, nodes):
+        for node in [_f for _f in nodes if _f]:
             if node.nodeType == node.ELEMENT_NODE:
                 childs = self._dom2object(*node.childNodes)
                 cls = self.typemap.get(node.nodeName)
@@ -75,7 +75,7 @@ class ObjectParser:
                 else:
                     attrs = {}
                     if node.attributes:
-                        for name, item in node.attributes.items():
+                        for name, item in list(node.attributes.items()):
                             attrs[name]=Text(item) # .nodeValue)
                     conv_node = cls(attrs, *childs)
                     res.append(conv_node)

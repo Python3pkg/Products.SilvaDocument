@@ -26,14 +26,15 @@ from silva.core.views.interfaces import IVirtualSite
 from zope.traversing.browser import absoluteURL
 
 
-import htmlformat
+from . import htmlformat
+from functools import reduce
 html = htmlformat
 
 from silva.translations import translate as _
 
 
-_attr_origin=u'silva_origin'
-_attr_prefix=u'silva_'
+_attr_origin='silva_origin'
+_attr_prefix='silva_'
 
 # special attribute used for heuristics when transforming
 # back to silva-xml
@@ -53,11 +54,11 @@ class SilvaElement(Element):
             the transformation from html to silvaxml.
         """
         attrs = {}
-        for name, value in vars(self.attr).items():
-            name = u'silva_'+name
+        for name, value in list(vars(self.attr).items()):
+            name = 'silva_'+name
             attrs[name]=value
 
-        attrs[u'silva_origin']=self.name()
+        attrs['silva_origin']=self.name()
         return attrs
 
     def convert(self, context):
@@ -107,11 +108,11 @@ class heading(SilvaElement):
     def convert(self, context):
         # some defensive programming here...
         level = self.attr.type
-        h_tag = {u'normal' : html.h3,
-                 u'sub': html.h4,
-                 u'subsub': html.h5,
-                 u'paragraph': html.h6,
-                 u'subparagraph': html.h6,
+        h_tag = {'normal' : html.h3,
+                 'sub': html.h4,
+                 'subsub': html.h5,
+                 'paragraph': html.h6,
+                 'subparagraph': html.h6,
                  }.get(level, html.h3)
 
         silva_type = None
@@ -144,13 +145,13 @@ class list(SilvaElement):
     """ Simple lists """
 
     def convert(self, context):
-        listtype = self.getattr('type', u'none')
+        listtype = self.getattr('type', 'none')
 
         attrs = {}
         if listtype in ['1','i','I','a','A']:
             tag = html.ol
-            attrs[u'type']=listtype
-        elif listtype in (u'disc',u'square',u'circle'):
+            attrs['type']=listtype
+        elif listtype in ('disc','square','circle'):
             tag = html.ul
         else:
             tag = html.ul
@@ -312,7 +313,7 @@ class index(SilvaElement):
         name = self.attr.name
         title = self.attr.title
         if title:
-            title = unicode(self.attr.title.asBytes('utf-8'), 'utf-8')
+            title = str(self.attr.title.asBytes('utf-8'), 'utf-8')
         else:
             title = ''
         if title:
@@ -348,7 +349,7 @@ class image(SilvaElement):
                 site = IVirtualSite(context.request)
                 attributes['src'] = site.get_root_url() + \
                     "/++resource++Products.SilvaDocument/broken-link.jpg"
-                attributes['alt'] = u'Referenced image is missing.'
+                attributes['alt'] = 'Referenced image is missing.'
         elif self.hasattr('path'):
             path = self.getattr('path')
             src = IPath(context.request).pathToUrlPath(str(path))
@@ -410,7 +411,7 @@ class table(SilvaElement):
     def compute_aligns_relwidths(self):
         """ return a list with the alignments """
         infos = str(self.attr.column_info).split(' ')
-        aligns = [(self.alignmapping.has_key(i[0]) and
+        aligns = [(i[0] in self.alignmapping and
                         self.alignmapping[i[0]] or 'left')
                     for i in infos]
         try:
@@ -490,8 +491,8 @@ class source(SilvaElement):
             meta_type = source.meta_type
             source_title = source.get_title() or id
             source_form = source.get_parameters_form()
-            header = html.h4(Text(u'%s \xab%s\xbb' % (meta_type, source_title)),
-                             title=u'source id: %s'%id)
+            header = html.h4(Text('%s \xab%s\xbb' % (meta_type, source_title)),
+                             title='source id: %s'%id)
             description = source.get_description()
             if description:
                 divcontent.append(
@@ -508,9 +509,9 @@ class source(SilvaElement):
                 key = child.attr.key.convert(context).extract_text()
                 attrkey = '%s__type__%s' % (key,vtype)
                 if vtype == 'list':
-                    value = [unicode(x, 'utf-8') for x in eval(value)]
+                    value = [str(x, 'utf-8') for x in eval(value)]
                 else:
-                    value = unicode(value, 'utf-8')
+                    value = str(value, 'utf-8')
                 params[key] = (value,attrkey)
         divpar = []
         for key in params:

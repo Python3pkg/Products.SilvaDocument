@@ -293,7 +293,7 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         document = self.root.document
         editable = document.get_editable()
         editable.content = ParsedXML(
-            'content', u"""<?xml version="1.0" encoding="utf-8"?>
+            'content', """<?xml version="1.0" encoding="utf-8"?>
 <doc>
   <p type="normal">
     <link target="_blank" url="Aléatoire">On me link</link>
@@ -305,7 +305,7 @@ class DocumentUpgraderTestCase(unittest.TestCase):
         self.assertEqual(len(links), 1)
         link = links[0]
         self.assertTrue(link.hasAttribute('url'))
-        self.assertEqual(link.getAttribute('url'), u'Aléatoire')
+        self.assertEqual(link.getAttribute('url'), 'Aléatoire')
         self.assertFalse(link.hasAttribute('anchor'))
         self.assertFalse(link.hasAttribute('reference'))
 

@@ -2,9 +2,9 @@
 # Copyright (c) 2002-2013 Infrae. All rights reserved.
 # See also LICENSE.txt
 
-from HTMLParser import HTMLParseError
+from html.parser import HTMLParseError
 from cgi import escape
-import urllib
+import urllib.request, urllib.parse, urllib.error
 import logging
 
 from Products.SilvaExternalSources.ExternalSource import getSourceForId
@@ -86,7 +86,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
                         if options.upgrade30:
                             attributes['data-silva-target'] = str(reference.target_id)
                             attributes['data-silva-reference'] = reference.tags[1]
-                            reference.tags[0] = u"body link"
+                            reference.tags[0] = "body link"
                             reference._p_changed = True
                         else:
                             target = reference.target
@@ -136,7 +136,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
             html = ['<div class="warning">'
                     '<strong>[external source element is broken]</strong>',
                     '<br />',
-                    escape(unicode(error)),
+                    escape(str(error)),
                     '</div>']
             self.render_html("".join(html))
             self.endElementNS(NS_DOCUMENT_URI, node.nodeName)
@@ -172,9 +172,9 @@ class DocumentVersionProducer(producers.SilvaProducer):
         if options.upgrade30:
 
             if source is None:
-                logger.error(u"Missing source %s, skipping it.", id)
+                logger.error("Missing source %s, skipping it.", id)
                 return
-            logger.info(u'Document uses source %s.', id)
+            logger.info('Document uses source %s.', id)
 
             value_settings = []
             seen_fields = set()
@@ -198,7 +198,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
 
                     is_multiple = field.get_value('multiple')
                     if is_multiple:
-                        map(resolve_location, value.split(','))
+                        list(map(resolve_location, value.split(',')))
                     else:
                         resolve_location(value)
                 else:
@@ -206,32 +206,32 @@ class DocumentVersionProducer(producers.SilvaProducer):
                     if (field.meta_type == 'CheckBoxField' or
                         parameter_type == 'boolean' or
                         isinstance(value, bool)):
-                        if value in (True, u'1', u'True'):
-                            value = u'1'
+                        if value in (True, '1', 'True'):
+                            value = '1'
                         else:
                             # False boolean are not included in the settings.
                             return
                     if parameter_type == 'list' or isinstance(value, list):
-                        if isinstance(value, basestring):
+                        if isinstance(value, str):
                             value = eval(value)
                         for item in value:
                             value_settings.append(
                                 ('field_' + name,
-                                 unicode(item).encode('utf-8')),)
+                                 str(item).encode('utf-8')),)
                     else:
                         value_settings.append(
                             ('field_' + name,
-                             unicode(value).encode('utf-8')),)
+                             str(value).encode('utf-8')),)
 
             if source.parameters is not None:
                 # Convert actual stored value
-                for name, value in parameters.items():
+                for name, value in list(parameters.items()):
                     try:
                         convert_parameter(name, value)
                         seen_fields.add(name)
                     except AttributeError:
                         logger.error(
-                            u"Parameter %s missing in source %s." % (
+                            "Parameter %s missing in source %s." % (
                                 name, id))
 
                 # For any field that was not seen, add the (required)
@@ -241,11 +241,11 @@ class DocumentVersionProducer(producers.SilvaProducer):
                         default_value = field.get_value('default')
                         if default_value is not None:
                             logger.warn(
-                                u"Using default for parameter %s in source %s." % (
+                                "Using default for parameter %s in source %s." % (
                                     field.id, id))
                             convert_parameter(field.id, default_value)
 
-            attributes['settings'] = urllib.urlencode(value_settings)
+            attributes['settings'] = urllib.parse.urlencode(value_settings)
 
         self.startElementNS(NS_DOCUMENT_URI, node.nodeName, attributes)
 
@@ -272,7 +272,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
                 request = self.getExported().request
                 try:
                     html = source.to_html(self.context, request, **parameters)
-                except Exception, error:
+                except Exception as error:
                     source_error("error message: " + str(error))
                     return
                 if not html:
@@ -438,7 +438,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
                 if options.upgrade30:
                     attributes['data-silva-target'] = str(reference.target_id)
                     attributes['data-silva-reference'] = reference.tags[1]
-                    reference.tags[0] = u"body image"
+                    reference.tags[0] = "body image"
                     reference._p_changed = True
                 elif image is not None:
                     rewritten_path = absoluteURL(image, request)
@@ -456,7 +456,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
                     site = IVirtualSite(request)
                     rewritten_path = site.get_root_url() + \
                         "/++resource++Products.SilvaDocument/broken-link.jpg"
-                    attributes['title'] = _(u'Referenced image is missing')
+                    attributes['title'] = _('Referenced image is missing')
                 attributes['rewritten_path'] = rewritten_path
 
             if image is not None:
@@ -475,7 +475,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
                 attributes['reference'] = self.get_reference(
                     attributes['reference'])
 
-        if attributes.has_key('alignment'):
+        if 'alignment' in attributes:
             if not attributes['alignment']:
                 attributes['alignment'] = 'default'
         else:
@@ -488,7 +488,7 @@ class DocumentVersionProducer(producers.SilvaProducer):
         try:
             # We don't trust that the input is even valid HTML.
             saxify(html, self.handler, validate=True)
-        except HTMLParseError, error:
+        except HTMLParseError as error:
             lined_html = ''
             for lineno, line in enumerate(escape(html).split('\n')):
                 lined_html += 'line %03d: %s\n' % (lineno + 1, line)
@@ -505,6 +505,6 @@ class DocumentVersionProducer(producers.SilvaProducer):
 
 def get_dict(attributes):
     result = {}
-    for key in attributes.keys():
+    for key in list(attributes.keys()):
         result[key] = attributes[key].value
     return result
